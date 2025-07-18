@@ -303,9 +303,9 @@ def find_agent_by_role(agents: List[Agent], role: str) -> Optional[Agent]:
 def system_runtime_bootstrap(root_dir: str, initial_task: str):
     print("--- System Runtime Bootstrap ---")
 
-    config = load_config(os.path.join(root_dir, "config/runtime.yaml"))
-    agent_specs = load_agent_templates(os.path.join(root_dir, "agents/"))
-    prompts = load_prompts(os.path.join(root_dir, "prompts/"))
+    config = load_config(os.path.join(root_dir, "config", "runtime.yaml"))
+    agent_specs = load_agent_templates(os.path.join(root_dir, "agents"))
+    prompts = load_prompts(os.path.join(root_dir, "prompts"))
 
     all_team_members = {member.lower() for spec in agent_specs if 'team' in spec for member in spec['team']}
 
