@@ -338,11 +338,14 @@ def system_runtime_bootstrap(root_dir: str, initial_task: str):
 
     print("\n--- System Runtime Bootstrap Complete ---")
 
-
-if __name__ == "__main__":
+def system_main():
     parser = argparse.ArgumentParser(description="Run the Gemini agent runtime.")
     parser.add_argument("task", type=str, help="The initial task for the orchestrator to perform.")
     args = parser.parse_args()
 
     project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
     system_runtime_bootstrap(project_root, args.task)
+
+
+if __name__ == "__main__":
+    system_main()
