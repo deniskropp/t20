@@ -1,0 +1,7 @@
+# config/runtime.yaml
+default_agent: Meta-AI
+max_concurrent_agents: 3
+logging_level: INFO
+api_endpoints:
+  search: "https://api.example.com/search"
+  summarize: "https://api.example.com/summarize"
