@@ -1,0 +1,36 @@
+{
+    "steps": [
+        {
+            "role": "Prompt Engineer",
+            "task": "Analyze the high-level goal 'refactoring' and identify key areas where agent collaboration is crucial for success. Define the scope of refactoring in the context of design, code, and user experience."
+        },
+        {
+            "role": "Task-Agnostic Step (TAS) extractor",
+            "task": "Identify and extract Task-Agnostic Steps (TAS) related to the high-level goal 'refactoring'. These steps should be independent of specific agent roles and represent fundamental actions required for refactoring."
+        },
+        {
+            "role": "Prompt Engineer",
+            "task": "Refine the prompts for the Designer and Engineer agents, focusing on clarity and specific requirements for refactoring existing designs and code. Ensure prompts emphasize accessibility and performance considerations."
+        },
+        {
+            "role": "Designer",
+            "task": "Analyze the existing design for potential areas of improvement, focusing on visual balance, accessibility, and UI flows. Generate updated layouts, color palettes, and typography options that align with modern design principles and user needs."
+        },
+        {
+            "role": "Engineer",
+            "task": "Analyze the existing codebase for potential areas of improvement, focusing on code modularity, performance, and responsiveness. Identify opportunities to refactor code into cleaner, more maintainable components."
+        },
+        {
+            "role": "Designer",
+            "task": "Based on the Engineer's analysis, create UI flows and mockups that reflect the refactored code structure and improved performance. Ensure the design is responsive and accessible across different devices and screen sizes."
+        },
+        {
+            "role": "Engineer",
+            "task": "Implement the updated designs and refactored code, focusing on responsive design and accessibility. Conduct thorough testing to ensure the refactored code meets performance and quality standards."
+        },
+        {
+            "role": "Prompt Engineer",
+            "task": "Evaluate the effectiveness of the prompts used throughout the refactoring process and identify areas for improvement. Update the prompts to reflect lessons learned and ensure future refactoring efforts are more efficient and effective."
+        }
+    ]
+}

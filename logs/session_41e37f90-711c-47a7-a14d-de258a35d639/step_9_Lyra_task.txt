@@ -1,0 +1,1045 @@
+The overall goal is: 'refactoring'
+
+Your role's specific goal is: 'Refine prompts, structure workflows and ensure clarity in agent instructions.'
+Your specific sub-task is: 'Evaluate the effectiveness of the prompts used throughout the refactoring process and identify areas for improvement in future refactoring projects.'
+
+Please use the following outputs from the other agents as your input:
+
+Artifact from step_0_TASe_result.txt:
+[
+  {
+    "id": "a12a9b80-256d-4749-9e50-38f5824a214b",
+    "name": "Analyze Existing Structure",
+    "description": "This step involves a thorough examination of the current system or component to understand its design, dependencies, and potential areas for improvement. It includes identifying code smells, performance bottlenecks, and maintainability issues. The analysis provides a baseline understanding before any modifications are made.",
+    "category": "Analysis",
+    "purpose": "To gain a deep understanding of the current system's architecture and identify areas needing refactoring.",
+    "keywords": [
+      "code analysis",
+      "dependency analysis",
+      "performance analysis",
+      "code smells",
+      "reverse engineering"
+    ],
+    "applicability_notes": "Applicable to any system or component that requires restructuring or improvement. The specific analysis techniques may vary based on the nature of the system.",
+    "examples_of_usage": [
+      "Analyzing a legacy software system to identify areas with high complexity and low maintainability.",
+      "Examining a database schema to identify normalization issues and potential performance bottlenecks.",
+      "Evaluating a manufacturing process to identify inefficiencies and areas for automation."
+    ],
+    "typical_inputs": [
+      "Existing system or component",
+      "Codebase",
+      "Documentation (if available)",
+      "Performance metrics (if available)"
+    ],
+    "typical_outputs": [
+      "Analysis report",
+      "List of code smells",
+      "Dependency graph",
+      "Performance bottlenecks identified"
+    ]
+  },
+  {
+    "id": "5b8c76e7-3e7c-4f6b-a8a2-9c1e7b3a5e8d",
+    "name": "Define Refactoring Goals",
+    "description": "This step involves establishing clear objectives for the refactoring process. These goals might include improving code readability, reducing complexity, enhancing performance, or increasing maintainability. Defining goals ensures that the refactoring efforts are focused and aligned with the overall project objectives.",
+    "category": "Planning",
+    "purpose": "To establish clear, measurable objectives for the refactoring process.",
+    "keywords": [
+      "goal setting",
+      "objective definition",
+      "requirements analysis",
+      "project planning"
+    ],
+    "applicability_notes": "This step is critical for any refactoring project, regardless of the size or complexity of the system. Clear goals help to prioritize refactoring efforts and measure success.",
+    "examples_of_usage": [
+      "Defining a goal to reduce the cyclomatic complexity of a module by 20%.",
+      "Setting a goal to improve the code coverage of a critical component to 90%.",
+      "Establishing a goal to reduce the number of dependencies in a system to improve maintainability."
+    ],
+    "typical_inputs": [
+      "Analysis report (from 'Analyze Existing Structure')",
+      "Project requirements",
+      "Stakeholder feedback"
+    ],
+    "typical_outputs": [
+      "Refactoring goals document",
+      "Prioritized list of refactoring tasks",
+      "Success criteria for refactoring"
+    ]
+  },
+  {
+    "id": "8e0a2f19-0e7a-4e3c-b5a1-2d9b6a7f8c1e",
+    "name": "Implement Refactoring Changes",
+    "description": "This step involves making the actual modifications to the system or component based on the defined refactoring goals. It includes applying various refactoring techniques, such as extracting methods, renaming variables, and simplifying complex logic. This step should be performed iteratively, with frequent testing to ensure that the changes do not introduce new issues.",
+    "category": "Execution",
+    "purpose": "To make the necessary changes to the system to achieve the refactoring goals.",
+    "keywords": [
+      "code modification",
+      "refactoring techniques",
+      "code improvement",
+      "iterative development"
+    ],
+    "applicability_notes": "This step is the core of the refactoring process. The specific techniques used will vary based on the nature of the system and the refactoring goals.",
+    "examples_of_usage": [
+      "Extracting a complex calculation into a separate method to improve readability.",
+      "Renaming a variable to better reflect its purpose.",
+      "Simplifying a conditional statement to reduce complexity."
+    ],
+    "typical_inputs": [
+      "Refactoring goals document",
+      "Codebase",
+      "Development environment"
+    ],
+    "typical_outputs": [
+      "Modified codebase",
+      "Unit tests",
+      "Integration tests"
+    ]
+  },
+  {
+    "id": "3c9b6d1a-7e2f-4b5a-8c3e-5d2a1b4f6e8d",
+    "name": "Validate Refactored Structure",
+    "description": "This step involves verifying that the refactoring changes have achieved the defined goals and have not introduced any new issues. It includes running unit tests, integration tests, and performance tests to ensure that the system is functioning correctly. It also involves code reviews to ensure that the changes meet the required quality standards.",
+    "category": "Quality Assurance",
+    "purpose": "To ensure that the refactored system meets the defined goals and maintains its functionality and quality.",
+    "keywords": [
+      "testing",
+      "quality assurance",
+      "code review",
+      "validation",
+      "verification"
+    ],
+    "applicability_notes": "This step is crucial to ensure the success of the refactoring process. Thorough testing and code reviews are essential to identify and fix any issues before the changes are deployed.",
+    "examples_of_usage": [
+      "Running unit tests to verify that individual components are functioning correctly.",
+      "Performing integration tests to ensure that different parts of the system are working together seamlessly.",
+      "Conducting code reviews to identify potential issues and ensure that the changes meet the required quality standards."
+    ],
+    "typical_inputs": [
+      "Modified codebase",
+      "Unit tests",
+      "Integration tests",
+      "Code review checklist"
+    ],
+    "typical_outputs": [
+      "Test results",
+      "Code review report",
+      "Validated codebase"
+    ]
+  }
+]
+
+---
+
+Artifact from step_1_Lyra_result.txt:
+[
+  {
+    "target_agent_name": "Designer",
+    "new_system_prompt": "You are Aurora, a UI/UX Designer specializing in accessibility and user experience. Your primary responsibility is to create design specifications that guide the refactoring process, focusing on improving the user interface, ensuring accessibility compliance (WCAG), and enhancing the overall user experience. You will receive analysis reports, refactoring goals, and validated codebases as inputs. Your designs should clearly address identified usability issues, propose solutions that adhere to accessibility guidelines, and optimize the user interface for performance. Focus on creating wireframes, mockups, and style guides that reflect these improvements. Ensure your designs are practical, feasible, and well-documented for the engineering team."
+  },
+  {
+    "target_agent_name": "Engineer",
+    "new_system_prompt": "You are Kodax, a Software Engineer specializing in code refactoring and performance optimization. Your primary responsibility is to implement refactoring changes based on design specifications and refactoring goals. You will receive design specifications, refactoring goals documents, and codebases as inputs. Your work involves modifying code, writing unit and integration tests, and validating the refactored structure. Prioritize code readability, maintainability, and performance. Ensure that all changes adhere to accessibility standards and that the system functions correctly after refactoring. Provide clear documentation and collaborate with the designer to address any implementation challenges."
+  }
+]
+
+---
+
+Artifact from step_2_Aurora_result.txt:
+{
+  "refactoringPlan": {
+    "introduction": "This document outlines the UI/UX refactoring plan for the task management application, focusing on enhancing visual clarity, improving user experience, and ensuring accessibility compliance. The refactoring will address identified usability issues and align the design with current trends and accessibility guidelines.",
+    "currentIssues": [
+      {
+        "issueId": "UI-001",
+        "description": "Inconsistent use of color contrast across the application, potentially hindering readability for users with visual impairments.",
+        "accessibilityConcern": "WCAG 2.0 Level AA requires a contrast ratio of 4.5:1 for normal text and 3:1 for large text.",
+        "proposedSolution": "Implement a new color palette with sufficient contrast ratios, verified using accessibility testing tools. Provide options for users to select alternative high-contrast themes."
+      },
+      {
+        "issueId": "UI-002",
+        "description": "The current typography lacks clear hierarchy, making it difficult for users to quickly scan and understand information.",
+        "accessibilityConcern": "Poor typography affects readability and can cause cognitive overload, particularly for users with dyslexia or learning disabilities.",
+        "proposedSolution": "Refactor typography using a clear hierarchy of font sizes and weights. Use semantic HTML to structure content logically. Ensure sufficient line height and letter spacing for readability."
+      },
+      {
+        "issueId": "UX-003",
+        "description": "The task creation flow is cumbersome, requiring too many steps and fields, leading to user frustration.",
+        "accessibilityConcern": "Complex forms can be difficult for users with motor impairments or cognitive disabilities to navigate and complete.",
+        "proposedSolution": "Simplify the task creation form by reducing the number of required fields and implementing progressive disclosure. Provide clear and concise labels and instructions. Ensure keyboard navigation is intuitive and efficient."
+      },
+      {
+        "issueId": "UX-004",
+        "description": "Lack of sufficient feedback on user actions (e.g., task completion, deletion), creating uncertainty and a poor user experience.",
+        "accessibilityConcern": "Lack of feedback can be disorienting, especially for users who rely on assistive technologies.",
+        "proposedSolution": "Implement clear and immediate feedback for all user actions. Use visual cues, auditory cues (where appropriate and controllable), and ARIA attributes to communicate state changes to assistive technologies."
+      }
+    ],
+    "refactoringComponents": [
+      {
+        "componentId": "CMP-001",
+        "name": "Color Palette",
+        "description": "Refactor the existing color palette to ensure sufficient contrast ratios and improve visual appeal. The new palette should include primary, secondary, and accent colors that meet WCAG AA guidelines.",
+        "mockup": {
+          "description": "A visual representation of the proposed color palette, showcasing contrast ratios and color combinations.",
+          "url": "example.com/color_palette_mockup.png"
+        },
+        "accessibilityConsiderations": "Use a color contrast checker to verify all color combinations meet WCAG AA standards. Provide alternative high-contrast themes."
+      },
+      {
+        "componentId": "CMP-002",
+        "name": "Typography",
+        "description": "Refactor the typography to establish a clear visual hierarchy and improve readability. This includes selecting appropriate font families, sizes, weights, and line heights.",
+        "mockup": {
+          "description": "A visual representation of the proposed typography, showcasing the hierarchy and readability.",
+          "url": "example.com/typography_mockup.png"
+        },
+        "accessibilityConsiderations": "Use semantic HTML to structure content. Ensure sufficient line height and letter spacing. Avoid using fonts that are difficult to read."
+      },
+      {
+        "componentId": "CMP-003",
+        "name": "Task Creation Form",
+        "description": "Simplify the task creation form to reduce the number of required fields and improve usability. Implement progressive disclosure to show additional options only when needed.",
+        "mockup": {
+          "description": "Wireframes and mockups of the simplified task creation form, showcasing the reduced number of fields and progressive disclosure.",
+          "url": "example.com/task_creation_mockup.png"
+        },
+        "accessibilityConsiderations": "Provide clear and concise labels and instructions. Ensure keyboard navigation is intuitive and efficient. Use ARIA attributes to enhance accessibility for assistive technologies."
+      },
+      {
+        "componentId": "CMP-004",
+        "name": "Feedback Mechanisms",
+        "description": "Implement clear and immediate feedback for all user actions, such as task completion and deletion. Use visual cues, auditory cues (where appropriate), and ARIA attributes to communicate state changes.",
+        "mockup": {
+          "description": "Mockups of the feedback mechanisms, showcasing visual and auditory cues.",
+          "url": "example.com/feedback_mockup.png"
+        },
+        "accessibilityConsiderations": "Ensure feedback is perceivable to all users, including those with visual or auditory impairments. Provide alternative text for visual cues and transcripts for auditory cues. Allow users to control the volume of auditory cues."
+      }
+    ],
+    "uiFlow": {
+      "flowId": "FLOW-001",
+      "name": "Task Creation Flow",
+      "description": "The refactored task creation flow will guide users through a simplified process with fewer steps and clearer instructions.",
+      "steps": [
+        {
+          "stepNumber": 1,
+          "description": "User clicks the 'Add Task' button.",
+          "expectedOutcome": "The simplified task creation form is displayed."
+        },
+        {
+          "stepNumber": 2,
+          "description": "User enters the task title and due date (required fields).",
+          "expectedOutcome": "The 'Create Task' button becomes enabled."
+        },
+        {
+          "stepNumber": 3,
+          "description": "User clicks the 'Create Task' button.",
+          "expectedOutcome": "The task is created and added to the task list. A success message is displayed."
+        },
+        {
+          "stepNumber": 4,
+          "description": "User can optionally expand the task to add more details (e.g., description, priority, tags).",
+          "expectedOutcome": "Additional fields are displayed using progressive disclosure."
+        }
+      ],
+      "accessibilityConsiderations": "Ensure keyboard navigation is intuitive and efficient. Provide clear and concise labels and instructions. Use ARIA attributes to enhance accessibility for assistive technologies."
+    },
+    "validationPlan": {
+      "description": "The refactored UI/UX will be validated through a combination of automated testing, manual testing, and user feedback.",
+      "tests": [
+        {
+          "testId": "TEST-001",
+          "name": "Accessibility Testing",
+          "description": "Use automated accessibility testing tools (e.g., Axe, WAVE) to identify and fix accessibility issues. Manually verify accessibility using screen readers and keyboard navigation.",
+          "successCriteria": "All WCAG 2.0 Level AA guidelines are met."
+        },
+        {
+          "testId": "TEST-002",
+          "name": "Usability Testing",
+          "description": "Conduct usability testing with a representative group of users to identify and fix usability issues. Measure task completion rates, error rates, and user satisfaction.",
+          "successCriteria": "Task completion rates are above 90%. User satisfaction scores are above 4 out of 5."
+        },
+        {
+          "testId": "TEST-003",
+          "name": "Performance Testing",
+          "description": "Measure the performance of the refactored UI/UX to ensure it is responsive and efficient.",
+          "successCriteria": "Page load times are below 2 seconds. UI interactions are smooth and responsive."
+        }
+      ]
+    }
+  }
+}
+
+---
+
+Artifact from step_3_Kodax_result.txt:
+{
+  "refactoringAnalysis": {
+    "summary": "Based on Aurora's UI/UX refactoring plan, the existing codebase needs significant refactoring in several key areas to address accessibility concerns, improve user experience, and enhance overall maintainability. The analysis focuses on the components and issues identified in Aurora's plan.",
+    "codebaseSectionsToRefactor": [
+      {
+        "sectionName": "Color Palette Implementation",
+        "relatedIssue": "UI-001 (Inconsistent color contrast)",
+        "currentCodeIssues": [
+          "Hardcoded color values throughout the CSS and JavaScript files.",
+          "Lack of a centralized color management system.",
+          "Insufficient contrast ratios in several UI elements, failing WCAG AA guidelines."
+        ],
+        "refactoringActions": [
+          "Introduce a CSS variables (custom properties) based theming system.",
+          "Implement a color contrast checker during development/build process to prevent accessibility violations.",
+          "Provide high-contrast theme options for users."
+        ],
+        "filesToRefactor": [
+          "src/styles/global.css",
+          "src/components/**/*.css",
+          "src/components/**/*.js"
+        ]
+      },
+      {
+        "sectionName": "Typography Styling",
+        "relatedIssue": "UI-002 (Poor typography hierarchy)",
+        "currentCodeIssues": [
+          "Inconsistent font sizes and weights across different sections.",
+          "Lack of semantic HTML usage for headings and content structure.",
+          "Insufficient line height and letter spacing, affecting readability."
+        ],
+        "refactoringActions": [
+          "Establish a clear typographic scale using CSS variables.",
+          "Refactor HTML to use semantic elements (<h1>-<h6>, <p>, etc.) correctly.",
+          "Adjust line height and letter spacing for optimal readability.",
+          "Consider using a system font stack for better cross-platform consistency."
+        ],
+        "filesToRefactor": [
+          "src/styles/global.css",
+          "src/components/**/*.css",
+          "src/components/**/*.js",
+          "src/components/**/*.jsx"
+        ]
+      },
+      {
+        "sectionName": "Task Creation Form Logic and Structure",
+        "relatedIssue": "UX-003 (Cumbersome task creation flow)",
+        "currentCodeIssues": [
+          "Complex form with too many required fields.",
+          "Lack of progressive disclosure for optional fields.",
+          "Inefficient keyboard navigation.",
+          "Unclear labels and instructions."
+        ],
+        "refactoringActions": [
+          "Simplify the form by reducing the number of required fields.",
+          "Implement progressive disclosure for optional fields.",
+          "Improve keyboard navigation using appropriate tab indices and ARIA attributes.",
+          "Provide clear and concise labels and instructions, ensuring they are associated correctly with form elements.",
+          "Consider using a form library to handle state and validation more efficiently."
+        ],
+        "filesToRefactor": [
+          "src/components/TaskForm.js",
+          "src/components/TaskForm.css",
+          "src/components/TaskForm.jsx"
+        ]
+      },
+      {
+        "sectionName": "Feedback Mechanism Implementation",
+        "relatedIssue": "UX-004 (Lack of sufficient feedback)",
+        "currentCodeIssues": [
+          "Insufficient visual feedback for user actions (e.g., task completion, deletion).",
+          "Absence of auditory cues (where appropriate).",
+          "Lack of ARIA attributes to communicate state changes to assistive technologies."
+        ],
+        "refactoringActions": [
+          "Implement clear and immediate visual feedback for all user actions (e.g., using color changes, animations, or icons).",
+          "Add auditory cues (optional and controllable by the user) for important events.",
+          "Use ARIA attributes to communicate state changes to assistive technologies (e.g., aria-live, aria-atomic, aria-relevant).",
+          "Ensure feedback messages are localized and accessible."
+        ],
+        "filesToRefactor": [
+          "src/components/**/*.js",
+          "src/components/**/*.jsx",
+          "src/components/**/*.css"
+        ]
+      }
+    ],
+    "performanceBottlenecks": [
+      {
+        "bottleneckArea": "Potential re-renders in task list updates",
+        "description": "Frequent updates to the task list might cause unnecessary re-renders, impacting performance, especially with a large number of tasks.",
+        "potentialSolutions": [
+          "Implement memoization techniques (e.g., React.memo) to prevent re-renders of unchanged task items.",
+          "Optimize task list rendering using virtualization or pagination.",
+          "Ensure efficient data structures for task management."
+        ],
+        "affectedFiles": [
+          "src/components/TaskList.js",
+          "src/components/TaskList.jsx"
+        ]
+      }
+    ],
+    "maintainabilityIssues": [
+      {
+        "issue": "Lack of consistent coding style",
+        "description": "Inconsistent coding style makes the codebase harder to read and maintain.",
+        "solution": "Enforce a consistent coding style using a linter (e.g., ESLint) and a code formatter (e.g., Prettier).",
+        "affectedFiles": [
+          "All files in the src directory."
+        ]
+      },
+      {
+        "issue": "Insufficient documentation",
+        "description": "Lack of documentation makes it difficult for new developers to understand the codebase.",
+        "solution": "Add JSDoc comments to all functions and components. Create a README file with a description of the project and instructions on how to set it up and run it.",
+        "affectedFiles": [
+          "All files in the src directory."
+        ]
+      }
+    ],
+    "prioritization": "Refactoring should be prioritized based on the severity of the issues and their impact on accessibility and user experience. The color palette and typography refactoring (UI-001 and UI-002) should be addressed first, followed by the task creation form (UX-003) and feedback mechanisms (UX-004). Performance optimizations should be addressed after the UI/UX improvements are implemented.",
+    "validationStrategy": "After each refactoring step, the changes should be validated using automated tests (unit and integration tests), manual testing (accessibility testing with screen readers and keyboard navigation), and user feedback. The validation plan outlined in Aurora's design specification should be followed.",
+    "tools": [
+      "ESLint",
+      "Prettier",
+      "Axe",
+      "WAVE",
+      "React DevTools",
+      "Color Contrast Checker"
+    ]
+  }
+}
+
+---
+
+Artifact from step_4_Lyra_result.txt:
+[
+  {
+    "target_agent_name": "Designer",
+    "new_system_prompt": "You are Aurora, a UI/UX Designer specializing in accessibility and user experience. Your primary responsibility is to create detailed design specifications for refactoring projects. You'll focus on improving the user interface, ensuring WCAG compliance, and enhancing the overall user experience based on provided analyses and goals. \n\nSpecifically, you will receive refactoring goals, analysis reports (including identified code smells and performance bottlenecks), and validated codebases. Based on these inputs, you will produce wireframes, mockups, style guides, and UI flow diagrams that clearly address usability issues and accessibility concerns. Your designs must include:\n\n*   Explicitly defined color palettes with contrast ratios meeting WCAG AA standards, including options for high-contrast themes.\n*   Clear typographic hierarchies optimized for readability, specifying font families, sizes, weights, and line heights.\n*   Simplified UI flows, especially for complex forms, using progressive disclosure and intuitive keyboard navigation.\n*   Comprehensive feedback mechanisms for user actions, utilizing visual, auditory (optional), and ARIA attributes to communicate state changes to assistive technologies.\n\nEnsure all design elements are practical, technically feasible, and thoroughly documented for the engineering team. Prioritize solutions that minimize code complexity and maximize maintainability. Your documentation should include rationale for design choices, accessibility considerations, and detailed specifications for each UI component."
+  },
+  {
+    "target_agent_name": "Engineer",
+    "new_system_prompt": "You are Kodax, a Software Engineer specializing in code refactoring and performance optimization. Your primary responsibility is to implement refactoring changes based on design specifications and refactoring goals, ensuring code quality, performance, and accessibility. \n\nYou will receive design specifications (including mockups and style guides), refactoring goals documents, and existing codebases as inputs. Your tasks include:\n\n*   Implementing UI/UX changes according to the designer's specifications, focusing on accessibility and usability.\n*   Writing comprehensive unit and integration tests to validate the refactored structure and prevent regressions.\n*   Analyzing and addressing performance bottlenecks, such as unnecessary re-renders or inefficient data structures.\n*   Ensuring code readability and maintainability by adhering to a consistent coding style and providing clear documentation.\n*   Integrating accessibility best practices, including semantic HTML, ARIA attributes, and proper color contrast.\n\nPrioritize tasks based on their impact on accessibility and user experience, addressing color palette and typography issues first, followed by form simplification and feedback mechanisms. Use tools like ESLint, Prettier, Axe, and React DevTools to ensure code quality and accessibility. Collaborate closely with the designer to resolve implementation challenges and provide feedback on the feasibility of design choices. Document all changes thoroughly, including rationale and implementation details."
+  }
+]
+
+---
+
+Artifact from step_5_Aurora_result.txt:
+{
+  "designSpecifications": {
+    "introduction": "These specifications detail the UI/UX refactoring for the task management application, focusing on accessibility, usability, and visual appeal. They address issues identified in previous analyses and aim to create a more intuitive and inclusive user experience.",
+    "colorPalette": {
+      "description": "The refactored color palette ensures sufficient contrast ratios for readability and provides a visually pleasing aesthetic. It includes primary, secondary, accent, and background colors, all compliant with WCAG 2.0 Level AA guidelines.",
+      "primaryColor": {
+        "name": "Indigo",
+        "hex": "#3f51b5",
+        "rgb": "63, 81, 181",
+        "contrastRatio": "4.6:1 (with white text)",
+        "usage": "Primary buttons, active states, headers.",
+        "accessibilityNotes": "Meets WCAG AA contrast requirements for normal text on a white background."
+      },
+      "secondaryColor": {
+        "name": "Teal",
+        "hex": "#009688",
+        "rgb": "0, 150, 136",
+        "contrastRatio": "6.2:1 (with white text)",
+        "usage": "Secondary buttons, accents, highlights.",
+        "accessibilityNotes": "Meets WCAG AA contrast requirements for normal text on a white background."
+      },
+      "accentColor": {
+        "name": "Amber",
+        "hex": "#ffc107",
+        "rgb": "255, 193, 7",
+        "contrastRatio": "3.5:1 (with dark gray text)",
+        "usage": "Notifications, warnings, attention-grabbing elements.",
+        "accessibilityNotes": "Requires dark gray or black text to meet WCAG AA contrast requirements. Avoid using for large blocks of text."
+      },
+      "backgroundColor": {
+        "name": "Off-White",
+        "hex": "#f5f5f5",
+        "rgb": "245, 245, 245",
+        "contrastRatio": "N/A",
+        "usage": "Main background color.",
+        "accessibilityNotes": "Provides sufficient contrast with dark text elements."
+      },
+      "textColor": {
+        "name": "Dark Gray",
+        "hex": "#212121",
+        "rgb": "33, 33, 33",
+        "contrastRatio": "N/A",
+        "usage": "Main text color.",
+        "accessibilityNotes": "Provides sufficient contrast on the off-white background."
+      },
+      "highContrastTheme": {
+        "description": "An alternative theme for users who require higher contrast.",
+        "backgroundColor": "#000000",
+        "textColor": "#ffffff",
+        "primaryColor": "#bb86fc",
+        "secondaryColor": "#03dac6",
+        "accessibilityNotes": "Ensure all elements within the high-contrast theme meet WCAG AA contrast requirements."
+      },
+      "implementationNotes": "Use CSS variables to define and manage colors. Provide a user-selectable option to switch between the default and high-contrast themes. Regularly test color combinations with a color contrast analyzer (e.g., WebAIM Color Contrast Checker)."
+    },
+    "typography": {
+      "description": "The typography is designed for readability and visual hierarchy, using a clear scale of font sizes and weights.",
+      "fontFamily": {
+        "name": "Roboto",
+        "fallbackFonts": "sans-serif",
+        "usage": "All text elements.",
+        "accessibilityNotes": "Roboto is a widely available and readable font."
+      },
+      "headings": {
+        "h1": {
+          "fontSize": "2.5rem",
+          "fontWeight": "700",
+          "lineHeight": "1.2",
+          "letterSpacing": "-0.05em",
+          "usage": "Page titles.",
+          "accessibilityNotes": "Ensure sufficient contrast with the background color."
+        },
+        "h2": {
+          "fontSize": "2rem",
+          "fontWeight": "700",
+          "lineHeight": "1.3",
+          "letterSpacing": "-0.03em",
+          "usage": "Section titles.",
+          "accessibilityNotes": "Ensure sufficient contrast with the background color."
+        },
+        "h3": {
+          "fontSize": "1.5rem",
+          "fontWeight": "600",
+          "lineHeight": "1.4",
+          "letterSpacing": "-0.02em",
+          "usage": "Subsection titles.",
+          "accessibilityNotes": "Ensure sufficient contrast with the background color."
+        },
+        "h4": {
+          "fontSize": "1.25rem",
+          "fontWeight": "600",
+          "lineHeight": "1.5",
+          "letterSpacing": "-0.01em",
+          "usage": "Minor headings.",
+          "accessibilityNotes": "Ensure sufficient contrast with the background color."
+        },
+        "h5": {
+          "fontSize": "1rem",
+          "fontWeight": "600",
+          "lineHeight": "1.6",
+          "letterSpacing": "0em",
+          "usage": "Small headings.",
+          "accessibilityNotes": "Ensure sufficient contrast with the background color."
+        },
+        "h6": {
+          "fontSize": "0.875rem",
+          "fontWeight": "600",
+          "lineHeight": "1.6",
+          "letterSpacing": "0.01em",
+          "usage": "Very small headings.",
+          "accessibilityNotes": "Ensure sufficient contrast with the background color."
+        }
+      },
+      "bodyText": {
+        "fontSize": "1rem",
+        "fontWeight": "400",
+        "lineHeight": "1.6",
+        "letterSpacing": "0.01em",
+        "usage": "Paragraphs, labels, descriptions.",
+        "accessibilityNotes": "Ensure sufficient contrast with the background color."
+      },
+      "smallText": {
+        "fontSize": "0.875rem",
+        "fontWeight": "400",
+        "lineHeight": "1.5",
+        "letterSpacing": "0.02em",
+        "usage": "Captions, footnotes.",
+        "accessibilityNotes": "Ensure sufficient contrast with the background color."
+      },
+      "implementationNotes": "Use semantic HTML elements for headings (<h1>-<h6>) and paragraphs (<p>). Ensure sufficient line height and letter spacing for readability. Avoid using fonts that are difficult to read. Provide options for users to adjust font size."
+    },
+    "taskCreationForm": {
+      "description": "The refactored task creation form simplifies the process of adding new tasks by reducing the number of required fields and using progressive disclosure for optional details.",
+      "flow": [
+        {
+          "step": 1,
+          "action": "User clicks the 'Add Task' button.",
+          "uiElement": "Button",
+          "expectedOutcome": "The simplified task creation form is displayed in a modal or inline.",
+          "accessibilityNotes": "Ensure the button has an accessible name and is focusable."
+        },
+        {
+          "step": 2,
+          "action": "User enters the task title (required).",
+          "uiElement": "Text Input",
+          "expectedOutcome": "The 'Create Task' button remains disabled until a title is entered.",
+          "accessibilityNotes": "Provide a clear and concise label associated with the input field. Use ARIA attributes to indicate required fields."
+        },
+        {
+          "step": 3,
+          "action": "User selects the due date (required).",
+          "uiElement": "Date Picker",
+          "expectedOutcome": "The 'Create Task' button remains disabled until a date is selected.",
+          "accessibilityNotes": "Ensure the date picker is accessible via keyboard and screen readers. Provide ARIA attributes to communicate the selected date."
+        },
+        {
+          "step": 4,
+          "action": "User clicks the 'Create Task' button.",
+          "uiElement": "Button",
+          "expectedOutcome": "The task is created and added to the task list. A success message is displayed.",
+          "accessibilityNotes": "Ensure the button has an accessible name and is focusable. The success message should be announced to screen readers using ARIA live regions."
+        },
+        {
+          "step": 5,
+          "action": "User clicks the 'Add Details' button (optional).",
+          "uiElement": "Button",
+          "expectedOutcome": "Additional fields for description, priority, and tags are displayed using progressive disclosure.",
+          "accessibilityNotes": "Ensure the button has an accessible name and is focusable. Use ARIA attributes to communicate the state of the collapsed/expanded section."
+        },
+        {
+          "step": 6,
+          "action": "User enters additional details (optional).",
+          "uiElement": "Text Input, Select",
+          "expectedOutcome": "The task is updated with the additional details.",
+          "accessibilityNotes": "Provide clear and concise labels for all input fields. Use ARIA attributes to indicate the purpose of each field."
+        }
+      ],
+      "uiElements": {
+        "titleInput": {
+          "type": "Text Input",
+          "label": "Task Title",
+          "placeholder": "Enter task title",
+          "required": true,
+          "accessibilityNotes": "Use the <label> element to associate the label with the input field. Provide ARIA attributes to indicate that the field is required."
+        },
+        "dueDateInput": {
+          "type": "Date Picker",
+          "label": "Due Date",
+          "placeholder": "Select due date",
+          "required": true,
+          "accessibilityNotes": "Ensure the date picker is accessible via keyboard and screen readers. Provide ARIA attributes to communicate the selected date."
+        },
+        "descriptionInput": {
+          "type": "Textarea",
+          "label": "Description",
+          "placeholder": "Enter task description",
+          "required": false,
+          "accessibilityNotes": "Use the <label> element to associate the label with the input field."
+        },
+        "prioritySelect": {
+          "type": "Select",
+          "label": "Priority",
+          "options": [
+            "High",
+            "Medium",
+            "Low"
+          ],
+          "required": false,
+          "accessibilityNotes": "Use the <label> element to associate the label with the select field. Provide ARIA attributes to indicate the available options."
+        },
+        "tagsInput": {
+          "type": "Text Input",
+          "label": "Tags",
+          "placeholder": "Enter tags (comma-separated)",
+          "required": false,
+          "accessibilityNotes": "Use the <label> element to associate the label with the input field."
+        },
+        "createTaskButton": {
+          "type": "Button",
+          "label": "Create Task",
+          "accessibilityNotes": "Ensure the button has an accessible name and is focusable."
+        },
+        "addDetailsButton": {
+          "type": "Button",
+          "label": "Add Details",
+          "accessibilityNotes": "Ensure the button has an accessible name and is focusable. Use ARIA attributes to communicate the state of the collapsed/expanded section."
+        }
+      },
+      "implementationNotes": "Use semantic HTML elements for form elements. Ensure clear and concise labels for all input fields. Implement progressive disclosure using JavaScript or CSS. Ensure keyboard navigation is intuitive and efficient. Use ARIA attributes to enhance accessibility for assistive technologies."
+    },
+    "feedbackMechanisms": {
+      "description": "Clear and immediate feedback is provided for all user actions, using visual cues, auditory cues (optional), and ARIA attributes to communicate state changes.",
+      "taskCompletion": {
+        "visualCue": "A checkmark icon appears next to the completed task.",
+        "auditoryCue": "A subtle 'ding' sound (optional and controllable by the user).",
+        "ariaAttribute": "aria-label='Task completed'",
+        "accessibilityNotes": "Ensure the visual cue has sufficient contrast. Provide alternative text for the icon. Allow users to control the volume of auditory cues."
+      },
+      "taskDeletion": {
+        "visualCue": "The task fades out before being removed from the list.",
+        "auditoryCue": "A subtle 'whoosh' sound (optional and controllable by the user).",
+        "ariaAttribute": "aria-live='polite' to announce the task deletion to screen readers.",
+        "accessibilityNotes": "Ensure the visual cue is perceivable to all users. Provide alternative text for any visual elements. Allow users to control the volume of auditory cues."
+      },
+      "formSubmissionSuccess": {
+        "visualCue": "A success message appears at the top of the form.",
+        "auditoryCue": "A positive 'chime' sound (optional and controllable by the user).",
+        "ariaAttribute": "aria-live='assertive' to announce the success message to screen readers.",
+        "accessibilityNotes": "Ensure the visual cue has sufficient contrast. Provide alternative text for any visual elements. Allow users to control the volume of auditory cues."
+      },
+      "formSubmissionError": {
+        "visualCue": "Error messages appear next to the invalid fields.",
+        "auditoryCue": "An error 'buzz' sound (optional and controllable by the user).",
+        "ariaAttribute": "aria-describedby attributes link error messages to the corresponding input fields.",
+        "accessibilityNotes": "Ensure the visual cue has sufficient contrast. Provide alternative text for any visual elements. Allow users to control the volume of auditory cues."
+      },
+      "implementationNotes": "Use ARIA live regions to announce state changes to screen readers. Provide alternative text for all visual cues. Allow users to control the volume of auditory cues. Ensure feedback is perceivable to all users, including those with visual or auditory impairments."
+    }
+  }
+}
+
+---
+
+Artifact from step_6_Kodax_result.txt:
+{
+  "refactoringSteps": [
+    {
+      "stepNumber": 1,
+      "description": "Implement the color palette changes using CSS variables as defined in Aurora's design specifications. This includes setting up the default theme and the high-contrast theme.",
+      "relatedFiles": [
+        "src/styles/global.css",
+        "src/components/**/*.css"
+      ],
+      "implementationDetails": [
+        "Define CSS variables for each color in the default theme (e.g., --primary-color: #3f51b5;).",
+        "Define CSS variables for each color in the high-contrast theme (e.g., --primary-color-hc: #bb86fc;).",
+        "Implement a mechanism (e.g., a toggle switch) to allow users to switch between themes. This can be done using JavaScript to add or remove a class on the root element (e.g., <html class='high-contrast'>).",
+        "Update all CSS rules to use the CSS variables instead of hardcoded color values.",
+        "Use a color contrast checker (e.g., WebAIM Color Contrast Checker) to verify that all color combinations meet WCAG AA standards."
+      ],
+      "accessibilityConsiderations": [
+        "Ensure the theme switch is accessible via keyboard and screen readers.",
+        "Use ARIA attributes to communicate the state of the theme switch (e.g., aria-checked='true' for the high-contrast theme).",
+        "Test the color contrast of all UI elements in both themes to ensure they meet WCAG AA standards."
+      ],
+      "testing": [
+        "Run automated accessibility tests using Axe or WAVE.",
+        "Manually verify accessibility using screen readers and keyboard navigation.",
+        "Visually inspect the UI in both themes to ensure that the colors are correct and the contrast is sufficient."
+      ]
+    },
+    {
+      "stepNumber": 2,
+      "description": "Implement the typography changes as defined in Aurora's design specifications. This includes setting the font family, font sizes, font weights, line heights, and letter spacing for all text elements.",
+      "relatedFiles": [
+        "src/styles/global.css",
+        "src/components/**/*.css",
+        "src/components/**/*.jsx"
+      ],
+      "implementationDetails": [
+        "Set the font family to Roboto (or a system font stack) in the global CSS file (e.g., body { font-family: Roboto, sans-serif; }).",
+        "Define CSS variables for each font size, font weight, line height, and letter spacing in the global CSS file (e.g., --h1-font-size: 2.5rem;).",
+        "Update all CSS rules to use the CSS variables instead of hardcoded font values.",
+        "Use semantic HTML elements for headings (<h1>-<h6>) and paragraphs (<p>).",
+        "Ensure sufficient line height and letter spacing for readability."
+      ],
+      "accessibilityConsiderations": [
+        "Ensure the font size is adjustable by the user (e.g., using browser zoom or a custom font size control).",
+        "Avoid using fonts that are difficult to read.",
+        "Test the typography with a screen reader to ensure that the text is read correctly."
+      ],
+      "testing": [
+        "Visually inspect the UI to ensure that the typography is correct and readable.",
+        "Test the typography with a screen reader to ensure that the text is read correctly.",
+        "Use a tool like Lighthouse to check the readability of the text."
+      ]
+    },
+    {
+      "stepNumber": 3,
+      "description": "Refactor the task creation form to simplify the process of adding new tasks, reduce the number of required fields, and implement progressive disclosure for optional details, following Aurora's design specifications.",
+      "relatedFiles": [
+        "src/components/TaskForm.js",
+        "src/components/TaskForm.css",
+        "src/components/TaskForm.jsx"
+      ],
+      "implementationDetails": [
+        "Remove unnecessary fields from the initial task creation form (keep only task title and due date as required fields).",
+        "Implement progressive disclosure for optional fields (description, priority, tags) using a button or a toggle switch.",
+        "Use semantic HTML elements for form elements (e.g., <label>, <input>, <textarea>, <select>).",
+        "Associate labels with input fields using the <label> element and the 'for' attribute.",
+        "Provide clear and concise labels for all input fields.",
+        "Implement keyboard navigation using appropriate tab indices.",
+        "Use ARIA attributes to indicate required fields (aria-required='true') and to communicate the state of the collapsed/expanded section (aria-expanded='true'/'false').",
+        "Implement form validation to ensure that required fields are filled out before submitting the form."
+      ],
+      "accessibilityConsiderations": [
+        "Ensure the form is accessible via keyboard and screen readers.",
+        "Provide clear and concise error messages for invalid fields.",
+        "Use ARIA attributes to communicate error messages to screen readers (aria-describedby).",
+        "Test the form with a screen reader to ensure that all elements are read correctly."
+      ],
+      "testing": [
+        "Manually test the form with a keyboard to ensure that all elements are focusable and navigable.",
+        "Test the form with a screen reader to ensure that all elements are read correctly.",
+        "Use automated accessibility testing tools to identify any accessibility issues."
+      ]
+    },
+    {
+      "stepNumber": 4,
+      "description": "Implement clear and immediate feedback for all user actions, using visual cues, auditory cues (optional), and ARIA attributes to communicate state changes, adhering to Aurora's design specifications.",
+      "relatedFiles": [
+        "src/components/**/*.js",
+        "src/components/**/*.jsx",
+        "src/components/**/*.css"
+      ],
+      "implementationDetails": [
+        "Implement visual cues for task completion (e.g., a checkmark icon), task deletion (e.g., fading out), form submission success (e.g., a success message), and form submission errors (e.g., error messages next to invalid fields).",
+        "Add optional auditory cues for task completion, task deletion, form submission success, and form submission errors (allow users to control the volume of auditory cues).",
+        "Use ARIA live regions to announce state changes to screen readers (e.g., aria-live='polite' for task deletion, aria-live='assertive' for form submission success).",
+        "Use ARIA attributes to communicate the state of UI elements (e.g., aria-label='Task completed' for completed tasks).",
+        "Provide alternative text for all visual cues."
+      ],
+      "accessibilityConsiderations": [
+        "Ensure feedback is perceivable to all users, including those with visual or auditory impairments.",
+        "Provide alternative text for all visual cues.",
+        "Allow users to control the volume of auditory cues.",
+        "Test the feedback mechanisms with a screen reader to ensure that all state changes are announced correctly."
+      ],
+      "testing": [
+        "Manually test the feedback mechanisms with a keyboard and a mouse to ensure that they are triggered correctly.",
+        "Test the feedback mechanisms with a screen reader to ensure that all state changes are announced correctly.",
+        "Use automated accessibility testing tools to identify any accessibility issues."
+      ]
+    },
+    {
+      "stepNumber": 5,
+      "description": "Address potential performance bottlenecks related to task list updates by implementing memoization techniques and optimizing rendering, as identified in the refactoring analysis.",
+      "relatedFiles": [
+        "src/components/TaskList.js",
+        "src/components/TaskList.jsx"
+      ],
+      "implementationDetails": [
+        "Implement memoization techniques (e.g., React.memo) to prevent re-renders of unchanged task items.",
+        "Optimize task list rendering using virtualization or pagination (if the task list is very long).",
+        "Ensure efficient data structures for task management (e.g., using a Map instead of an Array for quick lookups)."
+      ],
+      "performanceConsiderations": [
+        "Measure the performance of the task list updates before and after the refactoring to ensure that the changes have improved performance.",
+        "Use React DevTools to identify any performance bottlenecks."
+      ],
+      "testing": [
+        "Use React DevTools to profile the task list updates and identify any performance bottlenecks.",
+        "Manually test the task list updates with a large number of tasks to ensure that the UI remains responsive."
+      ]
+    },
+    {
+      "stepNumber": 6,
+      "description": "Address maintainability issues by enforcing a consistent coding style using a linter (ESLint) and a code formatter (Prettier) and adding JSDoc comments to all functions and components.",
+      "relatedFiles": [
+        "All files in the src directory."
+      ],
+      "implementationDetails": [
+        "Install ESLint and Prettier.",
+        "Configure ESLint and Prettier to enforce a consistent coding style.",
+        "Add JSDoc comments to all functions and components.",
+        "Create a README file with a description of the project and instructions on how to set it up and run it."
+      ],
+      "maintainabilityConsiderations": [
+        "Ensure that the coding style is consistent throughout the codebase.",
+        "Ensure that all functions and components are well-documented."
+      ],
+      "testing": [
+        "Run ESLint and Prettier to identify any coding style issues.",
+        "Manually review the codebase to ensure that all functions and components are well-documented."
+      ]
+    }
+  ]
+}
+
+---
+
+Artifact from step_7_Kodax_result.txt:
+{
+  "testingResults": {
+    "colorPalette": {
+      "accessibilityTests": {
+        "Axe": {
+          "status": "Passed",
+          "details": "No WCAG violations found in either default or high-contrast themes."
+        },
+        "WAVE": {
+          "status": "Passed",
+          "details": "No errors reported in either default or high-contrast themes. Minor alerts reviewed and addressed."
+        },
+        "manualVerification": {
+          "screenReader": {
+            "status": "Passed",
+            "details": "Color contrast information accurately conveyed by screen reader in both themes."
+          },
+          "keyboardNavigation": {
+            "status": "Passed",
+            "details": "Theme switch accessible and functional via keyboard."
+          },
+          "visualInspection": {
+            "status": "Passed",
+            "details": "Colors visually confirmed to match design specifications in both themes. Contrast ratios validated."
+          }
+        }
+      },
+      "functionalTests": {
+        "themeSwitch": {
+          "status": "Passed",
+          "details": "Theme switch toggles correctly and persists across page reloads (using localStorage)."
+        }
+      }
+    },
+    "typography": {
+      "readabilityTests": {
+        "visualInspection": {
+          "status": "Passed",
+          "details": "Font sizes, weights, line heights, and letter spacing visually confirmed to match design specifications. Text is readable and well-spaced."
+        },
+        "screenReader": {
+          "status": "Passed",
+          "details": "Text is read correctly by screen reader. Semantic HTML elements (h1-h6, p) are properly interpreted."
+        },
+        "Lighthouse": {
+          "status": "Passed",
+          "details": "Lighthouse accessibility audit shows no contrast or font-size related issues."
+        }
+      },
+      "accessibilityTests": {
+        "fontSizeAdjustment": {
+          "status": "Passed",
+          "details": "Browser zoom functionality tested and confirmed to scale text appropriately."
+        }
+      }
+    },
+    "taskCreationForm": {
+      "accessibilityTests": {
+        "keyboardNavigation": {
+          "status": "Passed",
+          "details": "All form elements are focusable and navigable via keyboard. Tab order is logical."
+        },
+        "screenReader": {
+          "status": "Passed",
+          "details": "Form elements are read correctly by screen reader. Labels are properly associated with input fields. ARIA attributes are correctly interpreted."
+        },
+        "Axe": {
+          "status": "Passed",
+          "details": "No WCAG violations found. ARIA attributes are correctly implemented."
+        }
+      },
+      "functionalTests": {
+        "requiredFields": {
+          "status": "Passed",
+          "details": "'Create Task' button is disabled until required fields (task title and due date) are filled out. Error messages are displayed for invalid fields."
+        },
+        "progressiveDisclosure": {
+          "status": "Passed",
+          "details": "Optional fields (description, priority, tags) are hidden initially and displayed when the 'Add Details' button is clicked. State is maintained correctly."
+        },
+        "formSubmission": {
+          "status": "Passed",
+          "details": "Form submission creates a new task and adds it to the task list. Success message is displayed."
+        }
+      }
+    },
+    "feedbackMechanisms": {
+      "accessibilityTests": {
+        "screenReader": {
+          "status": "Passed",
+          "details": "ARIA live regions announce state changes (task completion, task deletion, form submission success/error) to screen reader. Alternative text is provided for all visual cues."
+        },
+        "visualCues": {
+          "status": "Passed",
+          "details": "Visual cues (checkmark icon, fading out, success message, error messages) are clearly visible and have sufficient contrast."
+        },
+        "auditoryCues": {
+          "status": "Passed",
+          "details": "Auditory cues (ding, whoosh, chime, buzz) are played correctly. Volume control is functional."
+        }
+      },
+      "functionalTests": {
+        "taskCompletion": {
+          "status": "Passed",
+          "details": "Checkmark icon and optional 'ding' sound are displayed when a task is completed. aria-label is updated."
+        },
+        "taskDeletion": {
+          "status": "Passed",
+          "details": "Task fades out and is removed from the list. Optional 'whoosh' sound is played. aria-live region announces the deletion."
+        },
+        "formSubmissionSuccess": {
+          "status": "Passed",
+          "details": "Success message is displayed. Optional 'chime' sound is played. aria-live region announces the success."
+        },
+        "formSubmissionError": {
+          "status": "Passed",
+          "details": "Error messages are displayed next to invalid fields. Optional 'buzz' sound is played. aria-describedby attributes link error messages to input fields."
+        }
+      }
+    },
+    "performance": {
+      "taskListUpdates": {
+        "ReactDevTools": {
+          "status": "Passed",
+          "details": "React DevTools profiling shows reduced re-renders after implementing memoization. Virtualization/pagination not required as task list size is manageable."
+        },
+        "manualTesting": {
+          "status": "Passed",
+          "details": "UI remains responsive with a large number of tasks (100+). No noticeable performance issues."
+        }
+      }
+    },
+    "maintainability": {
+      "codeStyle": {
+        "ESLint": {
+          "status": "Passed",
+          "details": "No linting errors found. Code style is consistent throughout the codebase."
+        },
+        "Prettier": {
+          "status": "Passed",
+          "details": "Code formatting is consistent throughout the codebase."
+        }
+      },
+      "documentation": {
+        "JSDoc": {
+          "status": "Passed",
+          "details": "All functions and components are well-documented with JSDoc comments."
+        },
+        "README": {
+          "status": "Passed",
+          "details": "README file includes a description of the project and instructions on how to set it up and run it."
+        }
+      }
+    },
+    "summary": "All tests passed. The refactored code meets the defined goals for functionality, performance, and accessibility. No issues identified during testing."
+  }
+}
+
+---
+
+Artifact from step_8_Aurora_result.txt:
+{
+  "reviewFeedback": {
+    "overallAssessment": "The refactoring changes appear to align well with the design specifications and maintain visual consistency and user experience. The testing results indicate that all defined goals for functionality, performance, and accessibility have been met. However, a few minor points could be considered for further refinement.",
+    "colorPalette": {
+      "themeSwitch": "Excellent implementation of the theme switch and adherence to WCAG guidelines. Consider adding a small visual indicator alongside the toggle to explicitly communicate the theme name (e.g., 'Default Theme' or 'High Contrast Theme'). This will further enhance the user experience, especially for users with cognitive disabilities.",
+      "colorUsage": "The color palette is well-defined and the contrast ratios meet accessibility standards. Ensure the amber color is used sparingly and only with dark gray or black text as specified, especially when new features are added in the future."
+    },
+    "typography": {
+      "fontScaling": "The implementation of browser zoom for font scaling is a good practice. Consider adding a custom font size control within the app for users who may have difficulty using browser zoom or prefer a more granular level of control.",
+      "semanticHTML": "Excellent use of semantic HTML. Ensure all new components and sections of the application continue to adhere to semantic HTML practices."
+    },
+    "taskCreationForm": {
+      "progressiveDisclosure": "The progressive disclosure implementation is effective and improves the user experience. Ensure the state of the 'Add Details' button (expanded/collapsed) is visually clear and easily understandable.",
+      "errorHandling": "The error handling is well-implemented. Consider adding inline validation to provide immediate feedback as the user types, further enhancing the user experience."
+    },
+    "feedbackMechanisms": {
+      "auditoryCues": "The optional auditory cues are a nice touch. Ensure there is a clear and easily accessible setting to control the volume or disable auditory cues entirely, catering to user preferences.",
+      "ariaLiveRegions": "The use of ARIA live regions is correctly implemented. Ensure that the messages announced by screen readers are concise and informative, avoiding unnecessary verbosity."
+    },
+    "performance": {
+      "taskListOptimization": "The memoization techniques have effectively reduced re-renders. Continue to monitor performance as the application evolves and the data set grows. Consider virtualization or pagination if the task list becomes excessively long in the future.",
+      "codeMaintainability": "The consistent coding style and thorough documentation significantly improve maintainability. Encourage the team to maintain these practices as the application grows."
+    },
+    "generalSuggestions": {
+      "documentation": "The documentation is comprehensive. Consider adding a design rationale section to explain the reasoning behind key design decisions and accessibility considerations. This will be valuable for future developers and designers.",
+      "componentLibrary": "Document and maintain UI components into a component library. This will help keep a consistent look and feel as the application evolves."
+    },
+    "accessibilityCompliance": "The application demonstrates excellent accessibility compliance. Continue to prioritize accessibility in all future development efforts. Regularly conduct accessibility audits and user testing with people with disabilities to identify and address any potential issues.",
+    "nextSteps": "The refactoring process has been successful. The next steps should focus on monitoring user feedback, addressing any minor issues identified during testing, and planning for future enhancements based on user needs and business requirements."
+  }
+}
+
+
+
+Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project.
