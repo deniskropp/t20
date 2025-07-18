@@ -1,0 +1,100 @@
+[
+  {
+    "id": "f7a8b9c0-d1e2-43f4-a567-890123456789",
+    "name": "Evaluate Refactoring Impact",
+    "description": "Assess the effectiveness of the refactoring changes by comparing the system's state against predefined success metrics. This involves measuring improvements in areas such as performance, maintainability, and code quality. The evaluation should identify whether the refactoring objectives have been met and whether any unintended side effects have been introduced. This includes gathering quantitative data (e.g., performance benchmarks, code complexity metrics) and qualitative feedback (e.g., developer satisfaction, user experience reports).",
+    "category": "Assessment",
+    "purpose": "To determine the success of refactoring efforts based on predefined metrics.",
+    "keywords": [
+      "evaluation",
+      "metrics",
+      "performance",
+      "maintainability",
+      "code quality",
+      "measurement"
+    ],
+    "applicability_notes": "This step is applicable after any refactoring activity. The specific metrics used will vary depending on the goals of the refactoring project. It's important to establish baseline measurements before refactoring to accurately assess the impact of the changes.",
+    "examples_of_usage": [
+      "Measuring the reduction in code complexity after applying design patterns.",
+      "Assessing the improvement in application response time after optimizing database queries.",
+      "Evaluating the decrease in bug reports after refactoring error-prone code."
+    ],
+    "typical_inputs": [
+      "Refactored system",
+      "Success metrics",
+      "Baseline measurements",
+      "Test results"
+    ],
+    "typical_outputs": [
+      "Evaluation report",
+      "Performance data",
+      "Code quality metrics",
+      "List of remaining issues"
+    ]
+  },
+  {
+    "id": "0b9a8c7d-e3f4-4506-b789-0123456789ab",
+    "name": "Identify Improvement Areas",
+    "description": "Analyze the evaluation results to pinpoint specific areas where the refactoring changes have not fully met the defined objectives or where new issues have emerged. This involves a detailed review of the metrics, test results, and feedback to understand the root causes of any shortcomings. The identification process should be thorough and objective, focusing on actionable insights that can guide further refinement of the refactoring efforts.",
+    "category": "Problem Framing",
+    "purpose": "To pinpoint areas where refactoring changes have not met objectives or introduced new issues.",
+    "keywords": [
+      "analysis",
+      "identification",
+      "root cause",
+      "issues",
+      "shortcomings"
+    ],
+    "applicability_notes": "This step is crucial when the initial evaluation reveals that the refactoring goals have not been fully achieved or when unexpected side effects are observed. It requires a deep understanding of the system and the refactoring techniques applied.",
+    "examples_of_usage": [
+      "Identifying specific code modules that still exhibit high complexity after refactoring.",
+      "Pinpointing database queries that remain slow despite optimization efforts.",
+      "Analyzing bug reports to determine the root cause of newly introduced issues."
+    ],
+    "typical_inputs": [
+      "Evaluation report",
+      "Performance data",
+      "Code quality metrics",
+      "User feedback",
+      "Test results"
+    ],
+    "typical_outputs": [
+      "List of improvement areas",
+      "Root cause analysis",
+      "Actionable recommendations"
+    ]
+  },
+  {
+    "id": "1c2b3a49-f567-4788-b901-23456789abcd",
+    "name": "Iterate on Refactoring",
+    "description": "Based on the identified improvement areas, refine the refactoring design and implementation. This involves revisiting the original objectives, adjusting the refactoring techniques, and making further code changes to address the remaining issues. The iterative process should be data-driven, with each iteration guided by the evaluation results and focused on achieving measurable improvements. This may involve more granular changes, trying alternative solutions, or even reverting some previous changes if necessary. Continuous testing and validation are essential throughout this iterative process.",
+    "category": "Execution",
+    "purpose": "To refine refactoring design and implementation based on evaluation results.",
+    "keywords": [
+      "iteration",
+      "refinement",
+      "adjustment",
+      "improvement",
+      "continuous testing"
+    ],
+    "applicability_notes": "This step is a core part of an iterative refactoring process. It acknowledges that refactoring is not always a one-time activity and that continuous improvement is often necessary to achieve the desired outcomes. The number of iterations required will depend on the complexity of the system and the initial refactoring design.",
+    "examples_of_usage": [
+      "Applying different design patterns to reduce code complexity in identified modules.",
+      "Optimizing database queries using alternative indexing strategies.",
+      "Implementing additional error handling to address newly introduced bugs."
+    ],
+    "typical_inputs": [
+      "List of improvement areas",
+      "Root cause analysis",
+      "Actionable recommendations",
+      "Evaluation report",
+      "Refactored system"
+    ],
+    "typical_outputs": [
+      "Refined refactoring design",
+      "Updated code",
+      "Improved system",
+      "Test results"
+    ]
+  }
+]
