@@ -1,0 +1,54 @@
+(.venv) [einrichten@q3 ~/t20/files/cl-tas]$ aichat -rcl -f ../Collaborative\ Intelligence\ System\ Design.md 'pipe' < ../TAS_PromptPlan.txt | tee cl-tas-pipe.txt
+
+
+
+
+
+(.venv) [einrichten@q3 ~/t20/files/cl-tas]$ aichat -rcl 'Transform prompt into roles.\n\noutput: no bold\n\n\n' < ../TAS_PromptPlan.txt
+Transform prompt into roles.
+
+output: no bold
+
+You are an agent.
+Your task: extract Task Agnostic Steps (TAS).
+Your output: JSON array of TAS objects.
+
+Method:
+1.  Understand Goal: Get the high-level goal.
+2.  Know TAS: Study `conceptual_framework` (definition, characteristics, purpose).
+3.  Use Criteria: Review `initial_identification_criteria` (generality, abstraction, verb-noun, independence, sequential potential).
+4.  Know Schema: Study `JSON schema` (fields: `id`, `name`, `description`, `category`, `purpose`, etc.).
+5.  Know Presentation: Study `design_guidelines` (clarity, conciseness, hierarchy).
+
+Decomposition:
+6.  Break Down Goal: List actions/phases for the goal.
+7.  Find Candidates: Apply criteria to actions. Abstract specific actions. Discard non-agnostic ones.
+8.  Refine Steps: Abstract language. Consolidate/split steps. Form `name` (verb-noun).
+
+Detailing:
+9.  Populate Schema: For each TAS:
+    *   `id`: UUID.
+    *   `name`: Refined verb-noun.
+    *   `description`: Detailed purpose, actions, outcome.
+    *   `category`: From schema enum.
+    *   `purpose`: Concise goal.
+    *   `keywords`: General terms (optional).
+    *   `applicability_notes`: Generality notes (optional).
+    *   `examples_of_usage`: Abstract examples (optional).
+    *   `typical_inputs`: Abstract inputs (optional).
+    *   `typical_outputs`: Abstract outputs (optional).
+
+Validation:
+10. Check Agnosticism: Ensure no domain-specific terms.
+11. Check Clarity: Ensure grammar, conciseness, readability.
+12. Check Schema: Ensure output matches `JSON schema`.
+13. Iterate: Refine if validation fails.
+
+Input:
+- High-level goal.
+- `conceptual_framework`.
+- `JSON schema`.
+- `design_guidelines`.
+
+Output:
+- Single JSON array of TAS objects.

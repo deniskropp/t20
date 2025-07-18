@@ -1,0 +1,116 @@
+```json
+[
+  {
+    "id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+    "name": "Define Problem",
+    "description": "Clearly articulate the core issue or objective that needs to be addressed. This involves understanding the scope, identifying key stakeholders, and establishing the desired outcome or success criteria. It sets the foundation for all subsequent actions by ensuring a shared understanding of what needs to be achieved.",
+    "category": "Problem Framing",
+    "purpose": "Establish a clear understanding of the issue or objective.",
+    "keywords": ["clarify", "scope", "objective", "goal setting", "understanding"],
+    "applicability_notes": "This step is foundational and applicable to virtually any task or project, from simple personal goals to complex organizational initiatives. The depth of definition will vary based on complexity.",
+    "examples_of_usage": [
+      "In software development: Clearly defining the user story and acceptance criteria for a new feature.",
+      "In personal life: Identifying the specific reason for wanting to learn a new skill and the desired proficiency level.",
+      "In business: Articulating the business need and desired ROI for a new product launch."
+    ],
+    "typical_inputs": ["initial request", "stakeholder input", "existing context"],
+    "typical_outputs": ["problem statement", "defined scope", "success criteria"]
+  },
+  {
+    "id": "b2c3d4e5-f6a7-8901-2345-67890abcdef1",
+    "name": "Gather Information",
+    "description": "Collect relevant data, facts, and insights pertaining to the defined problem or objective. This may involve research, interviews, observation, or accessing existing knowledge bases. The goal is to build a comprehensive understanding of the situation.",
+    "category": "Information Gathering",
+    "purpose": "Collect relevant data and insights.",
+    "keywords": ["research", "data collection", "discovery", "investigation", "learning"],
+    "applicability_notes": "Essential for informed decision-making. The methods used will differ greatly depending on the domain, but the act of gathering information is universal.",
+    "examples_of_usage": [
+      "For a research paper: Collecting academic sources and empirical data.",
+      "For a business decision: Gathering market research, competitor analysis, and internal performance metrics.",
+      "For a personal project: Researching best practices, tutorials, and required materials."
+    ],
+    "typical_inputs": ["defined problem", "research questions", "data sources"],
+    "typical_outputs": ["raw data", "research findings", "information repository"]
+  },
+  {
+    "id": "c3d4e5f6-a7b8-9012-3456-7890abcdef12",
+    "name": "Analyze Information",
+    "description": "Process and interpret the gathered information to identify patterns, trends, relationships, and potential solutions. This step involves critical thinking and applying analytical techniques to derive meaningful insights from the data.",
+    "category": "Analysis",
+    "purpose": "Interpret data to derive insights.",
+    "keywords": ["interpret", "patterns", "trends", "insights", "evaluation"],
+    "applicability_notes": "This step transforms raw data into actionable knowledge. Techniques can range from simple observation to complex statistical modeling, but the core action is making sense of information.",
+    "examples_of_usage": [
+      "Analyzing customer feedback to identify common pain points.",
+      "Interpreting financial reports to assess business performance.",
+      "Examining experimental results to draw conclusions."
+    ],
+    "typical_inputs": ["gathered information", "analytical frameworks", "contextual knowledge"],
+    "typical_outputs": ["synthesized insights", "identified patterns", "conclusions"]
+  },
+  {
+    "id": "d4e5f6a7-b8c9-0123-4567-890abcdef123",
+    "name": "Develop Solutions",
+    "description": "Generate potential courses of action or strategies to address the defined problem based on the analysis. This phase often involves brainstorming, creative thinking, and formulating multiple options.",
+    "category": "Solution Development",
+    "purpose": "Generate potential courses of action.",
+    "keywords": ["brainstorm", "create", "options", "strategies", "design"],
+    "applicability_notes": "This is where creative problem-solving occurs. The output is a set of potential ways forward, which will be evaluated in subsequent steps.",
+    "examples_of_usage": [
+      "Designing different architectural approaches for a software system.",
+      "Proposing various marketing campaigns to reach a target audience.",
+      "Developing different treatment plans for a medical condition."
+    ],
+    "typical_inputs": ["analyzed information", "problem definition", "constraints"],
+    "typical_outputs": ["potential solutions", "alternative strategies", "design concepts"]
+  },
+  {
+    "id": "e5f6a7b8-c9d0-1234-5678-90abcdef1234",
+    "name": "Evaluate Options",
+    "description": "Assess the feasibility, effectiveness, and potential impact of each developed solution. This involves comparing alternatives against predefined criteria, considering risks, benefits, and resource requirements.",
+    "category": "Decision Making",
+    "purpose": "Assess and compare potential solutions.",
+    "keywords": ["compare", "assess", "feasibility", "risk", "benefit", "selection"],
+    "applicability_notes": "Crucial for making informed choices. The evaluation criteria and methods will vary, but the process of weighing pros and cons is universal.",
+    "examples_of_usage": [
+      "Comparing different software vendors based on features, cost, and support.",
+      "Evaluating the potential return on investment for various business initiatives.",
+      "Assessing the pros and cons of different travel destinations."
+    ],
+    "typical_inputs": ["developed solutions", "evaluation criteria", "constraints", "risk assessment"],
+    "typical_outputs": ["prioritized options", "recommendations", "feasibility analysis"]
+  },
+  {
+    "id": "f6a7b8c9-d0e1-2345-6789-0abcdef12345",
+    "name": "Implement Solution",
+    "description": "Put the selected solution into action. This involves planning the execution, allocating resources, performing the necessary tasks, and managing the process to ensure the solution is deployed effectively.",
+    "category": "Execution",
+    "purpose": "Put the selected solution into action.",
+    "keywords": ["execute", "deploy", "action", "build", "perform", "manage"],
+    "applicability_notes": "The 'doing' phase. This step translates a chosen plan into reality. The specific actions are highly domain-dependent, but the principle of execution is constant.",
+    "examples_of_usage": [
+      "Writing and deploying code for a new software feature.",
+      "Launching a marketing campaign according to the plan.",
+      "Constructing a building based on architectural blueprints."
+    ],
+    "typical_inputs": ["selected solution", "implementation plan", "resources", "personnel"],
+    "typical_outputs": ["deployed solution", "completed tasks", "operational system"]
+  },
+  {
+    "id": "a7b8c9d0-e1f2-3456-7890-abcdef123456",
+    "name": "Monitor and Review",
+    "description": "Track the performance and outcomes of the implemented solution. This involves collecting feedback, measuring results against the defined success criteria, and identifying any necessary adjustments or improvements.",
+    "category": "Monitoring & Evaluation",
+    "purpose": "Track performance and outcomes.",
+    "keywords": ["track", "measure", "feedback", "adjust", "improve", "evaluate"],
+    "applicability_notes": "Ensures the solution is effective and allows for continuous improvement. This feedback loop is critical for long-term success.",
+    "examples_of_usage": [
+      "Monitoring website traffic and user engagement after a redesign.",
+      "Reviewing sales figures and customer satisfaction post-product launch.",
+      "Assessing the effectiveness of a training program through participant feedback and performance metrics."
+    ],
+    "typical_inputs": ["implemented solution", "performance metrics", "feedback", "success criteria"],
+    "typical_outputs": ["performance data", "evaluation report", "improvement recommendations"]
+  }
+]
+```

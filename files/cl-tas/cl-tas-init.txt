@@ -1,0 +1,148 @@
+```json
+[
+  {
+    "id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+    "name": "Define Objective",
+    "description": "Clearly articulate the primary goal or desired outcome. This involves understanding the core purpose, scope, and success criteria of the endeavor. It sets the direction for subsequent actions.",
+    "category": "Problem Framing",
+    "purpose": "Establish a clear, actionable goal.",
+    "keywords": ["goal setting", "objective definition", "scoping", "purpose"],
+    "applicability_notes": "Fundamental to any project or task. The clarity of the objective directly impacts the effectiveness of all subsequent steps.",
+    "examples_of_usage": [
+      "Define the objective of improving customer satisfaction.",
+      "Define the objective of reducing operational costs.",
+      "Define the objective of developing a new product feature."
+    ],
+    "typical_inputs": ["initial request", "business need", "problem statement"],
+    "typical_outputs": ["clear objective statement", "defined scope", "success metrics"]
+  },
+  {
+    "id": "b2c3d4e5-f6a7-8901-2345-67890abcdef1",
+    "name": "Gather Information",
+    "description": "Collect relevant data, facts, and context pertaining to the defined objective. This may involve research, querying sources, or consulting stakeholders to build a comprehensive understanding of the situation.",
+    "category": "Information Gathering",
+    "purpose": "Acquire necessary data and context.",
+    "keywords": ["research", "data collection", "discovery", "information retrieval"],
+    "applicability_notes": "Applies when understanding a situation or problem requires external data or knowledge. The method of gathering can vary widely.",
+    "examples_of_usage": [
+      "Gather information on market trends for a new product.",
+      "Gather information on existing system performance.",
+      "Gather information on user feedback for a service."
+    ],
+    "typical_inputs": ["defined objective", "initial questions", "data sources"],
+    "typical_outputs": ["collected data", "relevant facts", "contextual information"]
+  },
+  {
+    "id": "c3d4e5f6-a7b8-9012-3456-7890abcdef12",
+    "name": "Analyze Information",
+    "description": "Process and interpret the gathered information to identify patterns, trends, relationships, and insights. This step transforms raw data into meaningful knowledge.",
+    "category": "Analysis",
+    "purpose": "Derive insights from collected data.",
+    "keywords": ["data analysis", "interpretation", "pattern recognition", "insight generation"],
+    "applicability_notes": "Crucial for making informed decisions. The complexity of analysis depends on the data and the objective.",
+    "examples_of_usage": [
+      "Analyze sales data to identify top-performing products.",
+      "Analyze user behavior data to understand engagement patterns.",
+      "Analyze competitor strategies to identify market positioning."
+    ],
+    "typical_inputs": ["collected data", "contextual information", "analytical tools"],
+    "typical_outputs": ["identified patterns", "key insights", "data summaries"]
+  },
+  {
+    "id": "d4e5f6a7-b8c9-0123-4567-890abcdef123",
+    "name": "Develop Solution",
+    "description": "Create potential approaches, strategies, or designs to address the objective based on the analysis. This involves generating ideas and formulating concrete plans.",
+    "category": "Solution Development",
+    "purpose": "Formulate potential solutions or approaches.",
+    "keywords": ["design", "planning", "strategy formulation", "idea generation"],
+    "applicability_notes": "The core creative and planning step. The output can range from a simple plan to a complex design.",
+    "examples_of_usage": [
+      "Develop a marketing strategy to reach a new audience.",
+      "Develop a technical design for a software component.",
+      "Develop a process improvement plan for an operation."
+    ],
+    "typical_inputs": ["analyzed information", "defined objective", "constraints"],
+    "typical_outputs": ["proposed solutions", "design documents", "action plans"]
+  },
+  {
+    "id": "e5f6a7b8-c9d0-1234-5678-90abcdef1234",
+    "name": "Evaluate Options",
+    "description": "Assess the feasibility, effectiveness, and potential impact of the developed solutions or options against the defined objective and criteria. This involves comparing alternatives.",
+    "category": "Decision Making",
+    "purpose": "Compare and assess potential solutions.",
+    "keywords": ["evaluation", "comparison", "assessment", "feasibility analysis"],
+    "applicability_notes": "Essential for selecting the best course of action from multiple possibilities.",
+    "examples_of_usage": [
+      "Evaluate different software vendors based on requirements.",
+      "Evaluate various project management methodologies for suitability.",
+      "Evaluate potential investment opportunities based on risk and return."
+    ],
+    "typical_inputs": ["proposed solutions", "evaluation criteria", "analysis results"],
+    "typical_outputs": ["prioritized options", "recommendations", "risk assessments"]
+  },
+  {
+    "id": "f6a7b8c9-d0e1-2345-6789-0abcdef12345",
+    "name": "Implement Solution",
+    "description": "Execute the chosen solution or plan. This involves carrying out the necessary actions, deploying resources, and managing the process to bring the solution to fruition.",
+    "category": "Execution",
+    "purpose": "Put the chosen solution into action.",
+    "keywords": ["execution", "implementation", "deployment", "action", "carrying out"],
+    "applicability_notes": "The action phase where plans are realized. Requires careful management and monitoring.",
+    "examples_of_usage": [
+      "Implement the new marketing campaign.",
+      "Implement the approved software update.",
+      "Implement the revised operational procedure."
+    ],
+    "typical_inputs": ["selected solution", "implementation plan", "resources"],
+    "typical_outputs": ["executed actions", "deployed system", "completed task"]
+  },
+  {
+    "id": "a7b8c9d0-e1f2-3456-7890-abcdef123456",
+    "name": "Monitor Progress",
+    "description": "Track the execution of the implemented solution against the defined objective and success criteria. This involves observing performance, identifying deviations, and gathering feedback.",
+    "category": "Monitoring & Control",
+    "purpose": "Track progress and performance.",
+    "keywords": ["tracking", "monitoring", "performance measurement", "feedback collection"],
+    "applicability_notes": "Ensures the solution stays on track and allows for timely adjustments.",
+    "examples_of_usage": [
+      "Monitor the performance of a deployed application.",
+      "Monitor customer feedback during a service rollout.",
+      "Monitor project milestones and timelines."
+    ],
+    "typical_inputs": ["implemented solution", "defined metrics", "progress reports"],
+    "typical_outputs": ["performance data", "progress updates", "identified issues"]
+  },
+  {
+    "id": "b8c9d0e1-f2a3-4567-8901-bcdef1234567",
+    "name": "Evaluate Outcome",
+    "description": "Assess the final results of the implemented solution against the initial objective and success criteria. This determines the overall effectiveness and impact.",
+    "category": "Evaluation",
+    "purpose": "Assess the final results against the objective.",
+    "keywords": ["assessment", "review", "performance evaluation", "impact analysis"],
+    "applicability_notes": "Determines the success of the endeavor and provides lessons learned.",
+    "examples_of_usage": [
+      "Evaluate the success of a product launch.",
+      "Evaluate the impact of a process change on efficiency.",
+      "Evaluate the overall customer satisfaction after an intervention."
+    ],
+    "typical_inputs": ["monitored data", "defined success criteria", "implemented solution"],
+    "typical_outputs": ["outcome assessment", "performance report", "lessons learned"]
+  },
+  {
+    "id": "c9d0e1f2-a3b4-5678-9012-cdef12345678",
+    "name": "Refine Process",
+    "description": "Incorporate learnings from the evaluation into future processes or the ongoing operation. This step focuses on continuous improvement and adaptation.",
+    "category": "Improvement",
+    "purpose": "Incorporate learnings for continuous improvement.",
+    "keywords": ["refinement", "optimization", "improvement", "adaptation", "learning"],
+    "applicability_notes": "Closes the loop and ensures that knowledge gained is applied to enhance future performance.",
+    "examples_of_usage": [
+      "Refine the onboarding process based on new hire feedback.",
+      "Refine the data analysis techniques based on past project outcomes.",
+      "Refine the project management approach based on lessons learned."
+    ],
+    "typical_inputs": ["outcome evaluation", "lessons learned", "performance data"],
+    "typical_outputs": ["updated processes", "improved methodologies", "actionable recommendations"]
+  }
+]
+```

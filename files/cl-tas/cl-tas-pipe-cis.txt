@@ -1,0 +1,357 @@
+```json
+[
+  {
+    "id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+    "name": "Define Goal",
+    "description": "Articulate the specific, high-level objective for decomposition. Ensure the goal is clear, actionable, and provides sufficient scope for multiple sub-actions, while avoiding excessive vagueness or domain-specific jargon.",
+    "category": "Problem Framing",
+    "purpose": "Establish a clear, high-level objective for system design.",
+    "keywords": [
+      "goal setting",
+      "objective definition",
+      "task initiation",
+      "scope definition"
+    ],
+    "applicability_notes": "This is the foundational step for any decomposition process. It applies universally across all domains where a complex task needs to be broken down.",
+    "examples_of_usage": [
+      "Define the goal: 'Design a collaborative intelligence system.'",
+      "Define the goal: 'Develop a new mobile application feature.'",
+      "Define the goal: 'Optimize a supply chain process.'"
+    ],
+    "typical_inputs": [
+      "A broad business requirement",
+      "A user request",
+      "A strategic initiative"
+    ],
+    "typical_outputs": [
+      "A clearly articulated high-level goal statement"
+    ]
+  },
+  {
+    "id": "b2c3d4e5-f6a7-8901-2345-67890abcdef1",
+    "name": "Internalize Principles",
+    "description": "Thoroughly review and understand the core principles, characteristics, and purpose of Task Agnostic Steps (TAS). This includes grasping their generality, reusability, abstraction, action-oriented nature, independence, and sequential potential.",
+    "category": "Knowledge Acquisition",
+    "purpose": "Understand the fundamental nature and requirements of Task Agnostic Steps.",
+    "keywords": [
+      "principles",
+      "framework",
+      "understanding",
+      "guidelines",
+      "characteristics"
+    ],
+    "applicability_notes": "Essential for anyone tasked with creating or utilizing Task Agnostic Steps. Ensures a consistent understanding of what constitutes a valid TAS.",
+    "examples_of_usage": [
+      "Internalize the principles of reusable task components.",
+      "Understand the characteristics of abstract, action-oriented steps.",
+      "Review the definition and purpose of Task Agnostic Steps."
+    ],
+    "typical_inputs": [
+      "Conceptual framework documentation",
+      "Definition of Task Agnostic Steps"
+    ],
+    "typical_outputs": [
+      "Deep understanding of TAS principles",
+      "Mental model for TAS identification"
+    ]
+  },
+  {
+    "id": "c3d4e5f6-a7b8-9012-3456-7890abcdef12",
+    "name": "Review Identification Criteria",
+    "description": "Familiarize with the specific criteria used to identify potential Task Agnostic Steps. This involves understanding questions related to domain independence, abstraction level, conciseness, and action-orientation.",
+    "category": "Knowledge Acquisition",
+    "purpose": "Learn the specific rules for evaluating candidate steps.",
+    "keywords": [
+      "criteria",
+      "identification",
+      "validation",
+      "filtering",
+      "evaluation"
+    ],
+    "applicability_notes": "Crucial for the filtering and selection process of candidate steps. Ensures that only genuinely agnostic steps are considered.",
+    "examples_of_usage": [
+      "Review the criteria for domain-agnostic actions.",
+      "Understand the questions for abstracting specific outcomes.",
+      "Familiarize with the verb-noun phrase requirement."
+    ],
+    "typical_inputs": [
+      "List of identification criteria",
+      "Examples of valid/invalid steps"
+    ],
+    "typical_outputs": [
+      "Clear understanding of TAS validation rules",
+      "Checklist for candidate evaluation"
+    ]
+  },
+  {
+    "id": "d4e5f6a7-b8c9-0123-4567-890abcdef123",
+    "name": "Understand Data Structure",
+    "description": "Review the target JSON schema for Task Agnostic Step objects. Note all required fields, their data types, and any constraints (e.g., enum values, minimum length).",
+    "category": "Knowledge Acquisition",
+    "purpose": "Learn the required format for outputting Task Agnostic Steps.",
+    "keywords": [
+      "schema",
+      "data structure",
+      "JSON",
+      "format",
+      "requirements"
+    ],
+    "applicability_notes": "Ensures the final output conforms to the expected structure, facilitating integration and processing.",
+    "examples_of_usage": [
+      "Understand the JSON schema for a Task Agnostic Step object.",
+      "Note the required fields: id, name, description, category, purpose.",
+      "Review the enum options for the 'category' field."
+    ],
+    "typical_inputs": [
+      "JSON schema definition",
+      "Data structure documentation"
+    ],
+    "typical_outputs": [
+      "Understanding of the output format",
+      "Knowledge of required fields and constraints"
+    ]
+  },
+  {
+    "id": "e5f6a7b8-c9d0-1234-5678-90abcdef1234",
+    "name": "Grasp Presentation Guidelines",
+    "description": "Review guidelines for content quality, focusing on clarity, conciseness, visual hierarchy, and the effective presentation of fields like name, purpose, description, keywords, inputs, and outputs.",
+    "category": "Knowledge Acquisition",
+    "purpose": "Understand how to present TAS content effectively.",
+    "keywords": [
+      "presentation",
+      "guidelines",
+      "quality",
+      "clarity",
+      "conciseness"
+    ],
+    "applicability_notes": "While not directly extraction, these guidelines ensure the generated TAS are usable and understandable in a UI context.",
+    "examples_of_usage": [
+      "Review guidelines for writing concise, action-oriented names.",
+      "Understand how to structure descriptions for clarity.",
+      "Learn best practices for presenting examples and inputs/outputs."
+    ],
+    "typical_inputs": [
+      "Design guidelines document",
+      "UI/UX best practices"
+    ],
+    "typical_outputs": [
+      "Understanding of content quality standards",
+      "Guidelines for writing descriptive text"
+    ]
+  },
+  {
+    "id": "f6a7b8c9-d0e1-2345-6789-0abcdef12345",
+    "name": "Decompose High-Level Goal",
+    "description": "Break down the provided high-level goal into a series of logical, sequential actions or phases. This initial breakdown should capture all apparent steps without initial concern for agnosticism.",
+    "category": "Decomposition",
+    "purpose": "Create an initial, granular breakdown of the main objective.",
+    "keywords": [
+      "decomposition",
+      "breakdown",
+      "sequencing",
+      "phases",
+      "brainstorming"
+    ],
+    "applicability_notes": "The first step in translating a broad goal into manageable components. Applicable to any complex task.",
+    "examples_of_usage": [
+      "Decompose 'Design a UI' into: Define requirements, Create mockups, Develop code, Test functionality.",
+      "Break down 'Optimize process' into: Analyze current state, Identify bottlenecks, Propose solutions, Implement changes, Monitor results."
+    ],
+    "typical_inputs": [
+      "A clearly defined high-level goal"
+    ],
+    "typical_outputs": [
+      "A list of sequential or logical sub-actions",
+      "An initial process flow"
+    ]
+  },
+  {
+    "id": "a7b8c9d0-e1f2-3456-7890-abcdef123456",
+    "name": "Identify Candidate Steps",
+    "description": "Evaluate each action from the initial decomposition against the Task Agnostic Step identification criteria. Mark steps that meet the criteria as strong candidates, abstracting domain-specific actions into general ones.",
+    "category": "Candidate Identification",
+    "purpose": "Select potential Task Agnostic Steps from the initial breakdown.",
+    "keywords": [
+      "candidate identification",
+      "evaluation",
+      "filtering",
+      "abstraction",
+      "selection"
+    ],
+    "applicability_notes": "Applies the defined criteria to filter and refine the initial decomposition, identifying steps suitable for abstraction.",
+    "examples_of_usage": [
+      "Evaluate 'Write Python code' -> Abstract to 'Develop Solution'.",
+      "Evaluate 'Analyze user feedback' -> Keep as 'Analyze Data'.",
+      "Identify steps that are domain-specific and discard them."
+    ],
+    "typical_inputs": [
+      "Decomposed list of actions",
+      "TAS identification criteria"
+    ],
+    "typical_outputs": [
+      "A preliminary list of potential TAS names (verb-noun phrases)"
+    ]
+  },
+  {
+    "id": "b8c9d0e1-f2a3-4567-8901-bcdef1234567",
+    "name": "Refine and Abstract Steps",
+    "description": "Review the candidate steps, rephrasing any remaining domain-specific language into general terms. Consolidate similar steps or split overly broad ones. Ensure each step's name is a concise, action-oriented verb-noun phrase.",
+    "category": "Refinement",
+    "purpose": "Ensure candidate steps are truly agnostic, concise, and well-named.",
+    "keywords": [
+      "refinement",
+      "abstraction",
+      "consolidation",
+      "splitting",
+      "naming"
+    ],
+    "applicability_notes": "Crucial for ensuring the generality and reusability of the identified steps.",
+    "examples_of_usage": [
+      "Rephrase 'Get requirements from client' to 'Gather Information'.",
+      "Consolidate 'Check data validity' and 'Validate data integrity' into 'Validate Data'.",
+      "Split 'Design and implement UI' into 'Design Interface' and 'Implement Solution'."
+    ],
+    "typical_inputs": [
+      "Preliminary list of candidate TAS names",
+      "TAS principles and criteria"
+    ],
+    "typical_outputs": [
+      "A refined list of abstract, well-named TAS candidates"
+    ]
+  },
+  {
+    "id": "c9d0e1f2-a3b4-5678-9012-cdef12345678",
+    "name": "Populate TAS Data Structure",
+    "description": "For each refined TAS candidate, create a JSON object conforming to the schema. Populate fields like id (UUID), name, description, category (from enum), purpose, and optionally keywords, applicability notes, examples, inputs, and outputs.",
+    "category": "Structuring",
+    "purpose": "Format each identified TAS according to the required JSON schema.",
+    "keywords": [
+      "populate",
+      "structure",
+      "JSON",
+      "schema",
+      "data entry"
+    ],
+    "applicability_notes": "The core step for generating the final output in the specified format.",
+    "examples_of_usage": [
+      "Generate a UUID for the 'id' field.",
+      "Write a detailed description for the 'description' field.",
+      "Select the most appropriate 'category' from the provided enum list."
+    ],
+    "typical_inputs": [
+      "Refined TAS candidates",
+      "JSON schema",
+      "Presentation guidelines"
+    ],
+    "typical_outputs": [
+      "A JSON object for each Task Agnostic Step"
+    ]
+  },
+  {
+    "id": "d0e1f2a3-b4c5-6789-0123-def123456789",
+    "name": "Validate Agnosticism",
+    "description": "Re-examine the name, description, purpose, examples, inputs, and outputs of each generated TAS to ensure they remain free of domain-specific jargon, proper nouns, or overly specific outcomes. Refine as needed.",
+    "category": "Validation",
+    "purpose": "Confirm that each TAS is truly general and reusable.",
+    "keywords": [
+      "validate",
+      "agnosticism",
+      "generality",
+      "reusability",
+      "refinement"
+    ],
+    "applicability_notes": "A critical quality check to ensure the core principle of agnosticism is maintained.",
+    "examples_of_usage": [
+      "Check if 'Analyze user feedback' contains any specific platform names.",
+      "Ensure 'Develop Solution' doesn't imply a specific technology.",
+      "Refine descriptions to focus on the 'how' rather than the 'what'."
+    ],
+    "typical_inputs": [
+      "Populated TAS JSON objects"
+    ],
+    "typical_outputs": [
+      "Validated TAS objects with confirmed agnosticism"
+    ]
+  },
+  {
+    "id": "e1f2a3b4-c5d6-7890-1234-ef1234567890",
+    "name": "Ensure Clarity and Conciseness",
+    "description": "Review all textual content within the TAS objects for clarity, grammar, and conciseness, adhering to presentation guidelines. Ensure names are action-oriented and descriptions are informative yet brief.",
+    "category": "Validation",
+    "purpose": "Ensure the quality and readability of TAS content.",
+    "keywords": [
+      "clarity",
+      "conciseness",
+      "readability",
+      "grammar",
+      "quality check"
+    ],
+    "applicability_notes": "Ensures the generated TAS are easily understood and effective in communication.",
+    "examples_of_usage": [
+      "Proofread descriptions for grammatical errors.",
+      "Shorten verbose sentences.",
+      "Verify that names are clear verb-noun phrases."
+    ],
+    "typical_inputs": [
+      "Validated TAS objects"
+    ],
+    "typical_outputs": [
+      "High-quality, clear, and concise TAS content"
+    ]
+  },
+  {
+    "id": "f2a3b4c5-d6e7-8901-2345-f1234567890a",
+    "name": "Verify Schema Conformance",
+    "description": "Ensure the final JSON output for each Task Agnostic Step strictly adheres to the provided JSON schema, checking for required fields, correct data types, enum values, and constraints.",
+    "category": "Validation",
+    "purpose": "Guarantee the output meets the structural requirements.",
+    "keywords": [
+      "verify",
+      "schema conformance",
+      "validation",
+      "JSON",
+      "compliance"
+    ],
+    "applicability_notes": "Final technical check to ensure the output is machine-readable and correctly formatted.",
+    "examples_of_usage": [
+      "Check if all required fields are present.",
+      "Confirm that 'category' uses an allowed enum value.",
+      "Validate that 'id' is a correctly formatted UUID."
+    ],
+    "typical_inputs": [
+      "Finalized TAS JSON objects",
+      "JSON schema definition"
+    ],
+    "typical_outputs": [
+      "Fully schema-compliant JSON output"
+    ]
+  },
+  {
+    "id": "a3b4c5d6-e7f8-9012-3456-1234567890ab",
+    "name": "Iterate and Refine",
+    "description": "If any validation checks fail, return to the relevant previous steps to refine the content. Repeat the decomposition, detailing, and validation phases until all criteria are met and a robust set of Task Agnostic Steps is produced.",
+    "category": "Iteration",
+    "purpose": "Continuously improve the quality and accuracy of the TAS.",
+    "keywords": [
+      "iterate",
+      "refine",
+      "improve",
+      "validation loop",
+      "quality assurance"
+    ],
+    "applicability_notes": "Acknowledges the iterative nature of the decomposition process.",
+    "examples_of_usage": [
+      "If a step is found to be not agnostic, return to 'Refine and Abstract Steps'.",
+      "If schema validation fails, return to 'Populate TAS Data Structure'.",
+      "Repeat validation checks after making corrections."
+    ],
+    "typical_inputs": [
+      "Feedback from validation steps",
+      "Failed validation reports"
+    ],
+    "typical_outputs": [
+      "A final, validated set of Task Agnostic Steps"
+    ]
+  }
+]
+```

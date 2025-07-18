@@ -1,0 +1,211 @@
+```json
+[
+  {
+    "id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+    "name": "Define Objective",
+    "description": "Clearly articulate the specific, high-level goal or desired outcome. This involves understanding the core purpose and scope of the task to be undertaken, ensuring it is specific enough to guide subsequent actions but broad enough to allow for decomposition.",
+    "category": "Problem Framing",
+    "purpose": "Establish a clear and actionable target for the process.",
+    "keywords": ["goal setting", "objective definition", "scoping", "clarification"],
+    "applicability_notes": "This is a foundational step applicable to virtually any project, task, or initiative, from personal goals to complex organizational strategies. It sets the direction for all subsequent activities.",
+    "examples_of_usage": [
+      "Define the objective: 'Improve customer satisfaction by 15% in the next quarter.'",
+      "Define the objective: 'Develop a new user authentication system.'",
+      "Define the objective: 'Reduce operational costs by 10% within the fiscal year.'"
+    ],
+    "typical_inputs": ["initial request", "broad idea", "problem statement"],
+    "typical_outputs": ["clear objective statement", "defined scope", "success criteria"]
+  },
+  {
+    "id": "b2c3d4e5-f6a7-8901-2345-67890abcdef1",
+    "name": "Decompose Task",
+    "description": "Break down the defined objective into smaller, manageable sub-tasks or phases. This involves identifying the logical sequence of actions required to achieve the overall goal, ensuring each sub-task is distinct and contributes to the final outcome.",
+    "category": "Planning",
+    "purpose": "Create a structured plan by dividing a large goal into actionable components.",
+    "keywords": ["task breakdown", "work breakdown structure", "sequencing", "sub-task identification"],
+    "applicability_notes": "Essential for managing complexity in any endeavor. It allows for better estimation, resource allocation, and progress tracking. Applicable to project management, software development, research, and creative processes.",
+    "examples_of_usage": [
+      "Decompose the objective 'Launch a new marketing campaign' into: 'Market Research', 'Content Creation', 'Channel Selection', 'Execution', 'Performance Analysis'.",
+      "Decompose the objective 'Build a prototype' into: 'Requirements Gathering', 'Design Mockups', 'Backend Development', 'Frontend Development', 'Integration Testing'.",
+      "Decompose the objective 'Write a research paper' into: 'Literature Review', 'Methodology Design', 'Data Collection', 'Data Analysis', 'Drafting', 'Editing'."
+    ],
+    "typical_inputs": ["defined objective", "project scope"],
+    "typical_outputs": ["list of sub-tasks", "task dependencies", "project phases"]
+  },
+  {
+    "id": "c3d4e5f6-a7b8-9012-3456-7890abcdef12",
+    "name": "Identify Actionable Steps",
+    "description": "For each decomposed sub-task, identify the specific, concrete actions that need to be performed. These steps should be granular enough to be executable and verifiable, focusing on the 'what' needs to be done at a fundamental level.",
+    "category": "Planning",
+    "purpose": "Define the specific actions required to complete each sub-task.",
+    "keywords": ["action planning", "task detailing", "step identification", "execution steps"],
+    "applicability_notes": "This step translates the decomposed sub-tasks into a practical to-do list. It's crucial for ensuring clarity on execution and is relevant across all domains where tasks are performed.",
+    "examples_of_usage": [
+      "For 'Content Creation' sub-task: 'Write blog post draft', 'Design infographic', 'Record video script'.",
+      "For 'Backend Development' sub-task: 'Implement user authentication API', 'Set up database schema', 'Develop data validation logic'.",
+      "For 'Data Collection' sub-task: 'Design survey questionnaire', 'Distribute survey', 'Collect responses'."
+    ],
+    "typical_inputs": ["decomposed sub-tasks", "project plan"],
+    "typical_outputs": ["list of specific actions", "task instructions"]
+  },
+  {
+    "id": "d4e5f6a7-b8c9-0123-4567-890abcdef123",
+    "name": "Abstract Action",
+    "description": "Rephrase identified specific actions into general, domain-agnostic terms. This involves removing specific jargon, tools, or contexts to represent the core action in a universally understandable way, focusing on the 'how' rather than the 'what' in a specific context.",
+    "category": "Abstraction",
+    "purpose": "Generalize specific actions to create reusable, task-agnostic components.",
+    "keywords": ["abstraction", "generalization", "rephrasing", "agnosticism"],
+    "applicability_notes": "This is the core step for creating Task Agnostic Steps. It ensures that identified actions can be applied across different domains and tasks, promoting reusability and a common language for processes.",
+    "examples_of_usage": [
+      "Abstract 'Write blog post draft' to 'Create Content'.",
+      "Abstract 'Implement user authentication API' to 'Develop Service Endpoint'.",
+      "Abstract 'Design survey questionnaire' to 'Formulate Inquiry Instrument'."
+    ],
+    "typical_inputs": ["specific action description", "domain context"],
+    "typical_outputs": ["abstract action name", "generalized description"]
+  },
+  {
+    "id": "e5f6a7b8-c9d0-1234-5678-90abcdef1234",
+    "name": "Define Step Purpose",
+    "description": "Articulate the concise, primary goal or intent of the abstract action. This summary should clearly communicate what the step aims to achieve in a general sense, serving as a high-level descriptor.",
+    "category": "Documentation",
+    "purpose": "Summarize the core objective of an abstract action.",
+    "keywords": ["purpose statement", "goal summary", "intent definition", "concise description"],
+    "applicability_notes": "Helps users quickly understand the value and function of each abstract step without needing to read a full description. Crucial for UI presentation and quick comprehension.",
+    "examples_of_usage": [
+      "Purpose for 'Create Content': 'To generate informational or engaging material.'",
+      "Purpose for 'Develop Service Endpoint': 'To establish a communication interface for data exchange.'",
+      "Purpose for 'Formulate Inquiry Instrument': 'To design a structured method for gathering information.'"
+    ],
+    "typical_inputs": ["abstract action name", "detailed description"],
+    "typical_outputs": ["concise purpose statement"]
+  },
+  {
+    "id": "f6a7b8c9-d0e1-2345-6789-0abcdef12345",
+    "name": "Detail Step Description",
+    "description": "Provide a comprehensive explanation of the abstract action. This includes elaborating on the core purpose, outlining typical activities involved, and specifying the intended outcomes, all while maintaining generality and avoiding domain-specific details.",
+    "category": "Documentation",
+    "purpose": "Provide a thorough understanding of the abstract action's function and execution.",
+    "keywords": ["detailed explanation", "step elaboration", "process description", "contextualization"],
+    "applicability_notes": "Ensures that the abstract step is well-understood and can be applied correctly across various contexts. Adheres to presentation guidelines for clarity and detail.",
+    "examples_of_usage": [
+      "Description for 'Create Content': 'Involves generating text, visual, or auditory material based on defined requirements. Activities may include drafting, editing, designing, and formatting to produce a final piece of information.',",
+      "Description for 'Develop Service Endpoint': 'Focuses on designing, implementing, and testing an interface that allows different software components or systems to communicate and exchange data. This includes defining request/response formats and handling data processing.',",
+      "Description for 'Formulate Inquiry Instrument': 'Concerns the design and construction of tools or methods for collecting specific data. This may involve creating questions, defining response options, and structuring the instrument for clarity and effectiveness.'"
+    ],
+    "typical_inputs": ["abstract action name", "step purpose", "keywords"],
+    "typical_outputs": ["detailed step description", "explanation of activities"]
+  },
+  {
+    "id": "01234567-89ab-cdef-0123-456789abcdef",
+    "name": "Assign Category",
+    "description": "Classify the abstract action into one of the predefined categories (e.g., 'Problem Framing', 'Analysis', 'Planning', 'Execution', 'Evaluation'). This categorization aids in organizing and understanding the role of the step within broader methodologies.",
+    "category": "Organization",
+    "purpose": "Categorize abstract actions for better organization and understanding.",
+    "keywords": ["classification", "categorization", "grouping", "taxonomy"],
+    "applicability_notes": "Helps in grouping similar types of actions, facilitating the creation of structured frameworks and methodologies. Ensures consistency in how steps are classified.",
+    "examples_of_usage": [
+      "Assign 'Define Objective' to 'Problem Framing'.",
+      "Assign 'Analyze Data' to 'Analysis'.",
+      "Assign 'Implement Solution' to 'Execution'."
+    ],
+    "typical_inputs": ["abstract action", "category list"],
+    "typical_outputs": ["assigned category"]
+  },
+  {
+    "id": "12345678-9abc-def0-1234-567890abcdef",
+    "name": "Add Keywords",
+    "description": "Identify and list relevant, general keywords associated with the abstract action. These keywords should reflect the core concepts and potential applications of the step, aiding in searchability and discoverability.",
+    "category": "Documentation",
+    "purpose": "Enhance discoverability and context through relevant keywords.",
+    "keywords": ["tagging", "indexing", "search terms", "metadata"],
+    "applicability_notes": "Improves the ability to find and relate similar abstract steps. Keywords should be general and descriptive of the action's nature.",
+    "examples_of_usage": [
+      "Keywords for 'Gather Information': ['research', 'data collection', 'discovery', 'input']",
+      "Keywords for 'Evaluate Options': ['decision making', 'comparison', 'assessment', 'selection']",
+      "Keywords for 'Communicate Findings': ['reporting', 'presentation', 'dissemination', 'sharing']"
+    ],
+    "typical_inputs": ["abstract action", "description"],
+    "typical_outputs": ["list of keywords"]
+  },
+  {
+    "id": "23456789-abcd-ef01-2345-67890abcdef1",
+    "name": "Provide Usage Examples",
+    "description": "Illustrate the application of the abstract action with 2-3 concrete, yet general, examples. These examples should demonstrate how the step functions in different, non-domain-specific scenarios to clarify its practical use.",
+    "category": "Documentation",
+    "purpose": "Demonstrate the practical application of the abstract action.",
+    "keywords": ["examples", "use cases", "illustration", "demonstration"],
+    "applicability_notes": "Helps users understand how to apply the abstract step in real-world situations by providing relatable scenarios. Examples should be diverse but maintain generality.",
+    "examples_of_usage": [
+      "Examples for 'Analyze Data': 'Reviewing sales figures to identify trends.', 'Examining user feedback to pinpoint common issues.', 'Interpreting experimental results to draw conclusions.'",
+      "Examples for 'Design Solution': 'Creating a blueprint for a physical product.', 'Outlining the architecture for a software system.', 'Developing a strategy for a business process.'"
+    ],
+    "typical_inputs": ["abstract action", "description", "purpose"],
+    "typical_outputs": ["list of usage examples"]
+  },
+  {
+    "id": "3456789a-bcde-f012-3456-7890abcdef12",
+    "name": "Specify Typical Inputs",
+    "description": "Describe the general types of information, data, or pre-conditions that are typically required or provided to initiate and perform the abstract action effectively.",
+    "category": "Documentation",
+    "purpose": "Define the prerequisites for executing the abstract action.",
+    "keywords": ["inputs", "prerequisites", "data requirements", "pre-conditions"],
+    "applicability_notes": "Clarifies what is needed before starting a step, aiding in preparation and ensuring the step can be executed successfully. Inputs should be described abstractly.",
+    "examples_of_usage": [
+      "Typical Inputs for 'Analyze Data': ['raw data', 'data schema', 'analytical model']",
+      "Typical Inputs for 'Design Solution': ['problem statement', 'requirements', 'constraints']",
+      "Typical Inputs for 'Gather Information': ['research question', 'information sources', 'search parameters']"
+    ],
+    "typical_inputs": ["abstract action", "context"],
+    "typical_outputs": ["list of typical inputs"]
+  },
+  {
+    "id": "456789ab-cdef-0123-4567-890abcdef123",
+    "name": "Specify Typical Outputs",
+    "description": "Describe the general types of information, data, or outcomes that are typically produced or generated upon the successful completion of the abstract action.",
+    "category": "Documentation",
+    "purpose": "Define the results or deliverables of the abstract action.",
+    "keywords": ["outputs", "results", "deliverables", "outcomes"],
+    "applicability_notes": "Clarifies what is expected to be produced by a step, aiding in verification and the flow of information to subsequent steps. Outputs should be described abstractly.",
+    "examples_of_usage": [
+      "Typical Outputs for 'Analyze Data': ['insights', 'trends', 'patterns', 'summary statistics']",
+      "Typical Outputs for 'Design Solution': ['design specification', 'prototype', 'blueprint', 'solution architecture']",
+      "Typical Outputs for 'Gather Information': ['collected data', 'research findings', 'relevant documents', 'knowledge base']"
+    ],
+    "typical_inputs": ["abstract action", "context"],
+    "typical_outputs": ["list of typical outputs"]
+  },
+  {
+    "id": "56789abc-def0-1234-5678-90abcdef1234",
+    "name": "Validate Agnosticism",
+    "description": "Review the abstract action's name, description, purpose, examples, inputs, and outputs to ensure they are free from domain-specific terminology, proper nouns, or highly specific details. Verify that the step represents a fundamental, reusable action.",
+    "category": "Validation",
+    "purpose": "Ensure the action is general and applicable across diverse contexts.",
+    "keywords": ["agnosticism check", "generality validation", "domain-free review", "reusability check"],
+    "applicability_notes": "This is a critical quality control step to confirm that the identified action truly meets the criteria of a Task Agnostic Step. It ensures the core value proposition of abstraction is maintained.",
+    "examples_of_usage": [
+      "Checking if 'Write Python code for data cleaning' was correctly abstracted to 'Process Data'.",
+      "Ensuring 'Schedule meeting via Outlook' is generalized to 'Arrange Communication'.",
+      "Verifying that 'Analyze customer feedback from Zendesk' is captured as 'Synthesize User Input'."
+    ],
+    "typical_inputs": ["drafted abstract step", "conceptual framework"],
+    "typical_outputs": ["validated abstract step", "identified areas for refinement"]
+  },
+  {
+    "id": "6789abcd-ef01-2345-6789-0abcdef12345",
+    "name": "Format as JSON",
+    "description": "Structure the validated Task Agnostic Step information into a JSON object that strictly conforms to the provided schema, including all required fields and adhering to data type specifications.",
+    "category": "Formatting",
+    "purpose": "Structure the abstract step data into the required JSON format.",
+    "keywords": ["json output", "data structuring", "schema compliance", "serialization"],
+    "applicability_notes": "Ensures the final output is machine-readable and consistent, meeting the technical requirements for integration or storage. This is the final step in preparing an individual TAS.",
+    "examples_of_usage": [
+      "Creating a JSON object for 'Define Objective' with fields: id, name, description, category, purpose, keywords, etc.",
+      "Ensuring the 'id' field is a valid UUID.",
+      "Confirming the 'category' field uses one of the allowed enum values."
+    ],
+    "typical_inputs": ["validated abstract step data", "JSON schema"],
+    "typical_outputs": ["JSON object for a Task Agnostic Step"]
+  }
+]
+```

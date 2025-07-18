@@ -1,0 +1,196 @@
+```json
+[
+  {
+    "id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+    "name": "Define Objective",
+    "description": "Clearly articulate the primary goal or desired outcome. This involves understanding the 'what' and 'why' of the task at hand, establishing clear boundaries and success criteria.",
+    "category": "Problem Framing",
+    "purpose": "Establish a clear understanding of the goal.",
+    "keywords": ["goal setting", "objective definition", "clarification", "scope"],
+    "applicability_notes": "This is a foundational step applicable to any task, project, or initiative, regardless of domain. It sets the direction for all subsequent actions.",
+    "examples_of_usage": [
+      "For a software project: 'Develop a user authentication module.'",
+      "For a marketing campaign: 'Increase brand awareness by 15% in the next quarter.'",
+      "For personal development: 'Improve public speaking skills.'"
+    ],
+    "typical_inputs": ["initial request", "broad idea", "problem statement"],
+    "typical_outputs": ["clear objective statement", "defined scope", "success metrics"]
+  },
+  {
+    "id": "b2c3d4e5-f6a7-8901-2345-67890abcdef0",
+    "name": "Gather Information",
+    "description": "Collect relevant data, facts, and context pertaining to the defined objective. This may involve research, querying sources, or consulting stakeholders.",
+    "category": "Information Gathering",
+    "purpose": "Acquire necessary data and context.",
+    "keywords": ["research", "data collection", "information retrieval", "discovery"],
+    "applicability_notes": "Essential for understanding the landscape, identifying constraints, and informing subsequent decisions. The sources and methods will vary greatly by task.",
+    "examples_of_usage": [
+      "For a research paper: 'Find academic articles on climate change impacts.'",
+      "For a business decision: 'Research competitor pricing strategies.'",
+      "For a technical problem: 'Review system logs for error patterns.'"
+    ],
+    "typical_inputs": ["defined objective", "initial questions", "data sources"],
+    "typical_outputs": ["raw data", "relevant facts", "contextual information", "research findings"]
+  },
+  {
+    "id": "c3d4e5f6-a7b8-9012-3456-7890abcdef01",
+    "name": "Analyze Information",
+    "description": "Process and interpret the gathered information to identify patterns, trends, relationships, and insights. This step transforms raw data into actionable knowledge.",
+    "category": "Analysis",
+    "purpose": "Derive insights from collected data.",
+    "keywords": ["data analysis", "interpretation", "pattern recognition", "insight generation"],
+    "applicability_notes": "Crucial for making informed decisions. The complexity of analysis depends on the data and the objective. Techniques can range from simple observation to complex statistical modeling.",
+    "examples_of_usage": [
+      "For a sales report: 'Identify top-selling products and regions.'",
+      "For a user feedback review: 'Categorize common user complaints.'",
+      "For a scientific experiment: 'Calculate statistical significance of results.'"
+    ],
+    "typical_inputs": ["raw data", "gathered information", "contextual knowledge"],
+    "typical_outputs": ["identified patterns", "key insights", "trends", "summarized findings"]
+  },
+  {
+    "id": "d4e5f6a7-b8c9-0123-4567-890abcdef012",
+    "name": "Develop Options",
+    "description": "Generate potential solutions, approaches, or courses of action based on the analysis. This phase encourages creative thinking and exploration of alternatives.",
+    "category": "Solution Development",
+    "purpose": "Create potential solutions or approaches.",
+    "keywords": ["brainstorming", "solution generation", "alternatives", "ideation"],
+    "applicability_notes": "Fosters innovation and ensures a range of possibilities are considered before committing to a single path. Applicable in problem-solving, planning, and design contexts.",
+    "examples_of_usage": [
+      "For a project management issue: 'Propose three different project scheduling methods.'",
+      "For a design challenge: 'Sketch multiple interface layouts.'",
+      "For a strategic decision: 'Outline various market entry strategies.'"
+    ],
+    "typical_inputs": ["analyzed information", "identified problems", "defined objective"],
+    "typical_outputs": ["list of potential solutions", "alternative approaches", "proposed strategies"]
+  },
+  {
+    "id": "e5f6a7b8-c9d0-1234-5678-90abcdef0123",
+    "name": "Evaluate Options",
+    "description": "Assess the viability, feasibility, and potential impact of each developed option against predefined criteria or the primary objective. This involves weighing pros and cons.",
+    "category": "Decision Making",
+    "purpose": "Assess and compare potential solutions.",
+    "keywords": ["evaluation", "comparison", "risk assessment", "feasibility analysis"],
+    "applicability_notes": "A critical step to select the most suitable option. Criteria for evaluation must be aligned with the initial objective.",
+    "examples_of_usage": [
+      "For choosing software: 'Compare features, cost, and support for different vendors.'",
+      "For resource allocation: 'Assess the return on investment for various projects.'",
+      "For process improvement: 'Evaluate the efficiency gains of different workflow changes.'"
+    ],
+    "typical_inputs": ["developed options", "evaluation criteria", "objective statement"],
+    "typical_outputs": ["ranked options", "pros and cons analysis", "risk assessment", "recommendations"]
+  },
+  {
+    "id": "f6a7b8c9-d0e1-2345-6789-0abcdef01234",
+    "name": "Select Solution",
+    "description": "Choose the best option from the evaluated alternatives based on the assessment. This is the decision point that directs subsequent action.",
+    "category": "Decision Making",
+    "purpose": "Choose the best course of action.",
+    "keywords": ["selection", "decision", "choice", "commitment"],
+    "applicability_notes": "The culmination of the analysis and evaluation phases. The chosen solution should directly address the objective.",
+    "examples_of_usage": [
+      "For a hiring process: 'Select the most qualified candidate.'",
+      "For a technical implementation: 'Choose the optimal algorithm.'",
+      "For a strategic plan: 'Approve the chosen market entry strategy.'"
+    ],
+    "typical_inputs": ["evaluated options", "recommendations", "decision criteria"],
+    "typical_outputs": ["selected solution", "approved plan", "final decision"]
+  },
+  {
+    "id": "a7b8c9d0-e1f2-3456-7890-abcdef012345",
+    "name": "Plan Execution",
+    "description": "Develop a detailed plan for implementing the selected solution. This includes defining tasks, timelines, resources, and responsibilities.",
+    "category": "Planning",
+    "purpose": "Outline steps for implementation.",
+    "keywords": ["planning", "scheduling", "resource allocation", "task breakdown"],
+    "applicability_notes": "Translates the chosen solution into a concrete, actionable roadmap. Essential for managing complex tasks and projects.",
+    "examples_of_usage": [
+      "For building a house: 'Create a construction schedule and list required materials.'",
+      "For launching a product: 'Develop a go-to-market plan with marketing and sales activities.'",
+      "For a research study: 'Outline the methodology, data collection phases, and analysis steps.'"
+    ],
+    "typical_inputs": ["selected solution", "objective", "resource availability"],
+    "typical_outputs": ["project plan", "task list", "schedule", "resource requirements"]
+  },
+  {
+    "id": "b8c9d0e1-f2a3-4567-8901-bcdef0123456",
+    "name": "Execute Plan",
+    "description": "Carry out the actions defined in the execution plan. This is the 'doing' phase where the solution is put into practice.",
+    "category": "Execution",
+    "purpose": "Implement the planned actions.",
+    "keywords": ["implementation", "action", "task completion", "operation"],
+    "applicability_notes": "The core phase where work is performed. Requires monitoring and adaptation as needed.",
+    "examples_of_usage": [
+      "For software development: 'Write code, test modules, and integrate components.'",
+      "For a marketing campaign: 'Launch advertisements, publish content, and engage with the audience.'",
+      "For a construction project: 'Pour foundations, erect structures, and install utilities.'"
+    ],
+    "typical_inputs": ["execution plan", "resources", "assigned tasks"],
+    "typical_outputs": ["completed tasks", "intermediate results", "progress updates", "work products"]
+  },
+  {
+    "id": "c9d0e1f2-a3b4-5678-9012-cdef01234567",
+    "name": "Monitor Progress",
+    "description": "Track the execution of the plan, measure performance against objectives, and identify any deviations or issues.",
+    "category": "Monitoring & Control",
+    "purpose": "Track progress and identify deviations.",
+    "keywords": ["monitoring", "tracking", "performance measurement", "status reporting"],
+    "applicability_notes": "Ensures the project stays on track and allows for timely intervention if problems arise. Continuous monitoring is key.",
+    "examples_of_usage": [
+      "For project management: 'Track task completion rates and budget adherence.'",
+      "For sales performance: 'Monitor sales figures against targets.'",
+      "For system operations: 'Observe system health metrics and error logs.'"
+    ],
+    "typical_inputs": ["execution plan", "completed tasks", "performance metrics", "status reports"],
+    "typical_outputs": ["progress reports", "performance data", "identified issues", "deviation alerts"]
+  },
+  {
+    "id": "d0e1f2a3-b4c5-6789-0123-def012345678",
+    "name": "Adjust Plan",
+    "description": "Modify the execution plan based on monitoring feedback, changing circumstances, or identified issues to ensure the objective is still met.",
+    "category": "Adaptation",
+    "purpose": "Modify the plan based on feedback.",
+    "keywords": ["adjustment", "adaptation", "re-planning", "corrective action"],
+    "applicability_notes": "Allows for flexibility and responsiveness in dynamic environments. Essential for navigating unforeseen challenges.",
+    "examples_of_usage": [
+      "For a delayed project: 'Revise the schedule and reallocate resources.'",
+      "For unexpected market changes: 'Adjust marketing messaging or product features.'",
+      "For technical difficulties: 'Implement alternative solutions or workarounds.'"
+    ],
+    "typical_inputs": ["progress reports", "identified issues", "performance data", "original plan"],
+    "typical_outputs": ["revised plan", "updated schedule", "corrective actions", "mitigation strategies"]
+  },
+  {
+    "id": "e1f2a3b4-c5d6-7890-1234-ef0123456789",
+    "name": "Validate Outcome",
+    "description": "Assess the final result or output against the initial objective and success criteria to confirm it meets the required standards.",
+    "category": "Validation",
+    "purpose": "Confirm the outcome meets objectives.",
+    "keywords": ["validation", "verification", "quality assurance", "testing", "review"],
+    "applicability_notes": "Ensures the delivered solution is effective and meets the intended purpose. Can involve formal testing or informal review.",
+    "examples_of_usage": [
+      "For software: 'Perform user acceptance testing (UAT) and bug fixing.'",
+      "For a report: 'Review findings for accuracy and completeness.'",
+      "For a product launch: 'Confirm all launch criteria have been met.'"
+    ],
+    "typical_inputs": ["final output", "objective statement", "success criteria", "performance data"],
+    "typical_outputs": ["validation report", "confirmation of success", "list of discrepancies", "acceptance/rejection"]
+  },
+  {
+    "id": "f2a3b4c5-d6e7-8901-2345-f01234567890",
+    "name": "Document Results",
+    "description": "Record the outcomes, processes, lessons learned, and final state of the task or project for future reference and knowledge sharing.",
+    "category": "Documentation",
+    "purpose": "Record outcomes and lessons learned.",
+    "keywords": ["documentation", "reporting", "knowledge management", "lessons learned"],
+    "applicability_notes": "Crucial for organizational learning, continuous improvement, and future project planning. Captures what worked and what didn't.",
+    "examples_of_usage": [
+      "For a completed project: 'Create a project closure report summarizing achievements and challenges.'",
+      "For a process change: 'Update standard operating procedures (SOPs).'",
+      "For a research finding: 'Publish results in a journal or internal report.'"
+    ],
+    "typical_inputs": ["validated outcome", "execution records", "performance data", "stakeholder feedback"],
+    "typical_outputs": ["final report", "documentation updates", "lessons learned log", "knowledge base entries"]
+  }
+]
+```
