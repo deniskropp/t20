@@ -1,0 +1,134 @@
+The overall goal is: 'Extract task agnostic steps'
+
+Your role's specific goal is: 'Generate aesthetic layouts, color palettes, typography, and UI flows, ensuring accessibility and visual balance.'
+Your specific sub-task is: 'Develop guidelines for the clear and intuitive presentation of the extracted task agnostic steps, focusing on readability, logical flow, and visual organization (even in a text-based format) to ensure they are easily comprehensible by human users.'
+
+Please use the following outputs from the other agents as your input:
+
+Artifact from step_0_Lyra_result.txt:
+{
+  "conceptual_framework": {
+    "name": "Task Agnostic Steps",
+    "definition": "Abstract, generalizable actions or decision points that are applicable across diverse tasks and domains, focusing on the 'how' of a process rather than the 'what' of a specific task.",
+    "characteristics": [
+      "Generality: Applicable across a wide range of tasks/domains.",
+      "Reusability: Can be reused in different contexts without significant modification.",
+      "Abstraction: Describes a higher-level action or pattern, devoid of specific implementation details or domain jargon.",
+      "Action-Oriented: Represents a distinct, logical action or decision point.",
+      "Independence: Not tied to the specific content, subject matter, or outcome of a particular task.",
+      "Sequential Potential: Often forms part of a logical flow or process, contributing to a broader workflow."
+    ],
+    "purpose": [
+      "To create reusable process templates and blueprints.",
+      "To facilitate automation by identifying common, repeatable process patterns.",
+      "To simplify complex workflows by abstracting and standardizing common elements.",
+      "To improve efficiency, consistency, and predictability across different tasks and projects.",
+      "To provide a foundational, universal vocabulary for process description and communication.",
+      "To enable cross-domain knowledge transfer and problem-solving methodologies."
+    ],
+    "initial_identification_criteria": [
+      "Does it describe an action that could be performed in multiple, seemingly unrelated tasks or industries?",
+      "Is it free from domain-specific terminology, proper nouns, or highly specific details?",
+      "Does it focus on the 'method' or 'approach' rather than the 'specific outcome' or 'subject matter'?",
+      "Can it be expressed as a clear, concise verb-noun phrase (e.g., 'Gather Information', 'Analyze Data', 'Evaluate Options')?",
+      "Does it represent a logical, self-contained unit of work or decision within a broader process?",
+      "Could it be a step in a general problem-solving, project management, or design methodology?"
+    ]
+  }
+}
+
+---
+
+Artifact from step_1_Kodax_result.txt:
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Task Agnostic Steps Collection",
+  "description": "A standardized, modular data structure for representing a collection of task agnostic steps, designed for machine-readability and easy integration.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "id",
+      "name",
+      "description",
+      "category",
+      "purpose"
+    ],
+    "properties": {
+      "id": {
+        "type": "string",
+        "description": "A unique identifier for the task agnostic step. UUID (e.g., 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx') is recommended for global uniqueness.",
+        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      },
+      "name": {
+        "type": "string",
+        "description": "The concise, action-oriented name of the task agnostic step (e.g., 'Gather Information', 'Analyze Data', 'Evaluate Options'). This should be a verb-noun phrase.",
+        "minLength": 3,
+        "maxLength": 100
+      },
+      "description": {
+        "type": "string",
+        "description": "A detailed explanation of the step's core purpose, typical actions involved, and what it aims to achieve. It should focus on the 'how' rather than the 'what' of a specific task.",
+        "minLength": 10
+      },
+      "category": {
+        "type": "string",
+        "description": "A broad classification or type for the step, grouping similar abstract actions (e.g., 'Information Gathering', 'Analysis', 'Decision Making').",
+        "enum": [
+          "Problem Framing",
+          "Information Gathering",
+          "Analysis",
+          "Solution Generation",
+          "Decision Making",
+          "Execution",
+          "Evaluation & Feedback",
+          "Refinement",
+          "Communication",
+          "Planning"
+        ]
+      },
+      "keywords": {
+        "type": "array",
+        "description": "An array of keywords or tags that help categorize, search for, and cross-reference the step (e.g., ['research', 'data collection', 'discovery']).",
+        "items": {
+          "type": "string"
+        },
+        "uniqueItems": true
+      },
+      "purpose": {
+        "type": "string",
+        "description": "The primary goal or objective that this specific task agnostic step aims to fulfill within a broader process. This is a more concise version of the description's intent.",
+        "minLength": 10
+      },
+      "applicability_notes": {
+        "type": "string",
+        "description": "Notes on the generality and applicability of the step across different domains or contexts, highlighting any common patterns, variations, or caveats without being domain-specific."
+      },
+      "examples_of_usage": {
+        "type": "array",
+        "description": "Abstract examples illustrating how this step might manifest or be applied in different, non-domain-specific scenarios to demonstrate its versatility.",
+        "items": {
+          "type": "string"
+        }
+      },
+      "typical_inputs": {
+        "type": "array",
+        "description": "Abstract descriptions of what kind of information, state, or pre-conditions are typically required or useful to begin this step. (e.g., ['unstructured data', 'defined problem statement']).",
+        "items": {
+          "type": "string"
+        }
+      },
+      "typical_outputs": {
+        "type": "array",
+        "description": "Abstract descriptions of what kind of information, state, or post-conditions are typically produced or achieved upon completing this step. (e.g., ['synthesized insights', 'prioritized options']).",
+        "items": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
+
+
+
+Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project.

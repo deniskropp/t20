@@ -1,0 +1,6 @@
+The overall goal is: 'System Overview'
+
+Your role's specific goal is: 'Identify and extract 'Task Agnostic Steps' (TAS) from high-level goals.'
+Your specific sub-task is: 'Analyze the high-level goal 'System Overview' to identify Task Agnostic Steps (TAS) required for its completion. TAS are steps that are generally applicable to any project.'
+
+Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project.

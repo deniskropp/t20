@@ -1,0 +1,260 @@
+(.venv) [einrichten@q3 ~/t20]$ aichat -mgemini:gemini-2.5-pro -f TAS_PromptPlan.txt
+```json
+[
+  {
+    "id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+    "name": "Gather Information",
+    "description": "This step involves the systematic collection of data and information from various sources relevant to a particular goal or problem. The focus is on discovery and research, without immediate analysis. Activities can include conducting surveys, interviews, literature reviews, or accessing databases to build a foundational set of raw data.",
+    "category": "Discovery & Research",
+    "purpose": "To acquire raw data and qualitative or quantitative information necessary for understanding a situation, problem, or environment.",
+    "keywords": [
+      "research",
+      "data collection",
+      "discovery",
+      "investigation",
+      "fact-finding"
+    ],
+    "applicability_notes": "This is often the first step in any project or problem-solving process. The methods of gathering information can vary dramatically (e.g., scientific observation vs. market surveys), but the core principle of collecting raw inputs remains constant.",
+    "examples_of_usage": [
+      "Conducting market research to understand customer needs before designing a product.",
+      "Collecting experimental data to test a scientific hypothesis.",
+      "Compiling legal precedents for a court case."
+    ],
+    "typical_inputs": [
+      "List of questions or hypotheses",
+      "Defined research scope",
+      "Identified sources of information"
+    ],
+    "typical_outputs": [
+      "Raw data sets",
+      "Interview transcripts",
+      "Collection of documents",
+      "Unstructured information"
+    ]
+  },
+  {
+    "id": "b2c3d4e5-f6a1-b789-c123-d4567890ef1a",
+    "name": "Define Scope",
+    "description": "This step focuses on clearly articulating the boundaries, objectives, deliverables, and constraints of a project or initiative. It involves establishing what is included and, just as importantly, what is excluded. The goal is to create a shared understanding among all stakeholders to prevent ambiguity and uncontrolled expansion of work later on.",
+    "category": "Problem Framing",
+    "purpose": "To establish clear and agreed-upon boundaries, goals, and constraints for a project or initiative.",
+    "keywords": [
+      "scoping",
+      "requirements",
+      "boundaries",
+      "objectives",
+      "constraints"
+    ],
+    "applicability_notes": "Defining scope is critical in project management, product development, and even personal goal setting. A poorly defined scope is a primary cause of project failure. This step often follows initial research and precedes detailed planning.",
+    "examples_of_usage": [
+      "Outlining the features for the first version of a new software application.",
+      "Specifying the chapters to be included in a research paper.",
+      "Defining the deliverables and timeline for a construction project."
+    ],
+    "typical_inputs": [
+      "Initial project idea",
+      "Stakeholder requirements",
+      "Preliminary research findings",
+      "Identified constraints (time, budget)"
+    ],
+    "typical_outputs": [
+      "Scope statement",
+      "List of objectives",
+      "List of deliverables",
+      "Defined exclusions"
+    ]
+  },
+  {
+    "id": "c3d4e5f6-a1b2-c789-d123-e4567890fa1b",
+    "name": "Develop Strategy",
+    "description": "This is a high-level thinking step that involves formulating a long-term or overarching approach to achieve a major goal. It answers the question 'How will we succeed?' by considering the available information, the defined scope, and the external environment. It focuses on the big picture, key priorities, and competitive advantages, rather than detailed, tactical planning.",
+    "category": "Planning & Strategy",
+    "purpose": "To create a high-level, guiding approach for achieving a primary objective, considering all internal and external factors.",
+    "keywords": [
+      "strategy",
+      "approach",
+      "positioning",
+      "long-term planning",
+      "vision"
+    ],
+    "applicability_notes": "Strategy development is distinct from planning. Strategy is about choosing the right direction and making high-level choices, while planning (Formulate Plan) is about defining the specific steps to move in that direction. This step is fundamental for business, military, and marketing contexts.",
+    "examples_of_usage": [
+      "Defining a company's market entry strategy for a new country.",
+      "Creating a political campaign's core messaging and outreach strategy.",
+      "Formulating a research institution's long-term funding and publication strategy."
+    ],
+    "typical_inputs": [
+      "Organizational goals",
+      "Analysis of environment (market, competitors)",
+      "Assessment of internal strengths/weaknesses",
+      "Defined scope"
+    ],
+    "typical_outputs": [
+      "Strategy document",
+      "Guiding principles",
+      "Key performance indicators (KPIs)",
+      "High-level roadmap"
+    ]
+  },
+  {
+    "id": "d4e5f6a1-b2c3-d789-e123-f4567890ab1c",
+    "name": "Formulate Plan",
+    "description": "This step involves creating a detailed, actionable plan that outlines the specific tasks, timelines, resources, and dependencies required to execute a strategy or achieve a defined scope. It translates the 'why' and 'what' into a concrete 'how' and 'when'. This is a tactical exercise focused on organization, sequencing, and scheduling.",
+    "category": "Planning & Strategy",
+    "purpose": "To create a detailed, step-by-step roadmap for executing a project, including tasks, timelines, and resource allocation.",
+    "keywords": [
+      "planning",
+      "scheduling",
+      "project plan",
+      "task management",
+      "roadmap"
+    ],
+    "applicability_notes": "This step is the cornerstone of project management. It can be applied to any endeavor that requires coordinated effort over time, from planning a software release to organizing a large event. It directly follows 'Develop Strategy' and 'Define Scope'.",
+    "examples_of_usage": [
+      "Creating a Gantt chart for a construction project.",
+      "Developing a content calendar for a marketing campaign.",
+      "Outlining the lesson plans and schedule for an academic course."
+    ],
+    "typical_inputs": [
+      "Developed strategy",
+      "Defined scope and deliverables",
+      "List of available resources",
+      "Time constraints"
+    ],
+    "typical_outputs": [
+      "Project plan",
+      "Task list with assignments",
+      "Project schedule or timeline",
+      "Resource allocation plan"
+    ]
+  },
+  {
+    "id": "e5f6a1b2-c3d4-e789-f123-a4567890bc1d",
+    "name": "Develop Solution",
+    "description": "This step represents the core execution or creation phase where a defined plan is turned into a tangible outcome or product. It is the 'building' phase of a project. This can involve writing code, manufacturing a physical product, constructing a building, or creating a piece of content. The focus is on implementing the specified requirements and designs.",
+    "category": "Execution & Implementation",
+    "purpose": "To build, create, or implement the primary deliverable of a project according to its defined specifications.",
+    "keywords": [
+      "build",
+      "create",
+      "implement",
+      "develop",
+      "produce"
+    ],
+    "applicability_notes": "The nature of this step is highly dependent on the domain, but the abstract concept of 'building the thing' is universal. It is the phase where the most resources are typically consumed and where the plan is brought to life.",
+    "examples_of_usage": [
+      "Writing the source code for a mobile application.",
+      "Manufacturing a batch of a new consumer good.",
+      "Filming and editing a feature-length movie."
+    ],
+    "typical_inputs": [
+      "Detailed project plan",
+      "Technical specifications or blueprints",
+      "Design mockups",
+      "Allocated resources (personnel, materials)"
+    ],
+    "typical_outputs": [
+      "A functional prototype or product",
+      "A completed deliverable",
+      "Source code or manufacturing files",
+      "The tangible 'solution'"
+    ]
+  },
+  {
+    "id": "f6a1b2c3-d4e5-f789-a123-b4567890cd1e",
+    "name": "Validate Solution",
+    "description": "This step involves rigorously testing and evaluating a developed solution against its original requirements, specifications, and quality standards. The goal is to identify defects, gaps, and areas for improvement before a full release or deployment. It is a critical quality control checkpoint that ensures the solution works as intended and meets user needs.",
+    "category": "Review & Evaluation",
+    "purpose": "To test a solution to ensure it meets requirements, functions correctly, and is free of significant defects.",
+    "keywords": [
+      "testing",
+      "quality assurance",
+      "validation",
+      "verification",
+      "user acceptance testing"
+    ],
+    "applicability_notes": "Validation is essential in any field that produces a product or service. The methods vary widely, from software testing protocols to clinical trials for a new drug, but the underlying purpose of ensuring fitness-for-purpose is the same.",
+    "examples_of_usage": [
+      "Conducting user acceptance testing (UAT) for a new website.",
+      "Performing stress tests on a newly designed bridge.",
+      "Proofreading and editing a manuscript before publication."
+    ],
+    "typical_inputs": [
+      "Developed solution or prototype",
+      "Original requirements and scope",
+      "Test cases or validation criteria",
+      "Quality standards"
+    ],
+    "typical_outputs": [
+      "Test results report",
+      "List of identified defects or bugs",
+      "Validation summary",
+      "Go/no-go recommendation for deployment"
+    ]
+  },
+  {
+    "id": "a1b2c3d4-e5f6-a789-b123-c4567890de1f",
+    "name": "Monitor Performance",
+    "description": "This step involves the ongoing tracking and measurement of key metrics after a solution has been deployed or a process has been implemented. It is about observing the real-world performance against established benchmarks or goals. The focus is on collecting data over time to understand trends, effectiveness, and emerging issues.",
+    "category": "Analysis & Synthesis",
+    "purpose": "To continuously track and measure key metrics to assess the ongoing performance and impact of a solution or process.",
+    "keywords": [
+      "monitoring",
+      "tracking",
+      "analytics",
+      "measurement",
+      "performance metrics"
+    ],
+    "applicability_notes": "This is a continuous, post-launch activity. It is fundamental to business operations, system administration, and any process that requires ongoing management and optimization. It provides the raw data needed for future analysis and decision-making.",
+    "examples_of_usage": [
+      "Tracking daily active users and conversion rates for a mobile app.",
+      "Monitoring a patient's vital signs after surgery.",
+      "Observing factory output and defect rates on a production line."
+    ],
+    "typical_inputs": [
+      "Deployed solution or active process",
+      "Defined key performance indicators (KPIs)",
+      "Monitoring tools (e.g., analytics dashboard)",
+      "Performance benchmarks"
+    ],
+    "typical_outputs": [
+      "Performance dashboards",
+      "Trend reports",
+      "Alerts for anomalies",
+      "Time-series data"
+    ]
+  },
+  {
+    "id": "b2c3d4e5-f6a1-b789-c123-d4567890ef2a",
+    "name": "Make Decision",
+    "description": "This is a conclusive step where a specific course of action is chosen from a set of evaluated options. It is the commitment point that follows analysis and evaluation. The step involves weighing the pros and cons, considering the potential risks and rewards, and formally selecting a path forward. The outcome is a clear, actionable choice.",
+    "category": "Decision Making",
+    "purpose": "To formally select a course of action from a set of alternatives based on available information and evaluation.",
+    "keywords": [
+      "decision",
+      "choice",
+      "selection",
+      "judgement",
+      "commitment"
+    ],
+    "applicability_notes": "This is a fundamental human and organizational activity. It can be a simple, individual choice or a complex, formal group decision. It is distinct from 'Evaluate Options,' which is the analytical prelude to this conclusive act.",
+    "examples_of_usage": [
+      "A board of directors voting to approve a major acquisition.",
+      "A project manager deciding to pivot to a new technology based on test results.",
+      "A hiring committee selecting the final candidate for a job."
+    ],
+    "typical_inputs": [
+      "A clear problem or question",
+      "A set of evaluated options",
+      "Analysis of risks and benefits",
+      "Recommendation or proposal"
+    ],
+    "typical_outputs": [
+      "A documented decision",
+      "Authorization to proceed",
+      "A chosen course of action",
+      "Communication of the decision to stakeholders"
+    ]
+  }
+]
+```

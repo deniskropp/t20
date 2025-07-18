@@ -1,0 +1,44 @@
+{
+    "steps": [
+        {
+            "role": "Prompt Engineer",
+            "task": "Analyze the high-level goal 'System Overview' and decompose it into actionable tasks for each agent (Designer, Engineer)."
+        },
+        {
+            "role": "Prompt Engineer",
+            "task": "Create a detailed prompt for the Designer to generate a visual representation of the system overview, focusing on clarity and aesthetics."
+        },
+        {
+            "role": "Designer",
+            "task": "Based on the prompt from the Prompt Engineer, design a system overview diagram, including key components, data flows, and user interfaces. Consider color palettes, typography, and visual hierarchy for optimal understanding."
+        },
+        {
+            "role": "Prompt Engineer",
+            "task": "Review the Designer's output and provide feedback to ensure it meets the requirements of a clear and informative system overview. Refine the prompt if necessary."
+        },
+        {
+            "role": "Prompt Engineer",
+            "task": "Create a prompt for the Engineer to implement a basic interactive prototype of the system overview, focusing on key functionalities and data interactions."
+        },
+        {
+            "role": "Engineer",
+            "task": "Based on the design and the Prompt Engineer's instructions, develop a functional prototype of the system overview, ensuring responsive design and accessibility. Focus on implementing key data flows and user interactions."
+        },
+        {
+            "role": "Prompt Engineer",
+            "task": "Evaluate the Engineer's prototype and provide feedback on code quality, performance, and adherence to design specifications. Refine prompts for further improvements."
+        },
+        {
+            "role": "Designer",
+            "task": "Based on the feedback from the Prompt Engineer and the Engineer's prototype, refine the visual design of the system overview, ensuring consistency and usability."
+        },
+        {
+            "role": "Engineer",
+            "task": "Incorporate the Designer's refined visual design into the prototype, ensuring seamless integration and optimal user experience."
+        },
+        {
+            "role": "Prompt Engineer",
+            "task": "Conduct a final review of the system overview (design and prototype) to ensure it meets the high-level goal and provides a clear and comprehensive understanding of the system. Document the process and prompts used for future reference."
+        }
+    ]
+}

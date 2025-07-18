@@ -1,0 +1,413 @@
+The overall goal is: 'Extract task agnostic steps'
+
+Your role's specific goal is: 'Refine prompts, structure workflows and ensure clarity in agent instructions.'
+Your specific sub-task is: 'Develop a detailed, step-by-step methodology and set of instructions for systematically identifying and extracting task agnostic steps from various high-level goals, leveraging the defined criteria, data structure, and presentation guidelines.'
+
+Please use the following outputs from the other agents as your input:
+
+Artifact from step_0_Lyra_result.txt:
+{
+  "conceptual_framework": {
+    "name": "Task Agnostic Steps",
+    "definition": "Abstract, generalizable actions or decision points that are applicable across diverse tasks and domains, focusing on the 'how' of a process rather than the 'what' of a specific task.",
+    "characteristics": [
+      "Generality: Applicable across a wide range of tasks/domains.",
+      "Reusability: Can be reused in different contexts without significant modification.",
+      "Abstraction: Describes a higher-level action or pattern, devoid of specific implementation details or domain jargon.",
+      "Action-Oriented: Represents a distinct, logical action or decision point.",
+      "Independence: Not tied to the specific content, subject matter, or outcome of a particular task.",
+      "Sequential Potential: Often forms part of a logical flow or process, contributing to a broader workflow."
+    ],
+    "purpose": [
+      "To create reusable process templates and blueprints.",
+      "To facilitate automation by identifying common, repeatable process patterns.",
+      "To simplify complex workflows by abstracting and standardizing common elements.",
+      "To improve efficiency, consistency, and predictability across different tasks and projects.",
+      "To provide a foundational, universal vocabulary for process description and communication.",
+      "To enable cross-domain knowledge transfer and problem-solving methodologies."
+    ],
+    "initial_identification_criteria": [
+      "Does it describe an action that could be performed in multiple, seemingly unrelated tasks or industries?",
+      "Is it free from domain-specific terminology, proper nouns, or highly specific details?",
+      "Does it focus on the 'method' or 'approach' rather than the 'specific outcome' or 'subject matter'?",
+      "Can it be expressed as a clear, concise verb-noun phrase (e.g., 'Gather Information', 'Analyze Data', 'Evaluate Options')?",
+      "Does it represent a logical, self-contained unit of work or decision within a broader process?",
+      "Could it be a step in a general problem-solving, project management, or design methodology?"
+    ]
+  }
+}
+
+---
+
+Artifact from step_1_Kodax_result.txt:
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Task Agnostic Steps Collection",
+  "description": "A standardized, modular data structure for representing a collection of task agnostic steps, designed for machine-readability and easy integration.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "id",
+      "name",
+      "description",
+      "category",
+      "purpose"
+    ],
+    "properties": {
+      "id": {
+        "type": "string",
+        "description": "A unique identifier for the task agnostic step. UUID (e.g., 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx') is recommended for global uniqueness.",
+        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      },
+      "name": {
+        "type": "string",
+        "description": "The concise, action-oriented name of the task agnostic step (e.g., 'Gather Information', 'Analyze Data', 'Evaluate Options'). This should be a verb-noun phrase.",
+        "minLength": 3,
+        "maxLength": 100
+      },
+      "description": {
+        "type": "string",
+        "description": "A detailed explanation of the step's core purpose, typical actions involved, and what it aims to achieve. It should focus on the 'how' rather than the 'what' of a specific task.",
+        "minLength": 10
+      },
+      "category": {
+        "type": "string",
+        "description": "A broad classification or type for the step, grouping similar abstract actions (e.g., 'Information Gathering', 'Analysis', 'Decision Making').",
+        "enum": [
+          "Problem Framing",
+          "Information Gathering",
+          "Analysis",
+          "Solution Generation",
+          "Decision Making",
+          "Execution",
+          "Evaluation & Feedback",
+          "Refinement",
+          "Communication",
+          "Planning"
+        ]
+      },
+      "keywords": {
+        "type": "array",
+        "description": "An array of keywords or tags that help categorize, search for, and cross-reference the step (e.g., ['research', 'data collection', 'discovery']).",
+        "items": {
+          "type": "string"
+        },
+        "uniqueItems": true
+      },
+      "purpose": {
+        "type": "string",
+        "description": "The primary goal or objective that this specific task agnostic step aims to fulfill within a broader process. This is a more concise version of the description's intent.",
+        "minLength": 10
+      },
+      "applicability_notes": {
+        "type": "string",
+        "description": "Notes on the generality and applicability of the step across different domains or contexts, highlighting any common patterns, variations, or caveats without being domain-specific."
+      },
+      "examples_of_usage": {
+        "type": "array",
+        "description": "Abstract examples illustrating how this step might manifest or be applied in different, non-domain-specific scenarios to demonstrate its versatility.",
+        "items": {
+          "type": "string"
+        }
+      },
+      "typical_inputs": {
+        "type": "array",
+        "description": "Abstract descriptions of what kind of information, state, or pre-conditions are typically required or useful to begin this step. (e.g., ['unstructured data', 'defined problem statement']).",
+        "items": {
+          "type": "string"
+        }
+      },
+      "typical_outputs": {
+        "type": "array",
+        "description": "Abstract descriptions of what kind of information, state, or post-conditions are typically produced or achieved upon completing this step. (e.g., ['synthesized insights', 'prioritized options']).",
+        "items": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
+
+---
+
+Artifact from step_2_Aurora_result.txt:
+{
+  "design_guidelines": {
+    "title": "Task Agnostic Steps: Mobile UI Design Guidelines",
+    "overall_vision": "A clean, intuitive, and visually balanced mobile interface for exploring and understanding Task Agnostic Steps. The design prioritizes readability, logical information flow, and accessibility, making complex abstract concepts easily digestible for human users.",
+    "mobile_ui_layout_guidelines": {
+      "general_principles": [
+        "**Clarity & Conciseness:** Present information directly, avoiding clutter.",
+        "**Visual Hierarchy:** Utilize size, weight, color, and spacing to guide the user's eye and emphasize key information.",
+        "**Scannability:** Design layouts that allow users to quickly grasp the essence of a step before diving into details.",
+        "**Consistency:** Maintain a uniform look and feel across all screens and components.",
+        "**Modularity:** Each task agnostic step should be presented as a distinct, self-contained unit.",
+        "**Mobile-First:** Optimize for touch interactions, limited screen real estate, and varying light conditions."
+      ],
+      "screen_layouts": {
+        "1_list_view_browse_search": {
+          "description": "Displays a collection of Task Agnostic Steps, allowing users to browse, search, and filter.",
+          "elements": [
+            {
+              "name": "App Bar/Header",
+              "purpose": "Contains app title, search icon, and potentially a filter/sort icon.",
+              "presentation": "Clean, minimal, fixed at top. Search icon (magnifying glass) should be prominent."
+            },
+            {
+              "name": "Task Step Card (List Item)",
+              "purpose": "Represents a single task agnostic step in a condensed format.",
+              "presentation": "Each card should be distinct, with clear padding. Contains:",
+              "sub_elements": [
+                {
+                  "field": "category",
+                  "presentation": "Small, subtly colored tag/badge at the top-left or right of the card, using a secondary font size. Helps with quick categorization."
+                },
+                {
+                  "field": "name",
+                  "presentation": "Primary heading for the card, bold, using a larger font size. Placed centrally or left-aligned for immediate recognition."
+                },
+                {
+                  "field": "purpose",
+                  "presentation": "A concise, single-line snippet below the name, using regular body text size. Provides quick context."
+                },
+                {
+                  "field": "keywords",
+                  "presentation": "Optional: Small, low-emphasis tags at the bottom of the card if space allows, or visible only on detail view to maintain cleanliness."
+                }
+              ],
+              "interaction": "Tappable area for the entire card, leading to the 'Detail View'."
+            },
+            {
+              "name": "Floating Action Button (FAB)",
+              "purpose": "If functionality like 'Add New Step' or 'Favorite' is introduced later.",
+              "presentation": "Circular, prominent, at bottom-right of screen."
+            }
+          ]
+        },
+        "2_detail_view_single_step": {
+          "description": "Presents comprehensive information for a selected Task Agnostic Step.",
+          "elements": [
+            {
+              "name": "App Bar/Header",
+              "purpose": "Contains step 'name' as title and a back arrow icon.",
+              "presentation": "Clean, fixed at top. Back arrow (chevron left) for navigation."
+            },
+            {
+              "name": "Main Content Area (Scrollable)",
+              "purpose": "Houses all detailed information about the step.",
+              "presentation": "Organized into logical sections with clear headings and ample white space. Use consistent padding.",
+              "sub_sections": [
+                {
+                  "field": "category",
+                  "presentation": "Prominent tag/badge near the top, below the app bar, using a distinct color. Reinforces classification."
+                },
+                {
+                  "field": "name",
+                  "presentation": "Large, bold heading, serving as the main title for the page. Should be the most visually dominant text."
+                },
+                {
+                  "field": "purpose",
+                  "presentation": "Sub-heading or bolded paragraph immediately following the name. Clearly states the step's primary goal, acting as an executive summary."
+                },
+                {
+                  "field": "description",
+                  "presentation": "Primary body text, presented as a clear, well-formatted paragraph. Sufficient line height and letter spacing for readability."
+                },
+                {
+                  "name": "Collapsible Sections / Cards",
+                  "purpose": "To manage information density, especially for longer lists or notes.",
+                  "presentation": "Use accordions or distinct card-like containers for:",
+                  "sub_elements": [
+                    {
+                      "field": "typical_inputs",
+                      "presentation": "Section heading 'Typical Inputs'. Presented as a bulleted list with clear, concise items. Consider a subtle icon (e.g., arrow pointing in) next to the heading."
+                    },
+                    {
+                      "field": "typical_outputs",
+                      "presentation": "Section heading 'Typical Outputs'. Presented as a bulleted list. Consider a subtle icon (e.g., arrow pointing out) next to the heading."
+                    },
+                    {
+                      "field": "examples_of_usage",
+                      "presentation": "Section heading 'Examples of Usage'. Presented as a numbered or bulleted list for clarity."
+                    },
+                    {
+                      "field": "applicability_notes",
+                      "presentation": "Section heading 'Applicability Notes'. Presented as a paragraph or short bulleted list. Can be an expandable section if content is long."
+                    }
+                  ]
+                },
+                {
+                  "field": "keywords",
+                  "presentation": "Presented as a row of small, tappable tags at the bottom, below the main content. Helps with cross-referencing and discovery."
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "color_palette": {
+      "philosophy": "A modern, clean, and accessible palette inspired by clarity and calm. Focus on muted tones with a vibrant accent for key actions and highlights.",
+      "colors": [
+        {
+          "name": "Primary Background",
+          "hex": "#F9F9F9",
+          "description": "Light, airy background for main content areas. Provides a clean canvas."
+        },
+        {
+          "name": "Secondary Background / Card",
+          "hex": "#FFFFFF",
+          "description": "Pure white for cards and elevated elements, creating depth and separation."
+        },
+        {
+          "name": "Primary Text",
+          "hex": "#212121",
+          "description": "Dark grey for main body text and headings. Ensures high contrast and readability."
+        },
+        {
+          "name": "Secondary Text / Subdued",
+          "hex": "#757575",
+          "description": "Medium grey for descriptions, secondary information, and hints. Provides visual relief."
+        },
+        {
+          "name": "Accent / Interactive",
+          "hex": "#4CAF50",
+          "description": "A vibrant, yet calming green for primary actions, active states, and highlights. Evokes growth and progress. (WCAG AA compliant against #F9F9F9 and #FFFFFF)."
+        },
+        {
+          "name": "Category Tag Background",
+          "hex": "#E8F5E9",
+          "description": "Light green tint for category tags, subtly linking to the accent color."
+        },
+        {
+          "name": "Border / Divider",
+          "hex": "#EEEEEE",
+          "description": "Very light grey for subtle separators and borders, maintaining a clean look."
+        }
+      ]
+    },
+    "typography": {
+      "philosophy": "Prioritize legibility and a modern aesthetic. A sans-serif typeface will provide clarity and a clean feel across all screen sizes.",
+      "font_family": "Roboto (or similar system sans-serif like SF Pro Display for iOS, Noto Sans for Android)",
+      "styles": [
+        {
+          "element": "App Bar Title / Page Title",
+          "size": "24sp",
+          "weight": "Bold",
+          "color": "Primary Text",
+          "description": "Prominent and clear for navigation and main screen identification."
+        },
+        {
+          "element": "Card Heading (Step Name)",
+          "size": "20sp",
+          "weight": "Medium",
+          "color": "Primary Text",
+          "description": "Large enough for quick scanning in list view."
+        },
+        {
+          "element": "Detail View - Step Name",
+          "size": "32sp",
+          "weight": "ExtraBold",
+          "color": "Primary Text",
+          "description": "The most dominant text on the detail page, clearly identifying the step."
+        },
+        {
+          "element": "Section Headings (Detail View)",
+          "size": "18sp",
+          "weight": "Medium",
+          "color": "Primary Text",
+          "description": "Clear separation for different sections of content."
+        },
+        {
+          "element": "Body Text (Description, Notes)",
+          "size": "16sp",
+          "weight": "Regular",
+          "color": "Primary Text",
+          "line_height_multiplier": "1.5",
+          "description": "Optimal size and spacing for comfortable reading."
+        },
+        {
+          "element": "Sub-Text / Purpose Snippet",
+          "size": "14sp",
+          "weight": "Regular",
+          "color": "Secondary Text / Subdued",
+          "description": "For secondary information, less emphasis but still readable."
+        },
+        {
+          "element": "Category Tags / Keywords",
+          "size": "12sp",
+          "weight": "Medium",
+          "color": "Accent / Interactive (for text on Category Tag Background)",
+          "description": "Small, concise labels, easy to distinguish."
+        }
+      ]
+    },
+    "ui_flow": {
+      "philosophy": "A straightforward, intuitive flow that allows users to easily discover, explore, and understand Task Agnostic Steps with minimal friction.",
+      "flows": [
+        {
+          "name": "Initial Launch / Discovery",
+          "steps": [
+            "User opens the app.",
+            "Lands on the 'List View' (Browse/Search screen) displaying a curated list or all available Task Agnostic Steps.",
+            "Can immediately scroll through the list, use the search bar, or apply filters/sort options."
+          ]
+        },
+        {
+          "name": "Exploring a Step",
+          "steps": [
+            "From the 'List View', user taps on a 'Task Step Card'.",
+            "Navigates to the 'Detail View' for that specific Task Agnostic Step.",
+            "User can scroll to read the full description, purpose, inputs, outputs, examples, and applicability notes.",
+            "Taps the back arrow in the app bar to return to the 'List View'."
+          ]
+        },
+        {
+          "name": "Searching & Filtering",
+          "steps": [
+            "From the 'List View', user taps the search icon in the app bar.",
+            "Search bar expands, and a keyboard appears.",
+            "User types keywords (e.g., 'analysis', 'decision').",
+            "List view dynamically updates to show matching Task Agnostic Steps (filtered by 'name', 'description', 'purpose', 'keywords').",
+            "User can also tap a filter icon to refine by 'Category'."
+          ]
+        },
+        {
+          "name": "Interaction with Collapsible Sections",
+          "steps": [
+            "On the 'Detail View', user taps a section heading (e.g., 'Typical Inputs') if it's designed as a collapsible accordion.",
+            "The section expands/collapses to reveal/hide its content.",
+            "This interaction helps manage information overload on smaller screens."
+          ]
+        }
+      ]
+    },
+    "accessibility_compliance_notes": {
+      "wcag_principles_applied": [
+        "**Perceivable:**",
+        "  - **Color Contrast:** All text and essential UI components meet WCAG AA standards (4.5:1 for normal text, 3:1 for large text/UI components). The chosen palette ensures this.",
+        "  - **Readable Text:** Typography guidelines ensure sufficient font sizes, line height, and clear font family for optimal readability across devices.",
+        "  - **Non-Text Content:** Icons (e.g., search, back, input/output indicators) will have appropriate alt-text or accessible labels for screen readers.",
+        "**Operable:**",
+        "  - **Touch Target Size:** All interactive elements (buttons, cards, icons) will have a minimum touch target size of 48x48 dp to prevent accidental taps.",
+        "  - **Navigation:** Clear back button, logical flow between list and detail views. Semantic heading structure for screen reader navigation.",
+        "  - **Keyboard Accessibility:** While primarily touch, standard mobile OS keyboard navigation (e.g., tabbing through focusable elements) should be supported where applicable.",
+        "**Understandable:**",
+        "  - **Predictable Navigation:** Consistent placement of common elements (e.g., back button, search icon).",
+        "  - **Clear Labeling:** All interactive elements and content sections are clearly labeled with descriptive text.",
+        "  - **Language:** Use clear, concise, and jargon-free language in descriptions and labels where possible, aligning with the 'task agnostic' nature."
+      ],
+      "additional_considerations": [
+        "**Dynamic Type Support:** Ensure the UI scales gracefully when users adjust system font sizes.",
+        "**Screen Reader Optimization:** Implement proper semantic HTML/native element roles and labels for optimal screen reader experience (e.g., using `aria-label` or `contentDescription`).",
+        "**Focus Management:** Ensure correct focus order for users navigating with assistive technologies."
+      ]
+    },
+    "inspiring_message": "Aurora envisions this app as a beacon of clarity in the vast sea of information. By meticulously crafting each interaction and visual element, we aim to transform abstract concepts into tangible insights, empowering users to master the universal building blocks of any process. This design is not just functional; it's an invitation to explore, learn, and innovate with confidence and ease."
+  }
+}
+
+
+
+Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project.

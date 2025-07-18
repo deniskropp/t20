@@ -1,0 +1,898 @@
+The overall goal is: 'System Overview'
+
+Your role's specific goal is: 'Implement designs into clean, modular, and performant code, focusing on responsive design and accessibility.'
+Your specific sub-task is: 'Create a modular and performant code implementation plan for the 'System Overview', incorporating responsive design principles and accessibility considerations based on the design specifications.'
+
+Please use the following outputs from the other agents as your input:
+
+Artifact from step_0_Lyra_result.txt:
+{
+  "Aurora": {
+    "sub_goals": [
+      "Define the primary user roles and their key interactions with the system.",
+      "Outline the high-level user journey through the core functionalities.",
+      "Identify critical user interface elements and their states.",
+      "Determine the overall visual and interaction design direction for the system."
+    ],
+    "information_requirements": [
+      "Target user demographics and their pain points/needs.",
+      "Existing brand guidelines and design system components (if any).",
+      "Examples of desired user experiences or competitor analysis.",
+      "Key performance indicators (KPIs) related to user engagement and satisfaction."
+    ]
+  },
+  "Kodax": {
+    "sub_goals": [
+      "Identify the core technical modules and services required for system functionality.",
+      "Outline the high-level data flow and persistence mechanisms.",
+      "Define the primary API endpoints and their responsibilities.",
+      "Propose a preliminary system architecture (e.g., monolithic, microservices)."
+    ],
+    "information_requirements": [
+      "Non-functional requirements (e.g., performance, scalability, security, reliability).",
+      "Integration points with external systems or third-party APIs (if any).",
+      "Preferred technology stack or existing infrastructure constraints.",
+      "Data privacy, compliance, and regulatory requirements."
+    ]
+  }
+}
+
+---
+
+Artifact from step_1_Aurora_result.txt:
+{
+  "design_vision": {
+    "title": "Aura: Your Intuitive Productivity Hub",
+    "description": "Aura's 'System Overview' is designed as a personalized, glanceable dashboard that empowers users with immediate insight into their task landscape. It's crafted to inspire productivity, reduce cognitive load, and provide a clear path forward, all within a clean, accessible, and visually balanced interface."
+  },
+  "mobile_ui_layout": {
+    "screen_name": "System Overview (Dashboard)",
+    "description": "This is the primary landing screen upon app launch, providing a high-level summary of the user's tasks and progress.",
+    "layout_sections": [
+      {
+        "name": "Top Navigation & Greeting",
+        "elements": [
+          {
+            "type": "Avatar/Profile Picture",
+            "position": "Top-Left",
+            "description": "Circular user avatar, tappable to access profile/settings.",
+            "accessibility": "Provides access to user profile and settings. Content description: 'User Profile'"
+          },
+          {
+            "type": "Greeting Text",
+            "position": "Center (prominent)",
+            "description": "Dynamic greeting like 'Good Morning, [User Name]!' or 'Your Day Ahead'.",
+            "accessibility": "Clearly readable with high contrast. Font size: 24-28px."
+          },
+          {
+            "type": "Notification/Settings Icon",
+            "position": "Top-Right",
+            "description": "Icon button for quick access to notifications or core app settings.",
+            "accessibility": "Tappable area 48x48dp. Content description: 'Notifications' or 'Settings'"
+          }
+        ]
+      },
+      {
+        "name": "Key Metrics & Summary Cards",
+        "elements": [
+          {
+            "type": "Summary Cards (Grid/Stacked)",
+            "description": "Prominent, tappable cards offering quick summaries. Each card features a large metric, a descriptive label, and potentially a small icon or progress indicator.",
+            "cards": [
+              {
+                "title": "Tasks Due Today",
+                "metric": "7",
+                "visual_cue": "Small progress bar or checkmark icon",
+                "interaction": "Tap to view filtered list of tasks due today."
+              },
+              {
+                "title": "Upcoming Tasks",
+                "metric": "12",
+                "visual_cue": "Calendar icon",
+                "interaction": "Tap to view upcoming tasks this week."
+              },
+              {
+                "title": "Completed This Week",
+                "metric": "25",
+                "visual_cue": "Trophy/Star icon",
+                "interaction": "Tap to view weekly productivity report."
+              },
+              {
+                "title": "Overdue Tasks",
+                "metric": "3",
+                "visual_cue": "Warning icon (red)",
+                "interaction": "Tap to view urgent overdue tasks."
+              }
+            ],
+            "accessibility": "Each card is a distinct, tappable element with a minimum touch target of 48x48dp. Semantic headings for screen readers. Color used with icon/text for status indication (e.g., red for overdue)."
+          }
+        ]
+      },
+      {
+        "name": "Productivity Visualization & Insights",
+        "elements": [
+          {
+            "type": "Weekly Productivity Chart",
+            "description": "A simple line or bar chart visualizing task completion trends over the last 7 days.",
+            "accessibility": "Interactive elements on the chart are accessible. Provides a high-level overview; detailed data is available on tap. Content description: 'Weekly Productivity Chart, tap for details.'"
+          },
+          {
+            "type": "Project Progress Overview (Optional)",
+            "description": "Small, scrollable list or carousel of top projects with their completion percentage.",
+            "accessibility": "Clearly labeled progress bars. Each project item is tappable to navigate to project details."
+          }
+        ]
+      },
+      {
+        "name": "Quick Actions & Navigation",
+        "elements": [
+          {
+            "type": "Floating Action Button (FAB)",
+            "position": "Bottom-Right",
+            "description": "Prominent '+' button for quickly adding a new task.",
+            "accessibility": "Large touch target (56x56dp). Content description: 'Add New Task'."
+          },
+          {
+            "type": "Bottom Navigation Bar",
+            "position": "Bottom-Fixed",
+            "description": "Standard navigation with icons and labels for Home (active), Tasks, Calendar, Projects, and Profile/Settings.",
+            "accessibility": "Clearly labeled icons. Active state has distinct visual feedback. All buttons are tappable with 48x48dp minimum."
+          }
+        ]
+      }
+    ]
+  },
+  "ui_flow": {
+    "system_overview_flow": [
+      {
+        "step": "1. App Launch / Login",
+        "action": "User opens the app or logs in.",
+        "outcome": "Lands directly on the 'System Overview' (Dashboard) screen."
+      },
+      {
+        "step": "2. Data Refresh",
+        "action": "User pulls down on the screen.",
+        "outcome": "Dashboard data refreshes, showing the latest task statuses and metrics."
+      },
+      {
+        "step": "3. Explore Summary Cards",
+        "action": "User taps on a 'Summary Card' (e.g., 'Tasks Due Today').",
+        "outcome": "Navigates to a filtered 'Tasks List' screen, showing only tasks relevant to that card (e.g., tasks due today)."
+      },
+      {
+        "step": "4. View Detailed Analytics",
+        "action": "User taps on the 'Weekly Productivity Chart'.",
+        "outcome": "Navigates to a dedicated 'Analytics & Reports' screen with more detailed productivity insights."
+      },
+      {
+        "step": "5. Add New Task",
+        "action": "User taps the 'Add New Task' FAB.",
+        "outcome": "A modal or a new screen for 'Task Creation' appears, allowing the user to quickly input task details."
+      },
+      {
+        "step": "6. Navigate Main Sections",
+        "action": "User taps on an icon in the 'Bottom Navigation Bar'.",
+        "outcome": "Seamlessly transitions to the corresponding main section of the app (e.g., 'Tasks List', 'Calendar', 'Projects')."
+      }
+    ]
+  },
+  "color_palette": {
+    "primary_brand_color": "#4A90E2",
+    "secondary_accent_color": "#50C878",
+    "warning_color": "#E74C3C",
+    "background_colors": {
+      "primary_background": "#F8F9FA",
+      "card_background": "#FFFFFF",
+      "separator_line": "#E0E0E0"
+    },
+    "text_colors": {
+      "heading_text": "#2C3E50",
+      "body_text": "#555555",
+      "secondary_text": "#888888",
+      "disabled_text": "#AAAAAA"
+    },
+    "accessibility_notes": "All color combinations ensure a minimum WCAG 2.1 AA contrast ratio. Semantic colors (red for overdue, green for completed) are always accompanied by an icon or text label to ensure usability for color-blind users."
+  },
+  "typography": {
+    "font_family": "Inter",
+    "hierarchy": {
+      "h1_app_title_greeting": {
+        "size": "28px",
+        "weight": "Bold",
+        "line_height": "1.2"
+      },
+      "h2_card_titles": {
+        "size": "18px",
+        "weight": "SemiBold",
+        "line_height": "1.3"
+      },
+      "h3_metrics_large": {
+        "size": "48px",
+        "weight": "Bold",
+        "line_height": "1"
+      },
+      "body_text": {
+        "size": "16px",
+        "weight": "Regular",
+        "line_height": "1.5"
+      },
+      "label_text": {
+        "size": "14px",
+        "weight": "Medium",
+        "line_height": "1.4"
+      },
+      "small_text_captions": {
+        "size": "12px",
+        "weight": "Regular",
+        "line_height": "1.6"
+      }
+    },
+    "accessibility_notes": "Utilizes a clean sans-serif font (Inter) for maximum readability across various screen sizes. Text scaling is supported, ensuring layouts adapt gracefully when system font sizes are increased. Adequate line height and letter spacing are maintained for legibility."
+  }
+}
+
+---
+
+Artifact from step_2_Kodax_result.txt:
+{
+  "data_structures": {
+    "UserProfile": {
+      "id": "string",
+      "name": "string",
+      "avatarUrl": "string",
+      "email": "string"
+    },
+    "TaskSummary": {
+      "dueTodayCount": "number",
+      "upcomingCount": "number",
+      "completedThisWeekCount": "number",
+      "overdueCount": "number"
+    },
+    "ProductivityTrendItem": {
+      "date": "string (YYYY-MM-DD)",
+      "completedTasksCount": "number"
+    },
+    "ProjectOverviewItem": {
+      "id": "string",
+      "name": "string",
+      "completionPercentage": "number (0-100)"
+    },
+    "NotificationSummary": {
+      "unreadCount": "number"
+    },
+    "DashboardData": {
+      "user": "UserProfile",
+      "taskSummary": "TaskSummary",
+      "weeklyProductivityTrend": "array of ProductivityTrendItem",
+      "projectOverviews": "array of ProjectOverviewItem",
+      "notifications": "NotificationSummary"
+    },
+    "Task": {
+      "id": "string",
+      "title": "string",
+      "description": "string",
+      "dueDate": "string (ISO 8601)",
+      "status": "string (e.g., 'pending', 'completed', 'overdue')",
+      "priority": "string (e.g., 'low', 'medium', 'high')",
+      "projectId": "string (optional)"
+    }
+  },
+  "api_endpoints": [
+    {
+      "name": "Get Dashboard Overview Data",
+      "endpoint": "/api/v1/dashboard",
+      "method": "GET",
+      "description": "Fetches all high-level data required for the 'System Overview' screen.",
+      "response_body_example": "{ \"data\": \"DashboardData structure\" }",
+      "notes": "This endpoint should be optimized for a single fetch to minimize initial load times on the dashboard."
+    },
+    {
+      "name": "Get Filtered Tasks",
+      "endpoint": "/api/v1/tasks",
+      "method": "GET",
+      "parameters": [
+        {"name": "status", "type": "string", "description": "e.g., 'due_today', 'upcoming', 'completed_this_week', 'overdue'"},
+        {"name": "projectId", "type": "string", "description": "Optional, filters tasks by project."}
+      ],
+      "description": "Retrieves a list of tasks based on specified filters, used when tapping on summary cards or project overviews.",
+      "response_body_example": "{ \"data\": [\"Task structure\", ...] }"
+    },
+    {
+      "name": "Create New Task",
+      "endpoint": "/api/v1/tasks",
+      "method": "POST",
+      "request_body_example": "{ \"title\": \"string\", \"description\": \"string\", \"dueDate\": \"string\", \"priority\": \"string\", \"projectId\": \"string\" }",
+      "description": "Adds a new task to the system, typically triggered by the Floating Action Button (FAB).",
+      "response_body_example": "{ \"data\": \"Task structure (newly created)\" }"
+    },
+    {
+      "name": "Get Detailed Productivity Analytics",
+      "endpoint": "/api/v1/analytics/productivity",
+      "method": "GET",
+      "parameters": [
+        {"name": "period", "type": "string", "description": "e.g., 'weekly', 'monthly', 'yearly'"}
+      ],
+      "description": "Fetches more granular productivity data, accessed when tapping the 'Weekly Productivity Chart'.",
+      "response_body_example": "{ \"data\": { \"trend\": [\"ProductivityTrendItem\", ...], \"summary\": { ... } } }"
+    },
+    {
+      "name": "Get User Profile",
+      "endpoint": "/api/v1/users/{userId}",
+      "method": "GET",
+      "description": "Retrieves detailed user profile information, accessed by tapping the avatar.",
+      "response_body_example": "{ \"data\": \"UserProfile structure\" }"
+    }
+  ],
+  "architectural_components": {
+    "frontend_components": [
+      {
+        "name": "DashboardScreen",
+        "type": "Container/View",
+        "description": "Main screen component, orchestrates data fetching and renders sub-components."
+      },
+      {
+        "name": "TopNavBar",
+        "type": "UI Component",
+        "description": "Displays user avatar, greeting, and notification/settings icon."
+      },
+      {
+        "name": "SummaryCardsGrid",
+        "type": "UI Component",
+        "description": "Renders the grid of tappable summary cards (Tasks Due Today, Upcoming, etc.). Each card is a distinct interactive element."
+      },
+      {
+        "name": "ProductivityChart",
+        "type": "UI Component",
+        "description": "Visualizes weekly task completion trends (line/bar chart)."
+      },
+      {
+        "name": "ProjectsOverviewList",
+        "type": "UI Component",
+        "description": "Displays a scrollable list of key projects with their progress."
+      },
+      {
+        "name": "FloatingActionButton (FAB)",
+        "type": "UI Component",
+        "description": "Prominent button for quick task creation."
+      },
+      {
+        "name": "BottomNavigationBar",
+        "type": "UI Component",
+        "description": "Provides primary app navigation (Home, Tasks, Calendar, Projects, Profile)."
+      },
+      {
+        "name": "APIClient / DataService",
+        "type": "Utility/Service",
+        "description": "Handles all API requests and responses, abstracts data fetching logic from UI components."
+      },
+      {
+        "name": "Global State Management",
+        "type": "Framework/Library",
+        "description": "Manages application state (e.g., user data, task counts) across components, potentially using Redux, Context API, or MobX."
+      }
+    ],
+    "backend_services": [
+      {
+        "name": "API Gateway / BFF (Backend For Frontend)",
+        "type": "Service",
+        "description": "Aggregates data from various microservices for the dashboard view, optimizing payload for mobile clients. Handles authentication and routing."
+      },
+      {
+        "name": "User Service",
+        "type": "Microservice",
+        "description": "Manages user profiles, authentication, and settings."
+      },
+      {
+        "name": "Task Service",
+        "type": "Microservice",
+        "description": "Manages all task-related data: creation, updates, status changes, filtering, and retrieval."
+      },
+      {
+        "name": "Project Service",
+        "type": "Microservice",
+        "description": "Manages project details, associations with tasks, and progress tracking."
+      },
+      {
+        "name": "Analytics Service",
+        "type": "Microservice",
+        "description": "Processes and aggregates task data to generate productivity trends and reports."
+      },
+      {
+        "name": "Notification Service (Optional)",
+        "type": "Microservice",
+        "description": "Manages and delivers user notifications, provides unread counts."
+      }
+    ],
+    "database_considerations": [
+      {
+        "name": "Relational Database (e.g., PostgreSQL, MySQL)",
+        "description": "Suitable for structured data like users, tasks, projects, maintaining strong relationships and data integrity."
+      },
+      {
+        "name": "Time-Series Database or Data Warehouse (e.g., InfluxDB, Snowflake)",
+        "description": "Potentially for detailed analytics and historical productivity trends, optimized for time-based queries."
+      }
+    ],
+    "authentication_authorization": {
+      "mechanism": "OAuth2 / JWT (JSON Web Tokens)",
+      "description": "Secure API access, token-based authentication for mobile clients, role-based authorization where necessary."
+    }
+  }
+}
+
+---
+
+Artifact from step_3_Lyra_result.txt:
+[
+  {
+    "target_agent_name": "Aurora",
+    "new_system_prompt": "You are Aurora, a world-class UI/UX Designer. Your task is to transform high-level requirements into detailed, actionable design specifications. Focus on creating intuitive, user-centric, and aesthetically pleasing interfaces that align perfectly with the 'System Overview' requirements. For each output, provide comprehensive coverage including a design vision, detailed UI layouts (e.g., mobile, web), user interaction flows, a complete color palette, and typography guidelines. Ensure concrete examples and detailed descriptions for all UI elements, explicitly defining user interactions and expected system responses for dynamic components. Always include thorough accessibility considerations. Your specifications should be precise enough for an engineer to implement directly without ambiguity, and they must clearly support the overall goal of providing a 'personalized, glanceable dashboard that empowers users with immediate insight into their task landscape, reduces cognitive load, and provides a clear path forward'."
+  },
+  {
+    "target_agent_name": "Kodax",
+    "new_system_prompt": "You are Kodax, a meticulous Software Engineer and Architect. Your task is to translate design specifications and system requirements into detailed, implementable technical specifications. Focus on defining robust data structures, efficient API endpoints, and a scalable system architecture that directly supports the 'System Overview' requirements. For each output, provide clear, unambiguous definitions for all data schemas, API contracts (including methods, parameters, request/response bodies, and error handling considerations), and a breakdown of architectural components (frontend, backend services, database considerations, authentication). Justify key technical decisions (e.g., architecture style, technology choices) with respect to performance, scalability, security, and maintainability. Your specifications should be precise enough for a development team to begin implementation, and they must clearly support the overall goal of providing a 'personalized, glanceable dashboard that empowers users with immediate insight into their task landscape, reduces cognitive load, and provides a clear path forward'."
+  }
+]
+
+---
+
+Artifact from step_4_Aurora_result.txt:
+{
+  "design_vision": {
+    "title": "Aura: Your Intuitive Productivity Hub - System Overview",
+    "description": "Aura's 'System Overview' is meticulously designed as a personalized, glanceable dashboard, acting as the user's command center. It empowers users with immediate, consolidated insight into their task landscape, fostering a sense of control and clarity. The interface is crafted to inspire productivity, significantly reduce cognitive load through intelligent summarization, and provide a clear, actionable path forward. Our commitment is to deliver a clean, accessible, and visually balanced experience that is both aesthetically pleasing and highly functional across mobile and web platforms."
+  },
+  "mobile_ui_layout": {
+    "screen_name": "System Overview (Dashboard)",
+    "description": "This is the primary landing screen upon app launch, providing a high-level summary of the user's tasks and progress. It's optimized for quick glances and intuitive navigation.",
+    "layout_sections": [
+      {
+        "name": "Top Navigation & Greeting",
+        "elements": [
+          {
+            "type": "Avatar/Profile Picture",
+            "element_id": "user_avatar",
+            "position": "Top-Left",
+            "description": "Circular user avatar. Displays user's profile picture if available, otherwise a default icon. Dynamically loads `UserProfile.avatarUrl`.",
+            "interaction": "Tapping the avatar navigates to the 'User Profile & Settings' screen.",
+            "system_response": "Triggers `GET /api/v1/users/{userId}` to fetch detailed profile data upon navigation.",
+            "accessibility": "Provides access to user profile and settings. Content description: 'User Profile. Tap to view and edit your profile.'"
+          },
+          {
+            "type": "Greeting Text",
+            "element_id": "greeting_text",
+            "position": "Center (prominent)",
+            "description": "Dynamic greeting like 'Good Morning, [User Name]!' or 'Your Day Ahead'. The name is populated from `UserProfile.name`.",
+            "interaction": "None (display only).",
+            "system_response": "Updates dynamically based on time of day and fetched user data.",
+            "accessibility": "Clearly readable with high contrast. Font size: 28px (h1_app_title_greeting). Announced as a heading for screen readers. Example: 'Good Morning, [User Name]!'"
+          },
+          {
+            "type": "Notification/Settings Icon",
+            "element_id": "notification_settings_icon",
+            "position": "Top-Right",
+            "description": "Icon button for quick access to notifications or core app settings. Displays a badge with `NotificationSummary.unreadCount` if greater than 0.",
+            "interaction": "Tapping the icon navigates to the 'Notifications' screen (or 'Settings' if no unread notifications are present).",
+            "system_response": "If `NotificationSummary.unreadCount > 0`, navigates to 'Notifications'. Otherwise, navigates to 'Settings'.",
+            "accessibility": "Tappable area 48x48dp. Content description: 'Notifications. You have [X] unread notifications.' or 'Settings.'"
+          }
+        ]
+      },
+      {
+        "name": "Key Metrics & Summary Cards",
+        "elements": [
+          {
+            "type": "Summary Cards (Grid/Stacked)",
+            "element_id": "summary_cards_grid",
+            "description": "Prominent, tappable cards offering quick summaries of task states. Each card features a large metric, a descriptive label, and a visual cue. Data is sourced from `TaskSummary`.",
+            "cards": [
+              {
+                "title": "Tasks Due Today",
+                "metric_source": "TaskSummary.dueTodayCount",
+                "visual_cue": "Small progress bar (e.g., blue) or checkmark icon. Card background remains 'card_background'.",
+                "interaction": "Tap to view filtered list of tasks due today.",
+                "system_response": "Navigates to 'Tasks List' screen. Triggers `GET /api/v1/tasks?status=due_today`. Displays a loading indicator on the 'Tasks List' screen until data is fetched."
+              },
+              {
+                "title": "Upcoming Tasks",
+                "metric_source": "TaskSummary.upcomingCount",
+                "visual_cue": "Calendar icon. Card background remains 'card_background'.",
+                "interaction": "Tap to view upcoming tasks this week.",
+                "system_response": "Navigates to 'Tasks List' screen. Triggers `GET /api/v1/tasks?status=upcoming`. Displays a loading indicator."
+              },
+              {
+                "title": "Completed This Week",
+                "metric_source": "TaskSummary.completedThisWeekCount",
+                "visual_cue": "Trophy/Star icon (using `secondary_accent_color`). Card background remains 'card_background'.",
+                "interaction": "Tap to view weekly productivity report.",
+                "system_response": "Navigates to 'Analytics & Reports' screen. Triggers `GET /api/v1/analytics/productivity?period=weekly`. Displays a loading indicator."
+              },
+              {
+                "title": "Overdue Tasks",
+                "metric_source": "TaskSummary.overdueCount",
+                "visual_cue": "Warning icon (using `warning_color`). Card background subtly tinted with `warning_color` (e.g., 10% opacity) if `overdueCount > 0`.",
+                "interaction": "Tap to view urgent overdue tasks.",
+                "system_response": "Navigates to 'Tasks List' screen. Triggers `GET /api/v1/tasks?status=overdue`. Displays a loading indicator."
+              }
+            ],
+            "accessibility": "Each card is a distinct, tappable element with a minimum touch target of 48x48dp. Semantic headings for screen readers (h2_card_titles). Color used for status indication (e.g., red for overdue) is always accompanied by a clear icon and text label to ensure usability for color-blind users."
+          }
+        ]
+      },
+      {
+        "name": "Productivity Visualization & Insights",
+        "elements": [
+          {
+            "type": "Weekly Productivity Chart",
+            "element_id": "productivity_chart",
+            "description": "A simple line or bar chart visualizing task completion trends over the last 7 days. Data sourced from `weeklyProductivityTrend` (array of `ProductivityTrendItem`). X-axis shows days, Y-axis shows task counts.",
+            "interaction": "Tapping the chart navigates to a dedicated 'Analytics & Reports' screen for more detailed insights.",
+            "system_response": "Navigates to 'Analytics & Reports' screen. Triggers `GET /api/v1/analytics/productivity`. Displays a loading indicator.",
+            "accessibility": "Interactive elements on the chart are accessible (e.g., individual bars/points can be tapped for tooltips). Provides a high-level overview; detailed data is available on tap. Content description: 'Weekly Productivity Chart, showing tasks completed per day over the last 7 days. Tap for detailed analytics.'"
+          },
+          {
+            "type": "Project Progress Overview (Optional)",
+            "element_id": "project_progress_overview",
+            "description": "Small, scrollable list or carousel of top projects with their completion percentage. Data sourced from `projectOverviews`.",
+            "interaction": "Tapping a project item navigates to the 'Project Details' screen, showing tasks filtered by that project.",
+            "system_response": "Navigates to 'Tasks List' screen. Triggers `GET /api/v1/tasks?projectId={projectId}`. Displays a loading indicator.",
+            "accessibility": "Clearly labeled progress bars. Each project item is tappable to navigate to project details. Content description: 'Project [Project Name], [X]% complete. Tap to view project details.'"
+          }
+        ]
+      },
+      {
+        "name": "Quick Actions & Navigation",
+        "elements": [
+          {
+            "type": "Floating Action Button (FAB)",
+            "element_id": "add_task_fab",
+            "position": "Bottom-Right",
+            "description": "Prominent '+' button for quickly adding a new task.",
+            "interaction": "Tapping the FAB opens a 'Task Creation' modal or navigates to a new 'Task Creation' screen.",
+            "system_response": "On successful task creation, triggers `POST /api/v1/tasks` and refreshes the dashboard data (implicitly via `GET /api/v1/dashboard` or local state update). Displays success/error toast message.",
+            "accessibility": "Large touch target (56x56dp). Content description: 'Add New Task'."
+          },
+          {
+            "type": "Bottom Navigation Bar",
+            "element_id": "bottom_nav_bar",
+            "position": "Bottom-Fixed",
+            "description": "Standard navigation with icons and labels for Home (active), Tasks, Calendar, Projects, and Profile/Settings. The 'Home' icon is highlighted to indicate the current screen.",
+            "interaction": "Tapping an icon transitions to the corresponding main section of the app.",
+            "system_response": "Seamlessly transitions to the target screen (e.g., 'Tasks List', 'Calendar', 'Projects', 'User Profile'). No direct API call from navigation bar, but subsequent screen might fetch data.",
+            "accessibility": "Clearly labeled icons. Active state has distinct visual feedback (e.g., color change, larger icon). All buttons are tappable with 48x48dp minimum touch targets. Uses ARIA attributes for current page indication."
+          }
+        ]
+      },
+      {
+        "name": "Loading & Error States",
+        "elements": [
+          {
+            "type": "Skeleton Loading State",
+            "element_id": "dashboard_skeleton_loader",
+            "description": "Displayed on initial load or data refresh. Placeholder shapes mimic the layout of each section (greeting, cards, charts) to indicate content is loading.",
+            "interaction": "None (display only).",
+            "system_response": "Replaced by actual content once `GET /api/v1/dashboard` successfully returns data.",
+            "accessibility": "Screen readers should announce 'Loading dashboard content...'."
+          },
+          {
+            "type": "Error Message / Retry",
+            "element_id": "dashboard_error_state",
+            "description": "Displayed if `GET /api/v1/dashboard` fails. Shows a friendly error message and a 'Retry' button.",
+            "interaction": "Tapping 'Retry' button re-attempts the `GET /api/v1/dashboard` API call.",
+            "system_response": "If successful, transitions to normal dashboard view. If failed again, displays the error message.",
+            "accessibility": "Error message is clearly visible and announced. 'Retry' button has clear content description."
+          }
+        ]
+      }
+    ]
+  },
+  "web_ui_layout": {
+    "screen_name": "System Overview (Dashboard)",
+    "description": "Adapted for larger screens, the web layout provides more space for information density and persistent navigation, optimizing for desktop productivity.",
+    "layout_sections": [
+      {
+        "name": "Persistent Side Navigation",
+        "elements": [
+          {
+            "type": "Navigation Menu",
+            "element_id": "side_nav_menu",
+            "position": "Left-Fixed",
+            "description": "A vertical navigation bar with icons and text labels for Home (active), Tasks, Calendar, Projects, and Settings/Profile. Provides quick access to main app sections.",
+            "interaction": "Clicking a menu item navigates to the corresponding screen. The active item is highlighted.",
+            "system_response": "Transitions to the target screen.",
+            "accessibility": "Keyboard navigable. Clearly labeled. Active state clearly indicated via color and background. ARIA attributes for current page."
+          }
+        ]
+      },
+      {
+        "name": "Top Bar & Greeting",
+        "elements": [
+          {
+            "type": "Greeting Text",
+            "element_id": "web_greeting_text",
+            "position": "Top-Left (main content area)",
+            "description": "Prominent greeting, e.g., 'Good Morning, [User Name]!', populated from `UserProfile.name`.",
+            "interaction": "None.",
+            "system_response": "Dynamic update based on time and user data.",
+            "accessibility": "High contrast, appropriate font size for a heading."
+          },
+          {
+            "type": "Search Bar",
+            "element_id": "global_search_bar",
+            "position": "Top-Center (main content area)",
+            "description": "Global search input field for tasks, projects, etc.",
+            "interaction": "Typing triggers search suggestions; pressing Enter performs a full search.",
+            "system_response": "Triggers `GET /api/v1/search?query=...` (assuming a search API exists). Displays search results.",
+            "accessibility": "Clear label, placeholder text, keyboard accessible."
+          },
+          {
+            "type": "Notification Icon",
+            "element_id": "web_notification_icon",
+            "position": "Top-Right (main content area)",
+            "description": "Icon for notifications, displays badge with `NotificationSummary.unreadCount`.",
+            "interaction": "Clicking opens a notification dropdown/modal.",
+            "system_response": "Displays notifications.",
+            "accessibility": "Clear content description, keyboard accessible."
+          },
+          {
+            "type": "Avatar/Profile Dropdown",
+            "element_id": "web_user_avatar_dropdown",
+            "position": "Top-Right (main content area)",
+            "description": "User avatar with a dropdown menu for profile, settings, logout.",
+            "interaction": "Clicking the avatar opens a dropdown menu.",
+            "system_response": "Displays menu options.",
+            "accessibility": "Keyboard accessible dropdown, clear labels for menu items."
+          }
+        ]
+      },
+      {
+        "name": "Dashboard Content Area",
+        "elements": [
+          {
+            "type": "Summary Cards (Grid)",
+            "element_id": "web_summary_cards_grid",
+            "description": "Larger, more detailed summary cards arranged in a responsive grid. Data from `TaskSummary`.",
+            "cards": [
+              {
+                "title": "Tasks Due Today",
+                "metric_source": "TaskSummary.dueTodayCount",
+                "visual_cue": "Prominent icon and value. Background `card_background`.",
+                "interaction": "Click to view filtered tasks.",
+                "system_response": "Navigates to 'Tasks List' screen (`GET /api/v1/tasks?status=due_today`)."
+              },
+              {
+                "title": "Upcoming Tasks",
+                "metric_source": "TaskSummary.upcomingCount",
+                "visual_cue": "Prominent icon and value. Background `card_background`.",
+                "interaction": "Click to view upcoming tasks.",
+                "system_response": "Navigates to 'Tasks List' screen (`GET /api/v1/tasks?status=upcoming`)."
+              },
+              {
+                "title": "Completed This Week",
+                "metric_source": "TaskSummary.completedThisWeekCount",
+                "visual_cue": "Prominent icon and value. Background `card_background`.",
+                "interaction": "Click to view productivity report.",
+                "system_response": "Navigates to 'Analytics & Reports' (`GET /api/v1/analytics/productivity?period=weekly`)."
+              },
+              {
+                "title": "Overdue Tasks",
+                "metric_source": "TaskSummary.overdueCount",
+                "visual_cue": "Warning icon (`warning_color`) and value. Card background subtly tinted with `warning_color` if `overdueCount > 0`.",
+                "interaction": "Click to view urgent overdue tasks.",
+                "system_response": "Navigates to 'Tasks List' screen (`GET /api/v1/tasks?status=overdue`)."
+              }
+            ],
+            "accessibility": "Each card is a clickable element. Semantic headings. Color cues are reinforced by text and icons."
+          },
+          {
+            "type": "Productivity Chart & Insights Section",
+            "element_id": "web_productivity_insights",
+            "description": "A larger, more interactive chart area for productivity trends, potentially including monthly/yearly views. Data from `weeklyProductivityTrend` and `GET /api/v1/analytics/productivity`.",
+            "interaction": "Hover for tooltips, click for detailed view. Dropdowns for changing period (weekly, monthly, yearly).",
+            "system_response": "Updates chart data based on selected period (`GET /api/v1/analytics/productivity?period=...`).",
+            "accessibility": "Chart elements are interactive and accessible via keyboard. Provides alternative text descriptions for screen readers."
+          },
+          {
+            "type": "Quick Add Task Card",
+            "element_id": "web_quick_add_task_card",
+            "description": "A dedicated card with an input field and 'Add Task' button for rapid task creation, replacing the FAB.",
+            "interaction": "Typing in input field and clicking 'Add Task' button.",
+            "system_response": "Triggers `POST /api/v1/tasks`. Displays success/error feedback. Refreshes dashboard data.",
+            "accessibility": "Input field has a clear label. Button is clearly labeled and keyboard accessible."
+          },
+          {
+            "type": "Recent Activity Feed (Optional)",
+            "element_id": "recent_activity_feed",
+            "description": "A scrollable list showing recently completed tasks, upcoming deadlines, or project updates.",
+            "interaction": "Clicking an item navigates to its detail page.",
+            "system_response": "Navigates to task/project detail.",
+            "accessibility": "Each item is clearly labeled and clickable."
+          }
+        ]
+      }
+    ]
+  },
+  "ui_flow": {
+    "system_overview_flow": [
+      {
+        "step": "1. App Launch / Login (Initial Data Load)",
+        "action": "User opens the app or logs in.",
+        "outcome": "Displays 'DashboardSkeletonLoader'. Triggers `GET /api/v1/dashboard`. Once data is received (DashboardData), 'DashboardScreen' populates with live data. If API fails, 'DashboardErrorState' is shown.",
+        "visual_feedback": "Skeleton loader -> populated dashboard or error message."
+      },
+      {
+        "step": "2. Data Refresh (Pull-to-Refresh / Manual Refresh)",
+        "action": "User pulls down on the mobile screen or clicks a refresh icon on web.",
+        "outcome": "Triggers `GET /api/v1/dashboard` again. Refreshes dashboard data.",
+        "visual_feedback": "Pull-to-refresh indicator (spinner at top) on mobile. Subtle loading indicator on web. Data on cards/charts updates seamlessly."
+      },
+      {
+        "step": "3. Explore Summary Cards (e.g., 'Tasks Due Today')",
+        "action": "User taps on the 'Tasks Due Today' Summary Card.",
+        "outcome": "Navigates to a filtered 'Tasks List' screen. The 'Tasks List' screen immediately triggers `GET /api/v1/tasks?status=due_today`.",
+        "visual_feedback": "Smooth slide transition to 'Tasks List' screen. 'Tasks List' shows a skeleton loader/spinner until its data is fetched. Once loaded, displays tasks due today."
+      },
+      {
+        "step": "4. View Detailed Analytics",
+        "action": "User taps/clicks on the 'Weekly Productivity Chart'.",
+        "outcome": "Navigates to a dedicated 'Analytics & Reports' screen. This screen triggers `GET /api/v1/analytics/productivity?period=weekly` (or default period).",
+        "visual_feedback": "Transition to 'Analytics & Reports' screen. A loading indicator is shown until the detailed analytics data is rendered."
+      },
+      {
+        "step": "5. Add New Task (FAB / Quick Add Card)",
+        "action": "User taps the 'Add New Task' FAB (mobile) or uses the 'Quick Add Task Card' (web).",
+        "outcome": "A 'Task Creation' modal (mobile) or inline form (web) appears. User inputs task details and submits.",
+        "visual_feedback": "Modal slides up/form appears. Input validation feedback (e.g., required fields).",
+        "system_response": "On submission, triggers `POST /api/v1/tasks` with task details. If successful, the modal/form closes, a success toast message appears ('Task added!'), and the dashboard data is refreshed (triggering `GET /api/v1/dashboard` or updating local state). If failed, an error toast message appears ('Failed to add task.')."
+      },
+      {
+        "step": "6. Navigate Main Sections (Bottom Nav Bar / Side Nav)",
+        "action": "User taps/clicks on an icon/item in the 'Bottom Navigation Bar' (mobile) or 'Side Navigation Menu' (web).",
+        "outcome": "Seamlessly transitions to the corresponding main section of the app (e.g., 'Tasks List', 'Calendar', 'Projects').",
+        "visual_feedback": "Standard navigation transition. The newly active navigation item is highlighted."
+      }
+    ]
+  },
+  "color_palette": {
+    "primary_brand_color": "#4A90E2",
+    "secondary_accent_color": "#50C878",
+    "warning_color": "#E74C3C",
+    "background_colors": {
+      "primary_background": "#F8F9FA",
+      "card_background": "#FFFFFF",
+      "separator_line": "#E0E0E0",
+      "chart_fill": "#EBF4FD",
+      "overdue_card_tint": "rgba(231, 76, 60, 0.1)"
+    },
+    "text_colors": {
+      "heading_text": "#2C3E50",
+      "body_text": "#555555",
+      "secondary_text": "#888888",
+      "disabled_text": "#AAAAAA",
+      "on_primary_color": "#FFFFFF"
+    },
+    "icon_colors": {
+      "default_icon": "#888888",
+      "active_icon": "#4A90E2",
+      "warning_icon": "#E74C3C"
+    },
+    "accessibility_notes": "All color combinations ensure a minimum WCAG 2.1 AA contrast ratio (4.5:1 for small text, 3:1 for large text/UI components). Semantic colors (red for overdue, green for completed) are always accompanied by an icon or text label to ensure usability for color-blind users and to provide redundant cues."
+  },
+  "typography": {
+    "font_family": "Inter",
+    "hierarchy": {
+      "h1_app_title_greeting": {
+        "size": "28px",
+        "weight": "Bold",
+        "line_height": "1.2",
+        "usage": "Main screen greeting (e.g., 'Good Morning, [User Name]!')."
+      },
+      "h2_card_titles": {
+        "size": "18px",
+        "weight": "SemiBold",
+        "line_height": "1.3",
+        "usage": "Titles for summary cards (e.g., 'Tasks Due Today', 'Upcoming Tasks')."
+      },
+      "h3_metrics_large": {
+        "size": "48px",
+        "weight": "Bold",
+        "line_height": "1",
+        "usage": "Large numbers on summary cards (e.g., '7', '12')."
+      },
+      "body_text": {
+        "size": "16px",
+        "weight": "Regular",
+        "line_height": "1.5",
+        "usage": "General body text, descriptions."
+      },
+      "label_text": {
+        "size": "14px",
+        "weight": "Medium",
+        "line_height": "1.4",
+        "usage": "Labels for inputs, navigation items, small card descriptions."
+      },
+      "small_text_captions": {
+        "size": "12px",
+        "weight": "Regular",
+        "line_height": "1.6",
+        "usage": "Captions, metadata, very small helper text."
+      }
+    },
+    "accessibility_notes": "Utilizes a clean sans-serif font (Inter) for maximum readability across various screen sizes and resolutions. Text scaling is fully supported, ensuring layouts adapt gracefully when system font sizes are increased. Adequate line height (1.2 to 1.6) and letter spacing (default) are maintained for optimal legibility and to prevent text from feeling cramped. All text elements use defined color contrasts."
+  },
+  "interactive_elements_detailed_specs": [
+    {
+      "element_id": "user_avatar",
+      "type": "Circular Image Button",
+      "trigger": "Tap/Click",
+      "expected_user_action": "Access profile settings.",
+      "system_response": "Navigate to 'User Profile & Settings' screen. Initial data for this screen will be fetched via `GET /api/v1/users/{userId}`. A loading state will be displayed on the 'User Profile' screen until data is ready.",
+      "visual_feedback": "Slight scale down on tap, then navigation transition. No direct visual feedback on avatar itself other than the tap animation.",
+      "accessibility_notes": "Accessible as a button. ARIA label: 'User Profile. Tap to view and edit your profile.'"
+    },
+    {
+      "element_id": "notification_settings_icon",
+      "type": "Icon Button",
+      "trigger": "Tap/Click",
+      "expected_user_action": "View notifications or access general settings.",
+      "system_response": "If unread notifications (`NotificationSummary.unreadCount > 0`), navigate to 'Notifications' screen. Otherwise, navigate to 'Settings' screen.",
+      "visual_feedback": "Icon slightly darkens/changes color on press. Badge (if present) might animate.",
+      "accessibility_notes": "Accessible as a button. ARIA label: 'Notifications. You have [X] unread notifications.' or 'Settings.'"
+    },
+    {
+      "element_id": "summary_cards_grid",
+      "type": "Tappable/Clickable Cards",
+      "trigger": "Tap/Click",
+      "expected_user_action": "View a filtered list of tasks corresponding to the card's metric.",
+      "system_response": "Navigate to 'Tasks List' screen. The destination screen will immediately make an API call to `GET /api/v1/tasks` with the appropriate `status` or `projectId` filter (e.g., `?status=due_today`). A loading indicator will be shown on the 'Tasks List' screen until task data is returned.",
+      "visual_feedback": "Card background briefly darkens or shows a ripple effect on tap/click. Smooth navigation transition.",
+      "accessibility_notes": "Each card is a distinct, focusable interactive element. ARIA role 'button' or 'link'. Content description includes the card title and metric, e.g., 'Tasks Due Today, 7 tasks. Tap to view.' Semantic headings for card titles."
+    },
+    {
+      "element_id": "productivity_chart",
+      "type": "Interactive Chart",
+      "trigger": "Tap/Click (mobile), Click (web)",
+      "expected_user_action": "Access detailed productivity analytics.",
+      "system_response": "Navigate to 'Analytics & Reports' screen. This screen will trigger `GET /api/v1/analytics/productivity` with a default period (e.g., 'weekly').",
+      "visual_feedback": "Chart might show a slight press animation. Navigation transition. 'Analytics & Reports' screen shows a loading state.",
+      "accessibility_notes": "Chart is accessible. Provides a high-level overview. Detailed data is available on tap. ARIA label: 'Weekly Productivity Chart. Tap for detailed analytics.'"
+    },
+    {
+      "element_id": "add_task_fab",
+      "type": "Floating Action Button (FAB)",
+      "trigger": "Tap/Click",
+      "expected_user_action": "Quickly add a new task.",
+      "system_response": "Opens a 'Task Creation' modal/screen. Upon successful form submission, `POST /api/v1/tasks` is called. If successful, the modal/screen closes, a 'Task added successfully!' toast appears, and the dashboard data is refreshed (e.g., via `GET /api/v1/dashboard`). If an error occurs, an 'Error adding task.' toast appears.",
+      "visual_feedback": "FAB slightly scales down on press. Modal/form slides up. Toast messages for success/error.",
+      "accessibility_notes": "Large touch target (56x56dp). ARIA label: 'Add New Task'. Keyboard focusable."
+    },
+    {
+      "element_id": "bottom_nav_bar",
+      "type": "Navigation Bar",
+      "trigger": "Tap/Click",
+      "expected_user_action": "Navigate between main sections of the application.",
+      "system_response": "Transitions to the corresponding screen (e.g., 'Tasks List', 'Calendar').",
+      "visual_feedback": "Tapped icon/label changes to `active_icon` color and potentially scales slightly. The active tab remains highlighted.",
+      "accessibility_notes": "Each navigation item is a button with a clear label. Active state is clearly indicated for screen readers (e.g., `aria-current='page'`). Keyboard navigable."
+    }
+  ],
+  "accessibility_guidelines_overall": {
+    "heading": "Comprehensive Accessibility Guidelines for Aura Dashboard",
+    "guidelines": [
+      "**Keyboard Navigation:** All interactive elements (buttons, links, form fields, cards) must be fully navigable and operable using only a keyboard. Focus indicators must be clearly visible.",
+      "**Screen Reader Compatibility:** All UI elements must have appropriate ARIA roles, states, and properties. Images must have `alt` text. Dynamic content updates should be announced using ARIA live regions.",
+      "**Color Contrast:** Adhere strictly to WCAG 2.1 AA guidelines for color contrast (minimum 4.5:1 for normal text, 3:1 for large text and graphical objects). Semantic colors (e.g., red for overdue) are always supported by non-color cues (icons, text labels).",
+      "**Scalable Text:** Ensure that text can be resized up to 200% without loss of content or functionality. Use relative units (e.g., `rem`, `em`, `dp`, `sp`) for font sizes and spacing where appropriate.",
+      "**Touch Target Size:** All interactive elements on mobile (buttons, cards, icons) must have a minimum touch target size of 48x48dp to ensure ease of use for all users, including those with motor impairments.",
+      "**Focus Management:** When modals or new screens open, focus should be programmatically moved to the first interactive element within the new context. When a modal closes, focus should return to the element that triggered it.",
+      "**Descriptive Labels:** All form fields, buttons, and interactive elements must have clear, concise, and descriptive labels, either visually or via ARIA attributes.",
+      "**Error Handling:** Error messages should be clear, concise, and provide actionable advice. They should be announced to screen readers. Form validation errors should be clearly associated with their respective input fields.",
+      "**Consistent Layout & Navigation:** Maintain predictable and consistent navigation patterns and layout across the application to reduce cognitive load and improve learnability.",
+      "**Semantic HTML/Component Structure:** Use semantic HTML5 elements (e.g., `<header>`, `<nav>`, `<main>`, `<section>`, `<footer>`) and follow established component patterns to create a logical structure for assistive technologies."
+    ]
+  }
+}
+
+
+
+Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project.

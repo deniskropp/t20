@@ -1,0 +1,32 @@
+{
+    "steps": [
+        {
+            "role": "Prompt Engineer",
+            "task": "Refine the high-level goal 'System Overview' into specific, actionable sub-goals and information requirements for each team member, ensuring clarity and scope definition."
+        },
+        {
+            "role": "Designer",
+            "task": "Based on the refined requirements, conceptualize aesthetic layouts and UI flows for presenting the 'System Overview', focusing on visual hierarchy, readability, and accessibility."
+        },
+        {
+            "role": "Engineer",
+            "task": "Analyze the proposed design concepts and define the underlying data structures, APIs, and architectural components required to implement the 'System Overview' effectively."
+        },
+        {
+            "role": "Prompt Engineer",
+            "task": "Develop and optimize prompts for the Designer and Engineer to generate detailed specifications (e.g., design assets, code snippets, data schemas) that align with the 'System Overview' requirements."
+        },
+        {
+            "role": "Designer",
+            "task": "Generate detailed design specifications, including color palettes, typography, and interactive elements, for the 'System Overview' based on the refined prompts."
+        },
+        {
+            "role": "Engineer",
+            "task": "Create a modular and performant code implementation plan for the 'System Overview', incorporating responsive design principles and accessibility considerations based on the design specifications."
+        },
+        {
+            "role": "Prompt Engineer",
+            "task": "Review the generated design specifications and implementation plan, providing feedback to ensure all aspects contribute cohesively to the 'System Overview' and meet the initial refined goals."
+        }
+    ]
+}

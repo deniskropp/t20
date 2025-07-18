@@ -1,0 +1,280 @@
+(.venv) [einrichten@q3 ~/t20]$ aichat -mgemini:gemini-2.5-flash-lite-preview-06-17  '```{ "high-level goal": "code generation", "conceptual_framework": "echo" }```' < TAS_PromptPlan.txt
+```json
+{
+  "high-level goal": "code generation",
+  "conceptual_framework": {
+    "definition": "Task Agnostic Steps (TAS) are fundamental, abstract actions that can be applied across a wide range of tasks, domains, and industries. They represent the 'how' of performing a task, rather than the specific 'what' or 'why'.",
+    "characteristics": {
+      "Generality": "Applicable to numerous unrelated tasks and domains.",
+      "Reusability": "Can be used as building blocks in various processes.",
+      "Abstraction": "Focuses on the method or approach, not specific content or outcomes.",
+      "Action-Oriented": "Expressed as clear, executable actions (verb-noun phrases).",
+      "Independence": "Represents a distinct, logical unit of work or decision.",
+      "Sequential Potential": "Can often be sequenced with other TAS to form a larger process."
+    },
+    "purpose": "To break down complex goals into a standardized, reusable set of fundamental actions, enabling more systematic process design, automation, and knowledge sharing.",
+    "initial_identification_criteria": [
+      "Does it describe an action that could be performed in multiple, seemingly unrelated tasks or industries?",
+      "Is it free from domain-specific terminology, proper nouns, or highly specific details?",
+      "Does it focus on the 'method' or 'approach' rather than the 'specific outcome' or 'subject matter'?",
+      "Can it be expressed as a clear, concise verb-noun phrase?",
+      "Does it represent a logical, self-contained unit of work or decision within a broader process?",
+      "Could it be a step in a general problem-solving, project management, or design methodology?"
+    ]
+  },
+  "JSON schema": {
+    "type": "array",
+    "items": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Unique identifier for the Task Agnostic Step."
+        },
+        "name": {
+          "type": "string",
+          "description": "A concise, action-oriented verb-noun phrase representing the step.",
+          "minLength": 5,
+          "maxLength": 100
+        },
+        "description": {
+          "type": "string",
+          "description": "A detailed explanation of the step's core purpose, typical actions involved, and what it aims to achieve. Focus on the 'how' and general applicability.",
+          "minLength": 50,
+          "maxLength": 500
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "Problem Framing",
+            "Information Gathering",
+            "Analysis",
+            "Design",
+            "Implementation",
+            "Testing",
+            "Deployment",
+            "Maintenance",
+            "Decision Making",
+            "Planning",
+            "Communication",
+            "Management",
+            "Evaluation",
+            "Refinement",
+            "Abstraction",
+            "System Design",
+            "Data Handling",
+            "Process Optimization"
+          ],
+          "description": "The general category to which the step belongs."
+        },
+        "purpose": {
+          "type": "string",
+          "description": "A brief, high-level summary of the step's primary goal.",
+          "minLength": 10,
+          "maxLength": 150
+        },
+        "keywords": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Relevant, general keywords that describe the step.",
+          "minItems": 1,
+          "maxItems": 10
+        },
+        "applicability_notes": {
+          "type": "string",
+          "description": "Notes on the step's generality, common patterns, or variations across domains without being specific.",
+          "minLength": 20,
+          "maxLength": 300
+        },
+        "examples_of_usage": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Abstract examples illustrating the step's application in different, non-domain-specific scenarios.",
+          "minItems": 2,
+          "maxItems": 5
+        },
+        "typical_inputs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Abstract types of information or pre-conditions needed to start this step.",
+          "minItems": 1,
+          "maxItems": 5
+        },
+        "typical_outputs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Abstract types of information or post-conditions produced upon completing this step.",
+          "minItems": 1,
+          "maxItems": 5
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "description",
+        "category",
+        "purpose"
+      ]
+    }
+  },
+  "design_guidelines": {
+    "clarity_conciseness": "All text should be clear, grammatically correct, and free of jargon. Names should be short and impactful. Descriptions should be thorough but not overly verbose.",
+    "visual_hierarchy": "Use clear headings and formatting (like bullet points) within descriptions and examples to improve readability. The `name` should be the primary identifier, followed by `purpose`.",
+    "presentation": {
+      "name": "Concise, action-oriented verb-noun phrase.",
+      "purpose": "Sub-heading or bolded paragraph summarizing the core goal.",
+      "description": "Detailed explanation of the step's core purpose, typical actions involved, and what it aims to achieve. Focus on the 'how' and general applicability.",
+      "keywords": "List of comma-separated or bulleted general terms.",
+      "applicability_notes": "Collapsible section providing context on generality and variations.",
+      "examples_of_usage": "Bulleted list of abstract scenarios.",
+      "typical_inputs": "Bulleted list of abstract data types or conditions.",
+      "typical_outputs": "Bulleted list of abstract data types or outcomes."
+    }
+  }
+}
+```
+```json
+[
+  {
+    "id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+    "name": "Define Requirements",
+    "description": "This step involves identifying and documenting the essential needs, constraints, and desired outcomes for a system or process. It focuses on understanding what needs to be built or achieved, gathering input from stakeholders, and translating those needs into clear, actionable specifications.",
+    "category": "Problem Framing",
+    "purpose": "To establish a clear understanding of what needs to be generated or built.",
+    "keywords": [
+      "requirements",
+      "specifications",
+      "needs",
+      "definition",
+      "scoping"
+    ],
+    "applicability_notes": "This step is fundamental to any project, whether it's software development, process design, or content creation. The nature of requirements will vary greatly, but the act of defining them remains consistent.",
+    "examples_of_usage": [
+      "Specifying the functionality of a new software module.",
+      "Outlining the desired features of a physical product.",
+      "Defining the parameters for an automated workflow."
+    ],
+    "typical_inputs": [
+      "User needs",
+      "Business objectives",
+      "Stakeholder feedback",
+      "Existing system documentation"
+    ],
+    "typical_outputs": [
+      "Functional requirements",
+      "Non-functional requirements",
+      "User stories",
+      "Use cases",
+      "Specification documents"
+    ]
+  },
+  {
+    "id": "b2c3d4e5-f6a7-8901-2345-67890abcdef0",
+    "name": "Generate Code",
+    "description": "This step involves the creation of source code based on predefined requirements, specifications, or models. It encompasses writing, assembling, and structuring code elements to fulfill the defined functionality. This can be done manually or through automated tools.",
+    "category": "Implementation",
+    "purpose": "To produce executable or foundational code based on specifications.",
+    "keywords": [
+      "code",
+      "generation",
+      "implementation",
+      "programming",
+      "scripting",
+      "development"
+    ],
+    "applicability_notes": "This is the core step for 'code generation' but is also applicable in broader contexts where structured output is created based on templates or rules, such as generating configuration files or data schemas.",
+    "examples_of_usage": [
+      "Writing Python scripts to automate data processing.",
+      "Using a code generator tool to create boilerplate code for a web application.",
+      "Developing a script to generate test data."
+    ],
+    "typical_inputs": [
+      "Defined requirements",
+      "Design specifications",
+      "Templates",
+      "Code libraries",
+      "Algorithms"
+    ],
+    "typical_outputs": [
+      "Source code files",
+      "Executable programs",
+      "Scripts",
+      "Code modules",
+      "APIs"
+    ]
+  },
+  {
+    "id": "c3d4e5f6-a7b8-9012-3456-7890abcdef01",
+    "name": "Validate Output",
+    "description": "This step involves verifying that the generated output (in this case, code) meets the specified requirements and quality standards. It includes checking for correctness, completeness, adherence to coding standards, and absence of critical errors or vulnerabilities.",
+    "category": "Testing",
+    "purpose": "To ensure the generated code is correct, functional, and meets quality standards.",
+    "keywords": [
+      "validation",
+      "verification",
+      "testing",
+      "quality assurance",
+      "code review"
+    ],
+    "applicability_notes": "This step is crucial for any generation process. It can range from simple checks to complex automated testing suites, ensuring the integrity and usability of the created artifacts.",
+    "examples_of_usage": [
+      "Running unit tests against generated code.",
+      "Performing static code analysis to identify potential issues.",
+      "Manually reviewing generated code for logical errors."
+    ],
+    "typical_inputs": [
+      "Generated code",
+      "Test cases",
+      "Requirements specifications",
+      "Coding standards"
+    ],
+    "typical_outputs": [
+      "Test results",
+      "Bug reports",
+      "Validation reports",
+      "Pass/Fail status"
+    ]
+  },
+  {
+    "id": "d4e5f6a7-b8c9-0123-4567-890abcdef012",
+    "name": "Refine Generation Process",
+    "description": "This step involves analyzing the results of previous steps (requirements, generation, validation) to identify areas for improvement in the generation process itself. It may involve adjusting parameters, updating templates, or modifying the generation logic to produce better quality output more efficiently.",
+    "category": "Process Optimization",
+    "purpose": "To improve the efficiency and quality of the code generation process.",
+    "keywords": [
+      "refinement",
+      "optimization",
+      "iteration",
+      "improvement",
+      "feedback loop"
+    ],
+    "applicability_notes": "This step represents an iterative improvement cycle, common in many development and creation processes. It ensures that the generation mechanism adapts to feedback and evolving needs.",
+    "examples_of_usage": [
+      "Adjusting generation parameters based on validation errors.",
+      "Updating code templates to incorporate best practices.",
+      "Modifying the generation algorithm to handle edge cases more effectively."
+    ],
+    "typical_inputs": [
+      "Validation results",
+      "Performance metrics",
+      "User feedback",
+      "Updated requirements"
+    ],
+    "typical_outputs": [
+      "Revised generation logic",
+      "Updated templates",
+      "Improved parameters",
+      "New test cases"
+    ]
+  }
+]
+```

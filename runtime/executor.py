@@ -1,13 +1,36 @@
 import uuid
 import os
 import json
+import argparse
 from dataclasses import dataclass, field
 from typing import List, Dict, Any, Optional
 
 from google import genai
 from google.genai import types
+from dotenv import load_dotenv
 
 from runtime.loader import load_config, load_agent_templates, load_prompts
+
+load_dotenv()
+
+@dataclass
+class ExecutionContext:
+    """Holds the state and context for a multi-agent workflow."""
+    session: 'Session'
+    high_level_goal: str
+    plan: Dict[str, Any]
+    step_index: int = 0
+    artifacts: Dict[str, Any] = field(default_factory=dict)
+
+    def current_step(self):
+        """Returns the current step in the plan."""
+        return self.plan.get("steps", [])[self.step_index]
+
+    def record_artifact(self, key: str, value: Any, mem: bool = False):
+        """Records an artifact from a step's execution."""
+        if mem:
+            self.artifacts[f"step_{self.step_index}_{key}"] = value
+        self.session.add_artifact(f"step_{self.step_index}_{key}", value)
 
 @dataclass
 class Agent:
@@ -19,99 +42,188 @@ class Agent:
     system_prompt: str
     instance_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     team: Optional[List['Agent']] = None
+    client: Optional[genai.Client] = field(init=False, default=None)
 
     def __post_init__(self):
+        """Initializes the agent after it has been created."""
         print(f"Agent instance created: {self.name} (Role: {self.role}, Model: {self.model}, ID: {self.instance_id})")
-
-    def start_workflow(self, session: 'Session', initial_task: str):
-        """Initiates a workflow based on the agent's role."""
-        print(f"Workflow started by {self.name} in Session {session.session_id} for task: '{initial_task}'")
-        if self.role == 'Orchestrator' and self.team:
-            self.orchestrate_task(session, initial_task)
-        else:
-            self.execute_task(session, initial_task)
-
-    def execute_task(self, session: 'Session', task_description: str):
-        """Executes a task using the Generative AI model."""
-        print(f"Agent {self.name} is executing task: {task_description}")
-        session.add_artifact(f"{self.name}_task_desc.txt", task_description)
         try:
-            # Initialize the GenAI client (consider moving this to a more global/reusable place)
-            # Ensure GOOGLE_API_KEY environment variable is set for Gemini Developer API
-            # or GOOGLE_GENAI_USE_VERTEXAI, GOOGLE_CLOUD_PROJECT, GOOGLE_CLOUD_LOCATION for Vertex AI
-            client = genai.Client()
+            self.client = genai.Client()
+        except Exception as e:
+            print(f"Error initializing GenAI client for {self.name}: {e}")
 
-            response = client.models.generate_content(
+    def update_system_prompt(self, new_prompt: str):
+        """Updates the agent's system prompt."""
+        print(f"Agent {self.name}'s system prompt updated.")
+        self.system_prompt = new_prompt
+
+    def execute_task(self, context: ExecutionContext) -> Optional[str]:
+        """Executes a task using the Generative AI model."""
+        step = context.current_step()
+        task_description = step.get("task", "No task description provided.")
+        print(f"Agent {self.name} is executing task: {task_description}")
+
+        context.record_artifact(f"{self.name}_prompt.txt", self.system_prompt)
+
+        if not self.client:
+            result = f"Error: GenAI client not initialized for {self.name}."
+            print(result)
+            context.record_artifact(f"{self.name}_error.txt", result)
+            return result
+
+        task_prompt: List[str] = [
+            f"The overall goal is: '{context.high_level_goal}'",
+            f"Your role's specific goal is: '{self.goal}'\n"
+            f"Your specific sub-task is: '{task_description}'",
+        ]
+
+        previous_artifacts = "\n\n---\n\n".join(
+            f"Artifact from {key}:\n{value}"
+            for key, value in context.artifacts.items()
+        )
+        if previous_artifacts:
+            task_prompt.append(f"Please use the following outputs from the other agents as your input:\n\n{previous_artifacts}\n\n")
+
+        task_prompt.append(
+            f"Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project."
+        )
+
+
+        context.record_artifact(f"{self.name}_task.txt", "\n\n".join(task_prompt))
+
+        try:
+            response = self.client.models.generate_content(
                 model=self.model,
-                contents=[task_description],
+                contents=task_prompt,
                 config=types.GenerateContentConfig(
-                    system_instruction=self.system_prompt, # type: ignore
-                    temperature=0.7, # Example: adjust creativity
-                    #max_output_tokens=800, # Example: adjust response length
+                    system_instruction=self.system_prompt,
+                    temperature=0.7,
+                    response_mime_type='application/json' #if self.role == 'Prompt Engineer' else None
                 ),
             )
-
-            result = response.text
-            print(f"Agent {self.name} completed task. Output: {result[:200]}...") # Print first 200 chars
-
+            result = response.text or ''
+            print(f"Agent {self.name} completed task. Output: {result[:200]}...")
         except Exception as e:
             result = f"Error executing task for {self.name}: {e}"
             print(result)
 
-        session.add_artifact(f"{self.name}_task_result.txt", result)
+        return result
 
-    def invoke_model(self, session: 'Session', prompt: str) -> Dict[str, Any]:
-        """Simulates invoking the agent's language model to get a structured plan."""
-        print(f"Agent {self.name} is invoking its model to generate a plan.")
-        # In a real implementation, this would be an API call to the model specified in self.model.
-        # For this example, we'll return a hardcoded, structured plan based on the prompt.
-        
-        # Heuristic to generate a plausible plan based on the goal.
-        plan = {
-            "steps": [
-                {"role": agent.role, "task": f"Complete sub-task for goal: {prompt}"} for agent in self.team or []
-            ]
-        }
+class Orchestrator(Agent):
+    """An agent responsible for creating and managing a plan."""
 
-        # Save the generated plan as a session artifact for inspection.
-        session.add_artifact(f"{self.name}_generated_plan.json", plan)
+    def start_workflow(self, session: 'Session', initial_task: str):
+        """Initiates and manages the entire workflow."""
+        print(f"Orchestrator {self.name} is starting workflow for goal: '{initial_task}'")
+
+        plan = self._generate_plan(session, initial_task)
+        if not plan or "steps" not in plan:
+            print("Orchestration failed: Could not generate a valid plan.")
+            return
+
+        context = ExecutionContext(session=session, high_level_goal=initial_task, plan=plan)
+        team_by_role = {agent.role: agent for agent in self.team} if self.team else {}
+
+        while context.step_index < len(plan["steps"]):
+            step = context.current_step()
+            role = step.get("role")
+            delegate_agent = team_by_role.get(role)
+
+            if not delegate_agent:
+                print(f"Warning: No agent found with role '{role}'. Skipping step {context.step_index}.")
+                context.step_index += 1
+                continue
+
+            if delegate_agent.role == 'Prompt Engineer':
+                print(f"Orchestrator detected special role: {delegate_agent.role}. Preparing inputs.")
+
+            result = delegate_agent.execute_task(context)
+            if result:
+                context.record_artifact(f"{delegate_agent.name}_result.txt", result, True)
+                if delegate_agent.role == 'Prompt Engineer':
+                    try:
+                        response = json.loads(result)
+                        self._check_new_prompts(session, response)
+                        for key, value in response.items() if isinstance(response, dict) else []:
+                            if key == "refined_prompts" or key == "initial_prompts":
+                                if "target_agent_name" in value:
+                                    self._check_new_prompts(session, value)
+                                else:
+                                    self._check_new_prompts(session, list(value))
+                    except json.JSONDecodeError:
+                        print("Prompt Engineer's output was not a valid JSON for prompt update.")
+
+            context.step_index += 1
+
+        print("Orchestrator has completed the workflow.")
+
+    def _check_new_prompts(self, session: 'Session', obj: dict | list):
+        if isinstance(obj, dict):
+            self._check_new_prompt(session, obj)
+        else:
+            for o in obj:
+                self._check_new_prompt(session, o)
+
+    def _check_new_prompt(self, session: 'Session', obj: dict):
+        if "target_agent_name" in obj and "new_system_prompt" in obj:
+            target_agent_name = obj.get("target_agent_name")
+            new_system_prompt = obj.get("new_system_prompt")
+
+            if target_agent_name and new_system_prompt:
+                target_agent = next((a for a in self.team or () if a.name == target_agent_name), None)
+                if not target_agent:
+                    target_agent = next((a for a in session.agents if a.name == target_agent_name), None)
+
+                if target_agent:
+                    target_agent.update_system_prompt(new_system_prompt)
+                else:
+                    print(f"Warning: Target agent '{target_agent_name}' not found for prompt update.")
+            #else:
+            #    print("Prompt Engineer's output did not contain valid prompt update data.")
+
+    def _generate_plan(self, session: 'Session', high_level_goal: str) -> Dict[str, Any]:
+        """Invokes the language model to get a structured plan."""
+        print(f"Orchestrator {self.name} is generating a plan for: '{high_level_goal}'")
+        if not self.client or not self.team:
+            print("Error: Orchestrator client or team not initialized.")
+            return {}
+
+        team_description = "\n".join(
+            f"- Name: '{agent.name}', Role: `{agent.role}`, Goal: {agent.goal}" for agent in self.team
+        )
+        planning_prompt = [
+            f"We are meta-artificial intelligence, working cohesively to create a detailed, step-by-step execution plan based on a high-level goal.",
+
+            f"The final output must be a single JSON object containing a 'steps' key, where 'steps' is a list of tasks.\n"
+            f"Each task in the list must have a 'role' and a 'task' description.\n"
+            f"The 'role' in each step must exactly match one of the roles from the team list provided below. Do not use the agent's name.\n"
+            f"Leverage the team members' goals to create a collaborative plan. For instance, a 'Prompt Engineer' should be used to refine the system prompts of other agents.",
+
+            f"High-Level Goal: '{high_level_goal}'\n"
+            f"Available Team Members:\n{team_description}",
+
+            f"Generate the JSON plan."
+        ]
+        session.add_artifact("planning_prompt.txt", "\n\n".join(planning_prompt))
+
+        try:
+            response = self.client.models.generate_content(
+                model=self.model,
+                contents=planning_prompt,
+                config=types.GenerateContentConfig(
+                    system_instruction=self.system_prompt,
+                    response_mime_type="application/json",
+                    temperature=0.1,
+                ),
+            )
+            plan = json.loads(response.text or '{}')
+        except Exception as e:
+            print(f"Error generating plan for {self.name}: {e}")
+            plan = {"error": str(e)}
+
+        session.add_artifact("initial_plan.json", plan)
         return plan
 
-    def orchestrate_task(self, session: 'Session', high_level_goal: str):
-        """Orchestrates a task by generating a plan and delegating to team members."""
-        print(f"Orchestrator {self.name} is breaking down goal: '{high_level_goal}'")
-        
-        # 1. Generate a prompt to create a plan.
-        team_description = "\n".join([f"- {agent.name} (Role: {agent.role})" for agent in self.team or []])
-        planning_prompt = (
-            f"Given the high-level goal: '{high_level_goal}', and the available team members:\n"
-            f"{team_description}\n\n"
-            "Create a step-by-step JSON plan to achieve this goal. Each step should specify the 'role' of the agent responsible and the 'task' description."
-        )
-
-        # 2. Invoke the model to get a structured plan.
-        plan = self.invoke_model(session, planning_prompt)
-        session.add_artifact("initial_plan.json", plan)
-
-        # 3. Delegate tasks based on the generated plan.
-        if "steps" in plan and self.team:
-            for step in plan["steps"]:
-                role_to_find = step.get("role")
-                task_to_delegate = step.get("task")
-                
-                if not role_to_find or not task_to_delegate:
-                    print(f"Warning: Skipping invalid step in plan: {step}")
-                    continue
-
-                # Find the correct agent in the team by role.
-                delegate_agent = next((agent for agent in self.team if agent.role == role_to_find), None)
-                
-                if delegate_agent:
-                    delegate_agent.execute_task(session, task_to_delegate)
-                else:
-                    print(f"Warning: No agent found with role '{role_to_find}' for task: '{task_to_delegate}'")
-        
-        print("Orchestrator has delegated all tasks. Workflow complete.")
 
 
 @dataclass
@@ -155,16 +267,17 @@ class Session:
 
 
 def instantiate_agent(spec: Dict[str, Any], prompts: Dict[str, str], all_specs: List[Dict[str, Any]]) -> Optional[Agent]:
-    """Creates an agent instance from its specification and prompt."""
     prompt_key = f"{spec['name'].lower()}_instructions.txt"
-    if prompt_key not in prompts and spec.get('name') == 'Meta-AI':
+    if spec.get('name') == 'Meta-AI':
         prompt_key = 'orchestrator_instructions.txt'
 
     if prompt_key not in prompts:
-        print(f"Warning: Prompt for agent '{spec['name']}' not found. Skipping.")
+        print(f"Warning: Prompt for agent '{spec['name']}' not found with key '{prompt_key}'. Skipping.")
         return None
 
-    agent = Agent(
+    agent_class = Orchestrator if spec.get('role') == 'Orchestrator' else Agent
+
+    agent = agent_class(
         name=spec.get('name', 'Unnamed Agent'),
         role=spec.get('role', 'Agent'),
         goal=spec.get('goal', ''),
@@ -185,26 +298,20 @@ def instantiate_agent(spec: Dict[str, Any], prompts: Dict[str, str], all_specs: 
     return agent
 
 def find_agent_by_role(agents: List[Agent], role: str) -> Optional[Agent]:
-    """Finds an agent by its role."""
-    for agent in agents:
-        if agent.role == role:
-            return agent
-    return None
+    return next((agent for agent in agents if agent.role == role), None)
 
 def system_runtime_bootstrap(root_dir: str, initial_task: str):
-    """Initializes and starts the system runtime."""
     print("--- System Runtime Bootstrap ---")
-    
+
     config = load_config(os.path.join(root_dir, "config/runtime.yaml"))
     agent_specs = load_agent_templates(os.path.join(root_dir, "agents/"))
     prompts = load_prompts(os.path.join(root_dir, "prompts/"))
-    
-    # Instantiate only the top-level agents first
+
+    all_team_members = {member.lower() for spec in agent_specs if 'team' in spec for member in spec['team']}
+
     agents = []
     for spec in agent_specs:
-        # Avoid instantiating team members directly; they'll be part of the orchestrator
-        is_team_member = any(spec['name'].lower() in s.get('team', []) for s in agent_specs if 'team' in s)
-        if not is_team_member:
+        if spec['name'].lower() not in all_team_members:
             agent = instantiate_agent(spec, prompts, agent_specs)
             if agent:
                 agents.append(agent)
@@ -220,15 +327,22 @@ def system_runtime_bootstrap(root_dir: str, initial_task: str):
         print(f"Error: Orchestrator with role '{orchestrator_role}' not found. Bootstrap aborted.")
         return
 
+    if not isinstance(orchestrator, Orchestrator):
+        print(f"Error: Agent with role '{orchestrator_role}' is not a valid Orchestrator instance. Bootstrap aborted.")
+        return
+
     session = Session(agents=agents)
-    
+
     print("\n--- Starting Workflow ---")
     orchestrator.start_workflow(session, initial_task)
-    
+
     print("\n--- System Runtime Bootstrap Complete ---")
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Run the Gemini agent runtime.")
+    parser.add_argument("task", type=str, help="The initial task for the orchestrator to perform.")
+    args = parser.parse_args()
+
     project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-    task = "Develop a new landing page for our product."
-    system_runtime_bootstrap(project_root, task)
+    system_runtime_bootstrap(project_root, args.task)

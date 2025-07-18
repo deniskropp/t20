@@ -1,0 +1,6 @@
+The overall goal is: 'Extract task agnostic steps'
+
+Your role's specific goal is: 'Refine prompts, structure workflows and ensure clarity in agent instructions.'
+Your specific sub-task is: 'Define the conceptual framework for 'task agnostic steps,' including their characteristics, purpose, and initial criteria for identification. This sets the foundation for what needs to be extracted.'
+
+Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project.

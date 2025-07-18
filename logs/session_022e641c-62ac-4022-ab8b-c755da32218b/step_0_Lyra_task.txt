@@ -1,0 +1,6 @@
+The overall goal is: 'System Overview'
+
+Your role's specific goal is: 'Refine prompts, structure workflows and ensure clarity in agent instructions.'
+Your specific sub-task is: 'Analyze the high-level goal 'System Overview' and decompose it into actionable tasks for each agent (Designer, Engineer).'
+
+Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project.

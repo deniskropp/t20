@@ -1,0 +1,185 @@
+{
+  "data_structures": {
+    "UserProfile": {
+      "id": "string",
+      "name": "string",
+      "avatarUrl": "string",
+      "email": "string"
+    },
+    "TaskSummary": {
+      "dueTodayCount": "number",
+      "upcomingCount": "number",
+      "completedThisWeekCount": "number",
+      "overdueCount": "number"
+    },
+    "ProductivityTrendItem": {
+      "date": "string (YYYY-MM-DD)",
+      "completedTasksCount": "number"
+    },
+    "ProjectOverviewItem": {
+      "id": "string",
+      "name": "string",
+      "completionPercentage": "number (0-100)"
+    },
+    "NotificationSummary": {
+      "unreadCount": "number"
+    },
+    "DashboardData": {
+      "user": "UserProfile",
+      "taskSummary": "TaskSummary",
+      "weeklyProductivityTrend": "array of ProductivityTrendItem",
+      "projectOverviews": "array of ProjectOverviewItem",
+      "notifications": "NotificationSummary"
+    },
+    "Task": {
+      "id": "string",
+      "title": "string",
+      "description": "string",
+      "dueDate": "string (ISO 8601)",
+      "status": "string (e.g., 'pending', 'completed', 'overdue')",
+      "priority": "string (e.g., 'low', 'medium', 'high')",
+      "projectId": "string (optional)"
+    }
+  },
+  "api_endpoints": [
+    {
+      "name": "Get Dashboard Overview Data",
+      "endpoint": "/api/v1/dashboard",
+      "method": "GET",
+      "description": "Fetches all high-level data required for the 'System Overview' screen.",
+      "response_body_example": "{ \"data\": \"DashboardData structure\" }",
+      "notes": "This endpoint should be optimized for a single fetch to minimize initial load times on the dashboard."
+    },
+    {
+      "name": "Get Filtered Tasks",
+      "endpoint": "/api/v1/tasks",
+      "method": "GET",
+      "parameters": [
+        {"name": "status", "type": "string", "description": "e.g., 'due_today', 'upcoming', 'completed_this_week', 'overdue'"},
+        {"name": "projectId", "type": "string", "description": "Optional, filters tasks by project."}
+      ],
+      "description": "Retrieves a list of tasks based on specified filters, used when tapping on summary cards or project overviews.",
+      "response_body_example": "{ \"data\": [\"Task structure\", ...] }"
+    },
+    {
+      "name": "Create New Task",
+      "endpoint": "/api/v1/tasks",
+      "method": "POST",
+      "request_body_example": "{ \"title\": \"string\", \"description\": \"string\", \"dueDate\": \"string\", \"priority\": \"string\", \"projectId\": \"string\" }",
+      "description": "Adds a new task to the system, typically triggered by the Floating Action Button (FAB).",
+      "response_body_example": "{ \"data\": \"Task structure (newly created)\" }"
+    },
+    {
+      "name": "Get Detailed Productivity Analytics",
+      "endpoint": "/api/v1/analytics/productivity",
+      "method": "GET",
+      "parameters": [
+        {"name": "period", "type": "string", "description": "e.g., 'weekly', 'monthly', 'yearly'"}
+      ],
+      "description": "Fetches more granular productivity data, accessed when tapping the 'Weekly Productivity Chart'.",
+      "response_body_example": "{ \"data\": { \"trend\": [\"ProductivityTrendItem\", ...], \"summary\": { ... } } }"
+    },
+    {
+      "name": "Get User Profile",
+      "endpoint": "/api/v1/users/{userId}",
+      "method": "GET",
+      "description": "Retrieves detailed user profile information, accessed by tapping the avatar.",
+      "response_body_example": "{ \"data\": \"UserProfile structure\" }"
+    }
+  ],
+  "architectural_components": {
+    "frontend_components": [
+      {
+        "name": "DashboardScreen",
+        "type": "Container/View",
+        "description": "Main screen component, orchestrates data fetching and renders sub-components."
+      },
+      {
+        "name": "TopNavBar",
+        "type": "UI Component",
+        "description": "Displays user avatar, greeting, and notification/settings icon."
+      },
+      {
+        "name": "SummaryCardsGrid",
+        "type": "UI Component",
+        "description": "Renders the grid of tappable summary cards (Tasks Due Today, Upcoming, etc.). Each card is a distinct interactive element."
+      },
+      {
+        "name": "ProductivityChart",
+        "type": "UI Component",
+        "description": "Visualizes weekly task completion trends (line/bar chart)."
+      },
+      {
+        "name": "ProjectsOverviewList",
+        "type": "UI Component",
+        "description": "Displays a scrollable list of key projects with their progress."
+      },
+      {
+        "name": "FloatingActionButton (FAB)",
+        "type": "UI Component",
+        "description": "Prominent button for quick task creation."
+      },
+      {
+        "name": "BottomNavigationBar",
+        "type": "UI Component",
+        "description": "Provides primary app navigation (Home, Tasks, Calendar, Projects, Profile)."
+      },
+      {
+        "name": "APIClient / DataService",
+        "type": "Utility/Service",
+        "description": "Handles all API requests and responses, abstracts data fetching logic from UI components."
+      },
+      {
+        "name": "Global State Management",
+        "type": "Framework/Library",
+        "description": "Manages application state (e.g., user data, task counts) across components, potentially using Redux, Context API, or MobX."
+      }
+    ],
+    "backend_services": [
+      {
+        "name": "API Gateway / BFF (Backend For Frontend)",
+        "type": "Service",
+        "description": "Aggregates data from various microservices for the dashboard view, optimizing payload for mobile clients. Handles authentication and routing."
+      },
+      {
+        "name": "User Service",
+        "type": "Microservice",
+        "description": "Manages user profiles, authentication, and settings."
+      },
+      {
+        "name": "Task Service",
+        "type": "Microservice",
+        "description": "Manages all task-related data: creation, updates, status changes, filtering, and retrieval."
+      },
+      {
+        "name": "Project Service",
+        "type": "Microservice",
+        "description": "Manages project details, associations with tasks, and progress tracking."
+      },
+      {
+        "name": "Analytics Service",
+        "type": "Microservice",
+        "description": "Processes and aggregates task data to generate productivity trends and reports."
+      },
+      {
+        "name": "Notification Service (Optional)",
+        "type": "Microservice",
+        "description": "Manages and delivers user notifications, provides unread counts."
+      }
+    ],
+    "database_considerations": [
+      {
+        "name": "Relational Database (e.g., PostgreSQL, MySQL)",
+        "description": "Suitable for structured data like users, tasks, projects, maintaining strong relationships and data integrity."
+      },
+      {
+        "name": "Time-Series Database or Data Warehouse (e.g., InfluxDB, Snowflake)",
+        "description": "Potentially for detailed analytics and historical productivity trends, optimized for time-based queries."
+      }
+    ],
+    "authentication_authorization": {
+      "mechanism": "OAuth2 / JWT (JSON Web Tokens)",
+      "description": "Secure API access, token-based authentication for mobile clients, role-based authorization where necessary."
+    }
+  }
+}
