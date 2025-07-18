@@ -1,0 +1,36 @@
+{
+    "steps": [
+        {
+            "role": "Prompt Engineer",
+            "task": "Refine the user's high-level goal into specific, actionable tasks for the Designer and Engineer roles. This includes defining the scope of the mission statement and vision content."
+        },
+        {
+            "role": "Designer",
+            "task": "Generate a design mockup for the HTML page, including layout, color palette, typography, and UI elements. The design should be visually appealing and accessible, reflecting the team's mission and vision."
+        },
+        {
+            "role": "Prompt Engineer",
+            "task": "Review the design mockup and provide feedback to the Designer, ensuring it aligns with the overall goals and accessibility standards. Refine prompts for the Engineer based on the design."
+        },
+        {
+            "role": "Engineer",
+            "task": "Implement the design mockup into clean, modular, and performant HTML and CSS code. Ensure the page is responsive and accessible, adhering to web standards."
+        },
+        {
+            "role": "Prompt Engineer",
+            "task": "Review the implemented HTML page and provide feedback to the Engineer, focusing on code quality, performance, and accessibility. Refine prompts for any necessary adjustments."
+        },
+        {
+            "role": "Designer",
+            "task": "Review the implemented HTML page and provide feedback on the visual aspects, ensuring it matches the original design and is visually appealing."
+        },
+        {
+            "role": "Engineer",
+            "task": "Make any necessary adjustments to the HTML and CSS code based on the feedback from the Prompt Engineer and Designer."
+        },
+        {
+            "role": "Task-Agnostic Step (TAS) extractor",
+            "task": "Perform a final review of the HTML page to ensure it meets all requirements and is ready for deployment. This includes checking for errors, validating accessibility, and optimizing performance."
+        }
+    ]
+}

@@ -1,0 +1,22 @@
+The overall goal is: 'Create a single HTML page with your Teams mission statement and vision'
+
+Your role's specific goal is: 'Generate aesthetic layouts, color palettes, typography, and UI flows, ensuring accessibility and visual balance.'
+Your specific sub-task is: 'Generate a design mockup for the HTML page, including layout, color palette, typography, and UI elements. The design should be visually appealing and accessible, reflecting the team's mission and vision.'
+
+Please use the following outputs from the other agents as your input:
+
+Artifact from step_0_Lyra_result.txt:
+[
+  {
+    "target_agent_name": "Aurora",
+    "new_system_prompt": "You are Aurora, a web designer specializing in creating visually appealing and user-friendly HTML pages. Your task is to design a single HTML page that effectively presents the provided mission statement and vision. Focus on clean aesthetics, clear typography, and a responsive layout that adapts to different screen sizes. Prioritize readability and visual hierarchy to ensure the mission statement and vision are easily understood and memorable. Use modern HTML5 and CSS3 practices. The HTML should be well-formed and semantic. The CSS should be inline for simplicity. Do not include any JavaScript. Use a single sans-serif font for the entire page."
+  },
+  {
+    "target_agent_name": "Kodax",
+    "new_system_prompt": "You are Kodax, a software engineer responsible for implementing the HTML design provided by Aurora. Your primary task is to translate Aurora's design into a functional HTML page, ensuring that the code is clean, well-structured, and adheres to web standards. You must use inline CSS styles exclusively. The HTML should include the mission statement and vision provided in a separate document. Ensure the HTML page is valid and displays the content correctly across different browsers. Do not use any JavaScript. Focus on semantic HTML and clear, concise code. The final HTML page should include a title tag in the `<head>` section that accurately describes the content of the page (e.g., 'Mission and Vision')."
+  }
+]
+
+
+
+Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project.
