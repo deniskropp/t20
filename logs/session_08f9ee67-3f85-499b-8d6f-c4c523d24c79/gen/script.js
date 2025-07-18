@@ -1,0 +1,222 @@
+document.addEventListener('DOMContentLoaded', function() {
+    const stepsData = [
+        {
+            "id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+            "name": "Define Scope",
+            "description": "Establish the boundaries and objectives of the system overview. This involves identifying the key aspects to be covered, the level of detail required, and the intended audience. Defining the scope ensures that the overview remains focused and relevant.",
+            "category": "Problem Framing",
+            "purpose": "To clearly define the parameters and goals of the system overview.",
+            "keywords": [
+                "boundaries",
+                "objectives",
+                "requirements",
+                "goals"
+            ],
+            "applicability_notes": "Applicable across various system types and complexities. Scope definition may involve stakeholders from different areas to ensure comprehensive coverage.",
+            "examples_of_usage": [
+                "In a software project, defining the scope might involve specifying which modules are included in the overview.",
+                "In a manufacturing process, defining the scope could mean outlining which stages of production are covered.",
+                "In a financial system, defining the scope may involve specifying which accounts or transactions are included in the overview."
+            ],
+            "typical_inputs": [
+                "Project goals",
+                "Stakeholder requirements",
+                "Available resources"
+            ],
+            "typical_outputs": [
+                "Scope document",
+                "List of key elements",
+                "Defined objectives"
+            ]
+        },
+        {
+            "id": "b2c3d4e5-f6a7-8901-2345-67890abcdef0",
+            "name": "Gather Information",
+            "description": "Collect and compile all relevant information necessary to create a comprehensive system overview. This includes documentation, data, expert opinions, and any other resources that provide insights into the system's components, functionality, and interactions.",
+            "category": "Information Gathering",
+            "purpose": "To acquire all necessary data and knowledge required for the system overview.",
+            "keywords": [
+                "data collection",
+                "research",
+                "documentation",
+                "investigation"
+            ],
+            "applicability_notes": "This step is universally applicable, but the specific sources and methods of information gathering will vary depending on the system and available resources.",
+            "examples_of_usage": [
+                "For a software system, this might involve reviewing code, API documentation, and user manuals.",
+                "For a physical system, this might involve inspecting schematics, interviewing engineers, and analyzing performance reports.",
+                "For a business process, this might involve reviewing process maps, interviewing stakeholders, and analyzing performance metrics."
+            ],
+            "typical_inputs": [
+                "System requirements",
+                "Known issues",
+                "Available documentation"
+            ],
+            "typical_outputs": [
+                "Compiled data",
+                "Documentation repository",
+                "Interview notes"
+            ]
+        },
+        {
+            "id": "c3d4e5f6-a7b8-9012-3456-7890abcdef01",
+            "name": "Analyze Data",
+            "description": "Examine the collected information to identify key patterns, relationships, and insights relevant to the system overview. This involves breaking down complex data into manageable components, identifying trends, and assessing the significance of different elements.",
+            "category": "Analysis",
+            "purpose": "To extract meaningful insights and patterns from the collected data.",
+            "keywords": [
+                "data mining",
+                "interpretation",
+                "pattern recognition",
+                "assessment"
+            ],
+            "applicability_notes": "The specific techniques used for data analysis will vary depending on the type of data and the goals of the overview, but the underlying principle of extracting meaningful insights remains constant.",
+            "examples_of_usage": [
+                "Analyzing software logs to identify performance bottlenecks.",
+                "Analyzing manufacturing data to identify process inefficiencies.",
+                "Analyzing sales data to identify customer trends."
+            ],
+            "typical_inputs": [
+                "Raw data",
+                "Compiled information",
+                "System metrics"
+            ],
+            "typical_outputs": [
+                "Identified patterns",
+                "Key insights",
+                "Data summaries"
+            ]
+        },
+        {
+            "id": "d4e5f6a7-b8c9-0123-4567-890abcdef012",
+            "name": "Synthesize Information",
+            "description": "Integrate the analyzed data and insights into a cohesive and understandable narrative. This involves connecting disparate pieces of information, resolving inconsistencies, and creating a clear and concise representation of the system as a whole.",
+            "category": "Synthesis",
+            "purpose": "To create a coherent and unified understanding of the system.",
+            "keywords": [
+                "integration",
+                "consolidation",
+                "harmonization",
+                "narration"
+            ],
+            "applicability_notes": "This step is crucial for creating a meaningful system overview, as it transforms raw data and isolated insights into a holistic understanding.",
+            "examples_of_usage": [
+                "Combining performance data, user feedback, and architectural diagrams to create a comprehensive view of a software system.",
+                "Integrating manufacturing data, process maps, and quality control reports to create a holistic view of a production process.",
+                "Synthesizing financial data, market trends, and competitor analysis to create a unified view of a business environment."
+            ],
+            "typical_inputs": [
+                "Analyzed data",
+                "Key insights",
+                "Individual findings"
+            ],
+            "typical_outputs": [
+                "Cohesive narrative",
+                "Unified understanding",
+                "Integrated view"
+            ]
+        },
+        {
+            "id": "e5f6a7b8-c9d0-1234-5678-90abcdef0123",
+            "name": "Present Findings",
+            "description": "Communicate the synthesized information in a clear, concise, and accessible manner. This involves selecting the appropriate format (e.g., report, presentation, diagram), tailoring the content to the intended audience, and ensuring that the key findings are effectively conveyed.",
+            "category": "Communication",
+            "purpose": "To effectively communicate the system overview to stakeholders.",
+            "keywords": [
+                "communication",
+                "presentation",
+                "reporting",
+                "dissemination"
+            ],
+            "applicability_notes": "The specific methods of presentation will vary depending on the audience and the nature of the system, but the underlying goal of clear and effective communication remains constant.",
+            "examples_of_usage": [
+                "Presenting a software architecture overview to developers using UML diagrams.",
+                "Presenting a manufacturing process overview to management using flowcharts.",
+                "Presenting a financial system overview to investors using charts and graphs."
+            ],
+            "typical_inputs": [
+                "Synthesized information",
+                "Target audience",
+                "Communication objectives"
+            ],
+            "typical_outputs": [
+                "Presentation slides",
+                "Reports",
+                "Diagrams"
+            ]
+        }
+    ];
+
+    const container = document.querySelector('.container');
+
+    // Group steps by category
+    const groupedSteps = stepsData.reduce((acc, step) => {
+        if (!acc[step.category]) {
+            acc[step.category] = [];
+        }
+        acc[step.category].push(step);
+        return acc;
+    }, {});
+
+    // Create swimlanes
+    for (const category in groupedSteps) {
+        const swimlane = document.createElement('div');
+        swimlane.classList.add('swimlane');
+
+        const swimlaneLabel = document.createElement('div');
+        swimlaneLabel.classList.add('swimlane-label');
+        swimlaneLabel.textContent = category;
+        swimlane.appendChild(swimlaneLabel);
+
+        const stepContainer = document.createElement('div');
+        stepContainer.classList.add('step-container');
+
+        // Create steps
+        groupedSteps[category].forEach((step, index) => {
+            const stepDiv = document.createElement('div');
+            stepDiv.classList.add('step');
+
+            const heading = document.createElement('h2');
+            heading.textContent = step.name;
+            stepDiv.appendChild(heading);
+
+            const description = document.createElement('p');
+            description.textContent = step.description;
+            stepDiv.appendChild(description);
+
+            // Keywords
+            if (step.keywords && step.keywords.length > 0) {
+                const keywordsParagraph = document.createElement('p');
+                step.keywords.forEach(keyword => {
+                    const keywordSpan = document.createElement('span');
+                    keywordSpan.classList.add('keyword');
+                    keywordSpan.textContent = keyword;
+                    keywordsParagraph.appendChild(keywordSpan);
+                    keywordsParagraph.appendChild(document.createTextNode(' ')); // Add space between keywords
+                });
+                stepDiv.appendChild(keywordsParagraph);
+            }
+
+            // Input/Output representation
+            const inputsTooltip = step.typical_inputs ? step.typical_inputs.join(', ') : 'No inputs';
+            const outputsTooltip = step.typical_outputs ? step.typical_outputs.join(', ') : 'No outputs';
+
+            const inputOutputDiv = document.createElement('div');
+            inputOutputDiv.classList.add('input-output');
+            inputOutputDiv.setAttribute('data-tooltip', `Inputs: ${inputsTooltip}\nOutputs: ${outputsTooltip}`);
+            stepDiv.appendChild(inputOutputDiv);
+
+            stepContainer.appendChild(stepDiv);
+
+            // Add connector if not the last step
+            if (index < groupedSteps[category].length - 1) {
+                const connectorDiv = document.createElement('div');
+                connectorDiv.classList.add('connector');
+                stepContainer.appendChild(connectorDiv);
+            }
+        });
+
+        swimlane.appendChild(stepContainer);
+        container.appendChild(swimlane);
+    }
+});
