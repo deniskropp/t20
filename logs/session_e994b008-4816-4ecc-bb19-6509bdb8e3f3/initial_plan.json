@@ -1,0 +1,36 @@
+{
+    "steps": [
+        {
+            "role": "Prompt Engineer",
+            "task": "Refine the prompt for the Task-Agnostic Step (TAS) extractor to ensure it accurately identifies and extracts relevant TAS for creating a task-agnostic plan."
+        },
+        {
+            "role": "Task-Agnostic Step (TAS) extractor",
+            "task": "Identify and extract a comprehensive list of Task-Agnostic Steps (TAS) necessary for creating a task-agnostic plan. Focus on steps applicable to a wide range of goals."
+        },
+        {
+            "role": "Prompt Engineer",
+            "task": "Review the extracted TAS and refine them for clarity, conciseness, and applicability across various tasks. Ensure the steps are easily understandable and actionable."
+        },
+        {
+            "role": "Designer",
+            "task": "Develop a visual representation of the task-agnostic plan, focusing on a clear and intuitive layout that highlights the sequence and interdependencies of the TAS. Consider using flowcharts or diagrams."
+        },
+        {
+            "role": "Engineer",
+            "task": "Translate the task-agnostic plan into a structured format (e.g., JSON schema, YAML) that can be easily parsed and utilized by other systems or agents. Ensure the format is well-documented and extensible."
+        },
+        {
+            "role": "Prompt Engineer",
+            "task": "Create example prompts that demonstrate how to use the task-agnostic plan to guide the execution of specific tasks. Provide clear instructions on how to adapt the plan to different scenarios."
+        },
+        {
+            "role": "Engineer",
+            "task": "Implement a system that allows users to input a high-level goal and automatically generate a task-specific plan based on the task-agnostic steps. Include error handling and validation to ensure the generated plan is valid."
+        },
+        {
+            "role": "Designer",
+            "task": "Design a user interface for interacting with the system, allowing users to easily input goals, view generated plans, and provide feedback. Ensure the interface is accessible and user-friendly."
+        }
+    ]
+}

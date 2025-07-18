@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>System Architecture Documentation</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 20px;
+}
+
+h1, h2, h3 {
+    color: #333;
+}
+
+h1 {
+    border-bottom: 2px solid #333;
+    padding-bottom: 5px;
+}
+
+h2 {
+    margin-top: 20px;
+}
+
+h3 {
+    margin-top: 15px;
+}
+
+.module {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 15px;
+    background-color: #f9f9f9;
+}
+
+.function {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #fff;
+}
+
+.parameter {
+    margin-bottom: 5px;
+}
+
+.parameter-name {
+    font-weight: bold;
+}
+
+.steps {
+    list-style-type: decimal;
+    margin-left: 20px;
+}
+
+.error-handling {
+    list-style-type: disc;
+    margin-left: 20px;
+}
+
+.example-usage {
+    font-style: italic;
+}
+
+.architecture {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+}
+
+.considerations {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+}
+
+.testing {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+}
+</style>
+</head>
+<body>
+
+<h1>System Architecture Documentation</h1>
+
+<h2>Modules</h2>
+
+<div class="module">
+    <h3>Module: plan_generator</h3>
+    <p><strong>Description:</strong> Generates a task-specific plan based on the task-agnostic steps and a user-provided high-level goal.</p>
+
+    <h4>Functions:</h4>
+
+    <div class="function">
+        <h5>Function: generate_plan</h5>
+        <p><strong>Description:</strong> Takes a high-level goal as input and returns a task-specific plan based on the TAS framework.</p>
+        <p><strong>Input Parameters:</strong></p>
+        <ul>
+            <li><span class="parameter-name">goal</span> (string): The high-level goal provided by the user.</li>
+            <li><span class="parameter-name">tas_data</span> (list): A list of TAS objects, each containing 'id', 'name', 'description', etc.</li>
+        </ul>
+        <p><strong>Output Parameters:</strong></p>
+        <ul>
+            <li><span class="parameter-name">plan</span> (list): A list of dictionaries, each representing a TAS with task-specific details.</li>
+        </ul>
+        <p><strong>Steps:</strong></p>
+        <ol class="steps">
+            <li>Validate input goal.</li>
+            <li>Iterate through the TAS list.</li>
+            <li>For each TAS, customize the description, inputs, and outputs based on the user's goal.</li>
+            <li>Append the customized TAS to the plan.</li>
+            <li>Return the generated plan.</li>
+        </ol>
+        <p><strong>Error Handling:</strong></p>
+        <ul class="error-handling">
+            <li>Handle invalid goal input (e.g., empty string).</li>
+            <li>Handle cases where TAS customization fails.</li>
+        </ul>
+        <p class="example-usage">Example Usage: plan = generate_plan(goal='Launch a new product', tas_data=tas_list)</p>
+    </div>
+
+    <div class="function">
+        <h5>Function: customize_tas</h5>
+        <p><strong>Description:</strong> Customizes a Task-Agnostic Step (TAS) based on the user's high-level goal.</p>
+        <p><strong>Input Parameters:</strong></p>
+        <ul>
+            <li><span class="parameter-name">tas</span> (dict): A dictionary representing a single TAS.</li>
+            <li><span class="parameter-name">goal</span> (string): The high-level goal provided by the user.</li>
+        </ul>
+        <p><strong>Output Parameters:</strong></p>
+        <ul>
+            <li><span class="parameter-name">customized_tas</span> (dict): A dictionary representing the customized TAS.</li>
+        </ul>
+        <p><strong>Steps:</strong></p>
+        <ol class="steps">
+            <li>Modify the 'description' field to be more specific to the given goal.</li>
+            <li>Modify the 'typical_inputs' field to be relevant to the given goal.</li>
+            <li>Modify the 'typical_outputs' field to be relevant to the given goal.</li>
+        </ol>
+        <p><strong>Error Handling:</strong></p>
+        <ul class="error-handling">
+            <li>Handle cases where the TAS dictionary is missing required fields.</li>
+            <li>Handle errors during string formatting or modification.</li>
+        </ul>
+        <p class="example-usage">Example Usage: customized_tas = customize_tas(tas=tas_item, goal='Launch a new product')</p>
+    </div>
+</div>
+
+<div class="module">
+    <h3>Module: input_validator</h3>
+    <p><strong>Description:</strong> Validates the user-provided high-level goal and ensures it meets certain criteria.</p>
+
+    <h4>Functions:</h4>
+
+    <div class="function">
+        <h5>Function: validate_goal</h5>
+        <p><strong>Description:</strong> Checks if the goal is a non-empty string.</p>
+        <p><strong>Input Parameters:</strong></p>
+        <ul>
+            <li><span class="parameter-name">goal</span> (string): The high-level goal provided by the user.</li>
+        </ul>
+        <p><strong>Output Parameters:</strong></p>
+        <ul>
+            <li><span class="parameter-name">is_valid</span> (boolean): True if the goal is valid, False otherwise.</li>
+            <li><span class="parameter-name">error_message</span> (string): An error message if the goal is invalid, otherwise an empty string.</li>
+        </ul>
+        <p><strong>Steps:</strong></p>
+        <ol class="steps">
+            <li>Check if the goal is None or an empty string.</li>
+            <li>If the goal is invalid, set is_valid to False and return an appropriate error message.</li>
+            <li>Otherwise, set is_valid to True and return an empty string as the error message.</li>
+        </ol>
+        <p><strong>Error Handling:</strong></p>
+        <ul class="error-handling">
+            <li>Handle unexpected input types.</li>
+            <li>Provide specific error messages for different validation failures.</li>
+        </ul>
+        <p class="example-usage">Example Usage: is_valid, error_message = validate_goal(goal='Launch a new product')</p>
+    </div>
+</div>
+
+<div class="module">
+    <h3>Module: data_access</h3>
+    <p><strong>Description:</strong> Provides functions to access and retrieve Task-Agnostic Step (TAS) data.</p>
+
+    <h4>Functions:</h4>
+
+    <div class="function">
+        <h5>Function: get_tas_data</h5>
+        <p><strong>Description:</strong> Retrieves TAS data from a predefined source (e.g., a JSON file or database).</p>
+        <p><strong>Input Parameters:</strong></p>
+        <ul>
+            <li>None</li>
+        </ul>
+        <p><strong>Output Parameters:</strong></p>
+        <ul>
+            <li><span class="parameter-name">tas_data</span> (list): A list of dictionaries, each representing a TAS.</li>
+        </ul>
+        <p><strong>Steps:</strong></p>
+        <ol class="steps">
+            <li>Load TAS data from the specified source.</li>
+            <li>Return the loaded data.</li>
+        </ol>
+        <p><strong>Error Handling:</strong></p>
+        <ul class="error-handling">
+            <li>Handle file not found errors.</li>
+            <li>Handle invalid JSON format errors.</li>
+        </ul>
+        <p class="example-usage">Example Usage: tas_data = get_tas_data()</p>
+    </div>
+</div>
+
+<div class="module">
+    <h3>Module: ui</h3>
+    <p><strong>Description:</strong> Provides a user interface for inputting the high-level goal and displaying the generated plan. This module will use a web framework to create a responsive and accessible interface.</p>
+    <p><strong>Dependencies:</strong></p>
+    <ul>
+        <li>Flask or similar web framework</li>
+        <li>HTML/CSS for front-end design</li>
+    </ul>
+
+    <h4>Functions:</h4>
+
+    <div class="function">
+        <h5>Function: display_input_form</h5>
+        <p><strong>Description:</strong> Displays a form for the user to input the high-level goal.</p>
+        <p><strong>Input Parameters:</strong></p>
+        <ul>
+            <li>None</li>
+        </ul>
+        <p><strong>Output Parameters:</strong></p>
+        <ul>
+            <li><span class="parameter-name">html</span> (string): HTML code for the input form.</li>
+        </ul>
+        <p><strong>Steps:</strong></p>
+        <ol class="steps">
+            <li>Create an HTML form with a text input field for the goal.</li>
+            <li>Add appropriate labels and accessibility attributes.</li>
+            <li>Return the HTML code.</li>
+        </ol>
+        <p><strong>Error Handling:</strong></p>
+        <ul class="error-handling">
+            <li>None</li>
+        </ul>
+        <p class="example-usage">Example Usage: html = display_input_form()</p>
+    </div>
+
+    <div class="function">
+        <h5>Function: display_generated_plan</h5>
+        <p><strong>Description:</strong> Displays the generated task-specific plan in a user-friendly format.</p>
+        <p><strong>Input Parameters:</strong></p>
+        <ul>
+            <li><span class="parameter-name">plan</span> (list): A list of dictionaries, each representing a TAS with task-specific details.</li>
+        </ul>
+        <p><strong>Output Parameters:</strong></p>
+        <ul>
+            <li><span class="parameter-name">html</span> (string): HTML code for displaying the plan.</li>
+        </ul>
+        <p><strong>Steps:</strong></p>
+        <ol class="steps">
+            <li>Iterate through the plan.</li>
+            <li>For each TAS, format the name, description, inputs, and outputs into HTML elements.</li>
+            <li>Add appropriate styling and accessibility attributes.</li>
+            <li>Return the HTML code.</li>
+        </ol>
+        <p><strong>Error Handling:</strong></p>
+        <ul class="error-handling">
+            <li>None</li>
+        </ul>
+        <p class="example-usage">Example Usage: html = display_generated_plan(plan=plan)</p>
+    </div>
+</div>
+
+<div class="architecture">
+    <h2>Overall Architecture</h2>
+    <p>The system will be a modular application consisting of four main modules: plan_generator, input_validator, data_access, and ui.  The ui module will handle user interaction, taking a goal as input. The input_validator module will validate the input goal. The data_access module will retrieve the TAS data. The plan_generator module will then use the valid goal and TAS data to generate a task-specific plan. The UI will then display the generated plan to the user in a user-friendly manner.  Error handling will be implemented in each module to ensure the system is robust. Logging will be used to track the execution of the system and identify potential issues.</p>
+</div>
+
+<div class="considerations">
+    <h2>Accessibility Considerations</h2>
+    <p>The UI will be designed with accessibility in mind, adhering to WCAG guidelines. This includes providing appropriate color contrast, using semantic HTML, providing alt text for images, and ensuring keyboard navigation is fully supported. Font sizes will be adjustable, and the layout will be responsive to accommodate different screen sizes and devices.</p>
+</div>
+
+<div class="considerations">
+    <h2>Responsive Design Considerations</h2>
+    <p>The UI will be built using a responsive design framework to ensure it adapts to different screen sizes and devices. This includes using flexible layouts, responsive images, and media queries to adjust the presentation of the content based on the screen size. The design will be tested on a variety of devices to ensure a consistent and user-friendly experience.</p>
+</div>
+
+<div class="testing">
+    <h2>Testing Strategy</h2>
+    <p>A comprehensive testing strategy will be implemented to ensure the system meets the specified requirements. This includes unit tests to verify the correctness of individual functions and modules, integration tests to verify the interaction between different modules, and end-to-end tests to verify the overall functionality of the system.  Test cases will be developed to cover a variety of scenarios, including valid and invalid input, edge cases, and error conditions.  Automated testing will be used to ensure that the system remains robust and reliable as it evolves.</p>
+</div>
+
+</body>
+</html>

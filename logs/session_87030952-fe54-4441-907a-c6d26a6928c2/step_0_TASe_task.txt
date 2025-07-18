@@ -1,0 +1,6 @@
+The overall goal is: 'plan only'
+
+Your role's specific goal is: 'Identify and extract 'Task Agnostic Steps' (TAS) for achieving high-level goals.'
+Your specific sub-task is: 'Decompose the high-level goal 'plan only' into a sequence of Task Agnostic Steps (TAS) necessary for its completion. Focus on identifying the core, universally applicable actions required regardless of the specific project details.'
+
+Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project.

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task-Agnostic Plan Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #ecf0f1;
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #3498db;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 12px;
+            color: #2c3e50;
+        }
+        input[type="text"],
+        textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #3498db;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        input[type="text"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #2980b9;
+            box-shadow: 0 0 5px rgba(41, 128, 185, 0.5);
+        }
+        button {
+            background-color: #3498db;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        button:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.5);
+        }
+        #planDisplay {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #ecf0f1;
+            border-radius: 8px;
+        }
+        #planDisplay h2 {
+            color: #3498db;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        .tas-item {
+            background-color: #ffffff;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .tas-item h3 {
+            margin-top: 0;
+            color: #3498db;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .tas-item .details {
+            display: none;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #ccc;
+        }
+        .tas-item .details p {
+            margin-bottom: 8px;
+        }
+        .tas-item .details p strong {
+            display: inline-block;
+            min-width: 100px;
+        }
+        #feedbackForm {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #ecf0f1;
+            border-radius: 8px;
+        }
+        #feedbackForm h2 {
+            color: #3498db;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        #feedbackForm button {
+            background-color: #27ae60;
+        }
+        #feedbackForm button:hover {
+            background-color: #229954;
+        }
+        .error-message {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Task-Agnostic Plan Generator</h1>
+
+        <div class="form-group">
+            <label for="goalInput">Enter your goal:</label>
+            <input type="text" id="goalInput" name="goal" aria-label="Enter your goal" placeholder="e.g., Launch a new product, Improve customer satisfaction">
+            <div id="goalError" class="error-message"></div>
+        </div>
+
+        <button id="generatePlan">Generate Plan</button>
+
+        <div id="planDisplay">
+            <!-- Plan will be displayed here -->
+        </div>
+
+        <div id="feedbackForm">
+            <h2>Provide Feedback (Optional)</h2>
+            <div class="form-group">
+                <label for="feedbackText">Your Feedback:</label>
+                <textarea id="feedbackText" name="feedback" rows="4" cols="50" aria-label="Enter your feedback" placeholder="Share your thoughts on the generated plan..."></textarea>
+            </div>
+            <button id="submitFeedback">Submit Feedback</button>
+        </div>
+    </div>
+
+    <script>
+        // Mock TAS data (replace with actual data retrieval)
+        const mockTasData = [
+            {
+                "id": "tas_001",
+                "name": "Market Research",
+                "description": "Conduct thorough market research to understand the target audience and competitive landscape.",
+                "typical_inputs": ["Market data", "Competitor analysis reports"],
+                "typical_outputs": ["Market research summary", "Target audience profile"]
+            },
+            {
+                "id": "tas_002",
+                "name": "Product Development",
+                "description": "Develop the product based on market insights and user requirements.",
+                "typical_inputs": ["Product specifications", "User feedback"],
+                "typical_outputs": ["Prototype", "Final product"]
+            },
+            {
+                "id": "tas_003",
+                "name": "Marketing Strategy",
+                "description": "Create a comprehensive marketing strategy to promote the product.",
+                "typical_inputs": ["Product features", "Target audience"],
+                "typical_outputs": ["Marketing plan", "Promotional materials"]
+            },
+            {
+                "id": "tas_004",
+                "name": "Launch Plan",
+                "description": "Develop a detailed plan for launching the product into the market.",
+                "typical_inputs": ["Marketing strategy", "Sales targets"],
+                "typical_outputs": ["Launch checklist", "Launch announcement"]
+            }
+        ];
+
+        // Mock functions (implementations based on the provided JSON)
+
+        function validateGoal(goal) {
+            if (!goal || goal.trim() === "") {
+                return { is_valid: false, error_message: "Goal cannot be empty." };
+            }
+            return { is_valid: true, error_message: "" };
+        }
+
+        function customizeTas(tas, goal) {
+            let customized_tas = { ...tas }; // Create a copy to avoid modifying original
+
+            // Basic customization logic (can be expanded)
+            customized_tas.description = `For the goal "${goal}", this step involves: ${tas.description}`;
+            customized_tas.typical_inputs = tas.typical_inputs.map(input => `Relevant to "${goal}": ${input}`);
+            customized_tas.typical_outputs = tas.typical_outputs.map(output => `Resulting from "${goal}": ${output}`);
+
+            return customized_tas;
+        }
+
+        function generatePlan(goal, tas_data) {
+            const validationResult = validateGoal(goal);
+            if (!validationResult.is_valid) {
+                return { plan: [], error: validationResult.error_message };
+            }
+
+            const plan = [];
+            for (const tas of tas_data) {
+                try {
+                    const customized_tas = customizeTas(tas, goal);
+                    plan.push(customized_tas);
+                } catch (error) {
+                    console.error(`Error customizing TAS ${tas.id}:`, error);
+                    // Optionally, you could add a placeholder or skip this TAS
+                    plan.push({
+                        id: tas.id,
+                        name: tas.name,
+                        description: `Error customizing this step for goal "${goal}".`,
+                        typical_inputs: [],
+                        typical_outputs: []
+                    });
+                }
+            }
+            return { plan: plan, error: null };
+        }
+
+        function displayGeneratedPlan(plan) {
+            const planDisplay = document.getElementById('planDisplay');
+            if (!plan || plan.length === 0) {
+                planDisplay.innerHTML = '';
+                return;
+            }
+
+            let html = '<h2>Generated Plan</h2>';
+            plan.forEach(tas => {
+                html += `
+                    <div class="tas-item">
+                        <h3 class="tas-name">${tas.name}</h3>
+                        <div class="details">
+                            <p><strong>Description:</strong> ${tas.description}</p>
+                            <p><strong>Typical Inputs:</strong></p>
+                            <ul>
+                                ${tas.typical_inputs.map(input => `<li>${input}</li>`).join('')}
+                            </ul>
+                            <p><strong>Typical Outputs:</strong></p>
+                            <ul>
+                                ${tas.typical_outputs.map(output => `<li>${output}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            });
+            planDisplay.innerHTML = html;
+
+            // Add event listeners for toggling TAS details
+            document.querySelectorAll('.tas-item .tas-name').forEach(header => {
+                header.addEventListener('click', function() {
+                    const details = this.nextElementSibling;
+                    if (details.style.display === 'block') {
+                        details.style.display = 'none';
+                    } else {
+                        details.style.display = 'block';
+                    }
+                });
+            });
+        }
+
+        function getTasData() {
+            // In a real application, this would fetch data from a backend or file
+            return mockTasData;
+        }
+
+        document.getElementById('generatePlan').addEventListener('click', () => {
+            const goalInput = document.getElementById('goalInput');
+            const goal = goalInput.value;
+            const goalErrorDiv = document.getElementById('goalError');
+
+            const validationResult = validateGoal(goal);
+            if (!validationResult.is_valid) {
+                goalErrorDiv.textContent = validationResult.error_message;
+                displayGeneratedPlan([]); // Clear previous plan if any
+                return;
+            } else {
+                goalErrorDiv.textContent = ''; // Clear error message
+            }
+
+            const tasData = getTasData();
+            const { plan, error } = generatePlan(goal, tasData);
+
+            if (error) {
+                goalErrorDiv.textContent = error; // Display generation error if any
+                displayGeneratedPlan([]);
+            } else {
+                displayGeneratedPlan(plan);
+            }
+        });
+
+        document.getElementById('submitFeedback').addEventListener('click', () => {
+            const feedbackText = document.getElementById('feedbackText').value;
+            if (feedbackText.trim()) {
+                console.log("Feedback submitted:", feedbackText);
+                alert("Thank you for your feedback!");
+                document.getElementById('feedbackText').value = ''; // Clear feedback textarea
+            } else {
+                alert("Please enter your feedback before submitting.");
+            }
+        });
+
+        // Initial load (optional: could pre-populate with a default or empty state)
+        // displayGeneratedPlan([]);
+    </script>
+</body>
+</html>

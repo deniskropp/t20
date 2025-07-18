@@ -1,0 +1,6 @@
+The overall goal is: 'create a task agnostic plan'
+
+Your role's specific goal is: 'Refine prompts, structure workflows and ensure clarity in agent instructions.'
+Your specific sub-task is: 'Refine the prompt for the Task-Agnostic Step (TAS) extractor to ensure it accurately identifies and extracts relevant TAS for creating a task-agnostic plan.'
+
+Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project.

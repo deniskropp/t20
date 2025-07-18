@@ -1,0 +1,303 @@
+[
+  {
+    "id": "a9a1b2c3-d4e5-46f7-8899-aabbccddeeff",
+    "name": "Define Objectives",
+    "description": "Clearly articulate the desired outcomes and goals of the plan. This involves specifying what needs to be achieved, the scope of the plan, and any constraints or limitations. Defining objectives ensures that the planning process is focused and aligned with overall strategic goals.",
+    "category": "Problem Framing",
+    "purpose": "Establish clear and measurable goals for the planning process.",
+    "keywords": [
+      "goals",
+      "objectives",
+      "scope",
+      "constraints",
+      "requirements"
+    ],
+    "applicability_notes": "Applicable to any planning scenario, regardless of domain or industry. The level of detail required in defining objectives may vary depending on the complexity and scope of the plan.",
+    "examples_of_usage": [
+      "A project team defines the objectives of a new product launch.",
+      "An organization defines the objectives of a strategic plan.",
+      "An individual defines the objectives of a personal development plan."
+    ],
+    "typical_inputs": [
+      "Strategic goals",
+      "Current situation analysis",
+      "Stakeholder requirements"
+    ],
+    "typical_outputs": [
+      "Defined objectives",
+      "Scope statement",
+      "Success criteria"
+    ]
+  },
+  {
+    "id": "b0b2c3d4-e5f6-47a8-99bb-ccddee001122",
+    "name": "Gather Information",
+    "description": "Collect relevant data and information needed for informed decision-making during the planning process. This includes researching existing knowledge, consulting with experts, and gathering data from various sources. Information gathering ensures that the plan is based on accurate and up-to-date knowledge.",
+    "category": "Analysis",
+    "purpose": "Acquire necessary data and knowledge to support the planning process.",
+    "keywords": [
+      "research",
+      "data collection",
+      "analysis",
+      "information gathering",
+      "investigation"
+    ],
+    "applicability_notes": "Essential in any planning activity. The sources and types of information gathered will vary depending on the context. This step might involve primary research, secondary research, or a combination of both.",
+    "examples_of_usage": [
+      "A marketing team gathers market research data to inform a marketing plan.",
+      "An engineer gathers technical specifications to inform a design plan.",
+      "A financial analyst gathers financial data to inform an investment plan."
+    ],
+    "typical_inputs": [
+      "Defined objectives",
+      "Knowledge gaps",
+      "Data requirements"
+    ],
+    "typical_outputs": [
+      "Collected data",
+      "Research findings",
+      "Information repository"
+    ]
+  },
+  {
+    "id": "c1c3d4e5-f6a7-48b9-a0cc-ddeeff223344",
+    "name": "Analyze Data",
+    "description": "Examine and interpret the gathered information to identify patterns, trends, and insights that can inform the plan. This involves using various analytical techniques to make sense of the data and draw meaningful conclusions. Analyzing data helps to identify potential risks and opportunities.",
+    "category": "Analysis",
+    "purpose": "Identify meaningful insights and patterns from the collected information.",
+    "keywords": [
+      "data analysis",
+      "interpretation",
+      "pattern recognition",
+      "trend analysis",
+      "insight generation"
+    ],
+    "applicability_notes": "Applicable to any planning process involving data. The specific analytical techniques used will depend on the type of data and the objectives of the plan. This step often involves both quantitative and qualitative analysis.",
+    "examples_of_usage": [
+      "A project manager analyzes project data to identify potential risks.",
+      "A business analyst analyzes sales data to identify growth opportunities.",
+      "A scientist analyzes experimental data to draw conclusions about a hypothesis."
+    ],
+    "typical_inputs": [
+      "Collected data",
+      "Research findings",
+      "Information repository"
+    ],
+    "typical_outputs": [
+      "Analyzed data",
+      "Insights",
+      "Trend reports"
+    ]
+  },
+  {
+    "id": "d2d4e5f6-a7b8-49ca-b1dd-eeff00445566",
+    "name": "Develop Options",
+    "description": "Generate a range of potential strategies, approaches, or solutions to achieve the defined objectives. This involves brainstorming, exploring different possibilities, and considering various alternatives. Developing options provides a broader range of choices and increases the likelihood of finding the best solution.",
+    "category": "Solution Design",
+    "purpose": "Create a diverse set of potential approaches to achieve the desired goals.",
+    "keywords": [
+      "options",
+      "alternatives",
+      "strategies",
+      "solutions",
+      "brainstorming"
+    ],
+    "applicability_notes": "Essential for any planning process that requires decision-making. The number of options developed may vary depending on the complexity of the problem. This step should encourage creativity and out-of-the-box thinking.",
+    "examples_of_usage": [
+      "A software development team develops different architectural options for a new application.",
+      "A marketing team develops different campaign options to promote a new product.",
+      "A city planner develops different zoning options for a new development area."
+    ],
+    "typical_inputs": [
+      "Analyzed data",
+      "Insights",
+      "Trend reports"
+    ],
+    "typical_outputs": [
+      "Generated options",
+      "Alternative strategies",
+      "Potential solutions"
+    ]
+  },
+  {
+    "id": "e3e5f6a7-b8c9-40db-b2ee-ff0011556677",
+    "name": "Evaluate Options",
+    "description": "Assess the feasibility, risks, and benefits of each option to determine the most suitable course of action. This involves using various evaluation criteria to compare the options and identify the strengths and weaknesses of each. Evaluating options helps to make informed decisions and select the best approach.",
+    "category": "Decision Making",
+    "purpose": "Determine the most effective and feasible option for achieving the objectives.",
+    "keywords": [
+      "evaluation",
+      "assessment",
+      "feasibility",
+      "risks",
+      "benefits"
+    ],
+    "applicability_notes": "Crucial for making informed decisions in any planning context. The evaluation criteria used will depend on the specific objectives and constraints of the plan. This step often involves a trade-off between different factors.",
+    "examples_of_usage": [
+      "A project manager evaluates different project management methodologies.",
+      "A business owner evaluates different investment opportunities.",
+      "A government agency evaluates different policy options."
+    ],
+    "typical_inputs": [
+      "Generated options",
+      "Alternative strategies",
+      "Potential solutions"
+    ],
+    "typical_outputs": [
+      "Evaluated options",
+      "Risk assessments",
+      "Cost-benefit analyses"
+    ]
+  },
+  {
+    "id": "f4f6a7b8-c9d0-41ec-b3ff-001122667788",
+    "name": "Select Option",
+    "description": "Choose the most appropriate option based on the evaluation results and decision-making criteria. This involves making a final decision and committing to a specific course of action. Selecting an option provides a clear direction for the plan and ensures that resources are focused on the most promising approach.",
+    "category": "Decision Making",
+    "purpose": "Choose the optimal strategy or solution to implement.",
+    "keywords": [
+      "selection",
+      "decision",
+      "choice",
+      "prioritization",
+      "commitment"
+    ],
+    "applicability_notes": "A necessary step in any planning process that involves multiple options. The decision-making process should be transparent and well-documented. This step often involves stakeholder input and approval.",
+    "examples_of_usage": [
+      "A company selects a new software platform.",
+      "A team selects a project to work on.",
+      "An individual selects a career path."
+    ],
+    "typical_inputs": [
+      "Evaluated options",
+      "Risk assessments",
+      "Cost-benefit analyses"
+    ],
+    "typical_outputs": [
+      "Selected option",
+      "Decision rationale",
+      "Implementation plan"
+    ]
+  },
+  {
+    "id": "00000000-1111-2222-3333-444444444444",
+    "name": "Document Plan",
+    "description": "Formally record the chosen plan, including its objectives, strategies, timelines, and resource allocations. This involves creating a comprehensive document that outlines all aspects of the plan and serves as a reference for implementation. Documenting the plan ensures that it is clearly communicated and can be effectively implemented and monitored.",
+    "category": "Execution & Implementation",
+    "purpose": "Create a formal record of the plan for communication and implementation.",
+    "keywords": [
+      "documentation",
+      "recording",
+      "communication",
+      "implementation",
+      "reference"
+    ],
+    "applicability_notes": "Essential for any plan that involves multiple stakeholders or requires long-term implementation. The level of detail in the documentation may vary depending on the complexity of the plan. This step ensures that the plan is accessible and understandable to all involved.",
+    "examples_of_usage": [
+      "Documenting a project plan.",
+      "Documenting a business strategy.",
+      "Documenting a research proposal."
+    ],
+    "typical_inputs": [
+      "Selected option",
+      "Decision rationale",
+      "Implementation plan"
+    ],
+    "typical_outputs": [
+      "Documented plan",
+      "Timeline",
+      "Resource allocation"
+    ]
+  },
+  {
+    "id": "11111111-2222-3333-4444-555555555555",
+    "name": "Communicate Plan",
+    "description": "Share the documented plan with relevant stakeholders to ensure alignment and understanding. This involves presenting the plan, addressing questions, and gathering feedback. Communicating the plan ensures that everyone is aware of the objectives, strategies, and their roles in implementation.",
+    "category": "Execution & Implementation",
+    "purpose": "Ensure all stakeholders are informed about the plan and their roles.",
+    "keywords": [
+      "communication",
+      "stakeholder engagement",
+      "presentation",
+      "alignment",
+      "feedback"
+    ],
+    "applicability_notes": "Applicable to any plan involving multiple stakeholders. The communication method may vary depending on the audience and the complexity of the plan. This step ensures buy-in and reduces the risk of misunderstandings.",
+    "examples_of_usage": [
+      "Presenting a project plan to the project team.",
+      "Presenting a marketing plan to the sales team.",
+      "Presenting a strategic plan to the board of directors."
+    ],
+    "typical_inputs": [
+      "Documented plan",
+      "Stakeholder list",
+      "Communication channels"
+    ],
+    "typical_outputs": [
+      "Shared plan",
+      "Stakeholder feedback",
+      "Aligned understanding"
+    ]
+  },
+  {
+    "id": "22222222-3333-4444-5555-666666666666",
+    "name": "Monitor Progress",
+    "description": "Track the progress of the plan against defined objectives and timelines. This involves collecting data, analyzing performance, and identifying any deviations from the plan. Monitoring progress ensures that the plan stays on track and allows for timely corrective actions.",
+    "category": "Monitoring & Evaluation",
+    "purpose": "Track plan execution and identify any deviations from the plan.",
+    "keywords": [
+      "monitoring",
+      "tracking",
+      "performance",
+      "metrics",
+      "evaluation"
+    ],
+    "applicability_notes": "Essential for any plan that requires long-term implementation. The frequency of monitoring may vary depending on the complexity of the plan and the volatility of the environment. This step provides early warning signs of potential problems.",
+    "examples_of_usage": [
+      "Monitoring the progress of a project against its timeline.",
+      "Monitoring the performance of a marketing campaign against its objectives.",
+      "Monitoring the financial performance of a company against its budget."
+    ],
+    "typical_inputs": [
+      "Documented plan",
+      "Performance metrics",
+      "Timeline"
+    ],
+    "typical_outputs": [
+      "Progress reports",
+      "Performance data",
+      "Deviation analysis"
+    ]
+  },
+  {
+    "id": "33333333-4444-5555-6666-777777777777",
+    "name": "Adjust Plan",
+    "description": "Make necessary adjustments to the plan based on the monitoring results and any changes in the environment. This involves re-evaluating objectives, strategies, and timelines, and implementing corrective actions. Adjusting the plan ensures that it remains relevant and effective in achieving its goals.",
+    "category": "Monitoring & Evaluation",
+    "purpose": "Adapt the plan to changing circumstances and ensure continued effectiveness.",
+    "keywords": [
+      "adjustment",
+      "adaptation",
+      "correction",
+      "re-evaluation",
+      "improvement"
+    ],
+    "applicability_notes": "Applicable to any plan that operates in a dynamic environment. The scope of the adjustments may vary depending on the severity of the deviations and the flexibility of the plan. This step ensures resilience and responsiveness.",
+    "examples_of_usage": [
+      "Adjusting a project plan to accommodate unexpected delays.",
+      "Adjusting a marketing campaign to respond to changing market conditions.",
+      "Adjusting a financial plan to reflect changes in interest rates."
+    ],
+    "typical_inputs": [
+      "Progress reports",
+      "Performance data",
+      "Deviation analysis",
+      "Environmental changes"
+    ],
+    "typical_outputs": [
+      "Revised plan",
+      "Corrective actions",
+      "Updated timeline"
+    ]
+  }
+]

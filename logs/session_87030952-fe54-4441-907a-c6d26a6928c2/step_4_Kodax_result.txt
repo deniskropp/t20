@@ -1,0 +1,120 @@
+{
+  "plan": [
+    {
+      "step": 1,
+      "task": "Define Objectives",
+      "code_implementation_details": {
+        "html_structure": "Use semantic HTML5 elements like `<form>`, `<label>`, `<input>`, and `<textarea>`. Structure the form with appropriate `div` elements for layout. Include an `<h1>` heading for the task title.",
+        "css_styling": "Apply styles based on the provided color palette and typography. Use CSS Grid or Flexbox for responsive layout. Ensure sufficient contrast between text and background. Define CSS classes for reusable components like input fields and buttons.",
+        "javascript_functionality": "Implement form validation to ensure required fields are filled. Use JavaScript to handle the 'Next' button click, potentially saving the form data and moving to the next step. Implement a progress bar using JavaScript to visually indicate the completion status.",
+        "accessibility_considerations": "Add ARIA attributes to input fields and form elements to provide semantic information for screen readers. Ensure keyboard navigation is fully supported. Provide error messages that are clear and easy to understand. Use appropriate `alt` attributes for images.",
+        "component_breakdown": {
+          "heading": "Reusable `Heading` component with customizable text and level (e.g., `<h1>`, `<h2>`).",
+          "input_field": "Reusable `InputField` component for text inputs, with `label`, `input`, and validation.",
+          "text_area": "Reusable `TextArea` component for multi-line text input, with `label`, `textarea`, and validation.",
+          "rich_text_editor": "Integrate a third-party rich text editor component (e.g., Quill, TinyMCE) with appropriate styling and accessibility features.",
+          "progress_bar": "Reusable `ProgressBar` component that accepts a percentage value as input.",
+          "button": "Reusable `Button` component with customizable text, color (primary/secondary), and click handler."
+        }
+      }
+    },
+    {
+      "step": 2,
+      "task": "Gather Information",
+      "code_implementation_details": {
+        "html_structure": "Use `<nav>` and `<ul>` elements to create a tabbed interface. Each tab should contain a `<form>` with relevant input fields and file upload elements (`<input type='file'>`). Use ARIA roles (`tablist`, `tab`, `tabpanel`) to define the tab structure.",
+        "css_styling": "Style the tabs to visually indicate the active tab. Use CSS to hide/show the content of each tab based on the active state. Apply styles based on the provided color palette and typography.",
+        "javascript_functionality": "Implement JavaScript to handle tab switching. Update the ARIA attributes and CSS classes to reflect the active tab. Implement file upload functionality using the `FileReader` API or a third-party library. Handle 'Previous' and 'Next' button clicks.",
+        "accessibility_considerations": "Ensure keyboard navigation between tabs using arrow keys. Provide clear instructions for file upload. Use ARIA attributes to improve accessibility for screen reader users. Ensure focus is managed correctly when switching tabs.",
+        "component_breakdown": {
+          "tabs": "Reusable `Tabs` component that manages the tab state and displays the appropriate content.",
+          "tab": "Reusable `Tab` component representing a single tab in the interface.",
+          "file_upload": "Reusable `FileUpload` component with drag-and-drop functionality and progress indication.",
+          "input_field": "Re-use of the `InputField` component from step 1.",
+          "text_area": "Re-use of the `TextArea` component from step 1.",
+          "button": "Re-use of the `Button` component from step 1."
+        }
+      }
+    },
+    {
+      "step": 3,
+      "task": "Analyze Data",
+      "code_implementation_details": {
+        "html_structure": "Use `<div>` elements to create a dashboard-style layout. Integrate charting libraries (e.g., Chart.js, D3.js) to display interactive charts and graphs. Include `<input>` elements for filters and a `<textarea>` for summarizing insights.",
+        "css_styling": "Style the dashboard elements to create a visually appealing and informative interface. Use CSS Grid or Flexbox for responsive layout. Apply styles based on the provided color palette and typography. Use a colorblind-friendly palette for the charts.",
+        "javascript_functionality": "Implement JavaScript to fetch and process data for the charts. Use the charting library API to create and update the charts based on user interactions. Implement filtering and sorting functionality. Handle 'Previous' and 'Next' button clicks.",
+        "accessibility_considerations": "Provide alternative text descriptions for all charts and graphs using the `alt` attribute or ARIA attributes. Ensure keyboard navigation for interacting with data visualizations. Allow users to download data in accessible formats (e.g., CSV).",
+        "component_breakdown": {
+          "chart": "Reusable `Chart` component that encapsulates the charting library and handles data rendering.",
+          "filter": "Reusable `Filter` component for filtering data based on various criteria.",
+          "text_area": "Re-use of the `TextArea` component from step 1.",
+          "button": "Re-use of the `Button` component from step 1."
+        }
+      }
+    },
+    {
+      "step": 4,
+      "task": "Develop Options",
+      "code_implementation_details": {
+        "html_structure": "Use `<ul>` and `<li>` elements to create a list of options. Each list item should contain input fields for describing the option, its benefits, and its drawbacks. Implement drag-and-drop functionality using a library like `react-beautiful-dnd` or `sortablejs`.",
+        "css_styling": "Style the list items to visually represent each option. Use CSS to provide visual feedback during drag-and-drop operations. Apply styles based on the provided color palette and typography.",
+        "javascript_functionality": "Implement JavaScript to handle adding, deleting, and reordering options. Use the drag-and-drop library API to manage the list state. Handle 'Previous' and 'Next' button clicks.",
+        "accessibility_considerations": "Use ARIA roles and attributes to make the list and drag-and-drop functionality accessible to screen readers. Provide keyboard shortcuts for adding, deleting, and reordering options. Ensure sufficient contrast between text and background.",
+        "component_breakdown": {
+          "option_list": "Reusable `OptionList` component that manages the list of options and handles drag-and-drop functionality.",
+          "option_item": "Reusable `OptionItem` component representing a single option in the list.",
+          "input_field": "Re-use of the `InputField` component from step 1.",
+          "text_area": "Re-use of the `TextArea` component from step 1.",
+          "button": "Re-use of the `Button` component from step 1."
+        }
+      }
+    },
+    {
+      "step": 5,
+      "task": "Evaluate Options",
+      "code_implementation_details": {
+        "html_structure": "Use `<table>` elements to create a matrix-style interface for comparing options based on predefined criteria. Use `<input type='range'>` or a star rating component for rating each criterion. Display overall scores in a separate summary table.",
+        "css_styling": "Style the table elements to create a visually clear and organized interface. Apply styles based on the provided color palette and typography. Ensure sufficient contrast between text and background.",
+        "javascript_functionality": "Implement JavaScript to handle rating changes and update the overall scores. Calculate and display the summary table. Handle 'Previous' and 'Next' button clicks.",
+        "accessibility_considerations": "Provide labels and descriptions for all criteria using `<label>` elements and ARIA attributes. Use ARIA attributes to make the rating scales accessible. Ensure keyboard navigation for rating options. Provide a text-based summary of the evaluation results.",
+        "component_breakdown": {
+          "evaluation_matrix": "Reusable `EvaluationMatrix` component that displays the options and criteria in a table format.",
+          "rating_scale": "Reusable `RatingScale` component for rating options based on a specific criterion.",
+          "summary_table": "Reusable `SummaryTable` component that displays the overall scores for each option.",
+          "button": "Re-use of the `Button` component from step 1."
+        }
+      }
+    },
+    {
+      "step": 6,
+      "task": "Select Option",
+      "code_implementation_details": {
+        "html_structure": "Display a list of evaluated options with their scores. Use radio buttons or similar UI elements to allow the user to select the preferred option. Implement a confirmation dialog using a modal component. Include a `<textarea>` for documenting the decision rationale.",
+        "css_styling": "Style the list of options to visually highlight the selected option. Style the confirmation dialog. Apply styles based on the provided color palette and typography. Ensure sufficient contrast between text and background.",
+        "javascript_functionality": "Implement JavaScript to handle option selection and display the confirmation dialog. Handle the 'Select Option' button click. Save the selected option and the decision rationale. Handle 'Previous' and 'Next' button clicks.",
+        "accessibility_considerations": "Use ARIA roles and attributes to make the options list accessible. Ensure keyboard navigation for selecting options. Provide clear feedback after an option is selected. Use sufficient contrast between text and background.",
+        "component_breakdown": {
+          "option_list": "Reusable `OptionList` component (potentially a modified version of the one from step 4).",
+          "confirmation_dialog": "Reusable `ConfirmationDialog` component for displaying confirmation messages.",
+          "text_area": "Re-use of the `TextArea` component from step 1.",
+          "button": "Re-use of the `Button` component from step 1."
+        }
+      }
+    },
+    {
+      "step": 7,
+      "task": "Document Plan",
+      "code_implementation_details": {
+        "html_structure": "Display a comprehensive view of the finalized plan, including objectives, strategies, timelines, and resource allocations. Use `<div>` elements to structure the content. Include buttons for exporting the plan in various formats (PDF, DOCX).",
+        "css_styling": "Style the plan document to be visually appealing and easy to read. Apply styles based on the provided color palette and typography. Ensure sufficient contrast between text and background.",
+        "javascript_functionality": "Implement JavaScript to handle exporting the plan in different formats. Use a library like `jsPDF` or a server-side solution to generate the PDF and DOCX files. Handle the 'Previous' and 'Save' button clicks.",
+        "accessibility_considerations": "Ensure the document structure is logical and accessible to screen readers. Provide alternative text for any images or charts. Use sufficient contrast between text and background. Ensure the exported documents are also accessible.",
+        "component_breakdown": {
+          "plan_summary": "Reusable `PlanSummary` component that displays the finalized plan in a structured format.",
+          "button": "Re-use of the `Button` component from step 1.",
+          "export_button": "Specialized `Button` component for handling document export functionality."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,282 @@
+[
+  {
+    "id": "747d0a51-3862-41f8-8e11-791454f786e9",
+    "name": "Define Objectives",
+    "description": "Clearly articulate the goals and desired outcomes of the plan. This involves identifying what needs to be achieved and setting measurable targets. It is a foundational step applicable across various domains, ensuring a clear understanding of the plan's purpose.",
+    "category": "Problem Framing",
+    "purpose": "Establish clear and measurable goals.",
+    "keywords": [
+      "goal setting",
+      "objective definition",
+      "outcome identification"
+    ],
+    "applicability_notes": "This step is crucial for providing direction and focus. The specific objectives will vary based on the context, but the process of defining them remains consistent.",
+    "examples_of_usage": [
+      "A project manager defining the deliverables for a project.",
+      "A marketing team setting targets for a new campaign.",
+      "An individual setting personal development goals."
+    ],
+    "typical_inputs": [
+      "Initial problem statement",
+      "Stakeholder needs",
+      "Available resources"
+    ],
+    "typical_outputs": [
+      "Clearly defined objectives",
+      "Measurable targets",
+      "Success criteria"
+    ]
+  },
+  {
+    "id": "1843d82e-4146-4115-b529-92f289e4e524",
+    "name": "Gather Information",
+    "description": "Collect relevant data and insights to inform the planning process. This may involve research, interviews, surveys, or data analysis. The goal is to gain a comprehensive understanding of the current situation and potential challenges or opportunities. This step is applicable in any domain where data is needed to inform decision-making.",
+    "category": "Analysis",
+    "purpose": "Collect and analyze relevant data.",
+    "keywords": [
+      "research",
+      "data collection",
+      "information gathering"
+    ],
+    "applicability_notes": "The types of information gathered will vary widely, but the underlying process of systematically collecting and analyzing data remains consistent.",
+    "examples_of_usage": [
+      "A market researcher gathering data on consumer preferences.",
+      "A scientist conducting experiments to test a hypothesis.",
+      "A business analyst analyzing financial data to identify trends."
+    ],
+    "typical_inputs": [
+      "Initial problem statement",
+      "Information needs",
+      "Available data sources"
+    ],
+    "typical_outputs": [
+      "Collected data",
+      "Analyzed insights",
+      "Identified trends"
+    ]
+  },
+  {
+    "id": "61c37d41-3c29-419d-bc65-931e653702f5",
+    "name": "Analyze Data",
+    "description": "Examine collected information to identify patterns, trends, and relationships. This involves using various analytical techniques to derive meaningful insights from raw data. This step is vital for understanding the information gathered and drawing conclusions to inform the plan. It applies across different domains, requiring the ability to interpret and synthesize information.",
+    "category": "Analysis",
+    "purpose": "Identify patterns and derive insights.",
+    "keywords": [
+      "data analysis",
+      "pattern recognition",
+      "trend identification"
+    ],
+    "applicability_notes": "The specific analytical techniques used will depend on the nature of the data, but the core principle of extracting meaning from information remains consistent.",
+    "examples_of_usage": [
+      "A data scientist analyzing customer behavior to improve marketing strategies.",
+      "An economist analyzing economic indicators to forecast future trends.",
+      "A project manager analyzing project data to identify potential risks."
+    ],
+    "typical_inputs": [
+      "Collected data",
+      "Information",
+      "Research findings"
+    ],
+    "typical_outputs": [
+      "Identified patterns",
+      "Derived insights",
+      "Actionable recommendations"
+    ]
+  },
+  {
+    "id": "9802b93b-d362-4c43-988d-615f3308f1f4",
+    "name": "Develop Solutions",
+    "description": "Generate a range of potential solutions or approaches to address the defined objectives. This involves brainstorming, creative thinking, and exploring different options. The goal is to create a diverse set of potential solutions to choose from. This step is applicable in any context where problem-solving is required.",
+    "category": "Solution Design",
+    "purpose": "Generate potential solutions.",
+    "keywords": [
+      "solution generation",
+      "brainstorming",
+      "option development"
+    ],
+    "applicability_notes": "The specific solutions will vary based on the context, but the process of generating a range of options remains consistent.",
+    "examples_of_usage": [
+      "An engineer designing different prototypes for a new product.",
+      "A software developer brainstorming different approaches to solve a technical problem.",
+      "A team developing different marketing strategies for a new product launch."
+    ],
+    "typical_inputs": [
+      "Analyzed data",
+      "Derived insights",
+      "Defined objectives"
+    ],
+    "typical_outputs": [
+      "Potential solutions",
+      "Alternative approaches",
+      "Feasibility assessments"
+    ]
+  },
+  {
+    "id": "73c226f4-d3c8-469e-b9d7-e7c02a5745b4",
+    "name": "Evaluate Options",
+    "description": "Assess the feasibility, benefits, and risks associated with each potential solution. This involves evaluating the pros and cons of each option and considering the available resources and constraints. The goal is to identify the most promising solution. This step is applicable in any decision-making process where different options need to be compared.",
+    "category": "Decision Making",
+    "purpose": "Assess the feasibility and risks of each solution.",
+    "keywords": [
+      "option evaluation",
+      "risk assessment",
+      "feasibility analysis"
+    ],
+    "applicability_notes": "The criteria used for evaluation will vary based on the context, but the process of systematically assessing each option remains consistent.",
+    "examples_of_usage": [
+      "A project manager evaluating different vendors for a project.",
+      "A business owner evaluating different investment opportunities.",
+      "An individual evaluating different career paths."
+    ],
+    "typical_inputs": [
+      "Potential solutions",
+      "Alternative approaches",
+      "Defined objectives"
+    ],
+    "typical_outputs": [
+      "Evaluated options",
+      "Risk assessments",
+      "Cost-benefit analysis"
+    ]
+  },
+  {
+    "id": "b90b5601-2c2a-4f9c-8e99-c398a6029785",
+    "name": "Select Solution",
+    "description": "Choose the best solution based on the evaluation process. This involves making a decision and committing to a specific course of action. The goal is to select the solution that is most likely to achieve the defined objectives. This step is applicable in any decision-making process where a choice needs to be made.",
+    "category": "Decision Making",
+    "purpose": "Choose the best solution.",
+    "keywords": [
+      "solution selection",
+      "decision making",
+      "course of action"
+    ],
+    "applicability_notes": "The criteria used for selection will vary based on the context, but the process of making a deliberate choice remains consistent.",
+    "examples_of_usage": [
+      "A project manager selecting a specific vendor for a project.",
+      "A business owner selecting a specific investment opportunity.",
+      "An individual selecting a specific career path."
+    ],
+    "typical_inputs": [
+      "Evaluated options",
+      "Risk assessments",
+      "Cost-benefit analysis"
+    ],
+    "typical_outputs": [
+      "Selected solution",
+      "Decision justification",
+      "Action plan"
+    ]
+  },
+  {
+    "id": "246b8b96-75e2-4a16-8748-b74f19111d05",
+    "name": "Develop Implementation Plan",
+    "description": "Create a detailed plan for putting the chosen solution into action. This involves defining specific tasks, assigning responsibilities, setting timelines, and allocating resources. The goal is to ensure that the solution is implemented effectively and efficiently. This step is applicable in any context where a plan needs to be executed.",
+    "category": "Execution & Implementation",
+    "purpose": "Create a detailed plan for execution.",
+    "keywords": [
+      "implementation planning",
+      "task definition",
+      "resource allocation"
+    ],
+    "applicability_notes": "The specific details of the plan will vary based on the context, but the process of defining tasks, assigning responsibilities, and setting timelines remains consistent.",
+    "examples_of_usage": [
+      "A project manager creating a project schedule.",
+      "A marketing team creating a campaign calendar.",
+      "An individual creating a personal development plan."
+    ],
+    "typical_inputs": [
+      "Selected solution",
+      "Decision justification",
+      "Available resources"
+    ],
+    "typical_outputs": [
+      "Detailed implementation plan",
+      "Defined tasks",
+      "Assigned responsibilities"
+    ]
+  },
+  {
+    "id": "4f418601-e080-49c4-b742-1c2e46a51f5d",
+    "name": "Execute Plan",
+    "description": "Carry out the tasks outlined in the implementation plan. This involves putting the plan into action and monitoring progress. The goal is to achieve the desired outcomes. This step is applicable in any context where a plan needs to be executed.",
+    "category": "Execution & Implementation",
+    "purpose": "Carry out the tasks outlined in the plan.",
+    "keywords": [
+      "plan execution",
+      "task completion",
+      "progress monitoring"
+    ],
+    "applicability_notes": "The specific tasks will vary based on the context, but the process of executing the plan and monitoring progress remains consistent.",
+    "examples_of_usage": [
+      "A project team executing the tasks outlined in the project schedule.",
+      "A marketing team executing the tasks outlined in the campaign calendar.",
+      "An individual executing the tasks outlined in their personal development plan."
+    ],
+    "typical_inputs": [
+      "Detailed implementation plan",
+      "Defined tasks",
+      "Assigned responsibilities"
+    ],
+    "typical_outputs": [
+      "Completed tasks",
+      "Progress updates",
+      "Achieved milestones"
+    ]
+  },
+  {
+    "id": "140f45a2-e087-4f08-82f5-60375752335e",
+    "name": "Monitor Progress",
+    "description": "Track the progress of the plan implementation and identify any deviations from the plan. This involves regularly monitoring key performance indicators (KPIs) and comparing actual results to planned results. The goal is to identify any issues early on and take corrective action. This step is applicable in any context where a plan is being executed.",
+    "category": "Monitoring & Evaluation",
+    "purpose": "Track progress and identify deviations.",
+    "keywords": [
+      "progress monitoring",
+      "KPI tracking",
+      "deviation identification"
+    ],
+    "applicability_notes": "The specific KPIs will vary based on the context, but the process of regularly monitoring progress and identifying deviations remains consistent.",
+    "examples_of_usage": [
+      "A project manager tracking project milestones.",
+      "A marketing team tracking campaign performance.",
+      "An individual tracking their progress towards their personal development goals."
+    ],
+    "typical_inputs": [
+      "Detailed implementation plan",
+      "Completed tasks",
+      "Progress updates"
+    ],
+    "typical_outputs": [
+      "Progress reports",
+      "Identified deviations",
+      "Corrective actions"
+    ]
+  },
+  {
+    "id": "c6a1993b-8882-460e-8072-397c5554e490",
+    "name": "Adjust Plan",
+    "description": "Make necessary adjustments to the plan based on the monitoring results. This involves taking corrective action to address any deviations from the plan and ensure that the desired outcomes are achieved. The goal is to keep the plan on track and maximize the chances of success. This step is applicable in any context where a plan is being executed.",
+    "category": "Monitoring & Evaluation",
+    "purpose": "Make necessary adjustments based on monitoring.",
+    "keywords": [
+      "plan adjustment",
+      "corrective action",
+      "course correction"
+    ],
+    "applicability_notes": "The specific adjustments will vary based on the context, but the process of taking corrective action to address deviations remains consistent.",
+    "examples_of_usage": [
+      "A project manager adjusting the project schedule to address unexpected delays.",
+      "A marketing team adjusting the campaign strategy to improve performance.",
+      "An individual adjusting their personal development plan to address challenges."
+    ],
+    "typical_inputs": [
+      "Progress reports",
+      "Identified deviations",
+      "Corrective actions"
+    ],
+    "typical_outputs": [
+      "Adjusted plan",
+      "Revised tasks",
+      "Updated timelines"
+    ]
+  }
+]

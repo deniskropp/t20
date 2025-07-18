@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task-Agnostic Plan Generator</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #2c3e50;
+            background-color: #ecf0f1;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1, h2, h3 {
+            color: #3498db;
+        }
+
+        h1 {
+            font-size: 28px; /* Larger for main title */
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+        }
+
+        h3 {
+            font-size: 20px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        /* Container for responsiveness */
+        .container {
+            width: 100%;
+            max-width: 960px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Goal Input Form */
+        #goalInputForm {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+            width: 100%;
+        }
+
+        #goalInputForm label {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+
+        #goalInput {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 16px;
+            border: 1px solid #3498db;
+            border-radius: 5px;
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
+            margin-bottom: 15px;
+            transition: border-color 0.3s ease;
+        }
+
+        #goalInput:focus {
+            outline: none;
+            border-color: #2980b9;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.3);
+        }
+
+        #generatePlan {
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffffff;
+            background-color: #3498db;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        #generatePlan:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        #generatePlan:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.5), 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Generated Plan Display */
+        #planDisplay {
+            background-color: #ecf0f1;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        #planDisplay h3 {
+            color: #3498db;
+            margin-bottom: 15px;
+        }
+
+        #planDisplay ul {
+            list-style: disc;
+            padding-left: 25px;
+        }
+
+        #planDisplay li {
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        /* Accordion styling for TAS details (example) */
+        .task-section {
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #ffffff;
+        }
+
+        .task-section-header {
+            background-color: #3498db;
+            color: #ffffff;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px 5px 0 0;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .task-section-header:hover {
+            background-color: #2980b9;
+        }
+
+        .task-section-content {
+            padding: 15px;
+            border-top: 1px solid #ccc;
+        }
+
+        .task-section-content ul {
+            list-style: circle;
+            padding-left: 20px;
+        }
+
+        .task-section-content li {
+            margin-bottom: 8px;
+        }
+
+        /* Feedback Form */
+        #feedbackForm {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        #feedbackForm label {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #2c3e50;
+            font-weight: bold;
+            display: block; /* Ensure label is on its own line */
+        }
+
+        #feedbackText {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+            resize: vertical; /* Allow vertical resizing */
+            min-height: 100px; /* Minimum height for textarea */
+        }
+
+        #feedbackText:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.3);
+        }
+
+        #submitFeedback {
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffffff;
+            background-color: #27ae60;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        #submitFeedback:hover {
+            background-color: #229954;
+            transform: translateY(-2px);
+        }
+
+        #submitFeedback:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.5), 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+            h2 {
+                font-size: 20px;
+            }
+            h3 {
+                font-size: 18px;
+            }
+            #goalInput, #feedbackText {
+                font-size: 14px;
+            }
+            #generatePlan, #submitFeedback {
+                font-size: 14px;
+                padding: 10px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 20px;
+            }
+            h2 {
+                font-size: 18px;
+            }
+            h3 {
+                font-size: 16px;
+            }
+            #goalInput, #feedbackText {
+                font-size: 13px;
+            }
+            #generatePlan, #submitFeedback {
+                font-size: 13px;
+                padding: 8px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Task-Agnostic Plan Generator</h1>
+
+        <!-- Goal Input Form -->
+        <form id="goalInputForm">
+            <label for="goalInput">Enter your goal:</label>
+            <input type="text" id="goalInput" name="goal" aria-label="Enter your goal" placeholder="e.g., Launch a new product, Improve customer satisfaction">
+            <button type="button" id="generatePlan" aria-label="Generate Plan">Generate Plan</button>
+        </form>
+
+        <!-- Generated Plan Display -->
+        <div id="planDisplay" aria-live="polite">
+            <h3>Generated Plan</h3>
+            <p>Your generated plan will appear here.</p>
+            <!-- Example of a generated plan structure (will be populated by JS) -->
+            <!--
+            <div class="task-section">
+                <div class="task-section-header">Task-Agnostic Step 1: Define Scope</div>
+                <div class="task-section-content">
+                    <ul>
+                        <li>Identify key stakeholders.</li>
+                        <li>Define project boundaries.</li>
+                        <li>Outline success metrics.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="task-section">
+                <div class="task-section-header">Task-Agnostic Step 2: Research & Analysis</div>
+                <div class="task-section-content">
+                    <ul>
+                        <li>Conduct market research.</li>
+                        <li>Analyze competitor strategies.</li>
+                        <li>Gather user feedback.</li>
+                    </ul>
+                </div>
+            </div>
+            -->
+        </div>
+
+        <!-- Feedback Form -->
+        <form id="feedbackForm">
+            <h3>Provide Feedback (Optional)</h3>
+            <label for="feedbackText">Your Feedback:</label>
+            <textarea id="feedbackText" name="feedback" rows="4" cols="50" aria-label="Enter your feedback" placeholder="Share your thoughts on the generated plan..."></textarea>
+            <button type="submit" id="submitFeedback" aria-label="Submit Feedback">Submit Feedback</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('generatePlan').addEventListener('click', function() {
+            const goalInput = document.getElementById('goalInput');
+            const planDisplay = document.getElementById('planDisplay');
+            const goal = goalInput.value.trim();
+
+            if (goal) {
+                // Simulate plan generation (replace with actual API call or logic)
+                const generatedPlan = generateTaskAgnosticPlan(goal);
+                displayPlan(generatedPlan, planDisplay);
+            } else {
+                alert('Please enter a goal to generate a plan.');
+            }
+        });
+
+        document.getElementById('feedbackForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+            const feedbackText = document.getElementById('feedbackText').value.trim();
+            if (feedbackText) {
+                // Simulate sending feedback (replace with actual API call)
+                console.log('Feedback submitted:', feedbackText);
+                alert('Thank you for your feedback!');
+                document.getElementById('feedbackText').value = ''; // Clear textarea
+            } else {
+                alert('Please provide some feedback.');
+            }
+        });
+
+        // --- Helper Functions ---
+
+        // Placeholder for actual plan generation logic
+        function generateTaskAgnosticPlan(goal) {
+            // This is a simplified example. In a real application, this would involve
+            // complex logic or an API call to generate a task-agnostic plan.
+            console.log(`Generating plan for: ${goal}`);
+            return [
+                {
+                    title: "Task-Agnostic Step 1: Define Objective & Scope",
+                    tasks: [
+                        `Clearly articulate the primary objective related to "${goal}".`,
+                        "Identify key stakeholders and their expectations.",
+                        "Define the boundaries and constraints of the initiative.",
+                        "Establish measurable success criteria."
+                    ]
+                },
+                {
+                    title: "Task-Agnostic Step 2: Research & Information Gathering",
+                    tasks: [
+                        "Conduct relevant market research or domain analysis.",
+                        "Identify best practices and existing solutions.",
+                        "Gather data and insights to inform decision-making.",
+                        "Consult with subject matter experts."
+                    ]
+                },
+                {
+                    title: "Task-Agnostic Step 3: Strategy & Planning",
+                    tasks: [
+                        "Develop a high-level strategy to achieve the objective.",
+                        "Break down the strategy into actionable phases or milestones.",
+                        "Identify potential risks and mitigation strategies.",
+                        "Allocate necessary resources (time, budget, personnel)."
+                    ]
+                },
+                {
+                    title: "Task-Agnostic Step 4: Execution & Implementation",
+                    tasks: [
+                        "Implement the planned strategies and tasks.",
+                        "Monitor progress against defined milestones.",
+                        "Adapt and adjust the plan as needed based on feedback and results.",
+                        "Ensure clear communication throughout the process."
+                    ]
+                },
+                {
+                    title: "Task-Agnostic Step 5: Evaluation & Iteration",
+                    tasks: [
+                        "Measure the outcomes against the success criteria.",
+                        "Gather feedback from stakeholders and users.",
+                        "Document lessons learned and identify areas for improvement.",
+                        "Plan for future iterations or continuous improvement."
+                    ]
+                }
+            ];
+        }
+
+        function displayPlan(plan, container) {
+            container.innerHTML = '<h3>Generated Plan</h3>'; // Clear previous content
+            if (plan && plan.length > 0) {
+                plan.forEach((taskStep, index) => {
+                    const taskSection = document.createElement('div');
+                    taskSection.classList.add('task-section');
+
+                    const taskHeader = document.createElement('div');
+                    taskHeader.classList.add('task-section-header');
+                    taskHeader.textContent = taskStep.title;
+                    taskHeader.setAttribute('role', 'button');
+                    taskHeader.setAttribute('aria-expanded', 'false');
+                    taskHeader.setAttribute('aria-controls', `task-content-${index}`);
+                    taskHeader.addEventListener('click', function() {
+                        const content = this.nextElementSibling;
+                        const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                        this.setAttribute('aria-expanded', !isExpanded);
+                        content.style.display = isExpanded ? 'none' : 'block';
+                        this.classList.toggle('expanded'); // Optional: for styling expanded state
+                    });
+
+                    const taskContent = document.createElement('div');
+                    taskContent.classList.add('task-section-content');
+                    taskContent.id = `task-content-${index}`;
+                    taskContent.style.display = 'none'; // Initially hidden
+
+                    const taskList = document.createElement('ul');
+                    taskStep.tasks.forEach(task => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = task;
+                        taskList.appendChild(listItem);
+                    });
+                    taskContent.appendChild(taskList);
+
+                    taskSection.appendChild(taskHeader);
+                    taskSection.appendChild(taskContent);
+                    container.appendChild(taskSection);
+                });
+            } else {
+                container.innerHTML += '<p>No plan generated. Please try again.</p>';
+            }
+        }
+
+        // Initialize accordions if needed (e.g., if you want them expanded by default)
+        // document.querySelectorAll('.task-section-header').forEach(header => {
+        //     header.click(); // Simulate a click to expand all initially
+        // });
+    </script>
+
+</body>
+</html>
