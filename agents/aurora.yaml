@@ -1,4 +1,4 @@
 name: Aurora
 role: Designer
 goal: Generate aesthetic layouts, color palettes, typography, and UI flows, ensuring accessibility and visual balance.
-model: gemini-2.0-flash
+model: gemini-2.5-flash-lite-preview-06-17

@@ -1,0 +1,449 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Collaborative Intelligence System Spec (KickLang)",
+  "description": "Schema for defining a Collaborative Intelligence System using KickLang.",
+  "type": "object",
+  "properties": {
+    "CollaborativeIntelligenceSystem": {
+      "type": "object",
+      "description": "A system enabling hybrid human-AI task orchestration with agentic modularity.",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "agents": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["MetaAI", "Aurora", "Kodax", "Lyra", "HumanAgent"]
+          }
+        },
+        "interfaces": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["SharedCanvas", "KnowledgeGraph", "PromptLibrary"]
+          }
+        },
+        "modes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["Synchronous", "Asynchronous", "MetaTemporal"]
+          }
+        },
+        "goals": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["CoCreation", "DecisionMaking", "InsightGeneration", "KnowledgeSynthesis"]
+          }
+        },
+        "feedback_loops": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["Human_AI", "AI_AI", "Human_Human"]
+          }
+        },
+        "execution_protocols": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["ToolCalling", "TaskDelegation", "PromptIteration"]
+          }
+        }
+      },
+      "required": ["description", "agents", "interfaces", "modes", "goals", "feedback_loops", "execution_protocols"]
+    },
+    "MetaAI": {
+      "type": "object",
+      "description": "The orchestrator agent.",
+      "properties": {
+        "role": {
+          "type": "string",
+          "enum": ["Orchestrator"]
+        },
+        "functions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["SegmentTask", "AssignRoles", "UpdateGraph", "RouteFeedback", "ManageSessions"]
+          }
+        },
+        "tools": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["apply_patch", "validate_code"]
+          }
+        },
+        "knowledge": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": ["role", "functions", "tools", "knowledge"]
+    },
+    "Aurora": {
+      "type": "object",
+      "description": "The designer agent.",
+      "properties": {
+        "role": {
+          "type": "string",
+          "enum": ["Designer"]
+        },
+        "input": {
+          "type": "string",
+          "enum": ["TaskSpec"]
+        },
+        "output": {
+          "type": "string",
+          "enum": ["DesignMockup"]
+        },
+        "constraints": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["Accessibility", "Minimalism", "PlatformCompliance"]
+          }
+        },
+        "uses": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["ColorPalette", "Typography", "UIFlow"]
+          }
+        }
+      },
+      "required": ["role", "input", "output", "constraints", "uses"]
+    },
+    "Kodax": {
+      "type": "object",
+      "description": "The engineer agent.",
+      "properties": {
+        "role": {
+          "type": "string",
+          "enum": ["Engineer"]
+        },
+        "input": {
+          "type": "string",
+          "enum": ["DesignMockup"]
+        },
+        "output": {
+          "type": "string",
+          "enum": ["CodeArtifact"]
+        },
+        "constraints": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["Responsive", "Semantic", "Performant"]
+          }
+        },
+        "uses": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["HTML", "CSS", "JS", "ToolValidator"]
+          }
+        }
+      },
+      "required": ["role", "input", "output", "constraints", "uses"]
+    },
+    "Lyra": {
+      "type": "object",
+      "description": "The prompt architect agent.",
+      "properties": {
+        "role": {
+          "type": "string",
+          "enum": ["PromptArchitect"]
+        },
+        "input": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["TaskSpec", "AgentOutput"]
+          }
+        },
+        "output": {
+          "type": "string",
+          "enum": ["OptimizedPrompt"]
+        },
+        "functions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["RefinePrompt", "MaintainLibrary", "ApplyFeedback"]
+          }
+        },
+        "strategy": {
+          "type": "string",
+          "enum": ["ChainOfThought"]
+        }
+      },
+      "required": ["role", "input", "output", "functions", "strategy"]
+    },
+    "HumanAgent": {
+      "type": "object",
+      "description": "The domain expert agent.",
+      "properties": {
+        "role": {
+          "type": "string",
+          "enum": ["DomainExpert"]
+        },
+        "input": {
+          "type": "string",
+          "enum": ["SystemOutput"]
+        },
+        "output": {
+          "type": "string",
+          "enum": ["Validation", "Feedback"]
+        },
+        "responsibilities": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["Creativity", "FinalDecision", "AccessibilityReview"]
+          }
+        }
+      },
+      "required": ["role", "input", "output", "responsibilities"]
+    },
+    "SharedCanvas": {
+      "type": "object",
+      "description": "Visual interface for agent collaboration.",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "displays": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["Designs", "Code", "PromptLogs", "WorkflowDiagram"]
+          }
+        },
+        "supports": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["SessionOverlay", "ChangeHistory", "FeedbackAnnotations"]
+          }
+        }
+      },
+      "required": ["description", "displays", "supports"]
+    },
+    "KnowledgeGraph": {
+      "type": "object",
+      "properties": {
+        "nodes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["DesignPattern", "CodeSnippet", "PromptEntry", "FeedbackNode"]
+          }
+        },
+        "relations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["Refines", "Implements", "Validates", "IteratesOn"]
+          }
+        },
+        "storage": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["SessionID", "Timestamp", "AgentSignature"]
+          }
+        }
+      },
+      "required": ["nodes", "relations", "storage"]
+    },
+    "PromptLibrary": {
+      "type": "object",
+      "properties": {
+        "entry_format": {
+          "type": "object",
+          "properties": {
+            "prompt_type": {
+              "type": "string"
+            },
+            "agent_role": {
+              "type": "string"
+            },
+            "structure": {
+              "type": "string"
+            },
+            "constraints": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "examples": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": ["prompt_type", "agent_role", "structure", "constraints", "examples"]
+        },
+        "function": {
+          "type": "string",
+          "enum": ["Standardize prompt templates and vocabulary across agents"]
+        }
+      },
+      "required": ["entry_format", "function"]
+    },
+    "ExecutionProtocol": {
+      "type": "object",
+      "properties": {
+        "protocol_type": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["ToolCall", "AgentSequence", "FeedbackLoop"]
+          }
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["OnTaskStart", "OnFeedbackReceived", "OnPerformanceDrop"]
+          }
+        },
+        "action": {
+          "type": "string",
+          "enum": ["KickLangScript", "ToolInvocation"]
+        }
+      },
+      "required": ["protocol_type", "conditions", "action"]
+    },
+    "ToolInvocation": {
+      "type": "object",
+      "properties": {
+        "tool_name": {
+          "type": "string"
+        },
+        "parameters": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "output": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": ["tool_name", "parameters", "output", "tags"]
+    },
+    "KickLangScript": {
+      "type": "object",
+      "properties": {
+        "script_id": {
+          "type": "string"
+        },
+        "task": {
+          "type": "string"
+        },
+        "agents_involved": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": ["script_id", "task", "agents_involved", "actions"]
+    },
+    "Quest": {
+      "type": "object",
+      "properties": {
+        "quest_name": {
+          "type": "string"
+        },
+        "assigned_to": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "reward": {
+          "type": "string"
+        },
+        "triggers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tracked_by": {
+          "type": "string",
+          "enum": ["MetaAI"]
+        }
+      },
+      "required": ["quest_name", "assigned_to", "reward", "triggers", "tracked_by"]
+    },
+    "ContextEnvelope": {
+      "type": "object",
+      "properties": {
+        "source_agent": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "constraints": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "forward_to": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": ["source_agent", "summary", "constraints", "forward_to"]
+    },
+    "SessionMemory": {
+      "type": "object",
+      "properties": {
+        "session_id": {
+          "type": "string"
+        },
+        "iteration_id": {
+          "type": "string"
+        },
+        "artifacts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "restored_by": {
+          "type": "string",
+          "enum": ["MetaAI"]
+        }
+      },
+      "required": ["session_id", "iteration_id", "artifacts", "restored_by"]
+    }
+  },
+  "definitions": {}
+}

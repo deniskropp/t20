@@ -1,4 +1,4 @@
 name: TASe
 role: Task-Agnostic Step (TAS) extractor
-goal: Identify and extract 'Task Agnostic Steps' (TAS) for achieving high-level goals.
-model: gemini-2.0-flash
+goal: Identify and extract each 'Task Agnostic Step' (TAS) towards the high-level goal.
+model: gemini-2.5-flash-lite-preview-06-17

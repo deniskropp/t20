@@ -1,4 +1,4 @@
 name: Lyra
 role: Prompt Engineer
 goal: Refine prompts, structure workflows and ensure clarity in agent instructions.
-model: gemini-2.0-flash
+model: gemini-2.5-flash

@@ -1,0 +1,114 @@
+# Collaborative Intelligence System Spec (KickLang)
+
+concept CollaborativeIntelligenceSystem {
+  description: "A system enabling hybrid human-AI task orchestration with agentic modularity."
+  agents: [MetaAI, Aurora, Kodax, Lyra, HumanAgent]
+  interfaces: [SharedCanvas, KnowledgeGraph, PromptLibrary]
+  modes: [Synchronous, Asynchronous, MetaTemporal]
+  goals: [CoCreation, DecisionMaking, InsightGeneration, KnowledgeSynthesis]
+  feedback_loops: [Human_AI, AI_AI, Human_Human]
+  execution_protocols: [ToolCalling, TaskDelegation, PromptIteration]
+}
+
+concept MetaAI {
+  role: Orchestrator
+  functions: [SegmentTask, AssignRoles, UpdateGraph, RouteFeedback, ManageSessions]
+  tools: [apply_patch, validate_code]
+  knowledge: [DesignPatterns, CodeSnippets, PromptVocabulary, FeedbackHistory]
+}
+
+concept Aurora {
+  role: Designer
+  input: TaskSpec
+  output: DesignMockup
+  constraints: [Accessibility, Minimalism, PlatformCompliance]
+  uses: [ColorPalette, Typography, UIFlow]
+}
+
+concept Kodax {
+  role: Engineer
+  input: DesignMockup
+  output: CodeArtifact
+  constraints: [Responsive, Semantic, Performant]
+  uses: [HTML, CSS, JS, ToolValidator]
+}
+
+concept Lyra {
+  role: PromptArchitect
+  input: TaskSpec, AgentOutput
+  output: OptimizedPrompt
+  functions: [RefinePrompt, MaintainLibrary, ApplyFeedback]
+  strategy: ChainOfThought
+}
+
+concept HumanAgent {
+  role: DomainExpert
+  input: SystemOutput
+  output: Validation, Feedback
+  responsibilities: [Creativity, FinalDecision, AccessibilityReview]
+}
+
+concept SharedCanvas {
+  description: "Visual interface for agent collaboration."
+  displays: [Designs, Code, PromptLogs, WorkflowDiagram]
+  supports: [SessionOverlay, ChangeHistory, FeedbackAnnotations]
+}
+
+concept KnowledgeGraph {
+  nodes: [DesignPattern, CodeSnippet, PromptEntry, FeedbackNode]
+  relations: [Refines, Implements, Validates, IteratesOn]
+  storage: [SessionID, Timestamp, AgentSignature]
+}
+
+concept PromptLibrary {
+  entry_format: {
+    prompt_type: string,
+    agent_role: string,
+    structure: string,
+    constraints: [string],
+    examples: [string]
+  }
+  function: Standardize prompt templates and vocabulary across agents
+}
+
+concept ExecutionProtocol {
+  protocol_type: [ToolCall, AgentSequence, FeedbackLoop]
+  conditions: [OnTaskStart, OnFeedbackReceived, OnPerformanceDrop]
+  action: KickLangScript | ToolInvocation
+}
+
+concept ToolInvocation {
+  tool_name: string,
+  parameters: map,
+  output: string,
+  tags: [string]
+}
+
+concept KickLangScript {
+  script_id: string,
+  task: string,
+  agents_involved: [string],
+  actions: [string]
+}
+
+concept Quest {
+  quest_name: string,
+  assigned_to: [string],
+  reward: string,
+  triggers: [string],
+  tracked_by: MetaAI
+}
+
+concept ContextEnvelope {
+  source_agent: string,
+  summary: string,
+  constraints: [string]
+  forward_to: [string]
+}
+
+concept SessionMemory {
+  session_id: string,
+  iteration_id: string,
+  artifacts: [string],
+  restored_by: MetaAI
+}
