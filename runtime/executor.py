@@ -22,6 +22,7 @@ class ExecutionContext:
     high_level_goal: str
     plan: Dict[str, Any]
     step_index: int = 0
+    round_num: int = 0
     artifacts: Dict[str, Any] = field(default_factory=dict)
 
     def current_step(self):
@@ -34,7 +35,7 @@ class ExecutionContext:
 
     def record_artifact(self, key: str, value: Any, mem: bool = False):
         """Records an artifact from a step's execution."""
-        k = f"step_{self.step_index}_{key}"
+        k = f"{self.round_num}__step_{self.step_index}_{key}"
         self.session.add_artifact(k, value)
         if mem:
             self.remember_artifact(k, value)
@@ -136,50 +137,55 @@ class Plan(BaseModel):
 class Orchestrator(Agent):
     """An agent responsible for creating and managing a plan."""
 
-    def start_workflow(self, session: 'Session', initial_task: str):
-        """Initiates and manages the entire workflow."""
-        print(f"{Fore.YELLOW}Orchestrator {self.name} is starting workflow for goal{Style.RESET_ALL}: '{initial_task}'")
 
+    def start_workflow(self, session: 'Session', initial_task: str, rounds: int = 1):
+        """Initiates and manages the entire workflow for multiple rounds."""
         plan = self._generate_plan(session, initial_task)
         if not plan or "steps" not in plan or "roles" not in plan:
-            print("{Fore.RED}Orchestration failed: Could not generate a valid plan.{Style.RESET_ALL}")
+            print(f"{Fore.RED}Orchestration failed: Could not generate a valid plan.{Style.RESET_ALL}")
             return
 
         context = ExecutionContext(session=session, high_level_goal=initial_task, plan=plan)
-        team_by_role = {agent.role: agent for agent in self.team} if self.team else {}
 
-        while context.step_index < len(plan["steps"]):
-            step = context.current_step()
-            role = step.get("role")
-            delegate_agent = team_by_role.get(role)
+        for context.round_num in range(1, rounds + 1):
+            print(f"{Fore.YELLOW}Orchestrator {self.name} is starting workflow round {context.round_num} for goal{Style.RESET_ALL}: '{initial_task}'")
 
-            if not delegate_agent:
-                print(f"{Fore.RED}Warning: No agent found with role '{role}'{Style.RESET_ALL}. Skipping step {context.step_index}.")
-                context.step_index += 1
-                continue
+            team_by_role = {agent.role: agent for agent in self.team} if self.team else {}
 
-            if delegate_agent.role == 'Prompt Engineer':
-                print(f"{Fore.LIGHTBLUE_EX}Orchestrator detected special role{Style.RESET_ALL}: {delegate_agent.role}. Preparing inputs.")
+            context.step_index = 0
 
-            result = delegate_agent.execute_task(context)
-            if result:
-                context.record_artifact(f"{delegate_agent.name}_result.txt", result, True)
+            while context.step_index < len(plan["steps"]):
+                step = context.current_step()
+                role = step.get("role")
+                delegate_agent = team_by_role.get(role)
+
+                if not delegate_agent:
+                    print(f"{Fore.RED}Warning: No agent found with role '{role}'{Style.RESET_ALL}. Skipping step {context.step_index}.")
+                    context.step_index += 1
+                    continue
+
                 if delegate_agent.role == 'Prompt Engineer':
-                    try:
-                        response = json.loads(result)
-                        self._check_new_prompts(session, response)
-                        for key, value in response.items() if isinstance(response, dict) else []:
-                            if key == "refined_prompts" or key == "initial_prompts":
-                                if "target_agent_name" in value:
-                                    self._check_new_prompts(session, value)
-                                else:
-                                    self._check_new_prompts(session, list(value))
-                    except json.JSONDecodeError:
-                        print("{Fore.RED}Prompt Engineer's output was not a valid JSON for prompt update.{Style.RESET_ALL}")
+                    print(f"{Fore.LIGHTBLUE_EX}Orchestrator detected special role{Style.RESET_ALL}: {delegate_agent.role}. Preparing inputs.")
 
-            context.step_index += 1
+                result = delegate_agent.execute_task(context)
+                if result:
+                    context.record_artifact(f"{delegate_agent.name}_result.txt", result, True)
+                    if delegate_agent.role == 'Prompt Engineer':
+                        try:
+                            response = json.loads(result)
+                            self._check_new_prompts(session, response)
+                            for key, value in response.items() if isinstance(response, dict) else []:
+                                if key == "refined_prompts" or key == "initial_prompts" or key == "initial_system_prompts":
+                                    if "target_agent_name" in value:
+                                        self._check_new_prompts(session, value)
+                                    else:
+                                        self._check_new_prompts(session, list(value))
+                        except json.JSONDecodeError:
+                            print(f"{Fore.RED}Prompt Engineer's output was not a valid JSON for prompt update.{Style.RESET_ALL}")
 
-        print(f"{Fore.LIGHTRED_EX}Orchestrator has completed the workflow.{Style.RESET_ALL}")
+                context.step_index += 1
+
+            print(f"{Fore.LIGHTRED_EX}Orchestrator has completed workflow round {context.round_num}.{Style.RESET_ALL}")
 
     def _check_new_prompts(self, session: 'Session', obj: dict | list):
         if isinstance(obj, dict):
@@ -217,7 +223,7 @@ class Orchestrator(Agent):
             for agent in self.team
         )
         planning_prompt = [
-            f"We are meta-artificial intelligence, cohesively creating a role and task plan, thinking step-by-step towards the high-level goal.",
+            f"We are meta-artificial intelligence, cohesively creating an iterative role and task plan, thinking step-by-step towards the high-level goal.",
 
             #f"The final output must be a single JSON object containing 'roles' and 'steps' keys, where 'steps' is a list of tasks.\n"
             #f"Each task in the list must have a 'role' and a 'task' description.\n"
@@ -225,9 +231,9 @@ class Orchestrator(Agent):
 
             f"High-Level Goal: '{high_level_goal}'",
 
-            f"Team Members:\n{team_description}"
+            f"Team Members:\n{team_description}",
 
-            f"Leverage each team member, guided by their goals, to maximize collaboration.",
+            f"Leverage each team member, guided by their goals, to maximize collaboration. Use prompt engineering to refine the system prompts for each agent based on their roles and tasks.",
         ]
         session.add_artifact("planning_prompt.txt", "\n\n".join(planning_prompt))
 
@@ -247,6 +253,7 @@ class Orchestrator(Agent):
             print(f"{Fore.RED}Error generating plan for {self.name}{Style.RESET_ALL}: {e}")
             plan = {"error": str(e)}
 
+        print(f"\n\n{Fore.GREEN}Plan generated for {self.name}{Style.RESET_ALL}: {plan}\n\n\n")
         session.add_artifact("initial_plan.json", plan)
         return plan
 
