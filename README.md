@@ -1,4 +1,3 @@
-```markdown
 ## Project: System Overview Generation
 
 This repository details the collaborative process undertaken to generate a comprehensive system overview. This overview includes both a visual representation of the system architecture and a functional interactive prototype. The project was a joint effort between a Prompt Engineer (Lyra), a Designer (Aurora), and an Engineer (Kodax).
@@ -53,4 +52,3 @@ The culmination of this project resulted in:
 *   **An Interactive Prototype:** A functional web-based prototype demonstrating core system features and user interactions, built with a focus on responsiveness and accessibility.
 
 This project showcases a structured, iterative, and collaborative approach to developing complex system overviews, balancing design aesthetics with functional implementation.
-```

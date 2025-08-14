@@ -1,4 +1,3 @@
-```md
 # Aura: System Overview
 
 This document details the technical requirements and design specifications for the "System Overview" feature of the Aura application. The goal is to provide users with a personalized, glanceable dashboard that offers immediate insight into their task landscape, reduces cognitive load, and presents a clear path forward.
@@ -186,4 +185,3 @@ Detailed responsibilities for key frontend components are outlined in the attach
 ## 6. Conclusion
 
 This plan provides a robust foundation for implementing the Aura "System Overview" feature. By adhering to these specifications, the team can deliver a highly functional, performant, and accessible dashboard that aligns with the core project goals.
-```

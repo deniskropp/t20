@@ -1,4 +1,3 @@
-```markdown
 # Project Planning Workflow
 
 This repository outlines a structured approach to planning, leveraging AI agents to break down high-level goals into actionable steps, design user interfaces, and implement them in code.
@@ -55,4 +54,3 @@ The workflow produces:
 *   **Finalized Plan:** A consolidated JSON object outlining the execution steps.
 
 This README provides an overview of the project's structure, the roles of each agent, and the overall workflow for achieving the "plan only" objective.
-```

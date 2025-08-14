@@ -1,4 +1,3 @@
-```markdown
 # Project Refactoring Initiative
 
 This repository outlines the process and results of a comprehensive refactoring initiative focused on a task management application. The primary goals of this initiative are to enhance the application's user interface (UI) and user experience (UX), ensure strict adherence to accessibility standards (WCAG), and improve overall code quality and performance.
@@ -66,4 +65,3 @@ Each step of the process generated specific artifacts, which are referenced in t
 This refactoring initiative successfully improved the task management application's UI/UX, accessibility, and performance. The collaborative approach between specialized agents ensured a comprehensive and effective refactoring process.
 
 ---
-```
