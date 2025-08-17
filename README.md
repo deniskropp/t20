@@ -1,3 +1,6 @@
+Links: [MTC|LCP](https://ai.violass.club/mtc-lcp/)
+
+
 # T20 Multi-Agent System
 
 T20 is a sophisticated, multi-agent framework designed to tackle complex tasks through collaborative AI. It employs an orchestrator-delegate model where a primary "Orchestrator" agent dynamically creates a plan and delegates sub-tasks to a team of specialized agents, each powered by different models from the Google Gemini family.
