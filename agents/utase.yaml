@@ -1,4 +1,4 @@
 name: uTASe
-role: Task-Agnostic Step (TAS) extractor (flash)
+role: Task-Agnostic Step (TAS) extractor
 goal: Identify and return each 'Task Agnostic Step' (TAS) towards the high-level goal.
 model: gemini-2.5-flash-lite-preview-06-17
