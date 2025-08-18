@@ -1,0 +1,68 @@
+{
+  "task": "Translate the high-fidelity mockups and style guide into modular, responsive, and accessible UI components using HTML, CSS, and JavaScript.",
+  "role": "Engineer",
+  "sub_task_execution": [
+    {
+      "component_name": "Button",
+      "description": "Implement primary and secondary button styles based on the style guide.",
+      "html_structure": "<button class=\"btn btn-primary\">Primary Action</button>\n<button class=\"btn btn-secondary\">Secondary Action</button>",
+      "css_styles": {
+        "base": ".btn {\n  padding: 12px 24px;\n  border-radius: 8px;\n  font-family: 'Inter', sans-serif;\n  font-size: 16px;\n  font-weight: 600;\n  cursor: pointer;\n  transition: background-color 0.2s ease, box-shadow 0.2s ease;\n  border: none;\n  display: inline-block;\n  text-align: center;\n}\n\n.btn-primary {\n  background-color: #00C2CB; /* Luminous Teal */\n  color: #0A2E58; /* Deep Ocean Blue */\n}\n\n.btn-primary:hover {\n  background-color: #00A1A8; /* Darker Teal */\n  box-shadow: 0px 4px 16px rgba(0, 194, 203, 0.3);\n}\n\n.btn-secondary {\n  background-color: #F0F4F8; /* Soft Cloud Gray */\n  color: #0A2E58; /* Deep Ocean Blue */\n  border: 1px solid #E8E8E8; /* Pale Mist */\n}\n\n.btn-secondary:hover {\n  background-color: #E8E8E8; /* Pale Mist */\n}\n\n/* Accessibility: Focus states */\n.btn:focus {\n  outline: none;\n  box-shadow: 0 0 0 3px rgba(0, 194, 203, 0.5); /* Luminous Teal focus ring */\n}",
+        "responsive_considerations": "Ensure buttons are appropriately sized and spaced on smaller viewports. Consider using flexbox for button groups.",
+        "accessibility_notes": "Ensure sufficient color contrast. Implement clear focus states for keyboard navigation. Use semantic `<button>` elements."
+      },
+      "javascript_logic": "Basic event listeners can be added here for click interactions if needed, but functionality will be handled at a higher level (e.g., in page components)."
+    },
+    {
+      "component_name": "InputField",
+      "description": "Implement the text input field styles.",
+      "html_structure": "<div class=\"input-group\">\n  <label for=\"prompt-input\" class=\"input-label\">Prompt</label>\n  <textarea id=\"prompt-input\" class=\"input-field\" placeholder=\"Ask me anything...\"></textarea>\n</div>",
+      "css_styles": {
+        "base": ".input-group {\n  width: 100%;\n  margin-bottom: 24px; /* Spacing from style guide */\n}\n\n.input-label {\n  display: block;\n  margin-bottom: 8px; /* Spacing from style guide */\n  font-family: 'Inter', sans-serif;\n  font-size: 16px;\n  font-weight: 600;\n  color: #333333; /* Charcoal Slate */\n}\n\n.input-field {\n  width: 100%;\n  padding: 16px;\n  border-radius: 8px;\n  border: 1px solid #E8E8E8; /* Pale Mist */\n  background-color: white;\n  font-family: 'Inter', sans-serif;\n  font-size: 16px;\n  font-weight: 400;\n  line-height: 1.6;\n  color: #333333; /* Charcoal Slate */\n  resize: vertical; /* Allow vertical resizing */\n  min-height: 120px; /* Minimum height for textarea */\n}\n\n.input-field::placeholder {\n  color: #CCCCCC; /* Lighter gray for placeholder */\n}\n\n.input-field:focus {\n  outline: none;\n  border-color: #00C2CB; /* Luminous Teal */\n  box-shadow: 0 0 0 3px rgba(0, 194, 203, 0.3);\n}",
+        "responsive_considerations": "Ensure input fields adapt to container widths. For mobile, consider slightly larger touch targets if necessary.",
+        "accessibility_notes": "Use `<label>` associated with the input using `for` and `id`. Ensure focus states are clear. Sufficient contrast for text and borders."
+      },
+      "javascript_logic": "For a textarea, JavaScript might be used for dynamic height adjustments based on content, or to integrate with a state management system."
+    },
+    {
+      "component_name": "Card",
+      "description": "Implement the card component for displaying structured content like color swatches or typography examples.",
+      "html_structure": "<div class=\"card\">\n  <!-- Card content goes here -->\n</div>",
+      "css_styles": {
+        "base": ".card {\n  background-color: white;\n  border-radius: 12px;\n  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.05);\n  padding: 24px;\n  margin-bottom: 16px; /* Spacing from style guide */\n  overflow: hidden; /* To contain child elements with rounded corners */\n}",
+        "responsive_considerations": "Cards should stack vertically on smaller screens and potentially arrange in columns on larger screens.",
+        "accessibility_notes": "Ensure content within cards has sufficient contrast. If cards contain interactive elements, ensure they are keyboard accessible."
+      },
+      "javascript_logic": "JavaScript would be used to populate card content dynamically based on AI output or other data."
+    },
+    {
+      "component_name": "Icon Button",
+      "description": "Implement styles for icon-only buttons.",
+      "html_structure": "<button class=\"icon-btn\" aria-label=\"Copy to clipboard\">\n  <!-- SVG icon here -->\n  <svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n    <path d=\"M16 1H4C2.89543 1 2 1.89543 2 3V17C2 18.1046 2.89543 19 4 19H16C17.1046 19 18 18.1046 18 17V3C18 1.89543 17.1046 1 16 1ZM16 17H4V3H16V17Z\" fill=\"currentColor\"/>\n    <path d=\"M20 5H18V19C18 20.1046 18.8954 21 20 21H22V5Z\" fill=\"currentColor\"/>\n  </svg>\n</button>",
+      "css_styles": {
+        "base": ".icon-btn {\n  background-color: transparent;\n  border: none;\n  padding: 8px;\n  cursor: pointer;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  border-radius: 6px;\n  transition: background-color 0.2s ease;\n}\n\n.icon-btn svg {\n  fill: #0A2E58; /* Deep Ocean Blue */\n  width: 24px;\n  height: 24px;\n}\n\n.icon-btn:hover {\n  background-color: #F0F4F8; /* Soft Cloud Gray */\n}\n\n.icon-btn:hover svg {\n  fill: #00C2CB; /* Luminous Teal */\n}\n\n/* Accessibility: Focus states */\n.icon-btn:focus {\n  outline: none;\n  box-shadow: 0 0 0 3px rgba(0, 194, 203, 0.5); /* Luminous Teal focus ring */\n}",
+        "responsive_considerations": "Ensure icons are appropriately sized and have enough spacing for touch targets.",
+        "accessibility_notes": "Crucially, use `aria-label` to describe the button's action for screen readers when there's no visible text. Ensure clear focus states."
+      },
+      "javascript_logic": "JavaScript will handle the click event to perform the action (e.g., copying text to clipboard)."
+    }
+  ],
+  "global_styles": {
+    "html": "box-sizing: border-box;",
+    "body": "font-family: 'Inter', sans-serif;\nbackground-color: #F0F4F8; /* Soft Cloud Gray */\ncolor: #333333; /* Charcoal Slate */\nmargin: 0;\nline-height: 1.6;\n-webkit-font-smoothing: antialiased;\n-moz-osx-font-smoothing: grayscale;",
+    "headings": {
+      "h1": "font-size: 48px; font-weight: 700; line-height: 1.2;",
+      "h2": "font-size: 36px; font-weight: 700; line-height: 1.3;",
+      "h3": "font-size: 28px; font-weight: 600; line-height: 1.3;",
+      "h4": "font-size: 20px; font-weight: 600; line-height: 1.4;"
+    },
+    "code_font": "font-family: 'Source Code Pro', monospace;",
+    "imports": [
+      "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Code+Pro:wght@400&family=Merriweather:wght@700&display=swap');"
+    ],
+    "accessibility": {
+      "contrast_ratios": "Ensure all text/background combinations meet WCAG AA standards.",
+      "keyboard_navigation": "All interactive elements must be focusable and operable via keyboard with visible focus indicators."
+    }
+  }
+}

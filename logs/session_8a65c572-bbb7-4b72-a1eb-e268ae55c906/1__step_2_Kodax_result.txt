@@ -1,0 +1,143 @@
+{
+  "api_client_module": {
+    "name": "humorEvaluatorApiClient",
+    "description": "A reusable module to handle all API communications with the https://ai.violass.club/v1 endpoint for the Humor Evaluator system.",
+    "language": "javascript",
+    "dependencies": [
+      "axios"
+    ],
+    "config": {
+      "baseUrl": "https://ai.violass.club/v1",
+      "apiKey": "YOUR_API_KEY"
+    },
+    "methods": [
+      {
+        "name": "generateJoke",
+        "description": "Generates a joke based on a given topic or theme.",
+        "http_method": "POST",
+        "endpoint": "/chat/completions",
+        "request_config": {
+          "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer ${apiKey}"
+          },
+          "body_template": {
+            "model": "your-preferred-llm-model-id",
+            "messages": [
+              {
+                "role": "system",
+                "content": "You are a creative comedian. Your goal is to generate concise, original, and genuinely funny jokes. Avoid offensive or overly complex humor."
+              },
+              {
+                "role": "user",
+                "content": "Generate a short, witty joke about ${topic}. Ensure it has a clear setup and punchline. Limit to 30 words."
+              }
+            ],
+            "temperature": 0.8,
+            "max_tokens": 100
+          }
+        },
+        "response_parsing": {
+          "success_path": "data.choices[0].message.content",
+          "error_path": "data.error.message"
+        },
+        "parameters": [
+          {
+            "name": "topic",
+            "type": "string",
+            "description": "The topic or theme for the joke."
+          }
+        ]
+      },
+      {
+        "name": "analyzeFeedback",
+        "description": "Analyzes user feedback on a joke to extract sentiment, specific points, and actionable insights.",
+        "http_method": "POST",
+        "endpoint": "/chat/completions",
+        "request_config": {
+          "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer ${apiKey}"
+          },
+          "body_template": {
+            "model": "your-preferred-llm-model-id",
+            "messages": [
+              {
+                "role": "system",
+                "content": "You are a humor analyst. Your task is to objectively analyze user feedback on jokes. Identify sentiment, specific elements mentioned, and actionable insights for improvement. Output a JSON object."
+              },
+              {
+                "role": "user",
+                "content": "Analyze the following user feedback for the joke: \"${jokeText}\". User feedback: \"${feedbackText}\".\n\nProvide your analysis as a JSON object with the following keys:\n- \"sentiment\": (string, 'positive', 'negative', 'neutral', 'mixed')\n- \"specific_points\": (array of strings, specific elements or aspects of the joke mentioned by the user)\n- \"actionable_insights\": (array of strings, concrete suggestions for improving the joke based on the feedback)\n- \"overall_summary\": (string, a brief summary of the feedback)\n\nExample Output:\n```json\n{\n  \"sentiment\": \"mixed\",\n  \"specific_points\": [\"setup too long\", \"punchline clever\", \"delivery unclear\"],\n  \"actionable_insights\": [\"Shorten the setup\", \"Rephrase the punchline for better clarity\"],\n  \"overall_summary\": \"User found the punchline good but the setup confusing.\"\n}\n```"
+              }
+            ],
+            "temperature": 0.2,
+            "max_tokens": 300
+          }
+        },
+        "response_parsing": {
+          "success_path": "data.choices[0].message.content",
+          "error_path": "data.error.message"
+        },
+        "parameters": [
+          {
+            "name": "jokeText",
+            "type": "string",
+            "description": "The full text of the joke being analyzed."
+          },
+          {
+            "name": "feedbackText",
+            "type": "string",
+            "description": "The user's feedback on the joke."
+          }
+        ]
+      },
+      {
+        "name": "getRecommendations",
+        "description": "Generates recommendations for improving a joke based on the results of a feedback analysis.",
+        "http_method": "POST",
+        "endpoint": "/chat/completions",
+        "request_config": {
+          "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer ${apiKey}"
+          },
+          "body_template": {
+            "model": "your-preferred-llm-model-id",
+            "messages": [
+              {
+                "role": "system",
+                "content": "You are a joke improvement specialist. Based on provided analysis, offer concrete, actionable recommendations to enhance a joke's humor, clarity, and originality. If the joke is good, suggest ways to make it even better or similar joke ideas."
+              },
+              {
+                "role": "user",
+                "content": "Based on the following joke feedback analysis:\n```json\n${analysisJson}\n```\nProvide specific, actionable recommendations to improve the original joke. Focus on clarity, humor, originality, and conciseness. If the joke is already strong, suggest ways to elevate it further or propose a similar joke concept. Format your recommendations as a concise, bulleted list. Limit each recommendation to one sentence."
+              }
+            ],
+            "temperature": 0.5,
+            "max_tokens": 200
+          }
+        },
+        "response_parsing": {
+          "success_path": "data.choices[0].message.content",
+          "error_path": "data.error.message"
+        },
+        "parameters": [
+          {
+            "name": "analysisJson",
+            "type": "string",
+            "description": "The JSON output from the feedback analysis."
+          }
+        ]
+      }
+    ],
+    "error_handling": {
+      "default_message": "An unexpected error occurred while communicating with the API.",
+      "specific_codes": {
+        "401": "Authentication failed. Please check your API key.",
+        "404": "The requested API endpoint was not found.",
+        "500": "An internal server error occurred on the API side."
+      }
+    }
+  }
+}

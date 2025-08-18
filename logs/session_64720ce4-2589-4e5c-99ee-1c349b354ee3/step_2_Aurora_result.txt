@@ -1,0 +1,118 @@
+{
+  "user_flow_diagrams": [
+    {
+      "id": "uf_ai_interaction_001",
+      "name": "Core AI Interaction Flow",
+      "description": "This flow details the primary interaction loop of the AI system, from user input to AI output.",
+      "stages": [
+        {
+          "stage_id": "uf_stage_01",
+          "name": "User Input",
+          "description": "User provides input to the AI system.",
+          "next_stage_ids": ["uf_stage_02"]
+        },
+        {
+          "stage_id": "uf_stage_02",
+          "name": "AI Processing (Thinking)",
+          "description": "System visually indicates the AI is processing the request.",
+          "next_stage_ids": ["uf_stage_03", "uf_stage_05"]
+        },
+        {
+          "stage_id": "uf_stage_03",
+          "name": "AI Output Display",
+          "description": "AI's response is presented to the user.",
+          "next_stage_ids": ["uf_stage_04"]
+        },
+        {
+          "stage_id": "uf_stage_04",
+          "name": "Follow-up/Iteration",
+          "description": "User can provide further input or refine the previous request.",
+          "next_stage_ids": ["uf_stage_02"]
+        },
+        {
+          "stage_id": "uf_stage_05",
+          "name": "Error State",
+          "description": "If processing fails, an error is displayed to the user.",
+          "next_stage_ids": ["uf_stage_01", "uf_stage_04"]
+        }
+      ]
+    }
+  ],
+  "low_fidelity_wireframes": [
+    {
+      "id": "wf_input_001",
+      "name": "Input Screen",
+      "description": "Represents the primary screen where users input their queries.",
+      "layout": {
+        "header": "AI Assistant",
+        "main_content": [
+          {"type": "text_area", "label": "Your Request", "placeholder": "Type your question or command here...", "id": "user_input_textarea"},
+          {"type": "button", "label": "Send", "id": "send_button", "state": "enabled"}
+        ],
+        "footer": null
+      },
+      "interaction_elements": [
+        {"element_id": "user_input_textarea", "interaction": "user can type text"},
+        {"element_id": "send_button", "interaction": "user clicks to submit input"}
+      ]
+    },
+    {
+      "id": "wf_processing_001",
+      "name": "Processing Screen",
+      "description": "Visual representation of the AI processing the user's input.",
+      "layout": {
+        "header": "AI Assistant",
+        "main_content": [
+          {"type": "text_area", "label": "Your Request", "value": "User's submitted query", "state": "disabled"},
+          {"type": "visual_indicator", "indicator_type": "animated_dots", "label": "AI is thinking...", "id": "processing_indicator"},
+          {"type": "status_message", "message": "Analyzing your request...", "id": "processing_message"}
+        ],
+        "footer": null
+      },
+      "interaction_elements": [
+        {"element_id": "processing_indicator", "interaction": "provides visual feedback of AI activity"},
+        {"element_id": "processing_message", "interaction": "informs user about the current processing stage"}
+      ]
+    },
+    {
+      "id": "wf_output_001",
+      "name": "Output Screen",
+      "description": "Displays the AI's response.",
+      "layout": {
+        "header": "AI Assistant",
+        "main_content": [
+          {"type": "text_area", "label": "Your Request", "value": "User's submitted query", "state": "disabled"},
+          {"type": "output_display", "label": "AI Response", "content_type": "text", "placeholder": "AI's generated response will appear here...", "id": "ai_output_display"},
+          {"type": "button", "label": "Refine Request", "id": "refine_button", "state": "enabled"},
+          {"type": "button", "label": "New Request", "id": "new_request_button", "state": "enabled"}
+        ],
+        "footer": null
+      },
+      "interaction_elements": [
+        {"element_id": "ai_output_display", "interaction": "displays AI-generated content"},
+        {"element_id": "refine_button", "interaction": "user clicks to modify previous query"},
+        {"element_id": "new_request_button", "interaction": "user clicks to start a fresh interaction"}
+      ]
+    },
+    {
+      "id": "wf_error_001",
+      "name": "Error Screen",
+      "description": "Displays an error message when the AI processing fails.",
+      "layout": {
+        "header": "AI Assistant",
+        "main_content": [
+          {"type": "text_area", "label": "Your Request", "value": "User's submitted query", "state": "disabled"},
+          {"type": "alert_message", "message_type": "error", "message": "An error occurred. Please try again or refine your request.", "id": "error_message"},
+          {"type": "button", "label": "Try Again", "id": "try_again_button", "state": "enabled"},
+          {"type": "button", "label": "Refine Request", "id": "refine_error_button", "state": "enabled"}
+        ],
+        "footer": null
+      },
+      "interaction_elements": [
+        {"element_id": "error_message", "interaction": "notifies user of a processing failure"},
+        {"element_id": "try_again_button", "interaction": "user clicks to re-attempt the same request"},
+        {"element_id": "refine_error_button", "interaction": "user clicks to modify the original query"}
+      ]
+    }
+  ]
+}

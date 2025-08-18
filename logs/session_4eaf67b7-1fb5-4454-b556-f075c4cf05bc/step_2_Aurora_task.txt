@@ -1,0 +1,272 @@
+The overall goal is: 'Create a website that is a frontend to an AI system like this.'
+
+Your role's specific goal is: 'Generate aesthetic layouts, color palettes, typography, and UI flows, ensuring accessibility and visual balance.'
+Your specific sub-task is: 'Create low-fidelity wireframes and user flow diagrams for the AI frontend. Focus on the primary user journey: inputting a request, viewing the AI's response, and managing the conversation history.'
+
+The team's roles are:
+    {'roles': [{'title': 'Designer', 'description': 'Generate aesthetic layouts, color palettes, typography, and UI flows, ensuring accessibility and visual balance.'}, {'title': 'Engineer', 'description': 'Implement designs into clean, modular, and performant code, focusing on responsive design and accessibility.'}, {'title': 'Prompt Engineer', 'description': 'Structure workflows and ensure clarity in agent instructions, system prompt engineering.'}, {'title': 'Task-Agnostic Step (TAS) extractor (flash)', 'description': "Identify and return each 'Task Agnostic Step' (TAS) towards the high-level goal."}], 'steps': [{'name': 'uTASe', 'role': 'Task-Agnostic Step (TAS) extractor (flash)', 'task': "Analyze the high-level goal 'Create a website that is a frontend to an AI system' and extract the primary project phases: 1. Planning & Scoping, 2. Design & Prototyping, 3. Development & Integration, 4. Testing & Refinement, 5. Deployment."}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': 'Based on the phases from uTASe, create a detailed project brief. Define the core features of the website, the target user, and the key interaction points with the AI. Draft initial system prompts for each team member to align them with this brief.'}, {'name': 'Aurora', 'role': 'Designer', 'task': "Create low-fidelity wireframes and user flow diagrams for the AI frontend. Focus on the primary user journey: inputting a request, viewing the AI's response, and managing the conversation history."}, {'name': 'Aurora', 'role': 'Designer', 'task': 'Develop a high-fidelity visual design and a comprehensive style guide based on the approved wireframes. The guide must include color palette, typography, spacing, and component styles, with a strong emphasis on accessibility (WCAG 2.1 AA).'}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Set up the frontend development environment. Select a modern JavaScript framework (e.g., React, Svelte), establish a scalable project architecture, and configure version control with Git.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Translate the high-fidelity designs from Aurora into clean, modular, and responsive UI components. Ensure all components are accessible and performant.'}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': "Design and refine the core system prompts that will govern the AI's behavior and personality on the website. Collaborate with Kodax to define the API contract for sending prompts and receiving structured responses."}, {'name': 'Kodax', 'role': 'Engineer', 'task': "Integrate the frontend components with the AI system's backend API. Implement robust state management to handle user input, API loading states, error handling, and streaming responses."}, {'name': 'Aurora', 'role': 'Designer', 'task': 'Conduct a thorough design review of the implemented frontend. Create a list of discrepancies between the design and the implementation for Kodax to address, ensuring visual consistency and adherence to the UX flow.'}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': "Perform user acceptance testing on the integrated system, focusing on the quality and relevance of the AI's responses. Iterate on the system prompts based on test results to improve the overall conversational experience."}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Address feedback from the design and prompt engineering reviews. Conduct final cross-browser and performance testing, then deploy the application to a production environment.'}, {'name': 'uTASe', 'role': 'Task-Agnostic Step (TAS) extractor (flash)', 'task': 'Perform a final review of the deployed website to verify that it successfully functions as a frontend to the AI system, thus confirming the fulfillment of the high-level goal.'}]}
+
+Please use the following outputs from the other agents as your input:
+
+Artifact from step_0_uTASe_result.txt (Task-Agnostic Step (TAS) extractor (flash)):
+[
+  {
+    "id": "7d28b9f0-1b2a-4c3d-8e4f-9a0b1c2d3e4f",
+    "name": "Define Project Scope",
+    "description": "Clearly articulate the high-level goal, identify the target audience, and outline the core functionalities and constraints of the project. This involves understanding the purpose of the AI system and how the website will serve as its frontend interface.",
+    "category": "Init",
+    "purpose": "Establish the foundational understanding and boundaries of the project.",
+    "keywords": [
+      "scoping",
+      "planning",
+      "goal definition",
+      "requirements gathering"
+    ],
+    "applicability_notes": "This step is crucial for any project, ensuring alignment among stakeholders before design or development begins. It sets the direction and feasibility of the entire endeavor.",
+    "examples_of_usage": [
+      "For an AI chatbot website, this step would define the chatbot's domain, user interaction model, and expected conversational capabilities.",
+      "For an AI image generation frontend, this step would specify the types of images to be generated, input parameters, and output formats.",
+      "For an AI data analysis tool, this step would outline the data sources, analysis types, and visualization requirements."
+    ],
+    "typical_inputs": [
+      "High-level project objective",
+      "Stakeholder requirements",
+      "Understanding of the AI system's capabilities"
+    ],
+    "typical_outputs": [
+      "Project brief",
+      "Defined scope document",
+      "Key features list"
+    ]
+  },
+  {
+    "id": "8e39c8a1-2c3b-4d4e-9f5a-0b1c2d3e4f5a",
+    "name": "Design User Interface and Experience",
+    "description": "Create wireframes, mockups, and prototypes to define the visual layout, user flow, and interaction design of the website. This includes designing how users will interact with the AI system, input data, and view results, ensuring an intuitive and engaging experience.",
+    "category": "Design",
+    "purpose": "Translate project requirements into a user-centered visual and interactive design.",
+    "keywords": [
+      "UI design",
+      "UX design",
+      "prototyping",
+      "wireframing",
+      "user flow"
+    ],
+    "applicability_notes": "This phase is iterative and involves close collaboration with engineers and prompt engineers to ensure the design is technically feasible and effectively communicates with the AI.",
+    "examples_of_usage": [
+      "Designing input fields for text prompts or data uploads.",
+      "Creating visual representations for AI-generated content (text, images, data visualizations).",
+      "Mapping out navigation and controls for managing AI interactions or conversation history."
+    ],
+    "typical_inputs": [
+      "Project brief",
+      "Defined scope document",
+      "User personas"
+    ],
+    "typical_outputs": [
+      "Wireframes",
+      "Mockups",
+      "Interactive prototypes",
+      "Style guide"
+    ]
+  },
+  {
+    "id": "9f4a0b1c-3d4e-5f6a-0b1c-2d3e4f5a6b",
+    "name": "Develop Frontend Application",
+    "description": "Build the website's user interface based on the approved designs, using appropriate web technologies and frameworks. This involves coding the visual elements, implementing user interactions, and setting up the project structure for scalability and maintainability.",
+    "category": "Development",
+    "purpose": "Construct the functional user-facing part of the website.",
+    "keywords": [
+      "frontend development",
+      "coding",
+      "web development",
+      "UI implementation",
+      "framework integration"
+    ],
+    "applicability_notes": "Emphasis should be placed on creating reusable components, ensuring responsiveness across devices, and adhering to accessibility standards.",
+    "examples_of_usage": [
+      "Implementing forms for user input.",
+      "Displaying dynamic content received from the AI.",
+      "Creating interactive elements for user control."
+    ],
+    "typical_inputs": [
+      "Approved UI/UX designs",
+      "Style guide",
+      "Technical stack selection"
+    ],
+    "typical_outputs": [
+      "Implemented UI components",
+      "Frontend codebase",
+      "Configured development environment"
+    ]
+  },
+  {
+    "id": "0a5b1c2d-4e5f-6a7b-0b1c-2d3e4f5a6b7c",
+    "name": "Integrate with AI System",
+    "description": "Connect the frontend application with the backend AI system's API. This involves handling data exchange, managing API requests and responses, and ensuring smooth communication between the user interface and the AI logic.",
+    "category": "Integration",
+    "purpose": "Enable the frontend to communicate with and utilize the AI system's capabilities.",
+    "keywords": [
+      "API integration",
+      "backend connection",
+      "data exchange",
+      "AI communication"
+    ],
+    "applicability_notes": "This step requires careful consideration of API contracts, error handling, and potentially real-time data streaming, depending on the AI system's nature.",
+    "examples_of_usage": [
+      "Sending user prompts to the AI API.",
+      "Receiving and displaying AI-generated responses.",
+      "Handling authentication and authorization for API access."
+    ],
+    "typical_inputs": [
+      "Frontend codebase",
+      "AI system API documentation",
+      "Authentication credentials"
+    ],
+    "typical_outputs": [
+      "Functional API integration",
+      "Data flow between frontend and AI",
+      "Error handling mechanisms"
+    ]
+  },
+  {
+    "id": "1b6c2d3e-5f6a-7b8c-0b1c-2d3e4f5a6b7c8d",
+    "name": "Test and Refine Functionality",
+    "description": "Conduct comprehensive testing of the integrated website, including functional testing, usability testing, performance testing, and cross-browser compatibility. Identify bugs, usability issues, and areas for improvement, and iterate on the design and development to address them.",
+    "category": "Testing",
+    "purpose": "Ensure the website is functional, user-friendly, and performs as expected.",
+    "keywords": [
+      "testing",
+      "quality assurance",
+      "bug fixing",
+      "usability testing",
+      "performance optimization"
+    ],
+    "applicability_notes": "Feedback loops with designers and prompt engineers are critical during this phase to refine both the user experience and the AI's output quality.",
+    "examples_of_usage": [
+      "Testing different user input scenarios to verify AI responses.",
+      "Checking UI responsiveness on various devices and screen sizes.",
+      "Evaluating loading times and overall application performance."
+    ],
+    "typical_inputs": [
+      "Integrated frontend and AI system",
+      "Test cases",
+      "User feedback"
+    ],
+    "typical_outputs": [
+      "Bug reports",
+      "Usability feedback",
+      "Performance metrics",
+      "Refined codebase and designs"
+    ]
+  },
+  {
+    "id": "2c7d3e4f-6f7a-8b9c-0b1c-2d3e4f5a6b7c8d9e",
+    "name": "Deploy Website",
+    "description": "Prepare and launch the website to a production environment. This includes setting up hosting, configuring the deployment pipeline, and making the website accessible to end-users.",
+    "category": "Deployment",
+    "purpose": "Make the AI frontend website publicly available.",
+    "keywords": [
+      "deployment",
+      "launch",
+      "hosting",
+      "production environment",
+      "release management"
+    ],
+    "applicability_notes": "Post-deployment monitoring and maintenance are essential to ensure continued functionality and user satisfaction.",
+    "examples_of_usage": [
+      "Deploying to cloud hosting platforms like AWS, Azure, or Google Cloud.",
+      "Setting up CI/CD pipelines for automated deployments.",
+      "Configuring domain names and SSL certificates."
+    ],
+    "typical_inputs": [
+      "Tested and refined codebase",
+      "Hosting environment",
+      "Deployment strategy"
+    ],
+    "typical_outputs": [
+      "Live website",
+      "Deployment logs",
+      "Monitoring setup"
+    ]
+  },
+  {
+    "id": "3d8e4f5a-7a8b-9c0d-0b1c-2d3e4f5a6b7c8d9e0f",
+    "name": "Verify Goal Achievement",
+    "description": "Conduct a final review of the deployed website to confirm it effectively functions as a frontend to the AI system and meets all the initial high-level goals and requirements.",
+    "category": "Validation",
+    "purpose": "Confirm the successful fulfillment of the overall project objective.",
+    "keywords": [
+      "verification",
+      "validation",
+      "goal confirmation",
+      "final review",
+      "project closure"
+    ],
+    "applicability_notes": "This step ensures that the project has successfully delivered on its intended purpose and provides a basis for future iterations or improvements.",
+    "examples_of_usage": [
+      "Testing the end-to-end user journey on the live site.",
+      "Confirming that the website accurately represents the AI's capabilities.",
+      "Gathering initial user feedback on the live product."
+    ],
+    "typical_inputs": [
+      "Live website",
+      "Original high-level goal",
+      "Project requirements"
+    ],
+    "typical_outputs": [
+      "Project completion report",
+      "Confirmation of goal achievement",
+      "Lessons learned"
+    ]
+  }
+]
+
+---
+
+Artifact from step_1_Lyra_result.txt (Prompt Engineer):
+{
+  "project_brief": {
+    "overall_goal": "To create a highly intuitive, responsive, and accessible web frontend for an AI system that enables users to interact seamlessly with AI capabilities, manage their interactions, and receive diverse AI-generated outputs.",
+    "core_features": [
+      "Intuitive Input Interface: Dedicated areas for users to submit requests to the AI (e.g., text prompts, file uploads, parameter forms).",
+      "Dynamic Output Display: Clear and adaptable presentation of AI responses, accommodating various formats (text, images, structured data, code, etc.).",
+      "Interaction History Management: Functionality to view, save, and manage past conversations or queries with the AI.",
+      "Real-time Feedback: Visual indicators for AI processing, loading states, and clear error messages.",
+      "Responsiveness & Accessibility: Full functionality and aesthetic appeal across all devices (desktop, tablet, mobile), adhering strictly to WCAG 2.1 AA standards."
+    ],
+    "target_user": {
+      "primary": "General users seeking to leverage AI for specific tasks (e.g., content creation, data summarization, creative exploration) who prioritize ease of use and clear communication.",
+      "secondary": "Developers or researchers who may use the platform for testing, demonstration, or specific AI model interaction, requiring robust functionality."
+    },
+    "key_interaction_points_with_ai": [
+      "Prompt Submission: User initiates an interaction by submitting a query or data.",
+      "AI Processing Indication: System provides immediate visual feedback that the AI is processing the request.",
+      "Response Presentation: AI-generated output is displayed clearly and appropriately formatted.",
+      "Iterative Interaction: Users can provide follow-up prompts or refine previous requests.",
+      "History Access: Users can easily review and manage their past interactions.",
+      "Error Communication: The system gracefully handles and communicates any AI processing failures or limitations."
+    ]
+  },
+  "initial_system_prompts": [
+    {
+      "role": "Designer",
+      "name": "Aurora",
+      "prompt": "Based on the project brief, create low-fidelity wireframes and user flow diagrams for the AI frontend. Prioritize the core user journey: submitting an AI request, viewing diverse AI responses (e.g., text, image, data visualization), and managing interaction history. Ensure designs inherently support responsiveness and clearly indicate AI processing states and error feedback."
+    },
+    {
+      "role": "Engineer",
+      "name": "Kodax",
+      "prompt": "Based on the project brief, set up the frontend development environment. Select a modern JavaScript framework (e.g., React, Svelte, Vue) and establish a scalable, modular project architecture. Configure version control (Git) and prepare the foundation for seamless integration with a RESTful or GraphQL AI API, anticipating varied AI output structures."
+    },
+    {
+      "role": "Prompt Engineer",
+      "name": "Lyra",
+      "prompt": "Based on the project brief, define the initial core capabilities and a preliminary persona for the AI. Draft high-level system prompts to guide the AI's behavior, focusing on clarity, helpfulness, and safety. Identify initial API contract considerations for prompt submission and structured AI response reception, ensuring alignment with the defined user interaction points."
+    }
+  ]
+}
+
+
+
+Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project.

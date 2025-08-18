@@ -1,0 +1,161 @@
+{
+  "development_environment_setup": {
+    "package_manager": "npm",
+    "framework": "React",
+    "styling": {
+      "method": "CSS Modules",
+      "variables": "Utilize CSS Custom Properties for the 'Nebula' color palette and typography scales.",
+      "global_styles": "Apply global styles for resets, base typography, and define CSS variables."
+    },
+    "project_structure": {
+      "root": "/",
+      "src": {
+        "components": {
+          "ChatInterface": {
+            "ChatInterface.jsx": "Main component for the chat UI.",
+            "MessageList.jsx": "Renders the list of messages.",
+            "MessageBubble.jsx": "Represents individual user or AI messages.",
+            "InputBar.jsx": "Contains the text input and send button.",
+            "TextInput.jsx": "The actual input field.",
+            "SendButton.jsx": "The send button component.",
+            "MicrophoneButton.jsx": "Optional microphone button.",
+            "TypingIndicator.jsx": "Shows when the AI is processing.",
+            "RetryButton.jsx": "Button to retry failed requests."
+          },
+          "Layout": {
+            "Header.jsx": "The application header.",
+            "MainContentArea.jsx": "Main content wrapper for desktop."
+          }
+        },
+        "styles": {
+          "global.css": "Global styles, resets, and CSS variable definitions.",
+          "colors.css": "Definitions for the 'Nebula' color palette.",
+          "typography.css": "Definitions for typography scale and fonts."
+        },
+        "App.jsx": "Root application component.",
+        "index.js": "Entry point for the React application."
+      },
+      "public": {
+        "index.html": "Main HTML file.",
+        "favicon.ico": "Favicon."
+      },
+      "package.json": "Project dependencies and scripts."
+    },
+    "build_tools": "Vite (or Create React App)",
+    "version_control": "Git"
+  },
+  "ui_component_implementation": [
+    {
+      "component_name": "Header",
+      "based_on": "Aurora's high-fidelity mockups - Mobile & Desktop",
+      "implementation_notes": "Create a functional component that displays the title 'AI Assistant'. Apply styles from `colors.css` and `typography.css`. Ensure it's fixed at the top and responsive font sizes/padding are handled.",
+      "responsiveness": "Adjust font size and padding based on breakpoint."
+    },
+    {
+      "component_name": "MessageBubble",
+      "based_on": "Aurora's high-fidelity mockups - Mobile & Desktop (User, AI, Error states)",
+      "implementation_notes": "Create a component that accepts `sender` (user, ai, system) and `content` props. Apply dynamic styling based on the sender using CSS Modules and color variables. Handle `alignSelf` for message alignment.",
+      "states": ["user", "ai", "error"],
+      "responsiveness": "Adjust `maxWidth` and padding based on breakpoint."
+    },
+    {
+      "component_name": "InputBar",
+      "based_on": "Aurora's high-fidelity mockups - Mobile & Desktop",
+      "implementation_notes": "A flex container holding `TextInput` and `SendButton`. Apply background and border styles. Ensure responsive padding.",
+      "elements": ["TextInput", "SendButton", "MicrophoneButton"]
+    },
+    {
+      "component_name": "TextInput",
+      "based_on": "Aurora's high-fidelity mockups - Mobile & Desktop",
+      "implementation_notes": "Standard input field. Implement `placeholder`, `value`, and `onChange` handlers. Apply focus state styles using CSS variables and a subtle glow effect on focus.",
+      "states": ["default", "focus", "disabled"],
+      "responsiveness": "Adjust `borderRadius` and `padding`."
+    },
+    {
+      "component_name": "SendButton",
+      "based_on": "Aurora's high-fidelity mockups - Mobile & Desktop",
+      "implementation_notes": "A circular button with an icon. Apply dynamic styles for hover, focus, and active states using CSS variables. Ensure it's a clickable element.",
+      "states": ["default", "hover", "focus", "active", "disabled"],
+      "responsiveness": "Adjust `padding` and `borderRadius`."
+    },
+    {
+      "component_name": "MicrophoneButton",
+      "based_on": "Aurora's high-fidelity mockups - Mobile",
+      "implementation_notes": "A button for voice input. Apply styles for hover and focus states.",
+      "states": ["default", "hover", "focus"],
+      "responsiveness": "Adjust `padding`."
+    },
+    {
+      "component_name": "TypingIndicator",
+      "based_on": "Aurora's high-fidelity mockups - Processing State",
+      "implementation_notes": "Component to display the 'pulsating dots' animation. Will require a separate animation definition or a library. Implement ARIA live region for accessibility.",
+      "animation": "PulsatingDots",
+      "accessibility": "ARIA live region for screen readers."
+    },
+    {
+      "component_name": "RetryButton",
+      "based_on": "Aurora's high-fidelity mockups - Error State",
+      "implementation_notes": "Button to retry. Similar styling to SendButton but with different text and potentially a different context. Implement hover and focus states.",
+      "states": ["default", "hover", "focus"],
+      "responsiveness": "Adjust `padding` and `borderRadius`."
+    },
+    {
+      "component_name": "ChatInterface",
+      "based_on": "Aurora's high-fidelity mockups - Mobile & Desktop",
+      "implementation_notes": "Main container component orchestrating `MessageList` and `InputBar`. Manages chat state (messages, input value). Handles rendering of `TypingIndicator` and `MessageBubble` with 'error' state.",
+      "responsiveness": "Manages layout adjustments for different breakpoints."
+    },
+    {
+      "component_name": "MessageList",
+      "based_on": "Aurora's high-fidelity mockups - Mobile & Desktop",
+      "implementation_notes": "Renders an array of `MessageBubble` components. Manages scrolling and potentially virtualization for long chat histories.",
+      "responsiveness": "Apply `maxWidth` and centering for desktop."
+    },
+    {
+      "component_name": "MainContentArea",
+      "based_on": "Aurora's high-fidelity mockups - Desktop",
+      "implementation_notes": "Wrapper component for desktop layout to center content and manage height.",
+      "responsiveness": "Applied only on desktop breakpoints."
+    }
+  ],
+  "css_variable_definitions": {
+    "colors": {
+      "--color-primary": "#1A237E",
+      "--color-secondary": "#7E57C2",
+      "--color-accent": "#FFD700",
+      "--color-neutral-dark": "#37474F",
+      "--color-neutral-light": "#F5F5F5",
+      "--color-feedback-success": "#388E3C",
+      "--color-feedback-error": "#D32F2F"
+    },
+    "typography": {
+      "--font-family-primary": "'Inter', sans-serif",
+      "--font-family-secondary": "'Roboto Mono', monospace",
+      "--font-size-h1": "3rem",
+      "--font-size-h2": "2rem",
+      "--font-size-body-large": "1.125rem",
+      "--font-size-body-default": "1rem",
+      "--font-size-caption": "0.875rem",
+      "--font-weight-regular": "400",
+      "--font-weight-medium": "500",
+      "--font-weight-semibold": "600"
+    },
+    "spacing": {
+      "--spacing-16": "16px",
+      "--spacing-12": "12px",
+      "--spacing-20": "20px",
+      "--spacing-24": "24px",
+      "--spacing-8": "8px"
+    }
+  },
+  "responsive_breakpoints": {
+    "mobile": "375px",
+    "desktop": "1440px"
+  },
+  "accessibility_focus": [
+    "Ensure all interactive elements have a visible focus state (e.g., outline or glow).",
+    "Use semantic HTML tags (`<button>`, `<input>`, etc.) where appropriate.",
+    "Implement ARIA attributes where necessary (e.g., `aria-live` for `TypingIndicator`).",
+    "Verify color contrast ratios using accessibility tools."
+  ]
+}

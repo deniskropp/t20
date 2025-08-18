@@ -1,0 +1,1618 @@
+The overall goal is: 'Create a website that is a frontend to an AI system like this.'
+
+Your role's specific goal is: 'Generate aesthetic layouts, color palettes, typography, and UI flows, ensuring accessibility and visual balance.'
+Your specific sub-task is: 'Conduct a design review of the implemented frontend to ensure it aligns with the mockups and provides a high-quality user experience.'
+
+The team's roles are:
+    {'roles': [{'title': 'Designer', 'description': 'Generate aesthetic layouts, color palettes, typography, and UI flows, ensuring accessibility and visual balance.'}, {'title': 'Engineer', 'description': 'Implement designs into clean, modular, and performant code, focusing on responsive design and accessibility.'}, {'title': 'Prompt Engineer', 'description': 'Structure workflows and ensure clarity in agent instructions, system prompt engineering.'}, {'title': 'Task-Agnostic Step (TAS) extractor (flash)', 'description': "Identify and return each 'Task Agnostic Step' (TAS) towards the high-level goal."}], 'steps': [{'name': 'Lyra', 'role': 'Prompt Engineer', 'task': "Define the website's core purpose, target audience, and key user interactions with the AI system to establish a clear project scope."}, {'name': 'uTASe', 'role': 'Task-Agnostic Step (TAS) extractor (flash)', 'task': 'Analyze the project scope to extract a comprehensive list of Task-Agnostic Steps required for creating the AI frontend.'}, {'name': 'Aurora', 'role': 'Designer', 'task': 'Create low-fidelity wireframes and user flow diagrams based on the defined scope, focusing on intuitive navigation and interaction layout.'}, {'name': 'Aurora', 'role': 'Designer', 'task': 'Develop a high-fidelity design system, including color palettes, typography, and interactive UI mockups for all website components.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Set up the frontend development environment, including the project structure, framework, and necessary build tools.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Translate the high-fidelity mockups into responsive, accessible, and modular UI components using clean code.'}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': 'Design the API contract and prompt structures for frontend-to-AI communication, defining how requests are made and responses are handled.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': "Implement the logic to connect the frontend to the AI system's API, managing application state (e.g., loading, data, errors) effectively."}, {'name': 'Aurora', 'role': 'Designer', 'task': 'Conduct a design review of the implemented frontend to ensure it aligns with the mockups and provides a high-quality user experience.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Perform final testing, including cross-browser compatibility checks, performance optimization, and bug fixing based on team feedback.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Deploy the completed and tested website to a production server, ensuring it is live and accessible to users.'}]}
+
+Please use the following outputs from the other agents as your input:
+
+Artifact from step_0_Lyra_result.txt (Prompt Engineer):
+{
+  "project_scope": {
+    "core_purpose": "To serve as an intuitive and accessible web-based interface for users to interact with a sophisticated AI system, enabling them to leverage AI capabilities for various tasks without requiring deep technical knowledge. The website aims to simplify complex AI interactions into a user-friendly experience.",
+    "target_audience": "Individuals and professionals seeking to leverage advanced AI capabilities for tasks such as content creation, information retrieval, problem-solving, or creative endeavors. Users are expected to have basic computer literacy but not necessarily technical expertise in AI or programming. They value ease of use, efficiency, and accurate AI responses.",
+    "key_user_interactions": [
+      {
+        "interaction_type": "Input Submission",
+        "details": "Users will primarily submit text-based prompts to the AI system. Future considerations may include support for file uploads (e.g., images for analysis, documents for summarization) if the underlying AI system supports such modalities."
+      },
+      {
+        "interaction_type": "AI Response Display",
+        "details": "The website will clearly and immediately display AI-generated outputs, which may include text, images, or structured data, depending on the AI's capabilities. Users should have options to copy, download, or share these outputs."
+      },
+      {
+        "interaction_type": "Iterative Interaction & Refinement",
+        "details": "Users will be able to engage in conversational or iterative interactions, providing follow-up prompts or modifying previous inputs to refine AI responses. A feedback mechanism (e.g., 'like'/'dislike' buttons) for AI outputs will be included to gather user satisfaction data."
+      },
+      {
+        "interaction_type": "Session Management & History",
+        "details": "The system will allow users to view their past interactions and conversation history, and easily start new interactions. User accounts will enable personalized experiences, persistent history, and preference management."
+      }
+    ]
+  }
+}
+
+---
+
+Artifact from step_1_uTASe_result.txt (Task-Agnostic Step (TAS) extractor (flash)):
+[
+  {
+    "id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+    "name": "Define Project Scope",
+    "description": "Establish the fundamental purpose, target audience, and primary user interactions for the AI frontend. This involves understanding what the website aims to achieve, who it serves, and the core ways users will engage with the AI system.",
+    "category": "Init",
+    "purpose": "To lay the groundwork for the AI frontend by defining its core objectives and user interaction paradigms.",
+    "keywords": [
+      "scope definition",
+      "project goals",
+      "target audience",
+      "user interaction"
+    ],
+    "applicability_notes": "This step is crucial for any project requiring a clear understanding of its objectives and user base before proceeding with design or development. It ensures alignment across all team members.",
+    "examples_of_usage": [
+      "Defining the purpose of a customer support chatbot.",
+      "Identifying the target users for a new productivity app.",
+      "Outlining the key features of an e-commerce platform."
+    ],
+    "typical_inputs": [
+      "High-level project idea",
+      "Business requirements"
+    ],
+    "typical_outputs": [
+      "Project scope document",
+      "User personas",
+      "Key interaction flows"
+    ]
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+    "name": "Design User Interface",
+    "description": "Create the visual and interactive elements of the website, translating the defined user interactions into an intuitive and aesthetically pleasing interface. This includes wireframing, visual design, and creating a design system.",
+    "category": "Design",
+    "purpose": "To craft a user-friendly and visually appealing interface for interacting with the AI system.",
+    "keywords": [
+      "UI design",
+      "UX design",
+      "wireframing",
+      "mockups",
+      "design system"
+    ],
+    "applicability_notes": "Applicable whenever a digital product needs a user-facing interface. The fidelity and complexity of the design will vary based on project requirements.",
+    "examples_of_usage": [
+      "Designing the layout for a mobile application.",
+      "Creating mockups for a SaaS platform dashboard.",
+      "Developing a style guide for a web portal."
+    ],
+    "typical_inputs": [
+      "Defined project scope",
+      "User personas",
+      "Key interaction flows"
+    ],
+    "typical_outputs": [
+      "Wireframes",
+      "High-fidelity mockups",
+      "Interactive prototypes",
+      "Design system components"
+    ]
+  },
+  {
+    "id": "b2c3d4e5-f6a7-8901-2345-67890abcdef0",
+    "name": "Set Up Development Environment",
+    "description": "Configure the necessary tools, frameworks, and project structure for frontend development. This ensures a consistent and efficient development workflow.",
+    "category": "Setup",
+    "purpose": "To prepare the technical foundation for building the AI frontend.",
+    "keywords": [
+      "environment setup",
+      "development tools",
+      "project structure",
+      "framework configuration"
+    ],
+    "applicability_notes": "Essential for any software development project to establish a working environment. The specific tools will depend on the chosen technology stack.",
+    "examples_of_usage": [
+      "Setting up a Node.js project with Express.",
+      "Configuring a React development environment.",
+      "Initializing a Python project with Flask."
+    ],
+    "typical_inputs": [
+      "Chosen technology stack",
+      "Project requirements"
+    ],
+    "typical_outputs": [
+      "Configured development environment",
+      "Project boilerplate",
+      "Build tools"
+    ]
+  },
+  {
+    "id": "c3d4e5f6-a7b8-9012-3456-7890abcdef01",
+    "name": "Implement User Interface",
+    "description": "Translate the approved UI designs and mockups into functional, responsive, and accessible frontend code. This involves building reusable UI components and ensuring they match the design specifications.",
+    "category": "Development",
+    "purpose": "To build the interactive frontend of the website based on design specifications.",
+    "keywords": [
+      "frontend development",
+      "UI implementation",
+      "component development",
+      "responsive design",
+      "accessibility"
+    ],
+    "applicability_notes": "This is a core development task for any project involving a user interface. It requires translating design assets into working code.",
+    "examples_of_usage": [
+      "Coding a React component library.",
+      "Implementing a Vue.js application based on Figma designs.",
+      "Building a static HTML/CSS website from mockups."
+    ],
+    "typical_inputs": [
+      "High-fidelity mockups",
+      "Design system",
+      "Frontend framework documentation"
+    ],
+    "typical_outputs": [
+      "Functional UI components",
+      "Responsive website layout",
+      "Accessible frontend code"
+    ]
+  },
+  {
+    "id": "d4e5f6a7-b8c9-0123-4567-890abcdef012",
+    "name": "Define AI Communication Contract",
+    "description": "Specify the structure and format of data exchanged between the frontend and the AI system. This includes defining API endpoints, request/response payloads, and prompt engineering strategies for effective AI interaction.",
+    "category": "Integration",
+    "purpose": "To establish a clear and efficient communication protocol between the frontend and the AI backend.",
+    "keywords": [
+      "API design",
+      "data contract",
+      "prompt engineering",
+      "frontend-backend integration"
+    ],
+    "applicability_notes": "Crucial for any system where a frontend needs to interact with a backend service, especially AI systems where prompt structure significantly impacts output quality.",
+    "examples_of_usage": [
+      "Defining the JSON schema for an API request to a recommendation engine.",
+      "Specifying the parameters for a natural language processing API call.",
+      "Outlining the format for chatbot messages."
+    ],
+    "typical_inputs": [
+      "AI system capabilities",
+      "Frontend interaction requirements",
+      "Prompt engineering guidelines"
+    ],
+    "typical_outputs": [
+      "API specification",
+      "Data models",
+      "Prompt templates"
+    ]
+  },
+  {
+    "id": "e5f6a7b8-c9d0-1234-5678-90abcdef0123",
+    "name": "Integrate Frontend with AI System",
+    "description": "Implement the logic within the frontend to send requests to the AI system's API and handle the responses. This involves managing application state, such as loading indicators, data display, and error handling.",
+    "category": "Integration",
+    "purpose": "To connect the user interface to the AI capabilities, enabling interaction.",
+    "keywords": [
+      "API integration",
+      "state management",
+      "data handling",
+      "AI interaction"
+    ],
+    "applicability_notes": "Essential for creating dynamic web applications that rely on external services or APIs. Proper state management is key to a smooth user experience.",
+    "examples_of_usage": [
+      "Fetching data from a REST API and displaying it in a list.",
+      "Handling user input and sending it to a backend service for processing.",
+      "Implementing real-time updates from a WebSocket connection."
+    ],
+    "typical_inputs": [
+      "API specification",
+      "Frontend UI components",
+      "State management patterns"
+    ],
+    "typical_outputs": [
+      "Connected frontend application",
+      "Managed application state",
+      "AI-generated content displayed"
+    ]
+  },
+  {
+    "id": "f6a7b8c9-d0e1-2345-6789-0abcdef01234",
+    "name": "Conduct Design Review",
+    "description": "Evaluate the implemented frontend against the original design mockups and user experience goals. This step ensures visual consistency, adherence to the design system, and overall usability.",
+    "category": "Validation",
+    "purpose": "To ensure the implemented frontend accurately reflects the intended design and user experience.",
+    "keywords": [
+      "design review",
+      "UI/UX audit",
+      "quality assurance",
+      "usability testing"
+    ],
+    "applicability_notes": "A critical quality check in any design and development process to catch discrepancies and ensure user satisfaction.",
+    "examples_of_usage": [
+      "Reviewing a mobile app's UI against its design specifications.",
+      "Conducting a usability test on a new website feature.",
+      "Performing a visual regression test on a web application."
+    ],
+    "typical_inputs": [
+      "Implemented frontend",
+      "High-fidelity mockups",
+      "Design system documentation"
+    ],
+    "typical_outputs": [
+      "Feedback report",
+      "List of design issues",
+      "Approved UI implementation"
+    ]
+  },
+  {
+    "id": "a7b8c9d0-e1f2-3456-7890-abcdef012345",
+    "name": "Perform Final Testing",
+    "description": "Conduct comprehensive testing of the integrated frontend application. This includes functional testing, cross-browser compatibility, performance optimization, and bug fixing to ensure a stable and high-quality product.",
+    "category": "Testing",
+    "purpose": "To verify the functionality, performance, and stability of the AI frontend before deployment.",
+    "keywords": [
+      "testing",
+      "quality assurance",
+      "bug fixing",
+      "performance optimization",
+      "cross-browser compatibility"
+    ],
+    "applicability_notes": "A universal step in software development to ensure the product meets quality standards and functions correctly across various environments.",
+    "examples_of_usage": [
+      "Testing a web application on different browsers and devices.",
+      "Conducting load testing on a backend service.",
+      "Performing unit tests on individual code modules."
+    ],
+    "typical_inputs": [
+      "Integrated frontend application",
+      "Test cases",
+      "User feedback"
+    ],
+    "typical_outputs": [
+      "Tested application",
+      "Bug reports",
+      "Performance metrics",
+      "Release candidate"
+    ]
+  },
+  {
+    "id": "b8c9d0e1-f2a3-4567-8901-bcdef0123456",
+    "name": "Deploy Application",
+    "description": "Release the completed and tested AI frontend to a live environment, making it accessible to the target audience. This involves configuring servers, deploying code, and ensuring the application is operational.",
+    "category": "Deployment",
+    "purpose": "To make the AI frontend publicly available and operational.",
+    "keywords": [
+      "deployment",
+      "release",
+      "hosting",
+      "server configuration",
+      "going live"
+    ],
+    "applicability_notes": "The final stage of bringing a software product to users. The specifics of deployment vary greatly depending on the hosting environment and chosen architecture.",
+    "examples_of_usage": [
+      "Deploying a website to a cloud hosting provider.",
+      "Releasing a mobile application to an app store.",
+      "Setting up a continuous deployment pipeline."
+    ],
+    "typical_inputs": [
+      "Tested application build",
+      "Deployment environment configuration",
+      "Deployment strategy"
+    ],
+    "typical_outputs": [
+      "Live application",
+      "Deployment logs",
+      "Monitoring setup"
+    ]
+  }
+]
+
+---
+
+Artifact from step_2_Aurora_result.txt (Designer):
+{
+  "design_process_plan": [
+    {
+      "step": 1,
+      "task": "Understand Project Scope",
+      "description": "Review the provided project scope from the Prompt Engineer to grasp the core purpose, target audience, and key user interactions with the AI system. This foundational understanding will guide all subsequent design decisions.",
+      "deliverable": "Mental model of project requirements."
+    },
+    {
+      "step": 2,
+      "task": "Identify Key User Flows",
+      "description": "Based on the 'key_user_interactions' defined in the project scope, map out the primary user journeys. This includes flows for submitting prompts, viewing responses, iterative refinement, and accessing history/sessions.",
+      "deliverable": "User flow diagrams for core interactions."
+    },
+    {
+      "step": 3,
+      "task": "Develop Low-Fidelity Wireframes",
+      "description": "Create simple, black-and-white wireframes for key screens identified in the user flows. Focus on layout, content hierarchy, and placement of interactive elements. Ensure intuitive navigation and clear interaction points.",
+      "deliverable": "Low-fidelity wireframes for main pages/views."
+    },
+    {
+      "step": 4,
+      "task": "Define Information Architecture",
+      "description": "Organize content and features logically. This involves structuring navigation and ensuring users can easily find what they need.",
+      "deliverable": "Sitemap or navigation structure overview."
+    },
+    {
+      "step": 5,
+      "task": "Establish Design Principles & Aesthetics",
+      "description": "Define the visual direction, considering a 'clean aesthetic' and 'minimally natural design'. This includes initial thoughts on color, typography, and overall mood. Accessibility will be a core consideration from this stage.",
+      "deliverable": "Initial design principles and aesthetic direction."
+    }
+  ],
+  "user_flow_diagrams": {
+    "title": "Core User Flows for AI Interaction Website",
+    "description": "These diagrams illustrate the primary paths users will take to interact with the AI system. They prioritize intuitive navigation and efficient task completion.",
+    "flows": [
+      {
+        "name": "Submit Prompt and Receive Response",
+        "steps": [
+          {"action": "User lands on Homepage/Interaction Page"},
+          {"action": "User types prompt into input field"},
+          {"action": "User clicks 'Submit' or presses Enter"},
+          {"action": "System displays loading indicator"},
+          {"action": "AI processes request"},
+          {"action": "AI returns response"},
+          {"action": "Response is displayed clearly to the user"},
+          {"action": "User can copy/download/share response"}
+        ]
+      },
+      {
+        "name": "Iterative Refinement",
+        "steps": [
+          {"action": "User views previous AI response"},
+          {"action": "User types follow-up prompt in a dedicated area or via the main input"},
+          {"action": "User submits follow-up prompt"},
+          {"action": "System displays loading indicator"},
+          {"action": "AI processes refined request"},
+          {"action": "New response is displayed, potentially alongside or replacing the old one"},
+          {"action": "User provides feedback (e.g., like/dislike)"}
+        ]
+      },
+      {
+        "name": "Access Interaction History",
+        "steps": [
+          {"action": "User clicks 'History' or 'Past Interactions' in navigation"},
+          {"action": "User views a list of past sessions/prompts"},
+          {"action": "User clicks on a specific past interaction"},
+          {"action": "User views the full prompt and AI response"},
+          {"action": "User can choose to continue the conversation or copy the response"}
+        ]
+      },
+      {
+        "name": "Start New Interaction",
+        "steps": [
+          {"action": "User clicks 'New Interaction' or similar button"},
+          {"action": "Interface clears or resets to the primary input area"},
+          {"action": "User begins typing a new prompt"}
+        ]
+      }
+    ]
+  },
+  "low_fidelity_wireframes": {
+    "title": "Low-Fidelity Wireframes: AI Interaction Frontend",
+    "description": "These wireframes focus on structure and layout, prioritizing clarity and ease of use for interacting with the AI system. Accessibility considerations are embedded in the layout choices (e.g., clear focus states, logical tab order).",
+    "screens": [
+      {
+        "screen_name": "Homepage / Interaction Hub",
+        "layout_elements": [
+          {"element": "Header", "description": "Logo, Navigation (History, Account/Settings)"},
+          {"element": "Main Content Area", "description": "Large, prominent text input field for prompts. Clear call-to-action button (e.g., 'Generate', 'Ask AI')."},
+          {"element": "Response Display Area", "description": "Placeholder for AI output, initially empty or showing a welcome message/guidance. Includes options to copy/download."},
+          {"element": "Sidebar (Optional)", "description": "Could display recent history, suggested prompts, or user settings."},
+          {"element": "Footer", "description": "Copyright, links to privacy/terms."}
+        ],
+        "notes": "Emphasis on the primary interaction: typing and receiving. Clean, uncluttered interface."
+      },
+      {
+        "screen_name": "Interaction History",
+        "layout_elements": [
+          {"element": "Header", "description": "Logo, Navigation"},
+          {"element": "Content Area", "description": "List of past interactions. Each item shows a snippet of the prompt and potentially the start of the response. Includes date/time. Search/filter functionality."},
+          {"element": "Interaction Detail View (Modal or Separate Page)", "description": "Displays full prompt, full response, feedback options (like/dislike), options to copy/share, and potentially a 'Continue Conversation' button."}
+        ],
+        "notes": "Facilitates easy review and retrieval of past AI outputs. Clear visual distinction between list items."
+      },
+      {
+        "screen_name": "Settings/Account (Basic)",
+        "layout_elements": [
+          {"element": "Header", "description": "Logo, Navigation"},
+          {"element": "Content Area", "description": "User profile information (if applicable), preference settings (e.g., theme, notification settings), logout button."}
+        ],
+        "notes": "Minimalist design, focusing on essential user controls."
+      }
+    ]
+  },
+  "design_principles": {
+    "aesthetics": "Clean, minimally natural. Focus on clarity, spaciousness, and a calming user experience. Avoid visual clutter.",
+    "typography": {
+      "primary_font": "A sans-serif typeface that balances readability and modern aesthetics (e.g., Inter, Nunito Sans, Work Sans).",
+      "hierarchy": "Clear distinction between headings, body text, and interactive elements through font size, weight, and color.",
+      "accessibility": "Ensure sufficient contrast ratios and legible font sizes across different screen resolutions."
+    },
+    "color_palette": {
+      "primary": "#FFFFFF",
+      "secondary": "#F0F0F0",
+      "accent": "#4A90E2",
+      "text_primary": "#333333",
+      "text_secondary": "#666666",
+      "notes": "A light, airy palette with a clear accent color for calls to action. Focus on high contrast for text."
+    },
+    "navigation": "Intuitive and consistent. Key actions should be readily accessible. Use clear labels and visual cues.",
+    "interaction_design": "Provide clear feedback for user actions (e.g., button states, loading indicators). Ensure interactive elements are easily discoverable and usable.",
+    "accessibility": "Adhere to WCAG guidelines. Ensure keyboard navigability, screen reader compatibility, sufficient color contrast, and resizable text."
+  }
+}
+
+---
+
+Artifact from step_3_Aurora_result.txt (Designer):
+{
+  "color_palette": {
+    "name": "AI Interface Palette",
+    "description": "A calming and clean palette designed for clarity and minimal distraction, with a focus on accessibility and a subtly natural feel.",
+    "shades": [
+      {
+        "name": "Primary White",
+        "hex": "#FFFFFF",
+        "role": "Backgrounds, primary surfaces, text on dark backgrounds"
+      },
+      {
+        "name": "Light Neutral",
+        "hex": "#F8F9FA",
+        "role": "Secondary backgrounds, card elements, subtle dividers"
+      },
+      {
+        "name": "Subtle Gray",
+        "hex": "#E9ECEF",
+        "role": "Borders, disabled states, subtle UI elements"
+      },
+      {
+        "name": "Primary Text",
+        "hex": "#212529",
+        "role": "Main body text, headings, important labels"
+      },
+      {
+        "name": "Secondary Text",
+        "hex": "#6C757D",
+        "role": "Helper text, secondary information, placeholder text"
+      },
+      {
+        "name": "Accent Blue",
+        "hex": "#007BFF",
+        "role": "Primary call-to-action buttons, active states, links, interactive elements"
+      },
+      {
+        "name": "Accent Blue Hover",
+        "hex": "#0056b3",
+        "role": "Hover state for accent elements"
+      },
+      {
+        "name": "Success Green",
+        "hex": "#28A745",
+        "role": "Success messages, positive feedback"
+      },
+      {
+        "name": "Warning Yellow",
+        "hex": "#FFC107",
+        "role": "Warning messages, attention-grabbing elements"
+      },
+      {
+        "name": "Error Red",
+        "hex": "#DC3545",
+        "role": "Error messages, critical alerts"
+      }
+    ]
+  },
+  "typography": {
+    "font_families": [
+      {
+        "name": "Inter",
+        "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap",
+        "weights": ["Regular (400)", "Medium (500)", "Bold (700)"],
+        "usage": "Primary typeface for all text elements, offering excellent readability and a clean, modern aesthetic."
+      }
+    ],
+    "styles": {
+      "display_large": {
+        "font_family": "Inter",
+        "font_weight": "700",
+        "font_size": "48px",
+        "line_height": "60px",
+        "letter_spacing": "-0.5px",
+        "color": "Primary Text"
+      },
+      "heading_1": {
+        "font_family": "Inter",
+        "font_weight": "700",
+        "font_size": "36px",
+        "line_height": "44px",
+        "color": "Primary Text"
+      },
+      "heading_2": {
+        "font_family": "Inter",
+        "font_weight": "700",
+        "font_size": "28px",
+        "line_height": "36px",
+        "color": "Primary Text"
+      },
+      "heading_3": {
+        "font_family": "Inter",
+        "font_weight": "500",
+        "font_size": "24px",
+        "line_height": "32px",
+        "color": "Primary Text"
+      },
+      "body_large": {
+        "font_family": "Inter",
+        "font_weight": "400",
+        "font_size": "18px",
+        "line_height": "28px",
+        "color": "Primary Text"
+      },
+      "body_regular": {
+        "font_family": "Inter",
+        "font_weight": "400",
+        "font_size": "16px",
+        "line_height": "24px",
+        "color": "Primary Text"
+      },
+      "body_small": {
+        "font_family": "Inter",
+        "font_weight": "400",
+        "font_size": "14px",
+        "line_height": "20px",
+        "color": "Secondary Text"
+      },
+      "button_text": {
+        "font_family": "Inter",
+        "font_weight": "500",
+        "font_size": "16px",
+        "line_height": "24px",
+        "color": "Primary White",
+        "text_transform": "none"
+      },
+      "label_input": {
+        "font_family": "Inter",
+        "font_weight": "500",
+        "font_size": "14px",
+        "line_height": "20px",
+        "color": "Primary Text"
+      }
+    }
+  },
+  "logo": {
+    "concept": "A minimalist, abstract representation of AI interaction and natural flow. It suggests intelligence, connection, and seamless communication.",
+    "visual_elements": [
+      "Two abstract, flowing shapes that subtly interlock or overlap, representing the user and the AI. The shapes are smooth and organic, hinting at 'natural design'.",
+      "A clean, sans-serif typeface for the brand name, positioned either below or to the side of the icon.",
+      "The color palette will be used sparingly, perhaps with the accent blue forming one of the flowing shapes."
+    ],
+    "brand_name": "AuraFlow AI",
+    "tagline": "Intelligent Interaction, Naturally.",
+    "color_usage": "Primary White or Light Neutral background, Accent Blue for interactive elements, Primary Text for contrast.",
+    "accessibility_notes": "Ensure sufficient contrast in the logo and clear visual distinction between elements. Provide an alt text description for the logo."
+  },
+  "ui_components": [
+    {
+      "component_name": "Input Field",
+      "description": "A primary text input area for users to submit prompts to the AI.",
+      "design_attributes": {
+        "width": "100%",
+        "height": "auto",
+        "min_height": "150px",
+        "padding": "16px",
+        "border": "1px solid Subtle Gray",
+        "border_radius": "8px",
+        "background_color": "Primary White",
+        "font_style": "body_regular",
+        "color": "Primary Text",
+        "placeholder_color": "Secondary Text",
+        "focus_state": {
+          "border_color": "Accent Blue",
+          "box_shadow": "0 0 0 3px rgba(0, 123, 255, 0.25)"
+        },
+        "resize": "vertical"
+      },
+      "accessibility": {
+        "label": "AI Prompt Input",
+        "required": true,
+        "aria_describedby": "prompt-input-description",
+        "description_id": "prompt-input-description",
+        "description_text": "Enter your prompt for the AI system here. You can refine your prompts for better results."
+      }
+    },
+    {
+      "component_name": "Primary Button",
+      "description": "Call to action button for submitting prompts or performing primary actions.",
+      "design_attributes": {
+        "padding": "12px 24px",
+        "border_radius": "8px",
+        "background_color": "Accent Blue",
+        "color": "Primary White",
+        "font_style": "button_text",
+        "border": "none",
+        "cursor": "pointer",
+        "transition": "background-color 0.2s ease-in-out",
+        "hover_state": {
+          "background_color": "Accent Blue Hover"
+        },
+        "active_state": {
+          "background_color": "#004085"
+        },
+        "disabled_state": {
+          "background_color": "#CCCCCC",
+          "color": "#999999",
+          "cursor": "not-allowed"
+        }
+      },
+      "accessibility": {
+        "role": "button",
+        "aria_label": "Submit Prompt"
+      }
+    },
+    {
+      "component_name": "Response Card",
+      "description": "Container for displaying AI-generated output.",
+      "design_attributes": {
+        "width": "100%",
+        "padding": "24px",
+        "margin_bottom": "20px",
+        "border": "1px solid Subtle Gray",
+        "border_radius": "8px",
+        "background_color": "Primary White",
+        "font_style": "body_regular",
+        "color": "Primary Text",
+        "box_shadow": "0 2px 4px rgba(0,0,0,0.05)"
+      },
+      "accessibility": {
+        "aria_label": "AI Response"
+      }
+    },
+    {
+      "component_name": "Navigation Link",
+      "description": "Links for site navigation (e.g., History, Settings).",
+      "design_attributes": {
+        "color": "Primary Text",
+        "font_family": "Inter",
+        "font_weight": "500",
+        "font_size": "16px",
+        "line_height": "24px",
+        "text_decoration": "none",
+        "padding": "8px 12px",
+        "border_radius": "4px",
+        "transition": "background-color 0.2s ease-in-out, color 0.2s ease-in-out",
+        "hover_state": {
+          "background_color": "Light Neutral",
+          "color": "Accent Blue"
+        },
+        "active_state": {
+          "color": "Accent Blue",
+          "font_weight": "700"
+        }
+      },
+      "accessibility": {
+        "role": "link"
+      }
+    },
+    {
+      "component_name": "Feedback Button",
+      "description": "Buttons for providing feedback on AI responses (e.g., Like/Dislike).",
+      "design_attributes": {
+        "display": "inline-flex",
+        "align_items": "center",
+        "justify_content": "center",
+        "padding": "8px 16px",
+        "margin_right": "10px",
+        "border": "1px solid Subtle Gray",
+        "border_radius": "4px",
+        "background_color": "Primary White",
+        "color": "Secondary Text",
+        "font_style": "body_small",
+        "cursor": "pointer",
+        "transition": "background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out",
+        "icon_size": "16px",
+        "hover_state": {
+          "background_color": "Light Neutral",
+          "border_color": "Subtle Gray",
+          "color": "Primary Text"
+        },
+        "active_state": {
+          "background_color": "Accent Blue",
+          "border_color": "Accent Blue",
+          "color": "Primary White"
+        }
+      },
+      "accessibility": {
+        "role": "button"
+      }
+    },
+    {
+      "component_name": "Loading Indicator",
+      "description": "Visual cue to show that the AI is processing a request.",
+      "design_attributes": {
+        "type": "spinner",
+        "size": "32px",
+        "color": "Accent Blue",
+        "animation": "spin 1s linear infinite"
+      },
+      "accessibility": {
+        "aria_label": "Loading AI response",
+        "role": "status"
+      }
+    }
+  ],
+  "interactive_ui_mockups": {
+    "title": "High-Fidelity Mockups: Key Screens",
+    "description": "Visual representations of the core website pages, demonstrating the application of the design system. These mockups prioritize a clean, intuitive, and accessible user experience.",
+    "screens": [
+      {
+        "screen_name": "AI Interaction Hub",
+        "layout_description": "A clean, spacious layout dominated by the prompt input area. The interface guides the user directly into interaction.",
+        "elements": [
+          {"type": "Header", "content": "Logo (AuraFlow AI), Navigation Links (History, Settings)"},
+          {"type": "Main Content Area", "content": [
+            {"type": "Heading", "text": "Engage with AuraFlow AI", "style": "heading_2"},
+            {"type": "Paragraph", "text": "Enter your prompt below to unlock the power of AI.", "style": "body_large", "color": "Secondary Text"},
+            {"type": "Input Field", "placeholder": "What can I help you create or understand today?", "style": "Input Field"},
+            {"type": "Button", "text": "Generate Response", "style": "Primary Button", "align": "right"},
+            {"type": "Response Display Area", "content": [
+              {"type": "Loading Indicator", "condition": "if AI is processing", "style": "Loading Indicator"},
+              {"type": "Response Card", "content": "AI-generated text will appear here. Includes options to copy, download, and provide feedback (like/dislike buttons).", "condition": "if AI has responded", "style": "Response Card"}
+            ], "empty_state_text": "Your AI-generated response will appear here."}
+          ]},
+          {"type": "Footer", "content": "© 2023 AuraFlow AI. All rights reserved."}
+        ],
+        "visual_notes": "Generous white space. Clear visual hierarchy. Focus on the input and output areas. Subtle hover effects on navigation and buttons."
+      },
+      {
+        "screen_name": "Interaction History",
+        "layout_description": "A clear, organized list of past interactions, allowing users to easily revisit and manage their AI sessions.",
+        "elements": [
+          {"type": "Header", "content": "Logo (AuraFlow AI), Navigation Links (History, Settings)"},
+          {"type": "Main Content Area", "content": [
+            {"type": "Heading", "text": "Interaction History", "style": "heading_1"},
+            {"type": "Search/Filter Bar", "placeholder": "Search history...", "style": "Input Field", "height": "auto"},
+            {"type": "List of Interactions", "items": [
+              {"prompt_snippet": "Explain quantum computing...", "response_snippet": "Quantum computing harnesses...", "date": "2023-10-27", "style": "List Item", "hover_effect": "background_color: Light Neutral"},
+              {"prompt_snippet": "Write a poem about...", "response_snippet": "In realms of thought, where...", "date": "2023-10-26", "style": "List Item", "hover_effect": "background_color: Light Neutral"}
+            ], "style": "List", "item_style": "ListItem"},
+            {"type": "Pagination", "condition": "if many interactions"}
+          ]},
+          {"type": "Footer", "content": "© 2023 AuraFlow AI. All rights reserved."}
+        ],
+        "visual_notes": "Each history item is a distinct row with clear date and prompt/response snippets. Clicking an item would reveal the full interaction (e.g., in a modal or a dedicated detail view)."
+      }
+    ]
+  }
+}
+
+---
+
+Artifact from step_4_Kodax_result.txt (Engineer):
+{
+  "project_name": "AI_Interaction_Frontend",
+  "frontend_setup": {
+    "framework": "React",
+    "language": "TypeScript",
+    "state_management": "Zustand",
+    "styling": "Tailwind CSS",
+    "build_tool": "Vite",
+    "linting_formatting": {
+      "linter": "ESLint",
+      "formatter": "Prettier"
+    },
+    "project_structure": {
+      "root": [
+        "public/",
+        "src/",
+        ".eslintrc.cjs",
+        ".gitignore",
+        "index.html",
+        "package.json",
+        "postcss.config.js",
+        "README.md",
+        "tailwind.config.js",
+        "tsconfig.json",
+        "tsconfig.node.json",
+        "vite.config.ts"
+      ],
+      "src/": [
+        "App.tsx",
+        "main.tsx",
+        "assets/",
+        "components/",
+        "hooks/",
+        "lib/",
+        "pages/",
+        "services/",
+        "store/",
+        "styles/",
+        "types/",
+        "utils/"
+      ],
+      "src/components/": [
+        "ui/",
+        "common/",
+        "layout/"
+      ],
+      "src/components/ui/": [
+        "Button/",
+        "Input/",
+        "Card/",
+        "Link/",
+        "FeedbackButton/",
+        "LoadingIndicator/"
+      ],
+      "src/pages/": [
+        "HomePage.tsx",
+        "HistoryPage.tsx",
+        "SettingsPage.tsx"
+      ],
+      "src/store/": [
+        "index.ts",
+        "aiStore.ts",
+        "uiStore.ts"
+      ],
+      "src/lib/": [
+        "api.ts",
+        "constants.ts"
+      ]
+    },
+    "dependencies": [
+      "react",
+      "react-dom",
+      "react-router-dom",
+      "zustand",
+      "axios",
+      "tailwindcss",
+      "postcss",
+      "autoprefixer"
+    ],
+    "devDependencies": [
+      "@types/react",
+      "@types/react-dom",
+      "@typescript-eslint/eslint-plugin",
+      "@typescript-eslint/parser",
+      "eslint",
+      "eslint-plugin-react-hooks",
+      "eslint-plugin-react-refresh",
+      "typescript",
+      "vite",
+      "@vitejs/plugin-react"
+    ]
+  },
+  "setup_commands": [
+    "npm create vite@latest AI_Interaction_Frontend --template react-ts",
+    "cd AI_Interaction_Frontend",
+    "npm install",
+    "npm install react-router-dom axios zustand",
+    "npm install -D tailwindcss postcss autoprefixer",
+    "npx tailwindcss init -p",
+    "// Configure tailwind.config.js: Add './src/**/*.{js,ts,jsx,tsx}' to content array.",
+    "// Configure tailwind.config.js: Add theme colors and fonts based on Aurora's design.",
+    "// Configure tsconfig.json: Ensure paths are set up correctly if needed.",
+    "// Configure .eslintrc.cjs: Add React hooks and TypeScript plugins.",
+    "// Create src/App.tsx with basic routing structure.",
+    "// Create src/main.tsx to render the App.",
+    "// Create initial page components in src/pages/ (e.g., HomePage.tsx).",
+    "// Create core UI components in src/components/ui/ based on Aurora's mockups and design system.",
+    "// Initialize Zustand stores in src/store/.",
+    "// Set up API service in src/lib/api.ts.",
+    "npm run dev"
+  ],
+  "notes": "This setup prioritizes a modern, efficient, and scalable frontend development environment. React provides a robust component model, TypeScript ensures type safety, Zustand offers a lightweight state management solution, and Tailwind CSS enables rapid, utility-first styling. Vite offers fast development server startup and build times. ESLint and Prettier will maintain code quality and consistency."
+}
+
+---
+
+Artifact from step_5_Kodax_result.txt (Engineer):
+{
+  "task": "Translate the high-fidelity mockups into responsive, accessible, and modular UI components using clean code.",
+  "sub_task_execution": {
+    "goal": "Implement the UI components based on Aurora's design system and mockups, ensuring responsiveness and accessibility.",
+    "plan": [
+      {
+        "step": 1,
+        "action": "Set up component structure",
+        "description": "Create directories for each UI component within `src/components/ui/` as defined in the project setup (e.g., `src/components/ui/Button/`, `src/components/ui/Input/`). Each component directory will contain its main component file (e.g., `Button.tsx`), its styling (e.g., `Button.module.css` or directly in TSX if using Tailwind's JIT), and potentially a test file.",
+        "output_format": "Directory structure."
+      },
+      {
+        "step": 2,
+        "action": "Implement `Input` component",
+        "description": "Create the `Input` component based on Aurora's `Input Field` design attributes and accessibility notes. This will involve a functional React component using TypeScript, with props for label, placeholder, styling, and accessibility attributes. Tailwind CSS will be used for styling.",
+        "output_format": "React component (`src/components/ui/Input/Input.tsx`) and associated styles/config."
+      },
+      {
+        "step": 3,
+        "action": "Implement `Button` component",
+        "description": "Create the `Primary Button` component, adhering to the specified design attributes, states (hover, active, disabled), and accessibility properties. Utilize Tailwind CSS for styling.",
+        "output_format": "React component (`src/components/ui/Button/Button.tsx`) and associated styles/config."
+      },
+      {
+        "step": 4,
+        "action": "Implement `ResponseCard` component",
+        "description": "Develop the `ResponseCard` component to display AI outputs. This includes styling, padding, margins, and incorporating slots for content and action buttons (like/dislike, copy/download).",
+        "output_format": "React component (`src/components/ui/Card/ResponseCard.tsx`) and associated styles/config."
+      },
+      {
+        "step": 5,
+        "action": "Implement `FeedbackButton` component",
+        "description": "Create the `FeedbackButton` component for like/dislike functionality, ensuring it handles different states (default, hover, active) and includes appropriate ARIA attributes.",
+        "output_format": "React component (`src/components/ui/FeedbackButton/FeedbackButton.tsx`) and associated styles/config."
+      },
+      {
+        "step": 6,
+        "action": "Implement `LoadingIndicator` component",
+        "description": "Develop the `LoadingIndicator` component (spinner) with specified size and color, including accessibility attributes for screen readers.",
+        "output_format": "React component (`src/components/ui/LoadingIndicator/LoadingIndicator.tsx`) and associated styles/config."
+      },
+      {
+        "step": 7,
+        "action": "Implement `NavigationLink` component",
+        "description": "Create a reusable `NavigationLink` component for header and footer navigation, incorporating hover and active states, and accessibility roles.",
+        "output_format": "React component (`src/components/ui/Link/NavigationLink.tsx`) and associated styles/config."
+      },
+      {
+        "step": 8,
+        "action": "Integrate components into pages",
+        "description": "Begin integrating the created UI components into the placeholder page components (`HomePage.tsx`, `HistoryPage.tsx`). This involves passing necessary props and structuring the layout according to the high-fidelity mockups.",
+        "output_format": "Updated page components."
+      },
+      {
+        "step": 9,
+        "action": "Apply global styles and theme",
+        "description": "Configure Tailwind CSS in `tailwind.config.ts` to include the defined color palette, typography (font families, weights, sizes), and other design system tokens from Aurora's output. Ensure these are accessible globally.",
+        "output_format": "Updated `tailwind.config.ts` and potentially `src/styles/globals.css`."
+      },
+      {
+        "step": 10,
+        "action": "Ensure Responsiveness",
+        "description": "Use Tailwind CSS's responsive utility classes (e.g., `sm:`, `md:`, `lg:`) to ensure all components and layouts adapt gracefully to different screen sizes, as implied by the need for responsive design.",
+        "output_format": "Component and page code with responsive classes."
+      },
+      {
+        "step": 11,
+        "action": "Verify Accessibility",
+        "description": "Conduct a preliminary check on implemented components to ensure semantic HTML, appropriate ARIA attributes, keyboard navigability, and sufficient color contrast, referencing the accessibility notes provided in the design artifacts.",
+        "output_format": "Code review and potential adjustments."
+      }
+    ],
+    "component_implementations": [
+      {
+        "component_name": "Input",
+        "file_path": "src/components/ui/Input/Input.tsx",
+        "code_snippet": "import React, { TextareaHTMLAttributes } from 'react';\nimport clsx from 'clsx';\n\ninterface InputProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {\n  label?: string;\n  description?: string;\n  descriptionId?: string;\n}\n\nconst Input: React.FC<InputProps> = ({\n  label,\n  description,\n  descriptionId,\n  className,\n  ...props\n}) => {\n  const inputClasses = clsx(\n    'w-full p-4 border border-subtle-gray rounded-lg bg-primary-white text-primary-text placeholder-secondary-text focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-transparent resize-vertical min-h-[150px]',\n    className\n  );\n\n  const labelId = descriptionId || `${props.id}-label`;\n\n  return (\n    <div className=\"mb-6\">\n      {label && (\n        <label htmlFor={props.id || labelId} className=\"block mb-2 text-label-input font-medium text-primary-text\">\n          {label}\n        </label>\n      )}\n      {description && (\n        <p id={descriptionId || labelId} className=\"text-body-small text-secondary-text mb-2\">\n          {description}\n        </p>\n      )}\n      <textarea\n        id={props.id || labelId}\n        className={inputClasses}\n        aria-describedby={description ? (descriptionId || `${props.id}-description`) : undefined}\n        {...props}\n      />\n    </div>\n  );\n};\n\nexport default Input;\n",
+        "tailwind_config_notes": "Ensure 'subtle-gray', 'primary-white', 'primary-text', 'secondary-text', 'accent-blue' are defined in theme.colors. Ensure 'body-small' and 'label-input' font styles are mapped to appropriate Tailwind text sizes and weights."
+      },
+      {
+        "component_name": "Primary Button",
+        "file_path": "src/components/ui/Button/Button.tsx",
+        "code_snippet": "import React, { ButtonHTMLAttributes } from 'react';\nimport clsx from 'clsx';\n\ninterface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {\n  variant?: 'primary' | 'secondary'; // Example for future variants\n}\n\nconst Button: React.FC<ButtonProps> = ({\n  children,\n  className,\n  variant = 'primary',\n  disabled,\n  ...props\n}) => {\n  const baseStyles = 'px-6 py-3 rounded-lg font-medium transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2';\n\n  const variantStyles = {\n    primary:\n      'bg-accent-blue text-primary-white hover:bg-accent-blue-hover disabled:bg-gray-400 disabled:text-gray-700',\n    // Add other variants here if needed\n  };\n\n  const buttonClasses = clsx(\n    baseStyles,\n    variantStyles[variant],\n    disabled ? 'cursor-not-allowed' : 'cursor-pointer',\n    className\n  );\n\n  return (\n    <button\n      className={buttonClasses}\n      disabled={disabled}\n      {...props}\n    >\n      {children}\n    </button>\n  );\n};\n\nexport default Button;\n",
+        "tailwind_config_notes": "Ensure 'accent-blue', 'accent-blue-hover', 'primary-white' are defined in theme.colors. Ensure 'button-text' font style is mapped correctly."
+      },
+      {
+        "component_name": "Response Card",
+        "file_path": "src/components/ui/Card/ResponseCard.tsx",
+        "code_snippet": "import React from 'react';\nimport clsx from 'clsx';\n\ninterface ResponseCardProps {\n  children: React.ReactNode;\n  className?: string;\n}\n\nconst ResponseCard: React.FC<ResponseCardProps> = ({\n  children,\n  className,\n}) => {\n  const cardClasses = clsx(\n    'w-full p-6 mb-5 border border-subtle-gray rounded-lg bg-primary-white shadow-sm',\n    className\n  );\n\n  return (\n    <div className={cardClasses}>\n      {children}\n    </div>\n  );\n};\n\nexport default ResponseCard;\n",
+        "tailwind_config_notes": "Ensure 'subtle-gray', 'primary-white' are defined in theme.colors. Ensure 'body-regular' font style is used for content within the card."
+      },
+      {
+        "component_name": "Feedback Button",
+        "file_path": "src/components/ui/FeedbackButton/FeedbackButton.tsx",
+        "code_snippet": "import React from 'react';\nimport clsx from 'clsx';\n\ninterface FeedbackButtonProps {\n  icon: React.ReactNode; // e.g., a thumbs-up or thumbs-down SVG\n  label: string;\n  onClick?: () => void;\n  isActive?: boolean;\n}\n\nconst FeedbackButton: React.FC<FeedbackButtonProps> = ({\n  icon,\n  label,\n  onClick,\n  isActive,\n}) => {\n  const buttonClasses = clsx(\n    'inline-flex items-center justify-center py-2 px-4 mr-2 border rounded-md text-body-small cursor-pointer transition-colors duration-200',\n    isActive\n      ? 'bg-accent-blue border-accent-blue text-primary-white'\n      : 'bg-primary-white border-subtle-gray text-secondary-text hover:bg-light-neutral hover:border-subtle-gray hover:text-primary-text'\n  );\n\n  return (\n    <button\n      className={buttonClasses}\n      onClick={onClick}\n      aria-pressed={isActive}\n    >\n      <span className=\"mr-1\">{icon}</span>\n      {label}\n    </button>\n  );\n};\n\nexport default FeedbackButton;\n",
+        "tailwind_config_notes": "Ensure 'accent-blue', 'accent-blue-hover', 'primary-white', 'light-neutral', 'subtle-gray', 'secondary-text', 'primary-text' are defined in theme.colors. Ensure 'body-small' font style is mapped correctly."
+      },
+      {
+        "component_name": "Loading Indicator",
+        "file_path": "src/components/ui/LoadingIndicator/LoadingIndicator.tsx",
+        "code_snippet": "import React from 'react';\nimport clsx from 'clsx';\n\ninterface LoadingIndicatorProps {\n  size?: 'small' | 'medium' | 'large'; // Example sizes\n}\n\nconst LoadingIndicator: React.FC<LoadingIndicatorProps> = ({\n  size = 'medium',\n}) => {\n  const sizeClasses = {\n    small: 'w-6 h-6 border-2',\n    medium: 'w-8 h-8 border-4',\n    large: 'w-12 h-12 border-4',\n  };\n\n  const indicatorClasses = clsx(\n    'animate-spin rounded-full border-accent-blue border-t-transparent',\n    sizeClasses[size]\n  );\n\n  return (\n    <div\n      className={indicatorClasses}\n      role=\"status\"\n      aria-label=\"Loading AI response\"\n    >\n      <span className=\"sr-only\">Loading...</span>\n    </div>\n  );\n};\n\nexport default LoadingIndicator;\n",
+        "tailwind_config_notes": "Ensure 'accent-blue' is defined in theme.colors. Define the 'spin' animation in tailwind.config.ts if not already present or use a standard animation."
+      },
+      {
+        "component_name": "Navigation Link",
+        "file_path": "src/components/ui/Link/NavigationLink.tsx",
+        "code_snippet": "import React from 'react';\nimport { Link, LinkProps } from 'react-router-dom';\nimport clsx from 'clsx';\n\nconst NavigationLink: React.FC<LinkProps> = ({ children, className, ...props }) => {\n  const linkClasses = clsx(\n    'px-3 py-2 rounded-md font-medium text-sm leading-5 transition-colors duration-200',\n    'text-primary-text hover:bg-light-neutral hover:text-accent-blue',\n    className\n  );\n\n  return (\n    <Link className={linkClasses} {...props}>\n      {children}\n    </Link>\n  );\n};\n\nexport default NavigationLink;\n",
+        "tailwind_config_notes": "Ensure 'primary-text', 'light-neutral', 'accent-blue' are defined in theme.colors. Ensure font styles for 'body-small' or similar are used for link text."
+      }
+    ],
+    "tailwind_config_update": {
+      "file_path": "tailwind.config.ts",
+      "changes": [
+        "Update `content` array to include './src/**/*.{js,ts,jsx,tsx}'.",
+        "Extend `theme.colors` with the palette provided by Aurora (e.g., `primaryWhite: '#FFFFFF'`, `accentBlue: '#007BFF'`).",
+        "Extend `theme.fontFamily` with 'Inter'.",
+        "Map typography styles to Tailwind's text size and weight classes (e.g., `theme.extend.fontSize`, `theme.extend.fontWeight`).",
+        "Define custom animations if necessary (e.g., for the loading spinner)."
+      ],
+      "example_snippet": "/** @type {import('tailwindcss').Config} */\nexport default {\n  content: [\n    \"./index.html\",\n    \"./src/**/*.{js,ts,jsx,tsx}\",\n  ],\n  theme: {\n    extend: {\n      colors: {\n        'primary-white': '#FFFFFF',\n        'light-neutral': '#F8F9FA',\n        'subtle-gray': '#E9ECEF',\n        'primary-text': '#212529',\n        'secondary-text': '#6C757D',\n        'accent-blue': '#007BFF',\n        'accent-blue-hover': '#0056b3',\n        // ... other colors\n      },\n      fontFamily: {\n        sans: ['Inter', 'sans-serif'], // Assuming Inter is the primary font\n      },\n      fontSize: {\n        'display-large': ['48px', { lineHeight: '60px', fontWeight: '700' }],\n        'heading-1': ['36px', { lineHeight: '44px', fontWeight: '700' }],\n        'heading-2': ['28px', { lineHeight: '36px', fontWeight: '700' }],\n        'heading-3': ['24px', { lineHeight: '32px', fontWeight: '500' }],\n        'body-large': ['18px', { lineHeight: '28px', fontWeight: '400' }],\n        'body-regular': ['16px', { lineHeight: '24px', fontWeight: '400' }],\n        'body-small': ['14px', { lineHeight: '20px', fontWeight: '400' }],\n        'label-input': ['14px', { lineHeight: '20px', fontWeight: '500' }],\n        'button-text': ['16px', { lineHeight: '24px', fontWeight: '500' }],\n      },\n      boxShadow: {\n        'sm': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',\n        'md': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',\n      },\n      keyframes: {\n        spin: {\n          from: { transform: 'rotate(0deg)' },\n          to: { transform: 'rotate(360deg)' },\n        }\n      },\n      animation: {\n        spin: 'spin 1s linear infinite',\n      }\n    },\n  },\n  plugins: [],\n}\n"
+      }
+    ],
+    "next_steps_for_kodax": [
+      "Implement the `HomePage.tsx` component, integrating the `Input`, `Button`, `ResponseCard`, `FeedbackButton`, and `LoadingIndicator` components as per the high-fidelity mockup.",
+      "Implement the `HistoryPage.tsx` component, including list items for past interactions and potentially a search/filter input.",
+      "Set up routing using `react-router-dom` in `App.tsx` to navigate between `HomePage` and `HistoryPage`.",
+      "Integrate Zustand stores for managing application state (e.g., current prompt, AI response, history list)."
+    ]
+  }
+}
+
+---
+
+Artifact from step_6_Lyra_result.txt (Prompt Engineer):
+{
+  "api_contract": {
+    "base_url": "https://api.auraflow.ai/v1",
+    "authentication": {
+      "type": "Bearer Token",
+      "header": "Authorization",
+      "description": "JWT token obtained after successful user authentication. The 'user_id' in requests should correspond to the authenticated user."
+    },
+    "endpoints": [
+      {
+        "name": "Generate AI Response",
+        "path": "/generate",
+        "method": "POST",
+        "description": "Initiates a new AI interaction or continues an existing conversation, sending user input and context to the AI system to generate a response.",
+        "request": {
+          "content_type": "application/json",
+          "payload": {
+            "type": "object",
+            "properties": {
+              "user_id": {
+                "type": "string",
+                "description": "Unique identifier for the authenticated user, provided by the frontend.",
+                "example": "usr_123abc"
+              },
+              "conversation_id": {
+                "type": "string",
+                "description": "Optional. Unique identifier for the ongoing conversation. If provided, the AI system will use this context for iterative interaction. If omitted, a new conversation will be initiated by the backend.",
+                "example": "conv_xyz789",
+                "nullable": true
+              },
+              "messages": {
+                "type": "array",
+                "description": "An ordered array of message objects representing the conversation history, including the current user prompt. This forms the core AI prompt structure.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "role": {
+                      "type": "string",
+                      "enum": ["system", "user", "assistant"],
+                      "description": "The role of the message sender (e.g., 'user' for user input, 'assistant' for AI responses, 'system' for initial AI instructions)."
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "The text content of the message."
+                    }
+                  },
+                  "required": ["role", "content"]
+                },
+                "minItems": 1
+              },
+              "model_parameters": {
+                "type": "object",
+                "description": "Optional. Parameters to fine-tune AI generation behavior (e.g., creativity, response length).",
+                "properties": {
+                  "temperature": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 2,
+                    "default": 0.7,
+                    "description": "Controls randomness. Higher values mean more random output."
+                  },
+                  "max_tokens": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "default": 500,
+                    "description": "Maximum number of tokens to generate in the AI response."
+                  },
+                  "top_p": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1,
+                    "default": 1.0,
+                    "description": "Controls diversity via nucleus sampling."
+                  }
+                },
+                "nullable": true
+              },
+              "stream": {
+                "type": "boolean",
+                "description": "If true, the AI response will be streamed token by token using Server-Sent Events (SSE) for real-time display.",
+                "default": false
+              }
+            },
+            "required": ["user_id", "messages"]
+          }
+        },
+        "response": {
+          "content_type": "application/json",
+          "payload": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Unique identifier for this specific AI response.",
+                "example": "res_abc123"
+              },
+              "conversation_id": {
+                "type": "string",
+                "description": "Unique identifier for the conversation this response belongs to. This will be new if not provided in the request.",
+                "example": "conv_xyz789"
+              },
+              "output": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": ["text", "image_url", "structured_json"],
+                    "description": "The type of content generated by the AI (e.g., plain text, a URL to an image, or stringified JSON data)."
+                  },
+                  "content": {
+                    "type": "string",
+                    "description": "The AI-generated content (e.g., response text, image URL, or stringified JSON)."
+                  }
+                },
+                "required": ["type", "content"]
+              },
+              "metadata": {
+                "type": "object",
+                "description": "Additional information about the AI generation process.",
+                "properties": {
+                  "model": {
+                    "type": "string",
+                    "description": "The specific AI model used for generation (e.g., 'gpt-3.5-turbo')."
+                  },
+                  "prompt_tokens": {
+                    "type": "integer",
+                    "description": "The number of tokens consumed by the input prompt."
+                  },
+                  "completion_tokens": {
+                    "type": "integer",
+                    "description": "The number of tokens generated in the AI response."
+                  },
+                  "total_tokens": {
+                    "type": "integer",
+                    "description": "The total number of tokens consumed (prompt + completion)."
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "The UTC timestamp of when the response was generated."
+                  }
+                }
+              }
+            },
+            "required": ["id", "conversation_id", "output"]
+          }
+        },
+        "streaming_response": {
+          "content_type": "text/event-stream",
+          "description": "For `stream: true` requests, the server will send Server-Sent Events (SSE). Each event will contain a 'delta' field with partial content.",
+          "event_format": {
+            "data": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "Unique ID for the streaming response session."
+                },
+                "conversation_id": {
+                  "type": "string",
+                  "description": "Conversation ID associated with the stream."
+                },
+                "delta": {
+                  "type": "string",
+                  "description": "A small chunk of the AI-generated text (token)."
+                },
+                "finish_reason": {
+                  "type": "string",
+                  "enum": ["stop", "length", "content_filter"],
+                  "description": "Reason the streaming finished. Present only in the final event.",
+                  "nullable": true
+                }
+              }
+            }
+          },
+          "end_event_marker": "[DONE]",
+          "notes": "The frontend should concatenate 'delta' chunks to form the complete response. The final event will indicate completion and may include metadata."
+        }
+      },
+      {
+        "name": "Get Interaction History",
+        "path": "/history",
+        "method": "GET",
+        "description": "Retrieves a paginated list of the user's past AI interaction conversations, typically displayed as a summary.",
+        "request": {
+          "parameters": {
+            "user_id": {
+              "type": "string",
+              "description": "Required. Unique identifier for the authenticated user.",
+              "in": "query"
+            },
+            "limit": {
+              "type": "integer",
+              "default": 20,
+              "minimum": 1,
+              "description": "Maximum number of conversations to return.",
+              "in": "query"
+            },
+            "offset": {
+              "type": "integer",
+              "default": 0,
+              "minimum": 0,
+              "description": "Number of conversations to skip for pagination.",
+              "in": "query"
+            }
+          }
+        },
+        "response": {
+          "content_type": "application/json",
+          "payload": {
+            "type": "object",
+            "properties": {
+              "conversations": {
+                "type": "array",
+                "description": "A list of conversation summary objects.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "Unique ID of the conversation.",
+                      "example": "conv_xyz789"
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "An auto-generated, concise title for the conversation (e.g., based on the first prompt).",
+                      "example": "Explaining Quantum Computing"
+                    },
+                    "last_updated": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "The UTC timestamp of the last message in the conversation."
+                    },
+                    "preview_messages": {
+                      "type": "array",
+                      "description": "A short preview of the conversation's messages, typically the first user prompt and AI response snippet.",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "role": {
+                            "type": "string",
+                            "enum": ["user", "assistant"]
+                          },
+                          "content_snippet": {
+                            "type": "string",
+                            "description": "Truncated content for display in history list."
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "required": ["id", "title", "last_updated"]
+                }
+              },
+              "total_count": {
+                "type": "integer",
+                "description": "The total number of conversations available for the user, irrespective of pagination."
+              }
+            },
+            "required": ["conversations", "total_count"]
+          }
+        }
+      },
+      {
+        "name": "Get Specific Conversation History",
+        "path": "/history/{conversationId}",
+        "method": "GET",
+        "description": "Retrieves the full message history (all turns) for a specific conversation, allowing users to revisit and continue past interactions.",
+        "request": {
+          "parameters": {
+            "user_id": {
+              "type": "string",
+              "description": "Required. Unique identifier for the authenticated user.",
+              "in": "query"
+            },
+            "conversationId": {
+              "type": "string",
+              "description": "Required. The unique ID of the conversation to retrieve.",
+              "in": "path"
+            }
+          }
+        },
+        "response": {
+          "content_type": "application/json",
+          "payload": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Unique ID of the conversation."
+              },
+              "title": {
+                "type": "string",
+                "description": "Title of the conversation."
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The UTC timestamp when the conversation was initiated."
+              },
+              "last_updated": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The UTC timestamp of the most recent message in the conversation."
+              },
+              "messages": {
+                "type": "array",
+                "description": "The complete list of message objects (user inputs and AI responses) in chronological order.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "Unique ID for this individual message/turn."
+                    },
+                    "role": {
+                      "type": "string",
+                      "enum": ["user", "assistant", "system"],
+                      "description": "Role of the message sender."
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "The full text content of the message."
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "The UTC timestamp of when this message was created."
+                    },
+                    "feedback": {
+                      "type": "object",
+                      "description": "Optional. Feedback provided for this specific AI response.",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "enum": ["like", "dislike"],
+                          "description": "Type of feedback."
+                        },
+                        "timestamp": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "Timestamp of when feedback was submitted."
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "required": ["id", "role", "content", "timestamp"]
+                }
+              }
+            },
+            "required": ["id", "title", "messages"]
+          }
+        }
+      },
+      {
+        "name": "Submit AI Response Feedback",
+        "path": "/feedback",
+        "method": "POST",
+        "description": "Allows users to provide explicit feedback (like/dislike) on specific AI-generated responses to improve future AI performance.",
+        "request": {
+          "content_type": "application/json",
+          "payload": {
+            "type": "object",
+            "properties": {
+              "user_id": {
+                "type": "string",
+                "description": "Unique identifier for the authenticated user.",
+                "example": "usr_123abc"
+              },
+              "response_id": {
+                "type": "string",
+                "description": "The unique ID of the AI response being feedback on, obtained from the /generate endpoint response.",
+                "example": "res_abc123"
+              },
+              "feedback_type": {
+                "type": "string",
+                "enum": ["like", "dislike"],
+                "description": "The type of feedback provided by the user."
+              },
+              "comment": {
+                "type": "string",
+                "description": "Optional. Any additional textual comments or context from the user regarding the feedback.",
+                "nullable": true
+              }
+            },
+            "required": ["user_id", "response_id", "feedback_type"]
+          }
+        },
+        "response": {
+          "content_type": "application/json",
+          "payload": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "string",
+                "enum": ["success", "error"],
+                "description": "Indicates if the feedback submission was successful."
+              },
+              "message": {
+                "type": "string",
+                "description": "A human-readable confirmation or error message."
+              }
+            },
+            "required": ["status", "message"]
+          }
+        }
+      }
+    ],
+    "error_response_format": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "A unique, machine-readable error code (e.g., 'INVALID_INPUT', 'UNAUTHORIZED', 'AI_GENERATION_FAILED')."
+        },
+        "message": {
+          "type": "string",
+          "description": "A human-readable message explaining the error."
+        },
+        "details": {
+          "type": "object",
+          "description": "Optional. A JSON object containing more specific details about the error, such as validation errors for specific fields.",
+          "nullable": true
+        }
+      },
+      "required": ["code", "message"],
+      "notes": "Standard HTTP status codes (e.g., 400 Bad Request, 401 Unauthorized, 404 Not Found, 500 Internal Server Error) will accompany these error payloads."
+    }
+  },
+  "prompt_structures": {
+    "description": "Defines the structure and content of the 'messages' array within the '/generate' request payload, which directly influences how the AI system processes the input.",
+    "formats": [
+      {
+        "name": "Single-Turn Interaction",
+        "usage": "Used for initial prompts where no prior conversation context is required or desired.",
+        "example": [
+          {
+            "role": "system",
+            "content": "You are a helpful and concise AI assistant named AuraFlow. Provide direct answers."
+          },
+          {
+            "role": "user",
+            "content": "What is the capital of France?"
+          }
+        ],
+        "notes": "The 'system' message sets the persona and instructions for the AI. It can be a static backend configuration, or dynamically adjustable by the frontend based on user preferences or interaction type."
+      },
+      {
+        "name": "Multi-Turn (Conversational) Interaction",
+        "usage": "Used for follow-up prompts where the AI needs to maintain conversational context from previous turns.",
+        "example": [
+          {
+            "role": "system",
+            "content": "You are a helpful and concise AI assistant named AuraFlow. Provide direct answers."
+          },
+          {
+            "role": "user",
+            "content": "Explain quantum computing in simple terms."
+          },
+          {
+            "role": "assistant",
+            "content": "Quantum computing harnesses quantum-mechanical phenomena like superposition and entanglement to perform computations. Unlike classical computers using bits (0 or 1), quantum computers use qubits, which can be 0, 1, or both simultaneously, enabling them to process vast amounts of information faster for certain problems."
+          },
+          {
+            "role": "user",
+            "content": "Can you give me a practical example of its application?"
+          }
+        ],
+        "notes": "The frontend is responsible for constructing this 'messages' array by retrieving the relevant conversation history (including both user and AI turns) and appending the new user prompt. It's crucial to manage the length of this array to stay within the AI model's token limits, potentially by truncating older messages or using summary techniques."
+      },
+      {
+        "name": "Input with File Upload (Future Consideration for Multi-Modal AI)",
+        "usage": "Applicable if the underlying AI system expands to support multi-modal inputs (e.g., image analysis, document summarization).",
+        "example_structure_concept": [
+          {
+            "role": "user",
+            "content": "Describe the main subjects in this image:",
+            "file_url": "https://example.com/user_uploaded_image.jpg"
+          },
+          {
+            "role": "user",
+            "content": "Summarize this document:",
+            "file_content_base64": "JVBERi0xLjMg..."
+          }
+        ],
+        "notes": "This would require specific API support for file handling (e.g., dedicated upload endpoint, or direct embedding as base64), and the 'messages' object schema would need expansion to accommodate 'file_url' or 'file_content_base64' fields, along with corresponding backend processing to prepare the input for the AI model."
+      }
+    ]
+  },
+  "frontend_integration_notes": {
+    "state_management_implications": "The frontend's state management (e.g., Zustand) will be crucial for holding the current `conversation_id`, the active `messages` array for the current interaction, and managing the list of `conversations` for the history view. Loading states and error displays for API calls also need to be managed.",
+    "ui_component_mapping": "The `ResponseCard` component (as designed by Aurora) will be populated by the `output.content` from the `/generate` response. `FeedbackButton` components will trigger the `POST /feedback` endpoint, using the `id` from the AI response.",
+    "streaming_handling": "If `stream: true` is used for `/generate`, the frontend should use an SSE client to listen for events. It will incrementally update the `ResponseCard` content with each `delta` received, providing a dynamic, real-time typing effect. A final event will signal completion and provide full metadata."
+  }
+}
+
+---
+
+Artifact from step_7_Kodax_result.txt (Engineer):
+{
+  "task": "Implement the logic to connect the frontend to the AI system's API, managing application state (e.g., loading, data, errors) effectively.",
+  "sub_task_execution": {
+    "goal": "Integrate the React frontend with the AI system's API using Axios and Zustand, managing loading states, API responses, and errors for a seamless user experience.",
+    "plan": [
+      {
+        "step": 1,
+        "action": "Define API Service Module",
+        "description": "Create a dedicated module (`src/lib/api.ts`) to house API interaction logic. This will include setting up an Axios instance with base URL and interceptors for authentication and error handling.",
+        "details": "Configure Axios instance with `baseURL` from Lyra's contract. Implement an interceptor to add the 'Authorization' header with a placeholder token. Implement a response interceptor to handle common error structures defined in Lyra's `error_response_format` and potentially re-throw them for component-level handling."
+      },
+      {
+        "step": 2,
+        "action": "Create Zustand Store for AI State",
+        "description": "Develop a Zustand store (`src/store/aiStore.ts`) to manage the application state related to AI interactions. This includes managing the current prompt, AI responses, conversation history, loading status, and any errors.",
+        "details": "Define state slices for: `currentPrompt`, `aiResponse` (text, type, and potentially metadata), `conversationId`, `messages` (for history in the current interaction), `isLoading`, `error`. Implement actions for: `setPrompt`, `fetchAiResponse` (which will call the API service), `setResponse`, `setError`, `clearError`, `addMessageToHistory`, `loadConversationHistory`, `setConversationId`."
+      },
+      {
+        "step": 3,
+        "action": "Implement `fetchAiResponse` action",
+        "description": "Implement the core `fetchAiResponse` action in the Zustand store to handle API calls to the `/generate` endpoint.",
+        "details": "This action will: \n1. Set `isLoading` to true and clear any previous `error`.\n2. Construct the `messages` array based on the current conversation state (potentially including a system message and previous turns).\n3. Make a POST request using the Axios instance to `/generate`, passing the `user_id` (placeholder for now), `conversation_id` (if available), and the `messages` array.\n4. Handle both standard responses and streaming responses (if `stream: true` is implemented later).\n5. On success: parse the response, update `aiResponse` and `conversationId` (if new), and add the assistant's message to the `messages` history.\n6. On error: catch the error, set the `error` state with details from Lyra's format, and set `isLoading` to false."
+      },
+      {
+        "step": 4,
+        "action": "Implement `HomePage` integration",
+        "description": "Connect the `HomePage` component to the `aiStore` and the API service to enable user interaction.",
+        "details": "Use Zustand's `useStore` hook to access and update state. Bind the `Input` component's value to `currentPrompt` and its `onChange` handler to `setPrompt`. Wire up the `Primary Button`'s `onClick` event to call `fetchAiResponse`. Conditionally render the `LoadingIndicator` based on `isLoading` state. Display the `aiResponse` within the `ResponseCard`. Show error messages if `error` state is present."
+      },
+      {
+        "step": 5,
+        "action": "Implement `HistoryPage` integration",
+        "description": "Connect the `HistoryPage` component to fetch and display conversation history from the `/history` endpoint.",
+        "details": "Create a new Zustand slice or expand `aiStore` for `historyState` (e.g., `conversations`, `historyIsLoading`, `historyError`). Implement actions like `fetchConversationHistory` which calls the `/history` endpoint using Axios. Display the list of conversations in the `HistoryPage`, potentially using a map over the `conversations` array and rendering summary items. Each item should be clickable to load a specific conversation (e.g., by calling `fetchSpecificConversationHistory` and updating `messages`, `conversationId`, etc.)."
+      },
+      {
+        "step": 6,
+        "action": "Implement Feedback Mechanism",
+        "description": "Integrate the `FeedbackButton` component to send feedback to the `/feedback` endpoint.",
+        "details": "Add `onFeedbackClick` handlers to the `HomePage` that call a new Zustand action `submitFeedback`. This action will make a POST request to `/feedback` with `response_id` and `feedback_type`. Update UI to reflect feedback state if necessary (e.g., visually marking a liked response)."
+      },
+      {
+        "step": 7,
+        "action": "Refine Error Handling and Loading States",
+        "description": "Ensure all API interactions have appropriate loading indicators and user-friendly error messages.",
+        "details": "Use the `isLoading` state from Zustand to show/hide `LoadingIndicator` components. Implement robust error display using `error` state, potentially showing a toast notification or an inline error message near the relevant UI element."
+      }
+    ],
+    "code_implementation_details": {
+      "api_service": {
+        "file_path": "src/lib/api.ts",
+        "code_snippet": "import axios from 'axios';\n\nconst API_BASE_URL = 'https://api.auraflow.ai/v1'; // As per Lyra's contract\n\nconst api = axios.create({\n  baseURL: API_BASE_URL,\n  headers: {\n    'Content-Type': 'application/json',\n  },\n});\n\n// Add a request interceptor for authentication\napi.interceptors.request.use(\n  (config) => {\n    // TODO: Get token from auth context/store\n    const token = localStorage.getItem('authToken') || 'YOUR_PLACEHOLDER_TOKEN';\n    if (token) {\n      config.headers.Authorization = `Bearer ${token}`;\n    }\n    return config;\n  },\n  (error) => {\n    return Promise.reject(error);\n  }\n);\n\n// Add a response interceptor for error handling\napi.interceptors.response.use(\n  (response) => response,\n  (error) => {\n    let errorMessage = 'An unexpected error occurred. Please try again.';\n    let errorCode = 'UNKNOWN_ERROR';\n\n    if (error.response) {\n      // The request was made and the server responded with a status code\n      // that falls out of the range of 2xx\n      const errorData = error.response.data;\n      errorCode = errorData.code || error.response.statusText;\n      errorMessage = errorData.message || `Server responded with status: ${error.response.status}`;\n\n      // Handle specific API error structures if defined\n      if (errorData && errorData.details) {\n        console.error('API Error Details:', errorData.details);\n        // Potentially map details to more user-friendly messages\n      }\n    } else if (error.request) {\n      // The request was made but no response was received\n      errorMessage = 'Network error: No response from server. Please check your connection.';\n      errorCode = 'NETWORK_ERROR';\n    } else {\n      // Something happened in setting up the request that triggered an Error\n      errorMessage = error.message;\n      errorCode = 'REQUEST_SETUP_ERROR';\n    }\n\n    // Re-throw a structured error object for components to catch\n    return Promise.reject({\n      code: errorCode,\n      message: errorMessage,\n      status: error.response?.status,\n    });\n  }\n);\n\nexport default api;\n"
+      },
+      "zustand_store": {
+        "file_path": "src/store/aiStore.ts",
+        "code_snippet": "import { create } from 'zustand';\nimport api from '../lib/api';\n\n// Define types based on Lyra's contract\ninterface SystemMessage {\n  role: 'system';\n  content: string;\n}\n\ninterface UserMessage {\n  role: 'user';\n  content: string;\n}\n\ninterface AssistantMessage {\n  role: 'assistant';\n  content: string;\n  id?: string; // response_id\n}\n\ntype Message = SystemMessage | UserMessage | AssistantMessage;\n\ninterface AIResponse {\n  id: string;\n  conversation_id: string;\n  output: {\n    type: 'text' | 'image_url' | 'structured_json';\n    content: string;\n  };\n  metadata?: {\n    model: string;\n    prompt_tokens: number;\n    completion_tokens: number;\n    total_tokens: number;\n    timestamp: string;\n  };\n}\n\ninterface ConversationSummary {\n  id: string;\n  title: string;\n  last_updated: string;\n  preview_messages: {\n    role: 'user' | 'assistant';\n    content_snippet: string;\n  }[];\n}\n\ninterface AIState {\n  // Interaction State\n  currentPrompt: string;\n  messages: Message[]; // Current conversation history\n  conversationId: string | null;\n  aiResponse: AIResponse | null;\n  isLoading: boolean;\n  error: { code: string; message: string } | null;\n\n  // History State\n  conversations: ConversationSummary[];\n  historyIsLoading: boolean;\n  historyError: { code: string; message: string } | null;\n\n  // Actions\n  setPrompt: (prompt: string) => void;\n  fetchAiResponse: (userId: string) => Promise<void>;\n  setResponse: (response: AIResponse | null) => void;\n  setError: (error: { code: string; message: string } | null) => void;\n  clearError: () => void;\n  addMessage: (message: Message) => void;\n  loadConversationHistory: (userId: string, limit?: number, offset?: number) => Promise<void>;\n  loadSpecificConversation: (userId: string, conversationId: string) => Promise<void>;\n  submitFeedback: (userId: string, responseId: string, feedbackType: 'like' | 'dislike', comment?: string) => Promise<void>;\n  clearInteractionState: () => void;\n}\n\nconst SYSTEM_PROMPT = 'You are a helpful and concise AI assistant named AuraFlow. Provide direct answers.';\n\nexport const useAIStore = create<AIState>((set, get) => ({\n  // Initial State\n  currentPrompt: '',\n  messages: [{ role: 'system', content: SYSTEM_PROMPT }],\n  conversationId: null,\n  aiResponse: null,\n  isLoading: false,\n  error: null,\n  conversations: [],\n  historyIsLoading: false,\n  historyError: null,\n\n  // Actions\n  setPrompt: (prompt) => set({ currentPrompt: prompt }),\n\n  fetchAiResponse: async (userId) => {\n    const { currentPrompt, messages, conversationId } = get();\n    if (!currentPrompt.trim()) return;\n\n    set({ isLoading: true, error: null });\n\n    const userMessage: UserMessage = { role: 'user', content: currentPrompt };\n    const updatedMessages = [...messages, userMessage];\n\n    try {\n      const response = await api.post<AIResponse>('/generate', {\n        user_id: userId,\n        conversation_id: conversationId,\n        messages: updatedMessages,\n        // TODO: Add model_parameters and stream options if needed\n        stream: false, // For simplicity initially, implement streaming later\n      });\n\n      const aiResponseData = response.data;\n      set({\n        aiResponse: aiResponseData,\n        conversationId: aiResponseData.conversation_id,\n        messages: [...updatedMessages, { role: 'assistant', content: aiResponseData.output.content, id: aiResponseData.id }],\n        isLoading: false,\n      });\n      // Clear current prompt after successful response\n      set({ currentPrompt: '' });\n\n    } catch (error: any) {\n      console.error('Error fetching AI response:', error);\n      set({\n        error: { code: error.code || 'FETCH_ERROR', message: error.message || 'Failed to get response from AI.' },\n        isLoading: false,\n      });\n    }\n  },\n\n  setResponse: (response) => set({ aiResponse: response }),\n  setError: (error) => set({ error }),\n  clearError: () => set({ error: null }),\n\n  addMessage: (message) => set((state) => ({ messages: [...state.messages, message] })),\n\n  loadConversationHistory: async (userId, limit = 20, offset = 0) => {\n    set({ historyIsLoading: true, historyError: null });\n    try {\n      const response = await api.get<{\n        conversations: ConversationSummary[];\n        total_count: number;\n      }>('/history', {\n        params: { user_id: userId, limit, offset },\n      });\n      set({\n        conversations: response.data.conversations,\n        historyIsLoading: false,\n      });\n    } catch (error: any) {\n      console.error('Error loading conversation history:', error);\n      set({\n        historyError: { code: error.code || 'HISTORY_LOAD_ERROR', message: error.message || 'Failed to load history.' },\n        historyIsLoading: false,\n      });\n    }\n  },\n\n  loadSpecificConversation: async (userId, conversationId) => {\n    set({ isLoading: true, error: null, messages: [{ role: 'system', content: SYSTEM_PROMPT }] }); // Reset messages with system prompt\n    try {\n      const response = await api.get<{\n        id: string;\n        title: string;\n        messages: Message[];\n      }>(\`/history/${conversationId}\`, {\n        params: { user_id: userId },\n      });\n      \n      // Filter out system messages from loaded history if they are not needed in the context\n      const conversationMessages = response.data.messages.filter(msg => msg.role !== 'system');\n\n      set({\n        conversationId: response.data.id,\n        messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...conversationMessages],\n        aiResponse: null, // Clear previous response\n        currentPrompt: '', // Clear prompt\n        isLoading: false,\n      });\n    } catch (error: any) {\n      console.error('Error loading specific conversation:', error);\n      set({\n        error: { code: error.code || 'CONV_LOAD_ERROR', message: error.message || 'Failed to load conversation.' },\n        isLoading: false,\n      });\n    }\n  },\n\n  submitFeedback: async (userId, responseId, feedbackType, comment) => {\n    try {\n      await api.post('/feedback', {\n        user_id: userId,\n        response_id: responseId,\n        feedback_type: feedbackType,\n        comment: comment,\n      });\n      // Optionally update UI to show feedback was submitted\n      console.log(`Feedback (${feedbackType}) submitted for response ${responseId}`);\n    } catch (error: any) {\n      console.error('Error submitting feedback:', error);\n      // Handle feedback submission error, maybe show a toast\n    }\n  },\n\n  clearInteractionState: () => {\n    set({\n      currentPrompt: '',\n      messages: [{ role: 'system', content: SYSTEM_PROMPT }],\n      conversationId: null,\n      aiResponse: null,\n      isLoading: false,\n      error: null,\n    });\n  }\n}));\n"
+      },
+      "homepage_integration_notes": "In `HomePage.tsx`, use `useAIStore` to get `currentPrompt`, `messages`, `isLoading`, `error`, `aiResponse`, `conversationId`. Use `setPrompt`, `fetchAiResponse`, `clearError` from the store. Bind input value and onChange. Call `fetchAiResponse` on button click. Conditionally render `LoadingIndicator` and `ResponseCard`. Display error messages.",
+      "historypage_integration_notes": "In `HistoryPage.tsx`, use `useAIStore` to get `conversations`, `historyIsLoading`, `historyError`. Use `loadConversationHistory`, `loadSpecificConversation`. Fetch history on component mount using `useEffect`. Render conversations in a list. Each item links to `loadSpecificConversation`.",
+      "feedback_integration_notes": "In `HomePage.tsx`'s `ResponseCard` or action area, implement `FeedbackButton` components. Their `onClick` handlers will call `submitFeedback` from the store, passing the necessary `responseId` (from `aiResponse.id`) and `feedbackType`."
+    },
+    "next_steps_for_kodax": [
+      "Implement the `HomePage.tsx` component, integrating the `Input`, `Button`, `ResponseCard`, `FeedbackButton`, and `LoadingIndicator` components with the `useAIStore` hooks and actions.",
+      "Implement the `HistoryPage.tsx` component, fetching and displaying conversation summaries using the `useAIStore` hooks and actions.",
+      "Implement routing to navigate between `HomePage` and `HistoryPage` using `react-router-dom`.",
+      "Add placeholder for user ID (e.g., `const userId = 'user-123';`) and pass it to store actions. A real implementation would fetch this from an authentication context.",
+      "Consider implementing streaming for the `/generate` endpoint for a more interactive experience, which would involve modifications to `fetchAiResponse` and the `ResponseCard` display logic."
+    ]
+  }
+}
+
+
+
+Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project.

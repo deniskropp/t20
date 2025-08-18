@@ -1,0 +1,234 @@
+{
+  "test_plan_title": "End-to-End AI Interaction Verification Plan",
+  "purpose": "To systematically verify that the frontend correctly constructs and sends AI prompts, and accurately parses, displays, and manages AI responses according to the defined API contract, user interaction loop, and design system.",
+  "scope": [
+    "User input handling for AI requests (prompt text, parameters, input type selection).",
+    "Frontend-to-backend API communication for /generate, /history, /history/{id}, and DELETE /history/{id} endpoints.",
+    "Accurate parsing and rendering of diverse AI output types (text, image URLs, structured JSON data, audio URLs).",
+    "Correct display and dismissal of loading states, success messages, and error messages (visual and accessibility).",
+    "Verification of core user flows for AI generation, iterative refinement, saving, and history management.",
+    "Accessibility of interactive elements and dynamic content within the AI interaction flow (keyboard navigation, screen reader announcements)."
+  ],
+  "test_environment": {
+    "frontend": "Aura AI Frontend application (React/Vite), running locally or on staging.",
+    "backend": "AI Backend service (mock or live) accessible via the defined API contract.",
+    "browser": "Modern web browser (e.g., Chrome, Firefox, Edge, Safari)."
+  },
+  "assumptions": [
+    "A valid user authentication token (e.g., API Key or Session Token) is available for authenticated requests.",
+    "The backend can simulate various AI output types (text, image_url, json_data, audio_url) for comprehensive testing.",
+    "The static frontend shell (components, routing) is fully implemented as per Kodax's step 6 output."
+  ],
+  "test_cases": [
+    {
+      "id": "E2E-AI-001",
+      "description": "Successful Text Generation (Basic)",
+      "preconditions": "User is on 'Main AI Workspace' page, logged in.",
+      "steps": [
+        "Enter a valid text prompt (e.g., 'Write a short poem about a starry night').",
+        "Select 'text-generation-v3' as 'model_id'.",
+        "Click the 'Generate' button."
+      ],
+      "expected_results": [
+        "Loading spinner/indicator appears.",
+        "Request to `/api/v1/generate` is sent with correct JSON payload (prompt, model_id, user_context, default input_type: 'text', empty parameters object).",
+        "Backend responds with `status: 'success'`, `output_type: 'text'`, and `content` (generated text).",
+        "Loading spinner disappears.",
+        "Generated text is displayed clearly in the output area.",
+        "Text content is selectable and copyable.",
+        "'Save' and 'Copy' buttons become active."
+      ],
+      "verification_points": [
+        "Network tab: Verify POST request payload to `/generate` matches API contract (schema, required fields).",
+        "UI: Check for correct loading state display (visual and accessible via screen reader).",
+        "UI: Verify generated text is displayed, formatted correctly, and accessible (e.g., sufficient contrast).",
+        "Functionality: Test 'Copy' button copies the output to clipboard.",
+        "Functionality: Test 'Save' button initiates save action (even if placeholder)."
+      ],
+      "notes": "Verify visual alignment of buttons, input/output areas, and text styling as per Design System (Aurora's step 3 & 8 feedback)."
+    },
+    {
+      "id": "E2E-AI-002",
+      "description": "Successful Image Generation (with parameters)",
+      "preconditions": "User is on 'Main AI Workspace' page, logged in. Backend supports image generation.",
+      "steps": [
+        "Enter a valid image prompt (e.g., 'A futuristic city at sunset').",
+        "Select 'image-gen-v2' as 'model_id'.",
+        "Adjust 'image_size' parameter to '1024x1024'.",
+        "Click the 'Generate' button."
+      ],
+      "expected_results": [
+        "Loading spinner/indicator appears.",
+        "Request to `/api/v1/generate` is sent with correct JSON payload (prompt, model_id, user_context, input_type: 'text', parameters including `image_size`).",
+        "Backend responds with `status: 'success'`, `output_type: 'image_url'`, and `content` (URL to the generated image).",
+        "Loading spinner disappears.",
+        "Generated image is displayed correctly in the output area (e.g., `<img>` tag).",
+        "Image is responsive and fits the output area.",
+        "'Save' and 'Download' buttons become active."
+      ],
+      "verification_points": [
+        "Network tab: Verify POST request payload includes `image_size` parameter correctly.",
+        "UI: Check image rendering, responsiveness, and alternative text (if applicable).",
+        "Functionality: Test 'Download' button downloads the image."
+      ]
+    },
+    {
+      "id": "E2E-AI-003",
+      "description": "AI Generation - Missing Prompt Error",
+      "preconditions": "User is on 'Main AI Workspace' page, logged in.",
+      "steps": [
+        "Leave the prompt input field empty.",
+        "Select any 'model_id'.",
+        "Click the 'Generate' button."
+      ],
+      "expected_results": [
+        "Frontend validation prevents sending the request (or backend returns error if client-side validation is skipped).",
+        "An clear error message is displayed near the input field (e.g., 'Prompt cannot be empty').",
+        "Error message styling matches `notification_error` from design system."
+      ],
+      "verification_points": [
+        "Network tab: Verify no request is sent, or a 4xx error from backend if validation is server-side.",
+        "UI: Check error message content, placement, and styling against design system (Aurora's feedback on error handling).",
+        "Accessibility: Verify error message is announced to screen readers (e.g., via `aria-live`)."
+      ]
+    },
+    {
+      "id": "E2E-AI-004",
+      "description": "AI Generation - Backend Error (e.g., 'MODEL_UNAVAILABLE')",
+      "preconditions": "User is on 'Main AI Workspace' page, logged in. Backend configured to return 'MODEL_UNAVAILABLE' error.",
+      "steps": [
+        "Enter a valid prompt.",
+        "Select a `model_id` that the backend is configured to reject.",
+        "Click the 'Generate' button."
+      ],
+      "expected_results": [
+        "Loading spinner/indicator appears.",
+        "Request to `/api/v1/generate` is sent.",
+        "Backend responds with `status: 'error'`, `error.code: 'MODEL_UNAVAILABLE'`, and a `message`.",
+        "Loading spinner disappears.",
+        "A clear, user-friendly error message is displayed in the output area or as a notification.",
+        "Error message styling matches `notification_error` from design system."
+      ],
+      "verification_points": [
+        "Network tab: Verify POST request payload and 5xx/4xx response with error schema.",
+        "UI: Check error message content, styling, and persistence (until new interaction).",
+        "Accessibility: Verify error message is announced to screen readers.",
+        "UI: Ensure input fields remain, allowing user to correct or retry."
+      ]
+    },
+    {
+      "id": "E2E-AI-005",
+      "description": "Iterative AI Interaction (Refine Prompt)",
+      "preconditions": "Successfully completed E2E-AI-001 (text generation).",
+      "steps": [
+        "Modify the existing prompt in the input area (e.g., add '...with a touch of melancholy').",
+        "Click the 'Generate' button again."
+      ],
+      "expected_results": [
+        "New request is sent with the modified prompt.",
+        "New loading state appears, then new output replaces the old one.",
+        "The interaction flow is smooth and allows for easy refinement."
+      ],
+      "verification_points": [
+        "Network tab: Verify the new prompt is sent correctly.",
+        "UI: Check smooth transition from old output to new loading state, then new output.",
+        "User Flow: Confirm that the user can easily modify input and re-submit without losing context (Aurora's feedback on iterative flow)."
+      ]
+    },
+    {
+      "id": "E2E-AI-006",
+      "description": "View Interaction History",
+      "preconditions": "At least 3-5 successful AI generations have been performed and saved/logged.",
+      "steps": [
+        "Navigate to the 'History' page via the header navigation."
+      ],
+      "expected_results": [
+        "Request to `/api/v1/history` is sent with user_id and default pagination parameters.",
+        "Backend responds with a list of history items (`data` array).",
+        "History page displays a list of `HistoryItem` components.",
+        "Each item correctly shows `prompt_snippet`, `output_snippet` (or thumbnail), `timestamp`, and `model_used`.",
+        "Search/filter bar is present (even if placeholder functionality)."
+      ],
+      "verification_points": [
+        "Network tab: Verify GET request to `/history` and response schema.",
+        "UI: Check layout and content of history items against wireframes and design system.",
+        "UI: Verify pagination controls (if implemented) or scrolling behavior for long lists."
+      ]
+    },
+    {
+      "id": "E2E-AI-007",
+      "description": "Re-run/Edit from History",
+      "preconditions": "User is on 'History' page (E2E-AI-006 passed).",
+      "steps": [
+        "Click the 'View' or 'Re-run' button on a specific history item."
+      ],
+      "expected_results": [
+        "Request to `/api/v1/history/{id}` is sent to retrieve full interaction details.",
+        "Frontend navigates back to 'Main AI Workspace' page.",
+        "Input area is pre-filled with `original_prompt` and `parameters_used` from the selected history item.",
+        "User can modify the pre-filled prompt/parameters and click 'Generate' to re-run."
+      ],
+      "verification_points": [
+        "Network tab: Verify GET request to `/history/{id}` and response schema.",
+        "UI: Check that prompt and parameters are accurately populated in the input fields (Aurora's feedback on iterative flow).",
+        "Functionality: Verify re-generation works correctly with the pre-filled data."
+      ]
+    },
+    {
+      "id": "E2E-AI-008",
+      "description": "Delete History Item",
+      "preconditions": "User is on 'History' page (E2E-AI-006 passed).",
+      "steps": [
+        "Click the 'Delete' button on a specific history item.",
+        "Confirm deletion in the modal/dialog (if present)."
+      ],
+      "expected_results": [
+        "Request to `DELETE /api/v1/history/{id}` is sent.",
+        "Backend responds with `status: 'success'` and `message`.",
+        "The deleted item is immediately removed from the history list on the UI.",
+        "A success notification (using `notification_success` style) is briefly displayed."
+      ],
+      "verification_points": [
+        "Network tab: Verify DELETE request and success response.",
+        "UI: Check immediate removal of item from list.",
+        "UI: Verify success message content and styling."
+      ]
+    },
+    {
+      "id": "E2E-AI-009",
+      "description": "Accessibility: Keyboard Navigation for Core Interaction",
+      "preconditions": "User is on 'Main AI Workspace' page.",
+      "steps": [
+        "Use Tab key to navigate through all interactive elements (input field, parameter controls, Generate button, Save, Copy buttons).",
+        "Use Enter/Space to activate buttons."
+      ],
+      "expected_results": [
+        "All interactive elements are focusable in a logical order.",
+        "Clear, visible focus indicators appear on each focused element (matching design system's focus states).",
+        "Buttons activate correctly when Enter/Space is pressed."
+      ],
+      "verification_points": [
+        "UI: Visually inspect focus indicators (Aurora's high severity feedback).",
+        "Functionality: Confirm activation via keyboard."
+      ]
+    },
+    {
+      "id": "E2E-AI-010",
+      "description": "Accessibility: Screen Reader Feedback for Dynamic Content",
+      "preconditions": "User is on 'Main AI Workspace' page, using a screen reader (e.g., NVDA, VoiceOver).",
+      "steps": [
+        "Enter prompt and click 'Generate'.",
+        "Observe screen reader announcements during loading and after receiving output.",
+        "Trigger an error scenario (e.g., E2E-AI-003 or E2E-AI-004)."
+      ],
+      "expected_results": [
+        "Screen reader announces 'Loading...' or 'Processing...' when the spinner appears (via `aria-live` or similar).",
+        "Screen reader announces the generated output when it appears.",
+        "Screen reader announces error messages clearly when they are displayed."
+      ],
+      "verification_points": [
+        "Screen Reader: Listen for appropriate announcements for loading states, generated content, and error messages (Aurora's high severity feedback)."
+      ]
+    }
+  ]
+}

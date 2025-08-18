@@ -1,0 +1,163 @@
+{
+  "wireframes": {
+    "description": "Low-fidelity wireframes focusing on the primary user journey: inputting a request, viewing the AI's response, and managing conversation history.",
+    "screens": [
+      {
+        "name": "AI Interaction Hub",
+        "layout": "Single column, centered content for focus.",
+        "elements": [
+          {
+            "type": "Header",
+            "content": "AI Interaction Hub - Logo Placeholder",
+            "placement": "Top, sticky"
+          },
+          {
+            "type": "Conversation History Panel",
+            "content": "List of past conversation titles/summaries.",
+            "placement": "Left sidebar (collapsible on mobile)",
+            "interaction": "Clicking a history item loads it into the main view."
+          },
+          {
+            "type": "Main Content Area",
+            "content": [
+              {
+                "type": "AI Response Display",
+                "content": "Placeholder for AI-generated text, images, or data. Includes scrollbar if content exceeds height.",
+                "state": "Initially empty or shows welcome message."
+              },
+              {
+                "type": "User Input Area",
+                "content": [
+                  {
+                    "type": "Text Input Field",
+                    "placeholder": "Type your request here..."
+                  },
+                  {
+                    "type": "Submit Button",
+                    "label": "Send"
+                  },
+                  {
+                    "type": "File Upload Button (Optional)",
+                    "label": "Upload File"
+                  }
+                ],
+                "placement": "Bottom of Main Content Area, sticky"
+              }
+            ],
+            "state": "Dynamically updates with AI responses and user inputs."
+          },
+          {
+            "type": "Footer",
+            "content": "© 2023 AI Assistant. All rights reserved.",
+            "placement": "Bottom"
+          }
+        ]
+      },
+      {
+        "name": "Conversation Detail View (within AI Interaction Hub)",
+        "layout": "Main Content Area displays a threaded conversation.",
+        "elements": [
+          {
+            "type": "Conversation Title",
+            "content": "User-provided or AI-generated title for the conversation."
+          },
+          {
+            "type": "Message Thread",
+            "content": "Alternating user prompts and AI responses, timestamped.",
+            "state": "Scrollable vertically."
+          },
+          {
+            "type": "Input Area",
+            "content": [
+              {
+                "type": "Text Input Field",
+                "placeholder": "Continue the conversation..."
+              },
+              {
+                "type": "Submit Button",
+                "label": "Send"
+              }
+            ],
+            "placement": "Bottom of Main Content Area, sticky"
+          }
+        ]
+      }
+    ]
+  },
+  "user_flow_diagram": {
+    "title": "Primary User Journey: AI Interaction",
+    "steps": [
+      {
+        "id": "start",
+        "label": "User arrives at AI Interaction Hub",
+        "type": "Start"
+      },
+      {
+        "id": "view_history",
+        "label": "User views conversation history (optional)",
+        "type": "Decision",
+        "options": [
+          {"label": "Select existing conversation", "next_step": "load_history"},
+          {"label": "Start new conversation", "next_step": "input_request"}
+        ]
+      },
+      {
+        "id": "load_history",
+        "label": "Load selected conversation into Main Content Area",
+        "type": "Process",
+        "next_step": "input_request_in_history"
+      },
+      {
+        "id": "input_request",
+        "label": "User inputs a request in the Input Area",
+        "type": "Process",
+        "next_step": "submit_request"
+      },
+       {
+        "id": "input_request_in_history",
+        "label": "User inputs a follow-up request in the Input Area",
+        "type": "Process",
+        "next_step": "submit_request"
+      },
+      {
+        "id": "submit_request",
+        "label": "User submits the request",
+        "type": "Process",
+        "next_step": "ai_processing_indicator"
+      },
+      {
+        "id": "ai_processing_indicator",
+        "label": "Display AI processing indicator",
+        "type": "Process",
+        "next_step": "receive_ai_response"
+      },
+      {
+        "id": "receive_ai_response",
+        "label": "AI system processes request and returns response",
+        "type": "Process",
+        "next_step": "display_ai_response"
+      },
+      {
+        "id": "display_ai_response",
+        "label": "Display AI response in Main Content Area",
+        "type": "Process",
+        "next_step": "user_decision_after_response"
+      },
+      {
+        "id": "user_decision_after_response",
+        "label": "User reviews response",
+        "type": "Decision",
+        "options": [
+          {"label": "Continue conversation", "next_step": "input_request_in_history"},
+          {"label": "Start new conversation", "next_step": "input_request"},
+          {"label": "End session", "next_step": "end"}
+        ]
+      },
+      {
+        "id": "end",
+        "label": "User leaves the website",
+        "type": "End"
+      }
+    ]
+  }
+}

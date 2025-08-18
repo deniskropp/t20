@@ -1,0 +1,424 @@
+{
+  "technical_specifications": {
+    "global_design_tokens": {
+      "colors": [
+        {
+          "name": "Brand Blue",
+          "variable": "--color-brand-blue",
+          "hex": "#3B82F6",
+          "description": "Primary actions, buttons, active states."
+        },
+        {
+          "name": "Success Green",
+          "variable": "--color-success-green",
+          "hex": "#10B981",
+          "description": "Positive feedback, secondary CTAs."
+        },
+        {
+          "name": "Cloud White",
+          "variable": "--color-cloud-white",
+          "hex": "#FFFFFF",
+          "description": "Primary background for content."
+        },
+        {
+          "name": "Stone Gray",
+          "variable": "--color-stone-gray",
+          "hex": "#D1D5DB",
+          "description": "Borders, dividers, disabled states."
+        },
+        {
+          "name": "Charcoal",
+          "variable": "--color-charcoal",
+          "hex": "#1F2937",
+          "description": "Primary text color."
+        },
+        {
+          "name": "Alarm Red",
+          "variable": "--color-alarm-red",
+          "hex": "#B91C1C",
+          "description": "Error messages, critical alerts."
+        },
+        {
+          "name": "Pale Gray",
+          "variable": "--color-pale-gray",
+          "hex": "#F3F4F6",
+          "description": "Overall page background."
+        },
+        {
+          "name": "Muted Gray",
+          "variable": "--color-muted-gray",
+          "hex": "#6B7280",
+          "description": "Secondary text color, placeholders."
+        },
+        {
+          "name": "Disabled Gray",
+          "variable": "--color-disabled-gray",
+          "hex": "#E5E7EB",
+          "description": "Background for disabled input fields."
+        }
+      ],
+      "typography": {
+        "font_family": "--font-family-primary: 'Inter', sans-serif;",
+        "font_weights": {
+          "regular": "--font-weight-regular: 400;",
+          "medium": "--font-weight-medium: 500;",
+          "semibold": "--font-weight-semibold: 600;"
+        },
+        "font_sizes": [
+          {
+            "name": "h1",
+            "variable": "--font-size-h1",
+            "value": "32px",
+            "lineHeight": "40px",
+            "weight": "var(--font-weight-semibold)"
+          },
+          {
+            "name": "h2",
+            "variable": "--font-size-h2",
+            "value": "24px",
+            "lineHeight": "32px",
+            "weight": "var(--font-weight-semibold)"
+          },
+          {
+            "name": "body_large",
+            "variable": "--font-size-body-large",
+            "value": "18px",
+            "lineHeight": "28px",
+            "weight": "var(--font-weight-regular)"
+          },
+          {
+            "name": "body_default",
+            "variable": "--font-size-body-default",
+            "value": "16px",
+            "lineHeight": "24px",
+            "weight": "var(--font-weight-regular)"
+          },
+          {
+            "name": "body_small",
+            "variable": "--font-size-body-small",
+            "value": "14px",
+            "lineHeight": "20px",
+            "weight": "var(--font-weight-regular)"
+          },
+          {
+            "name": "button_text",
+            "variable": "--font-size-button-text",
+            "value": "16px",
+            "lineHeight": "24px",
+            "weight": "var(--font-weight-semibold)"
+          },
+          {
+            "name": "label",
+            "variable": "--font-size-label",
+            "value": "14px",
+            "lineHeight": "20px",
+            "weight": "var(--font-weight-medium)"
+          }
+        ]
+      },
+      "global_background": "body { background-color: var(--color-pale-gray); }"
+    },
+    "component_specifications": [
+      {
+        "component_name": "Header",
+        "html_structure": "<header>",
+        "styles": {
+          "backgroundColor": "var(--color-cloud-white)",
+          "textColor": "var(--color-charcoal)",
+          "fontSize": "var(--font-size-h2)",
+          "fontWeight": "var(--font-weight-semibold)",
+          "padding": "16px 24px",
+          "borderBottom": "1px solid var(--color-disabled-gray)"
+        },
+        "accessibility": {
+          "semantic_html": "Use <header> tag.",
+          "logo_alt_text": "AI Assistant Logo"
+        }
+      },
+      {
+        "component_name": "Textarea (User Input & Context)",
+        "id_prefix": "user_input_textarea",
+        "html_structure": "<textarea id='user_input_textarea' aria-label='User input field for AI prompts'></textarea>",
+        "states": [
+          {
+            "state": "default",
+            "styles": {
+              "backgroundColor": "var(--color-cloud-white)",
+              "borderColor": "var(--color-stone-gray)",
+              "textColor": "var(--color-charcoal)",
+              "fontSize": "var(--font-size-body-default)",
+              "borderRadius": "8px",
+              "padding": "12px 16px",
+              "height": "150px",
+              "placeholderColor": "var(--color-muted-gray)",
+              "focusOutline": "2px solid var(--color-brand-blue)"
+            }
+          },
+          {
+            "state": "disabled",
+            "styles": {
+              "backgroundColor": "var(--color-disabled-gray)",
+              "borderColor": "var(--color-stone-gray)",
+              "textColor": "var(--color-charcoal)",
+              "fontSize": "var(--font-size-body-default)",
+              "borderRadius": "8px",
+              "padding": "12px 16px",
+              "height": "150px",
+              "opacity": "0.7",
+              "cursor": "not-allowed"
+            }
+          }
+        ],
+        "accessibility": {
+          "aria_label": "Mandatory 'aria-label' attribute based on context (e.g., 'User input field for AI prompts', 'User input field, displayed for context').",
+          "keyboard_nav": "Tab-focusable."
+        }
+      },
+      {
+        "component_name": "Button",
+        "html_structure": "<button>",
+        "variants": [
+          {
+            "type": "default (e.g., Generate, Try Again)",
+            "styles": {
+              "backgroundColor": "var(--color-brand-blue)",
+              "textColor": "var(--color-cloud-white)",
+              "fontSize": "var(--font-size-button-text)",
+              "fontWeight": "var(--font-weight-semibold)",
+              "borderRadius": "8px",
+              "padding": "12px 24px",
+              "hoverBackgroundColor": "#2563EB",
+              "focusOutline": "2px solid var(--color-brand-blue)",
+              "cursor": "pointer"
+            }
+          },
+          {
+            "type": "secondary (e.g., New Request, Refine Prompt on Error)",
+            "styles": {
+              "backgroundColor": "var(--color-pale-gray)",
+              "textColor": "var(--color-charcoal)",
+              "fontSize": "var(--font-size-body-small)",
+              "fontWeight": "var(--font-weight-medium)",
+              "borderRadius": "6px",
+              "padding": "10px 20px",
+              "hoverBackgroundColor": "var(--color-disabled-gray)",
+              "focusOutline": "2px solid var(--color-stone-gray)",
+              "cursor": "pointer"
+            }
+          },
+          {
+            "type": "success (e.g., Refine Prompt)",
+            "styles": {
+              "backgroundColor": "var(--color-success-green)",
+              "textColor": "var(--color-cloud-white)",
+              "fontSize": "var(--font-size-body-small)",
+              "fontWeight": "var(--font-weight-medium)",
+              "borderRadius": "6px",
+              "padding": "10px 20px",
+              "hoverBackgroundColor": "#059669",
+              "focusOutline": "2px solid var(--color-success-green)",
+              "cursor": "pointer"
+            }
+          }
+        ],
+        "accessibility": {
+          "aria_label": "Mandatory 'aria-label' attribute for clarity (e.g., 'Submit prompt to the AI assistant', 'Button to refine the previous prompt').",
+          "keyboard_nav": "Tab-focusable, operable with Enter/Space.",
+          "semantic_html": "Use <button> tag."
+        }
+      },
+      {
+        "component_name": "Output Display",
+        "id_prefix": "ai_output_display",
+        "html_structure": "<div id='ai_output_display' aria-label='Display area for the AI's generated response'></div>",
+        "styles": {
+          "backgroundColor": "var(--color-cloud-white)",
+          "borderColor": "var(--color-stone-gray)",
+          "textColor": "var(--color-charcoal)",
+          "fontSize": "var(--font-size-body-default)",
+          "borderRadius": "8px",
+          "padding": "16px",
+          "minHeight": "200px",
+          "lineHeight": "1.6"
+        },
+        "accessibility": {
+          "aria_label": "Mandatory 'aria-label' (e.g., 'Display area for the AI's generated response').",
+          "role_attribute": "Consider 'role=\"region\"' or 'role=\"status\"' if content updates dynamically and needs to be announced by screen readers."
+        }
+      },
+      {
+        "component_name": "Visual Indicator (AI Processing)",
+        "id_prefix": "processing_indicator",
+        "html_structure": "<span id='processing_indicator' aria-label='Visual indicator showing AI is processing the request'>AI is thinking...</span>",
+        "styles": {
+          "color": "var(--color-brand-blue)",
+          "fontSize": "var(--font-size-body-large)",
+          "fontWeight": "var(--font-weight-medium)",
+          "marginTop": "20px",
+          "marginBottom": "8px",
+          "animation": "blink 1.4s infinite both",
+          "animationDelay": "-0.32s"
+        },
+        "animation_details": "@keyframes blink { 0%, 100% { opacity: 0; } 50% { opacity: 1; } } (or similar animated dots/spinner)",
+        "accessibility": {
+          "aria_label": "Mandatory 'aria-label' (e.g., 'Visual indicator showing AI is processing the request').",
+          "aria_live": "Consider 'aria-live=\"polite\"' for status messages that update dynamically."
+        }
+      },
+      {
+        "component_name": "Status Message (AI Processing)",
+        "id_prefix": "processing_message",
+        "html_structure": "<p id='processing_message' aria-label='Status message indicating AI processing progress'>Analyzing your request...</p>",
+        "styles": {
+          "color": "var(--color-muted-gray)",
+          "fontSize": "var(--font-size-body-small)",
+          "textAlign": "center"
+        },
+        "accessibility": {
+          "aria_label": "Mandatory 'aria-label' (e.g., 'Status message indicating AI processing progress').",
+          "aria_live": "Consider 'aria-live=\"polite\"' for dynamic updates."
+        }
+      },
+      {
+        "component_name": "Alert Message (Error)",
+        "id_prefix": "error_message",
+        "html_structure": "<div id='error_message' role='alert' aria-live='assertive' aria-label='Error message indicating a problem with the AI request'></div>",
+        "styles": {
+          "backgroundColor": "#FEF2F2",
+          "borderColor": "#FEE2E2",
+          "textColor": "var(--color-alarm-red)",
+          "fontSize": "var(--font-size-body-small)",
+          "borderRadius": "6px",
+          "padding": "12px 16px",
+          "marginTop": "20px",
+          "marginBottom": "8px",
+          "borderWidth": "1px"
+        },
+        "accessibility": {
+          "aria_label": "Mandatory 'aria-label' (e.g., 'Error message indicating a problem with the AI request').",
+          "role_attribute": "'role=\"alert\"' and 'aria-live=\"assertive\"' for immediate screen reader announcement.",
+          "icon": "Consider adding a visual error icon for additional clarity."
+        }
+      }
+    ],
+    "accessibility_guidelines": [
+      "WCAG 2.1 AA Compliance: Ensure all elements meet or exceed WCAG 2.1 AA guidelines.",
+      "Color Contrast: Verify sufficient contrast ratios for all text and interactive elements (min 4.5:1 for small text, 3:1 for large text/graphics).",
+      "Keyboard Navigation: All interactive elements (buttons, text areas) must be focusable via Tab key and operable with Enter/Space.",
+      "Focus Indicators: Provide clear and visible focus indicators for all interactive elements.",
+      "Screen Reader Support: Utilize semantic HTML5 elements and appropriate ARIA attributes (e.g., 'aria-label', 'aria-live', 'role') to convey meaning and state to screen readers.",
+      "Semantic HTML: Use HTML5 semantic tags (e.g., '<header>', '<main>', '<button>', '<textarea>') to structure content meaningfully."
+    ],
+    "responsiveness_guidelines": [
+      "Fluid Layouts: Design and implement components to adapt gracefully to various screen widths, rather than relying solely on fixed breakpoints.",
+      "Mobile-First Approach: Prioritize layout and functionality for smaller screens first, then progressively enhance for larger viewports.",
+      "Flexible Units: Use relative units (e.g., 'rem', 'em', '%', 'vw', 'vh') where appropriate for sizing and spacing.",
+      "Image Optimization: Ensure images are responsive and optimized for performance."
+    ]
+  },
+  "user_stories": [
+    {
+      "id": "us_001",
+      "story": "As a user, I want to clearly see an input field so that I can easily type my prompt to the AI.",
+      "acceptance_criteria": [
+        "The input field is a large textarea.",
+        "It has a clear placeholder text 'Ask me anything...'.",
+        "It is visually distinct and easy to locate."
+      ]
+    },
+    {
+      "id": "us_002",
+      "story": "As a user, I want a prominent 'Generate' button so that I can submit my prompt to the AI.",
+      "acceptance_criteria": [
+        "The button is labeled 'Generate'.",
+        "It is styled according to the primary button variant in the UI kit.",
+        "It is easily clickable and has clear hover/focus states."
+      ]
+    },
+    {
+      "id": "us_003",
+      "story": "As a user, when the AI is processing, I want to see a visual indicator and status message so that I know the system is actively working on my request.",
+      "acceptance_criteria": [
+        "A 'AI is thinking...' message with animated dots is displayed.",
+        "A supporting 'Analyzing your request...' message is visible.",
+        "The input field becomes disabled and visually subdued during processing."
+      ]
+    },
+    {
+      "id": "us_004",
+      "story": "As a user, I want the AI's response to be clearly displayed in a dedicated area so that I can easily read and understand the output.",
+      "acceptance_criteria": [
+        "The AI response is shown in a distinct output display area.",
+        "The text is formatted for readability (e.g., good line height, appropriate font size).",
+        "The previous prompt is visible (but disabled) for context."
+      ]
+    },
+    {
+      "id": "us_005",
+      "story": "As a user, I want options to 'Refine Prompt' or 'New Request' after receiving an AI response so that I can continue my interaction or start fresh.",
+      "acceptance_criteria": [
+        "A 'Refine Prompt' button (success variant) is available.",
+        "A 'New Request' button (secondary variant) is available.",
+        "Both buttons are clearly labeled and functional."
+      ]
+    },
+    {
+      "id": "us_006",
+      "story": "As a user, if an error occurs, I want a clear error message and options to 'Try Again' or 'Refine Prompt' so that I can understand the issue and recover.",
+      "acceptance_criteria": [
+        "An alert message (error variant) is displayed, explaining the error.",
+        "A 'Try Again' button (default variant) is available to re-submit the original prompt.",
+        "A 'Refine Prompt' button (secondary variant) is available to modify the prompt.",
+        "The previous prompt is visible (but disabled) for context."
+      ]
+    },
+    {
+      "id": "us_007",
+      "story": "As a user, I expect the website to be accessible so that I can use it effectively regardless of my abilities.",
+      "acceptance_criteria": [
+        "All interactive elements are navigable via keyboard.",
+        "Content is readable by screen readers (semantic HTML, ARIA attributes).",
+        "Color contrast ratios meet WCAG 2.1 AA standards.",
+        "Focus indicators are clear for keyboard users."
+      ]
+    },
+    {
+      "id": "us_008",
+      "story": "As a user, I expect the website to work well on different screen sizes (e.g., mobile, tablet, desktop) so that I can use it on any device.",
+      "acceptance_criteria": [
+        "Layouts adjust gracefully to smaller and larger screens.",
+        "Text and components remain legible and usable across devices."
+      ]
+    }
+  ],
+  "kodax_system_prompt": {
+    "role": "You are Kodax, a highly skilled Frontend Engineer. Your primary responsibility is to translate high-fidelity UI/UX designs into robust, performant, and accessible web application code.",
+    "context": "We have completed the design phase for the AI system frontend. Aurora has provided comprehensive high-fidelity mockups and a detailed UI kit. Your task is to set up the foundational frontend architecture and implement all static UI components based on these designs and the provided technical specifications.",
+    "objective": "Develop the static frontend UI for the AI assistant application. This includes establishing the project structure, creating reusable components, and ensuring full responsiveness and adherence to accessibility standards.",
+    "inputs_provided": [
+      "High-fidelity mockups (JSON format)",
+      "UI Kit (JSON format, includes color palette, typography, component styles)",
+      "Detailed Technical Specifications (provided as part of this prompt, including global design tokens and component-specific details)",
+      "User Stories (provided as part of this prompt, to guide functional implementation and testing)"
+    ],
+    "deliverables": [
+      "**Initialized Frontend Project:** A well-structured, maintainable, and scalable project architecture (e.g., using a modern build tool like Vite/Webpack, clear component directory structure).",
+      "**Implemented UI Components:** All components from the high-fidelity mockups (Header, Input Text Area, Buttons, AI Output Display, Processing Indicator, Error Alert) implemented as reusable, modular code.",
+      "**Global Styles:** CSS variables for color palette and typography implemented consistently across the application.",
+      "**Responsive Design:** The application UI must adapt gracefully to various screen sizes (mobile, tablet, desktop) ensuring optimal user experience on all devices.",
+      "**Accessibility Compliance:** All implemented components and pages must adhere to WCAG 2.1 AA standards, including keyboard navigation, sufficient color contrast, semantic HTML, and appropriate ARIA attributes.",
+      "**Clean & Performant Code:** Write clean, well-commented, and optimized code that follows best practices for maintainability and performance."
+    ],
+    "technical_guidelines": [
+      "**Component-Based Architecture:** Structure the frontend as reusable components where appropriate (e.g., a Button component, a TextArea component, an Alert component).",
+      "**Design Fidelity:** Implement the UI pixel-perfectly based on the provided mockups and UI Kit. Pay close attention to spacing, sizing, colors, typography, and visual states.",
+      "**CSS Variables/Design Tokens:** Utilize CSS custom properties (variables) for all colors, typography values, and common spacing/sizing defined in the 'global_design_tokens' section of the technical specifications.",
+      "**Semantic HTML5:** Use appropriate HTML5 semantic elements (e.g., '<header>', '<main>', '<button>', '<textarea>') to ensure structural meaning and aid accessibility.",
+      "**Accessibility (A11y):** Proactively integrate accessibility features as detailed in the 'accessibility_guidelines' section. This includes correct 'aria-label' attributes for interactive elements and status messages, proper focus management, and keyboard operability.",
+      "**Animations:** Implement the 'AI thinking' visual indicator with a smooth, non-distracting animation (e.g., animated dots or a spinner) as specified.",
+      "**State Management:** Implement basic UI state management for component states (e.g., disabled input field during processing, active/hover states for buttons).",
+      "**Cross-Browser Compatibility:** Ensure the implemented UI functions correctly across modern web browsers."
+    ],
+    "next_steps_context": "Upon completion of this phase, the next step will involve integrating these static UI components with the backend AI system via API calls. Your current focus is purely on the robust and accurate implementation of the user interface."
+  }
+}

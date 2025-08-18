@@ -1,0 +1,910 @@
+The overall goal is: 'Create a website that is a frontend to an AI system like this.'
+
+Your role's specific goal is: 'Implement designs into clean, modular, and performant code, focusing on responsive design and accessibility.'
+Your specific sub-task is: 'Translate the high-fidelity mockups into responsive, accessible, and modular UI components using clean code.'
+
+The team's roles are:
+    {'roles': [{'title': 'Designer', 'description': 'Generate aesthetic layouts, color palettes, typography, and UI flows, ensuring accessibility and visual balance.'}, {'title': 'Engineer', 'description': 'Implement designs into clean, modular, and performant code, focusing on responsive design and accessibility.'}, {'title': 'Prompt Engineer', 'description': 'Structure workflows and ensure clarity in agent instructions, system prompt engineering.'}, {'title': 'Task-Agnostic Step (TAS) extractor (flash)', 'description': "Identify and return each 'Task Agnostic Step' (TAS) towards the high-level goal."}], 'steps': [{'name': 'Lyra', 'role': 'Prompt Engineer', 'task': "Define the website's core purpose, target audience, and key user interactions with the AI system to establish a clear project scope."}, {'name': 'uTASe', 'role': 'Task-Agnostic Step (TAS) extractor (flash)', 'task': 'Analyze the project scope to extract a comprehensive list of Task-Agnostic Steps required for creating the AI frontend.'}, {'name': 'Aurora', 'role': 'Designer', 'task': 'Create low-fidelity wireframes and user flow diagrams based on the defined scope, focusing on intuitive navigation and interaction layout.'}, {'name': 'Aurora', 'role': 'Designer', 'task': 'Develop a high-fidelity design system, including color palettes, typography, and interactive UI mockups for all website components.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Set up the frontend development environment, including the project structure, framework, and necessary build tools.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Translate the high-fidelity mockups into responsive, accessible, and modular UI components using clean code.'}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': 'Design the API contract and prompt structures for frontend-to-AI communication, defining how requests are made and responses are handled.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': "Implement the logic to connect the frontend to the AI system's API, managing application state (e.g., loading, data, errors) effectively."}, {'name': 'Aurora', 'role': 'Designer', 'task': 'Conduct a design review of the implemented frontend to ensure it aligns with the mockups and provides a high-quality user experience.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Perform final testing, including cross-browser compatibility checks, performance optimization, and bug fixing based on team feedback.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Deploy the completed and tested website to a production server, ensuring it is live and accessible to users.'}]}
+
+Please use the following outputs from the other agents as your input:
+
+Artifact from step_0_Lyra_result.txt (Prompt Engineer):
+{
+  "project_scope": {
+    "core_purpose": "To serve as an intuitive and accessible web-based interface for users to interact with a sophisticated AI system, enabling them to leverage AI capabilities for various tasks without requiring deep technical knowledge. The website aims to simplify complex AI interactions into a user-friendly experience.",
+    "target_audience": "Individuals and professionals seeking to leverage advanced AI capabilities for tasks such as content creation, information retrieval, problem-solving, or creative endeavors. Users are expected to have basic computer literacy but not necessarily technical expertise in AI or programming. They value ease of use, efficiency, and accurate AI responses.",
+    "key_user_interactions": [
+      {
+        "interaction_type": "Input Submission",
+        "details": "Users will primarily submit text-based prompts to the AI system. Future considerations may include support for file uploads (e.g., images for analysis, documents for summarization) if the underlying AI system supports such modalities."
+      },
+      {
+        "interaction_type": "AI Response Display",
+        "details": "The website will clearly and immediately display AI-generated outputs, which may include text, images, or structured data, depending on the AI's capabilities. Users should have options to copy, download, or share these outputs."
+      },
+      {
+        "interaction_type": "Iterative Interaction & Refinement",
+        "details": "Users will be able to engage in conversational or iterative interactions, providing follow-up prompts or modifying previous inputs to refine AI responses. A feedback mechanism (e.g., 'like'/'dislike' buttons) for AI outputs will be included to gather user satisfaction data."
+      },
+      {
+        "interaction_type": "Session Management & History",
+        "details": "The system will allow users to view their past interactions and conversation history, and easily start new interactions. User accounts will enable personalized experiences, persistent history, and preference management."
+      }
+    ]
+  }
+}
+
+---
+
+Artifact from step_1_uTASe_result.txt (Task-Agnostic Step (TAS) extractor (flash)):
+[
+  {
+    "id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+    "name": "Define Project Scope",
+    "description": "Establish the fundamental purpose, target audience, and primary user interactions for the AI frontend. This involves understanding what the website aims to achieve, who it serves, and the core ways users will engage with the AI system.",
+    "category": "Init",
+    "purpose": "To lay the groundwork for the AI frontend by defining its core objectives and user interaction paradigms.",
+    "keywords": [
+      "scope definition",
+      "project goals",
+      "target audience",
+      "user interaction"
+    ],
+    "applicability_notes": "This step is crucial for any project requiring a clear understanding of its objectives and user base before proceeding with design or development. It ensures alignment across all team members.",
+    "examples_of_usage": [
+      "Defining the purpose of a customer support chatbot.",
+      "Identifying the target users for a new productivity app.",
+      "Outlining the key features of an e-commerce platform."
+    ],
+    "typical_inputs": [
+      "High-level project idea",
+      "Business requirements"
+    ],
+    "typical_outputs": [
+      "Project scope document",
+      "User personas",
+      "Key interaction flows"
+    ]
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+    "name": "Design User Interface",
+    "description": "Create the visual and interactive elements of the website, translating the defined user interactions into an intuitive and aesthetically pleasing interface. This includes wireframing, visual design, and creating a design system.",
+    "category": "Design",
+    "purpose": "To craft a user-friendly and visually appealing interface for interacting with the AI system.",
+    "keywords": [
+      "UI design",
+      "UX design",
+      "wireframing",
+      "mockups",
+      "design system"
+    ],
+    "applicability_notes": "Applicable whenever a digital product needs a user-facing interface. The fidelity and complexity of the design will vary based on project requirements.",
+    "examples_of_usage": [
+      "Designing the layout for a mobile application.",
+      "Creating mockups for a SaaS platform dashboard.",
+      "Developing a style guide for a web portal."
+    ],
+    "typical_inputs": [
+      "Defined project scope",
+      "User personas",
+      "Key interaction flows"
+    ],
+    "typical_outputs": [
+      "Wireframes",
+      "High-fidelity mockups",
+      "Interactive prototypes",
+      "Design system components"
+    ]
+  },
+  {
+    "id": "b2c3d4e5-f6a7-8901-2345-67890abcdef0",
+    "name": "Set Up Development Environment",
+    "description": "Configure the necessary tools, frameworks, and project structure for frontend development. This ensures a consistent and efficient development workflow.",
+    "category": "Setup",
+    "purpose": "To prepare the technical foundation for building the AI frontend.",
+    "keywords": [
+      "environment setup",
+      "development tools",
+      "project structure",
+      "framework configuration"
+    ],
+    "applicability_notes": "Essential for any software development project to establish a working environment. The specific tools will depend on the chosen technology stack.",
+    "examples_of_usage": [
+      "Setting up a Node.js project with Express.",
+      "Configuring a React development environment.",
+      "Initializing a Python project with Flask."
+    ],
+    "typical_inputs": [
+      "Chosen technology stack",
+      "Project requirements"
+    ],
+    "typical_outputs": [
+      "Configured development environment",
+      "Project boilerplate",
+      "Build tools"
+    ]
+  },
+  {
+    "id": "c3d4e5f6-a7b8-9012-3456-7890abcdef01",
+    "name": "Implement User Interface",
+    "description": "Translate the approved UI designs and mockups into functional, responsive, and accessible frontend code. This involves building reusable UI components and ensuring they match the design specifications.",
+    "category": "Development",
+    "purpose": "To build the interactive frontend of the website based on design specifications.",
+    "keywords": [
+      "frontend development",
+      "UI implementation",
+      "component development",
+      "responsive design",
+      "accessibility"
+    ],
+    "applicability_notes": "This is a core development task for any project involving a user interface. It requires translating design assets into working code.",
+    "examples_of_usage": [
+      "Coding a React component library.",
+      "Implementing a Vue.js application based on Figma designs.",
+      "Building a static HTML/CSS website from mockups."
+    ],
+    "typical_inputs": [
+      "High-fidelity mockups",
+      "Design system",
+      "Frontend framework documentation"
+    ],
+    "typical_outputs": [
+      "Functional UI components",
+      "Responsive website layout",
+      "Accessible frontend code"
+    ]
+  },
+  {
+    "id": "d4e5f6a7-b8c9-0123-4567-890abcdef012",
+    "name": "Define AI Communication Contract",
+    "description": "Specify the structure and format of data exchanged between the frontend and the AI system. This includes defining API endpoints, request/response payloads, and prompt engineering strategies for effective AI interaction.",
+    "category": "Integration",
+    "purpose": "To establish a clear and efficient communication protocol between the frontend and the AI backend.",
+    "keywords": [
+      "API design",
+      "data contract",
+      "prompt engineering",
+      "frontend-backend integration"
+    ],
+    "applicability_notes": "Crucial for any system where a frontend needs to interact with a backend service, especially AI systems where prompt structure significantly impacts output quality.",
+    "examples_of_usage": [
+      "Defining the JSON schema for an API request to a recommendation engine.",
+      "Specifying the parameters for a natural language processing API call.",
+      "Outlining the format for chatbot messages."
+    ],
+    "typical_inputs": [
+      "AI system capabilities",
+      "Frontend interaction requirements",
+      "Prompt engineering guidelines"
+    ],
+    "typical_outputs": [
+      "API specification",
+      "Data models",
+      "Prompt templates"
+    ]
+  },
+  {
+    "id": "e5f6a7b8-c9d0-1234-5678-90abcdef0123",
+    "name": "Integrate Frontend with AI System",
+    "description": "Implement the logic within the frontend to send requests to the AI system's API and handle the responses. This involves managing application state, such as loading indicators, data display, and error handling.",
+    "category": "Integration",
+    "purpose": "To connect the user interface to the AI capabilities, enabling interaction.",
+    "keywords": [
+      "API integration",
+      "state management",
+      "data handling",
+      "AI interaction"
+    ],
+    "applicability_notes": "Essential for creating dynamic web applications that rely on external services or APIs. Proper state management is key to a smooth user experience.",
+    "examples_of_usage": [
+      "Fetching data from a REST API and displaying it in a list.",
+      "Handling user input and sending it to a backend service for processing.",
+      "Implementing real-time updates from a WebSocket connection."
+    ],
+    "typical_inputs": [
+      "API specification",
+      "Frontend UI components",
+      "State management patterns"
+    ],
+    "typical_outputs": [
+      "Connected frontend application",
+      "Managed application state",
+      "AI-generated content displayed"
+    ]
+  },
+  {
+    "id": "f6a7b8c9-d0e1-2345-6789-0abcdef01234",
+    "name": "Conduct Design Review",
+    "description": "Evaluate the implemented frontend against the original design mockups and user experience goals. This step ensures visual consistency, adherence to the design system, and overall usability.",
+    "category": "Validation",
+    "purpose": "To ensure the implemented frontend accurately reflects the intended design and user experience.",
+    "keywords": [
+      "design review",
+      "UI/UX audit",
+      "quality assurance",
+      "usability testing"
+    ],
+    "applicability_notes": "A critical quality check in any design and development process to catch discrepancies and ensure user satisfaction.",
+    "examples_of_usage": [
+      "Reviewing a mobile app's UI against its design specifications.",
+      "Conducting a usability test on a new website feature.",
+      "Performing a visual regression test on a web application."
+    ],
+    "typical_inputs": [
+      "Implemented frontend",
+      "High-fidelity mockups",
+      "Design system documentation"
+    ],
+    "typical_outputs": [
+      "Feedback report",
+      "List of design issues",
+      "Approved UI implementation"
+    ]
+  },
+  {
+    "id": "a7b8c9d0-e1f2-3456-7890-abcdef012345",
+    "name": "Perform Final Testing",
+    "description": "Conduct comprehensive testing of the integrated frontend application. This includes functional testing, cross-browser compatibility, performance optimization, and bug fixing to ensure a stable and high-quality product.",
+    "category": "Testing",
+    "purpose": "To verify the functionality, performance, and stability of the AI frontend before deployment.",
+    "keywords": [
+      "testing",
+      "quality assurance",
+      "bug fixing",
+      "performance optimization",
+      "cross-browser compatibility"
+    ],
+    "applicability_notes": "A universal step in software development to ensure the product meets quality standards and functions correctly across various environments.",
+    "examples_of_usage": [
+      "Testing a web application on different browsers and devices.",
+      "Conducting load testing on a backend service.",
+      "Performing unit tests on individual code modules."
+    ],
+    "typical_inputs": [
+      "Integrated frontend application",
+      "Test cases",
+      "User feedback"
+    ],
+    "typical_outputs": [
+      "Tested application",
+      "Bug reports",
+      "Performance metrics",
+      "Release candidate"
+    ]
+  },
+  {
+    "id": "b8c9d0e1-f2a3-4567-8901-bcdef0123456",
+    "name": "Deploy Application",
+    "description": "Release the completed and tested AI frontend to a live environment, making it accessible to the target audience. This involves configuring servers, deploying code, and ensuring the application is operational.",
+    "category": "Deployment",
+    "purpose": "To make the AI frontend publicly available and operational.",
+    "keywords": [
+      "deployment",
+      "release",
+      "hosting",
+      "server configuration",
+      "going live"
+    ],
+    "applicability_notes": "The final stage of bringing a software product to users. The specifics of deployment vary greatly depending on the hosting environment and chosen architecture.",
+    "examples_of_usage": [
+      "Deploying a website to a cloud hosting provider.",
+      "Releasing a mobile application to an app store.",
+      "Setting up a continuous deployment pipeline."
+    ],
+    "typical_inputs": [
+      "Tested application build",
+      "Deployment environment configuration",
+      "Deployment strategy"
+    ],
+    "typical_outputs": [
+      "Live application",
+      "Deployment logs",
+      "Monitoring setup"
+    ]
+  }
+]
+
+---
+
+Artifact from step_2_Aurora_result.txt (Designer):
+{
+  "design_process_plan": [
+    {
+      "step": 1,
+      "task": "Understand Project Scope",
+      "description": "Review the provided project scope from the Prompt Engineer to grasp the core purpose, target audience, and key user interactions with the AI system. This foundational understanding will guide all subsequent design decisions.",
+      "deliverable": "Mental model of project requirements."
+    },
+    {
+      "step": 2,
+      "task": "Identify Key User Flows",
+      "description": "Based on the 'key_user_interactions' defined in the project scope, map out the primary user journeys. This includes flows for submitting prompts, viewing responses, iterative refinement, and accessing history/sessions.",
+      "deliverable": "User flow diagrams for core interactions."
+    },
+    {
+      "step": 3,
+      "task": "Develop Low-Fidelity Wireframes",
+      "description": "Create simple, black-and-white wireframes for key screens identified in the user flows. Focus on layout, content hierarchy, and placement of interactive elements. Ensure intuitive navigation and clear interaction points.",
+      "deliverable": "Low-fidelity wireframes for main pages/views."
+    },
+    {
+      "step": 4,
+      "task": "Define Information Architecture",
+      "description": "Organize content and features logically. This involves structuring navigation and ensuring users can easily find what they need.",
+      "deliverable": "Sitemap or navigation structure overview."
+    },
+    {
+      "step": 5,
+      "task": "Establish Design Principles & Aesthetics",
+      "description": "Define the visual direction, considering a 'clean aesthetic' and 'minimally natural design'. This includes initial thoughts on color, typography, and overall mood. Accessibility will be a core consideration from this stage.",
+      "deliverable": "Initial design principles and aesthetic direction."
+    }
+  ],
+  "user_flow_diagrams": {
+    "title": "Core User Flows for AI Interaction Website",
+    "description": "These diagrams illustrate the primary paths users will take to interact with the AI system. They prioritize intuitive navigation and efficient task completion.",
+    "flows": [
+      {
+        "name": "Submit Prompt and Receive Response",
+        "steps": [
+          {"action": "User lands on Homepage/Interaction Page"},
+          {"action": "User types prompt into input field"},
+          {"action": "User clicks 'Submit' or presses Enter"},
+          {"action": "System displays loading indicator"},
+          {"action": "AI processes request"},
+          {"action": "AI returns response"},
+          {"action": "Response is displayed clearly to the user"},
+          {"action": "User can copy/download/share response"}
+        ]
+      },
+      {
+        "name": "Iterative Refinement",
+        "steps": [
+          {"action": "User views previous AI response"},
+          {"action": "User types follow-up prompt in a dedicated area or via the main input"},
+          {"action": "User submits follow-up prompt"},
+          {"action": "System displays loading indicator"},
+          {"action": "AI processes refined request"},
+          {"action": "New response is displayed, potentially alongside or replacing the old one"},
+          {"action": "User provides feedback (e.g., like/dislike)"}
+        ]
+      },
+      {
+        "name": "Access Interaction History",
+        "steps": [
+          {"action": "User clicks 'History' or 'Past Interactions' in navigation"},
+          {"action": "User views a list of past sessions/prompts"},
+          {"action": "User clicks on a specific past interaction"},
+          {"action": "User views the full prompt and AI response"},
+          {"action": "User can choose to continue the conversation or copy the response"}
+        ]
+      },
+      {
+        "name": "Start New Interaction",
+        "steps": [
+          {"action": "User clicks 'New Interaction' or similar button"},
+          {"action": "Interface clears or resets to the primary input area"},
+          {"action": "User begins typing a new prompt"}
+        ]
+      }
+    ]
+  },
+  "low_fidelity_wireframes": {
+    "title": "Low-Fidelity Wireframes: AI Interaction Frontend",
+    "description": "These wireframes focus on structure and layout, prioritizing clarity and ease of use for interacting with the AI system. Accessibility considerations are embedded in the layout choices (e.g., clear focus states, logical tab order).",
+    "screens": [
+      {
+        "screen_name": "Homepage / Interaction Hub",
+        "layout_elements": [
+          {"element": "Header", "description": "Logo, Navigation (History, Account/Settings)"},
+          {"element": "Main Content Area", "description": "Large, prominent text input field for prompts. Clear call-to-action button (e.g., 'Generate', 'Ask AI')."},
+          {"element": "Response Display Area", "description": "Placeholder for AI output, initially empty or showing a welcome message/guidance. Includes options to copy/download."},
+          {"element": "Sidebar (Optional)", "description": "Could display recent history, suggested prompts, or user settings."},
+          {"element": "Footer", "description": "Copyright, links to privacy/terms."}
+        ],
+        "notes": "Emphasis on the primary interaction: typing and receiving. Clean, uncluttered interface."
+      },
+      {
+        "screen_name": "Interaction History",
+        "layout_elements": [
+          {"element": "Header", "description": "Logo, Navigation"},
+          {"element": "Content Area", "description": "List of past interactions. Each item shows a snippet of the prompt and potentially the start of the response. Includes date/time. Search/filter functionality."},
+          {"element": "Interaction Detail View (Modal or Separate Page)", "description": "Displays full prompt, full response, feedback options (like/dislike), options to copy/share, and potentially a 'Continue Conversation' button."}
+        ],
+        "notes": "Facilitates easy review and retrieval of past AI outputs. Clear visual distinction between list items."
+      },
+      {
+        "screen_name": "Settings/Account (Basic)",
+        "layout_elements": [
+          {"element": "Header", "description": "Logo, Navigation"},
+          {"element": "Content Area", "description": "User profile information (if applicable), preference settings (e.g., theme, notification settings), logout button."}
+        ],
+        "notes": "Minimalist design, focusing on essential user controls."
+      }
+    ]
+  },
+  "design_principles": {
+    "aesthetics": "Clean, minimally natural. Focus on clarity, spaciousness, and a calming user experience. Avoid visual clutter.",
+    "typography": {
+      "primary_font": "A sans-serif typeface that balances readability and modern aesthetics (e.g., Inter, Nunito Sans, Work Sans).",
+      "hierarchy": "Clear distinction between headings, body text, and interactive elements through font size, weight, and color.",
+      "accessibility": "Ensure sufficient contrast ratios and legible font sizes across different screen resolutions."
+    },
+    "color_palette": {
+      "primary": "#FFFFFF",
+      "secondary": "#F0F0F0",
+      "accent": "#4A90E2",
+      "text_primary": "#333333",
+      "text_secondary": "#666666",
+      "notes": "A light, airy palette with a clear accent color for calls to action. Focus on high contrast for text."
+    },
+    "navigation": "Intuitive and consistent. Key actions should be readily accessible. Use clear labels and visual cues.",
+    "interaction_design": "Provide clear feedback for user actions (e.g., button states, loading indicators). Ensure interactive elements are easily discoverable and usable.",
+    "accessibility": "Adhere to WCAG guidelines. Ensure keyboard navigability, screen reader compatibility, sufficient color contrast, and resizable text."
+  }
+}
+
+---
+
+Artifact from step_3_Aurora_result.txt (Designer):
+{
+  "color_palette": {
+    "name": "AI Interface Palette",
+    "description": "A calming and clean palette designed for clarity and minimal distraction, with a focus on accessibility and a subtly natural feel.",
+    "shades": [
+      {
+        "name": "Primary White",
+        "hex": "#FFFFFF",
+        "role": "Backgrounds, primary surfaces, text on dark backgrounds"
+      },
+      {
+        "name": "Light Neutral",
+        "hex": "#F8F9FA",
+        "role": "Secondary backgrounds, card elements, subtle dividers"
+      },
+      {
+        "name": "Subtle Gray",
+        "hex": "#E9ECEF",
+        "role": "Borders, disabled states, subtle UI elements"
+      },
+      {
+        "name": "Primary Text",
+        "hex": "#212529",
+        "role": "Main body text, headings, important labels"
+      },
+      {
+        "name": "Secondary Text",
+        "hex": "#6C757D",
+        "role": "Helper text, secondary information, placeholder text"
+      },
+      {
+        "name": "Accent Blue",
+        "hex": "#007BFF",
+        "role": "Primary call-to-action buttons, active states, links, interactive elements"
+      },
+      {
+        "name": "Accent Blue Hover",
+        "hex": "#0056b3",
+        "role": "Hover state for accent elements"
+      },
+      {
+        "name": "Success Green",
+        "hex": "#28A745",
+        "role": "Success messages, positive feedback"
+      },
+      {
+        "name": "Warning Yellow",
+        "hex": "#FFC107",
+        "role": "Warning messages, attention-grabbing elements"
+      },
+      {
+        "name": "Error Red",
+        "hex": "#DC3545",
+        "role": "Error messages, critical alerts"
+      }
+    ]
+  },
+  "typography": {
+    "font_families": [
+      {
+        "name": "Inter",
+        "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap",
+        "weights": ["Regular (400)", "Medium (500)", "Bold (700)"],
+        "usage": "Primary typeface for all text elements, offering excellent readability and a clean, modern aesthetic."
+      }
+    ],
+    "styles": {
+      "display_large": {
+        "font_family": "Inter",
+        "font_weight": "700",
+        "font_size": "48px",
+        "line_height": "60px",
+        "letter_spacing": "-0.5px",
+        "color": "Primary Text"
+      },
+      "heading_1": {
+        "font_family": "Inter",
+        "font_weight": "700",
+        "font_size": "36px",
+        "line_height": "44px",
+        "color": "Primary Text"
+      },
+      "heading_2": {
+        "font_family": "Inter",
+        "font_weight": "700",
+        "font_size": "28px",
+        "line_height": "36px",
+        "color": "Primary Text"
+      },
+      "heading_3": {
+        "font_family": "Inter",
+        "font_weight": "500",
+        "font_size": "24px",
+        "line_height": "32px",
+        "color": "Primary Text"
+      },
+      "body_large": {
+        "font_family": "Inter",
+        "font_weight": "400",
+        "font_size": "18px",
+        "line_height": "28px",
+        "color": "Primary Text"
+      },
+      "body_regular": {
+        "font_family": "Inter",
+        "font_weight": "400",
+        "font_size": "16px",
+        "line_height": "24px",
+        "color": "Primary Text"
+      },
+      "body_small": {
+        "font_family": "Inter",
+        "font_weight": "400",
+        "font_size": "14px",
+        "line_height": "20px",
+        "color": "Secondary Text"
+      },
+      "button_text": {
+        "font_family": "Inter",
+        "font_weight": "500",
+        "font_size": "16px",
+        "line_height": "24px",
+        "color": "Primary White",
+        "text_transform": "none"
+      },
+      "label_input": {
+        "font_family": "Inter",
+        "font_weight": "500",
+        "font_size": "14px",
+        "line_height": "20px",
+        "color": "Primary Text"
+      }
+    }
+  },
+  "logo": {
+    "concept": "A minimalist, abstract representation of AI interaction and natural flow. It suggests intelligence, connection, and seamless communication.",
+    "visual_elements": [
+      "Two abstract, flowing shapes that subtly interlock or overlap, representing the user and the AI. The shapes are smooth and organic, hinting at 'natural design'.",
+      "A clean, sans-serif typeface for the brand name, positioned either below or to the side of the icon.",
+      "The color palette will be used sparingly, perhaps with the accent blue forming one of the flowing shapes."
+    ],
+    "brand_name": "AuraFlow AI",
+    "tagline": "Intelligent Interaction, Naturally.",
+    "color_usage": "Primary White or Light Neutral background, Accent Blue for interactive elements, Primary Text for contrast.",
+    "accessibility_notes": "Ensure sufficient contrast in the logo and clear visual distinction between elements. Provide an alt text description for the logo."
+  },
+  "ui_components": [
+    {
+      "component_name": "Input Field",
+      "description": "A primary text input area for users to submit prompts to the AI.",
+      "design_attributes": {
+        "width": "100%",
+        "height": "auto",
+        "min_height": "150px",
+        "padding": "16px",
+        "border": "1px solid Subtle Gray",
+        "border_radius": "8px",
+        "background_color": "Primary White",
+        "font_style": "body_regular",
+        "color": "Primary Text",
+        "placeholder_color": "Secondary Text",
+        "focus_state": {
+          "border_color": "Accent Blue",
+          "box_shadow": "0 0 0 3px rgba(0, 123, 255, 0.25)"
+        },
+        "resize": "vertical"
+      },
+      "accessibility": {
+        "label": "AI Prompt Input",
+        "required": true,
+        "aria_describedby": "prompt-input-description",
+        "description_id": "prompt-input-description",
+        "description_text": "Enter your prompt for the AI system here. You can refine your prompts for better results."
+      }
+    },
+    {
+      "component_name": "Primary Button",
+      "description": "Call to action button for submitting prompts or performing primary actions.",
+      "design_attributes": {
+        "padding": "12px 24px",
+        "border_radius": "8px",
+        "background_color": "Accent Blue",
+        "color": "Primary White",
+        "font_style": "button_text",
+        "border": "none",
+        "cursor": "pointer",
+        "transition": "background-color 0.2s ease-in-out",
+        "hover_state": {
+          "background_color": "Accent Blue Hover"
+        },
+        "active_state": {
+          "background_color": "#004085"
+        },
+        "disabled_state": {
+          "background_color": "#CCCCCC",
+          "color": "#999999",
+          "cursor": "not-allowed"
+        }
+      },
+      "accessibility": {
+        "role": "button",
+        "aria_label": "Submit Prompt"
+      }
+    },
+    {
+      "component_name": "Response Card",
+      "description": "Container for displaying AI-generated output.",
+      "design_attributes": {
+        "width": "100%",
+        "padding": "24px",
+        "margin_bottom": "20px",
+        "border": "1px solid Subtle Gray",
+        "border_radius": "8px",
+        "background_color": "Primary White",
+        "font_style": "body_regular",
+        "color": "Primary Text",
+        "box_shadow": "0 2px 4px rgba(0,0,0,0.05)"
+      },
+      "accessibility": {
+        "aria_label": "AI Response"
+      }
+    },
+    {
+      "component_name": "Navigation Link",
+      "description": "Links for site navigation (e.g., History, Settings).",
+      "design_attributes": {
+        "color": "Primary Text",
+        "font_family": "Inter",
+        "font_weight": "500",
+        "font_size": "16px",
+        "line_height": "24px",
+        "text_decoration": "none",
+        "padding": "8px 12px",
+        "border_radius": "4px",
+        "transition": "background-color 0.2s ease-in-out, color 0.2s ease-in-out",
+        "hover_state": {
+          "background_color": "Light Neutral",
+          "color": "Accent Blue"
+        },
+        "active_state": {
+          "color": "Accent Blue",
+          "font_weight": "700"
+        }
+      },
+      "accessibility": {
+        "role": "link"
+      }
+    },
+    {
+      "component_name": "Feedback Button",
+      "description": "Buttons for providing feedback on AI responses (e.g., Like/Dislike).",
+      "design_attributes": {
+        "display": "inline-flex",
+        "align_items": "center",
+        "justify_content": "center",
+        "padding": "8px 16px",
+        "margin_right": "10px",
+        "border": "1px solid Subtle Gray",
+        "border_radius": "4px",
+        "background_color": "Primary White",
+        "color": "Secondary Text",
+        "font_style": "body_small",
+        "cursor": "pointer",
+        "transition": "background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out",
+        "icon_size": "16px",
+        "hover_state": {
+          "background_color": "Light Neutral",
+          "border_color": "Subtle Gray",
+          "color": "Primary Text"
+        },
+        "active_state": {
+          "background_color": "Accent Blue",
+          "border_color": "Accent Blue",
+          "color": "Primary White"
+        }
+      },
+      "accessibility": {
+        "role": "button"
+      }
+    },
+    {
+      "component_name": "Loading Indicator",
+      "description": "Visual cue to show that the AI is processing a request.",
+      "design_attributes": {
+        "type": "spinner",
+        "size": "32px",
+        "color": "Accent Blue",
+        "animation": "spin 1s linear infinite"
+      },
+      "accessibility": {
+        "aria_label": "Loading AI response",
+        "role": "status"
+      }
+    }
+  ],
+  "interactive_ui_mockups": {
+    "title": "High-Fidelity Mockups: Key Screens",
+    "description": "Visual representations of the core website pages, demonstrating the application of the design system. These mockups prioritize a clean, intuitive, and accessible user experience.",
+    "screens": [
+      {
+        "screen_name": "AI Interaction Hub",
+        "layout_description": "A clean, spacious layout dominated by the prompt input area. The interface guides the user directly into interaction.",
+        "elements": [
+          {"type": "Header", "content": "Logo (AuraFlow AI), Navigation Links (History, Settings)"},
+          {"type": "Main Content Area", "content": [
+            {"type": "Heading", "text": "Engage with AuraFlow AI", "style": "heading_2"},
+            {"type": "Paragraph", "text": "Enter your prompt below to unlock the power of AI.", "style": "body_large", "color": "Secondary Text"},
+            {"type": "Input Field", "placeholder": "What can I help you create or understand today?", "style": "Input Field"},
+            {"type": "Button", "text": "Generate Response", "style": "Primary Button", "align": "right"},
+            {"type": "Response Display Area", "content": [
+              {"type": "Loading Indicator", "condition": "if AI is processing", "style": "Loading Indicator"},
+              {"type": "Response Card", "content": "AI-generated text will appear here. Includes options to copy, download, and provide feedback (like/dislike buttons).", "condition": "if AI has responded", "style": "Response Card"}
+            ], "empty_state_text": "Your AI-generated response will appear here."}
+          ]},
+          {"type": "Footer", "content": "© 2023 AuraFlow AI. All rights reserved."}
+        ],
+        "visual_notes": "Generous white space. Clear visual hierarchy. Focus on the input and output areas. Subtle hover effects on navigation and buttons."
+      },
+      {
+        "screen_name": "Interaction History",
+        "layout_description": "A clear, organized list of past interactions, allowing users to easily revisit and manage their AI sessions.",
+        "elements": [
+          {"type": "Header", "content": "Logo (AuraFlow AI), Navigation Links (History, Settings)"},
+          {"type": "Main Content Area", "content": [
+            {"type": "Heading", "text": "Interaction History", "style": "heading_1"},
+            {"type": "Search/Filter Bar", "placeholder": "Search history...", "style": "Input Field", "height": "auto"},
+            {"type": "List of Interactions", "items": [
+              {"prompt_snippet": "Explain quantum computing...", "response_snippet": "Quantum computing harnesses...", "date": "2023-10-27", "style": "List Item", "hover_effect": "background_color: Light Neutral"},
+              {"prompt_snippet": "Write a poem about...", "response_snippet": "In realms of thought, where...", "date": "2023-10-26", "style": "List Item", "hover_effect": "background_color: Light Neutral"}
+            ], "style": "List", "item_style": "ListItem"},
+            {"type": "Pagination", "condition": "if many interactions"}
+          ]},
+          {"type": "Footer", "content": "© 2023 AuraFlow AI. All rights reserved."}
+        ],
+        "visual_notes": "Each history item is a distinct row with clear date and prompt/response snippets. Clicking an item would reveal the full interaction (e.g., in a modal or a dedicated detail view)."
+      }
+    ]
+  }
+}
+
+---
+
+Artifact from step_4_Kodax_result.txt (Engineer):
+{
+  "project_name": "AI_Interaction_Frontend",
+  "frontend_setup": {
+    "framework": "React",
+    "language": "TypeScript",
+    "state_management": "Zustand",
+    "styling": "Tailwind CSS",
+    "build_tool": "Vite",
+    "linting_formatting": {
+      "linter": "ESLint",
+      "formatter": "Prettier"
+    },
+    "project_structure": {
+      "root": [
+        "public/",
+        "src/",
+        ".eslintrc.cjs",
+        ".gitignore",
+        "index.html",
+        "package.json",
+        "postcss.config.js",
+        "README.md",
+        "tailwind.config.js",
+        "tsconfig.json",
+        "tsconfig.node.json",
+        "vite.config.ts"
+      ],
+      "src/": [
+        "App.tsx",
+        "main.tsx",
+        "assets/",
+        "components/",
+        "hooks/",
+        "lib/",
+        "pages/",
+        "services/",
+        "store/",
+        "styles/",
+        "types/",
+        "utils/"
+      ],
+      "src/components/": [
+        "ui/",
+        "common/",
+        "layout/"
+      ],
+      "src/components/ui/": [
+        "Button/",
+        "Input/",
+        "Card/",
+        "Link/",
+        "FeedbackButton/",
+        "LoadingIndicator/"
+      ],
+      "src/pages/": [
+        "HomePage.tsx",
+        "HistoryPage.tsx",
+        "SettingsPage.tsx"
+      ],
+      "src/store/": [
+        "index.ts",
+        "aiStore.ts",
+        "uiStore.ts"
+      ],
+      "src/lib/": [
+        "api.ts",
+        "constants.ts"
+      ]
+    },
+    "dependencies": [
+      "react",
+      "react-dom",
+      "react-router-dom",
+      "zustand",
+      "axios",
+      "tailwindcss",
+      "postcss",
+      "autoprefixer"
+    ],
+    "devDependencies": [
+      "@types/react",
+      "@types/react-dom",
+      "@typescript-eslint/eslint-plugin",
+      "@typescript-eslint/parser",
+      "eslint",
+      "eslint-plugin-react-hooks",
+      "eslint-plugin-react-refresh",
+      "typescript",
+      "vite",
+      "@vitejs/plugin-react"
+    ]
+  },
+  "setup_commands": [
+    "npm create vite@latest AI_Interaction_Frontend --template react-ts",
+    "cd AI_Interaction_Frontend",
+    "npm install",
+    "npm install react-router-dom axios zustand",
+    "npm install -D tailwindcss postcss autoprefixer",
+    "npx tailwindcss init -p",
+    "// Configure tailwind.config.js: Add './src/**/*.{js,ts,jsx,tsx}' to content array.",
+    "// Configure tailwind.config.js: Add theme colors and fonts based on Aurora's design.",
+    "// Configure tsconfig.json: Ensure paths are set up correctly if needed.",
+    "// Configure .eslintrc.cjs: Add React hooks and TypeScript plugins.",
+    "// Create src/App.tsx with basic routing structure.",
+    "// Create src/main.tsx to render the App.",
+    "// Create initial page components in src/pages/ (e.g., HomePage.tsx).",
+    "// Create core UI components in src/components/ui/ based on Aurora's mockups and design system.",
+    "// Initialize Zustand stores in src/store/.",
+    "// Set up API service in src/lib/api.ts.",
+    "npm run dev"
+  ],
+  "notes": "This setup prioritizes a modern, efficient, and scalable frontend development environment. React provides a robust component model, TypeScript ensures type safety, Zustand offers a lightweight state management solution, and Tailwind CSS enables rapid, utility-first styling. Vite offers fast development server startup and build times. ESLint and Prettier will maintain code quality and consistency."
+}
+
+
+
+Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project.

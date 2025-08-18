@@ -1,0 +1,168 @@
+The overall goal is: 'Implementation of Hierarchical AI Team Orchestration'
+
+Your role's specific goal is: 'Structure workflows and ensure clarity in agent instructions, system prompt engineering'
+Your specific sub-task is: 'Based on the initial phases from uTASe, design the agent communication protocol and the logical workflow for task delegation, progress tracking, and result synthesis. Define the initial system prompts for each role.'
+
+The team's roles are:
+    {'roles': [{'title': 'Designer', 'description': 'Generate aesthetic layouts, color palettes, typography, and UI flows, ensuring accessibility and visual balance.'}, {'title': 'Engineer', 'description': 'Implement designs into clean, modular, and performant code, focusing on responsive design and accessibility.'}, {'title': 'Prompt Engineer', 'description': 'Structure workflows and ensure clarity in agent instructions, system prompt engineering'}, {'title': 'Task-Agnostic Step (TAS) extractor (flash)', 'description': "Identify and return each 'Task Agnostic Step' (TAS) towards the high-level goal."}], 'steps': [{'name': 'uTASe', 'role': 'Task-Agnostic Step (TAS) extractor (flash)', 'task': "Deconstruct the high-level goal, 'Implementation of Hierarchical AI Team Orchestration', into foundational phases and core components."}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': 'Based on the initial phases from uTASe, design the agent communication protocol and the logical workflow for task delegation, progress tracking, and result synthesis. Define the initial system prompts for each role.'}, {'name': 'Aurora', 'role': 'Designer', 'task': 'Design the UI/UX for the orchestration management dashboard. Create wireframes and mockups for visualizing the agent hierarchy, task assignments, communication logs, and overall system status, based on the workflow from Lyra.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': "Develop the front-end for the orchestration dashboard based on Aurora's designs and implement the back-end infrastructure to support the agent communication protocol and workflow logic defined by Lyra."}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': 'Integrate and refine the role-specific system prompts into the back-end system built by Kodax. Develop dynamic prompt templates that can be populated with real-time task data.'}, {'name': 'Aurora', 'role': 'Designer', 'task': 'Review the implemented dashboard for visual consistency, usability, and adherence to the original design specifications. Provide feedback for UI/UX refinements.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Incorporate feedback from Aurora to polish the UI. Perform integration testing to ensure the front-end and back-end systems are communicating flawlessly.'}, {'name': 'uTASe', 'role': 'Task-Agnostic Step (TAS) extractor (flash)', 'task': 'Analyze the completed system and extract a comprehensive, step-by-step testing and validation plan to ensure all orchestration functionalities meet the high-level goal.'}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': 'Execute the testing plan from uTASe, leading the final validation of the end-to-end orchestration flow. Document the final system prompts and operational guidelines for deployment.'}]}
+
+Please use the following outputs from the other agents as your input:
+
+Artifact from 1__step_0_uTASe_result.txt (Task-Agnostic Step (TAS) extractor (flash)):
+[
+  {
+    "id": "b1a7c7a5-20d5-4a6d-8f1e-4c4d1b2a3f4e",
+    "name": "Define Orchestration Architecture",
+    "description": "Establish the foundational structure and communication patterns for a hierarchical AI team. This involves defining the levels of hierarchy, the roles within each level, and the mechanisms for information flow and task delegation between agents and across hierarchical layers. Key considerations include scalability, fault tolerance, and the overall control flow.",
+    "category": "Init",
+    "purpose": "To set the structural and communication blueprint for the AI team orchestration.",
+    "keywords": [
+      "architecture",
+      "design",
+      "hierarchy",
+      "AI team",
+      "orchestration",
+      "communication protocol"
+    ],
+    "applicability_notes": "This step is crucial for any system involving coordinated multi-agent or multi-component operations, especially where a clear command structure or tiered decision-making is required.",
+    "examples_of_usage": [
+      "Designing a multi-level customer support AI system with tiered escalation.",
+      "Structuring a swarm of autonomous robots with a central command and regional coordinators.",
+      "Defining the flow of information in a complex scientific simulation involving specialized AI agents."
+    ],
+    "typical_inputs": [
+      "High-level project goals",
+      "Functional requirements for AI agents",
+      "Constraints on communication bandwidth or latency"
+    ],
+    "typical_outputs": [
+      "Hierarchical structure diagram",
+      "Defined communication protocols",
+      "Role definitions within the hierarchy"
+    ]
+  },
+  {
+    "id": "c8d9e0f1-3a2b-4c5d-6e7f-8a9b0c1d2e3f",
+    "name": "Develop Agent Communication Protocol",
+    "description": "Design and formalize the methods by which AI agents within the hierarchical structure will communicate. This includes defining message formats, data exchange standards, and interaction patterns (e.g., request-response, publish-subscribe) to ensure seamless information transfer and task coordination.",
+    "category": "Init",
+    "purpose": "To enable effective and standardized communication between AI agents.",
+    "keywords": [
+      "communication",
+      "protocol",
+      "AI agents",
+      "messaging",
+      "data exchange"
+    ],
+    "applicability_notes": "Essential for distributed systems where components need to interact reliably. The complexity of the protocol often scales with the complexity of the interactions and the number of agents.",
+    "examples_of_usage": [
+      "Creating a standardized API for inter-agent communication in a distributed computing environment.",
+      "Defining message schemas for task assignment and status updates in a project management AI.",
+      "Establishing a signaling mechanism for collaborative problem-solving among AI agents."
+    ],
+    "typical_inputs": [
+      "Defined orchestration architecture",
+      "Agent capabilities and requirements",
+      "Desired communication patterns"
+    ],
+    "typical_outputs": [
+      "Message format specifications",
+      "Communication flow diagrams",
+      "Standardized data schemas"
+    ]
+  },
+  {
+    "id": "e2f3a4b5-6c7d-8e9f-0a1b-2c3d4e5f6a7b",
+    "name": "Design Task Delegation Workflow",
+    "description": "Create a systematic process for breaking down overarching tasks into smaller, manageable sub-tasks that can be assigned to specific AI agents or teams within the hierarchical structure. This includes defining criteria for task decomposition, assignment logic, and feedback loops for progress monitoring.",
+    "category": "Refactoring",
+    "purpose": "To efficiently distribute work across the AI team based on hierarchy and capabilities.",
+    "keywords": [
+      "task delegation",
+      "workflow",
+      "AI team",
+      "task decomposition",
+      "assignment logic"
+    ],
+    "applicability_notes": "Applicable to any scenario requiring task management and resource allocation in a team or distributed system. Optimizing this workflow is key to efficiency.",
+    "examples_of_usage": [
+      "Developing a system for assigning coding tasks to different engineering teams based on expertise.",
+      "Creating a workflow for distributing data analysis sub-tasks to specialized AI modules.",
+      "Mapping out a process for delegating project milestones to hierarchical management levels."
+    ],
+    "typical_inputs": [
+      "Overall project objectives",
+      "Agent capabilities and availability",
+      "Task dependencies"
+    ],
+    "typical_outputs": [
+      "Task breakdown structure",
+      "Assignment rules and logic",
+      "Progress tracking mechanisms"
+    ]
+  },
+  {
+    "id": "f9a8b7c6-5d4e-3f2a-1b0c-d1e2f3a4b5c6",
+    "name": "Implement Progress Tracking and Synthesis",
+    "description": "Develop mechanisms to monitor the execution status of delegated tasks at various levels of the hierarchy. This includes collecting status updates from agents, aggregating progress information, and synthesizing it into a coherent overview for higher-level oversight and decision-making.",
+    "category": "Implementation",
+    "purpose": "To provide visibility into task execution and consolidate performance data.",
+    "keywords": [
+      "progress tracking",
+      "synthesis",
+      "AI orchestration",
+      "monitoring",
+      "data aggregation"
+    ],
+    "applicability_notes": "Crucial for project management, performance evaluation, and adaptive control in complex systems. Effective tracking enables timely intervention and course correction.",
+    "examples_of_usage": [
+      "Building a dashboard to visualize the real-time progress of multiple ongoing AI-driven projects.",
+      "Creating a system to collect and summarize performance metrics from distributed AI agents.",
+      "Developing a feedback loop for reporting task completion status up the management chain."
+    ],
+    "typical_inputs": [
+      "Delegated tasks",
+      "Agent status updates",
+      "Defined reporting intervals"
+    ],
+    "typical_outputs": [
+      "Aggregated progress reports",
+      "Performance dashboards",
+      "Synthesized status summaries"
+    ]
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
+    "name": "Establish Hierarchical Control Logic",
+    "description": "Define the decision-making processes and control mechanisms that govern the interactions and operations within the hierarchical AI team. This involves specifying how higher levels influence lower levels, how conflicts are resolved, and how the overall team adapts to changing conditions or objectives.",
+    "category": "Refactoring",
+    "purpose": "To define the command and control structure for the AI team.",
+    "keywords": [
+      "control logic",
+      "hierarchy",
+      "decision making",
+      "AI team",
+      "orchestration"
+    ],
+    "applicability_notes": "Fundamental for any system requiring coordinated action and management, particularly in dynamic environments. The logic must balance autonomy with centralized oversight.",
+    "examples_of_usage": [
+      "Implementing a hierarchical reinforcement learning system where policies are learned at different levels.",
+      "Designing a command structure for a fleet of autonomous vehicles with regional supervisors.",
+      "Setting up a system for dynamic resource allocation in a cloud computing environment managed by AI."
+    ],
+    "typical_inputs": [
+      "Orchestration architecture",
+      "Task delegation workflows",
+      "Performance feedback"
+    ],
+    "typical_outputs": [
+      "Control flow diagrams",
+      "Decision trees or rulesets",
+      "Adaptation strategies"
+    ]
+  }
+]
+
+
+
+Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project.

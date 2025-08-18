@@ -1,0 +1,130 @@
+{
+  "task": "Translate the high-fidelity mockups into responsive, accessible, and modular UI components using clean code.",
+  "sub_task_execution": {
+    "goal": "Implement the UI components based on Aurora's design system and mockups, ensuring responsiveness and accessibility.",
+    "plan": [
+      {
+        "step": 1,
+        "action": "Set up component structure",
+        "description": "Create directories for each UI component within `src/components/ui/` as defined in the project setup (e.g., `src/components/ui/Button/`, `src/components/ui/Input/`). Each component directory will contain its main component file (e.g., `Button.tsx`), its styling (e.g., `Button.module.css` or directly in TSX if using Tailwind's JIT), and potentially a test file.",
+        "output_format": "Directory structure."
+      },
+      {
+        "step": 2,
+        "action": "Implement `Input` component",
+        "description": "Create the `Input` component based on Aurora's `Input Field` design attributes and accessibility notes. This will involve a functional React component using TypeScript, with props for label, placeholder, styling, and accessibility attributes. Tailwind CSS will be used for styling.",
+        "output_format": "React component (`src/components/ui/Input/Input.tsx`) and associated styles/config."
+      },
+      {
+        "step": 3,
+        "action": "Implement `Button` component",
+        "description": "Create the `Primary Button` component, adhering to the specified design attributes, states (hover, active, disabled), and accessibility properties. Utilize Tailwind CSS for styling.",
+        "output_format": "React component (`src/components/ui/Button/Button.tsx`) and associated styles/config."
+      },
+      {
+        "step": 4,
+        "action": "Implement `ResponseCard` component",
+        "description": "Develop the `ResponseCard` component to display AI outputs. This includes styling, padding, margins, and incorporating slots for content and action buttons (like/dislike, copy/download).",
+        "output_format": "React component (`src/components/ui/Card/ResponseCard.tsx`) and associated styles/config."
+      },
+      {
+        "step": 5,
+        "action": "Implement `FeedbackButton` component",
+        "description": "Create the `FeedbackButton` component for like/dislike functionality, ensuring it handles different states (default, hover, active) and includes appropriate ARIA attributes.",
+        "output_format": "React component (`src/components/ui/FeedbackButton/FeedbackButton.tsx`) and associated styles/config."
+      },
+      {
+        "step": 6,
+        "action": "Implement `LoadingIndicator` component",
+        "description": "Develop the `LoadingIndicator` component (spinner) with specified size and color, including accessibility attributes for screen readers.",
+        "output_format": "React component (`src/components/ui/LoadingIndicator/LoadingIndicator.tsx`) and associated styles/config."
+      },
+      {
+        "step": 7,
+        "action": "Implement `NavigationLink` component",
+        "description": "Create a reusable `NavigationLink` component for header and footer navigation, incorporating hover and active states, and accessibility roles.",
+        "output_format": "React component (`src/components/ui/Link/NavigationLink.tsx`) and associated styles/config."
+      },
+      {
+        "step": 8,
+        "action": "Integrate components into pages",
+        "description": "Begin integrating the created UI components into the placeholder page components (`HomePage.tsx`, `HistoryPage.tsx`). This involves passing necessary props and structuring the layout according to the high-fidelity mockups.",
+        "output_format": "Updated page components."
+      },
+      {
+        "step": 9,
+        "action": "Apply global styles and theme",
+        "description": "Configure Tailwind CSS in `tailwind.config.ts` to include the defined color palette, typography (font families, weights, sizes), and other design system tokens from Aurora's output. Ensure these are accessible globally.",
+        "output_format": "Updated `tailwind.config.ts` and potentially `src/styles/globals.css`."
+      },
+      {
+        "step": 10,
+        "action": "Ensure Responsiveness",
+        "description": "Use Tailwind CSS's responsive utility classes (e.g., `sm:`, `md:`, `lg:`) to ensure all components and layouts adapt gracefully to different screen sizes, as implied by the need for responsive design.",
+        "output_format": "Component and page code with responsive classes."
+      },
+      {
+        "step": 11,
+        "action": "Verify Accessibility",
+        "description": "Conduct a preliminary check on implemented components to ensure semantic HTML, appropriate ARIA attributes, keyboard navigability, and sufficient color contrast, referencing the accessibility notes provided in the design artifacts.",
+        "output_format": "Code review and potential adjustments."
+      }
+    ],
+    "component_implementations": [
+      {
+        "component_name": "Input",
+        "file_path": "src/components/ui/Input/Input.tsx",
+        "code_snippet": "import React, { TextareaHTMLAttributes } from 'react';\nimport clsx from 'clsx';\n\ninterface InputProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {\n  label?: string;\n  description?: string;\n  descriptionId?: string;\n}\n\nconst Input: React.FC<InputProps> = ({\n  label,\n  description,\n  descriptionId,\n  className,\n  ...props\n}) => {\n  const inputClasses = clsx(\n    'w-full p-4 border border-subtle-gray rounded-lg bg-primary-white text-primary-text placeholder-secondary-text focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-transparent resize-vertical min-h-[150px]',\n    className\n  );\n\n  const labelId = descriptionId || `${props.id}-label`;\n\n  return (\n    <div className=\"mb-6\">\n      {label && (\n        <label htmlFor={props.id || labelId} className=\"block mb-2 text-label-input font-medium text-primary-text\">\n          {label}\n        </label>\n      )}\n      {description && (\n        <p id={descriptionId || labelId} className=\"text-body-small text-secondary-text mb-2\">\n          {description}\n        </p>\n      )}\n      <textarea\n        id={props.id || labelId}\n        className={inputClasses}\n        aria-describedby={description ? (descriptionId || `${props.id}-description`) : undefined}\n        {...props}\n      />\n    </div>\n  );\n};\n\nexport default Input;\n",
+        "tailwind_config_notes": "Ensure 'subtle-gray', 'primary-white', 'primary-text', 'secondary-text', 'accent-blue' are defined in theme.colors. Ensure 'body-small' and 'label-input' font styles are mapped to appropriate Tailwind text sizes and weights."
+      },
+      {
+        "component_name": "Primary Button",
+        "file_path": "src/components/ui/Button/Button.tsx",
+        "code_snippet": "import React, { ButtonHTMLAttributes } from 'react';\nimport clsx from 'clsx';\n\ninterface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {\n  variant?: 'primary' | 'secondary'; // Example for future variants\n}\n\nconst Button: React.FC<ButtonProps> = ({\n  children,\n  className,\n  variant = 'primary',\n  disabled,\n  ...props\n}) => {\n  const baseStyles = 'px-6 py-3 rounded-lg font-medium transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2';\n\n  const variantStyles = {\n    primary:\n      'bg-accent-blue text-primary-white hover:bg-accent-blue-hover disabled:bg-gray-400 disabled:text-gray-700',\n    // Add other variants here if needed\n  };\n\n  const buttonClasses = clsx(\n    baseStyles,\n    variantStyles[variant],\n    disabled ? 'cursor-not-allowed' : 'cursor-pointer',\n    className\n  );\n\n  return (\n    <button\n      className={buttonClasses}\n      disabled={disabled}\n      {...props}\n    >\n      {children}\n    </button>\n  );\n};\n\nexport default Button;\n",
+        "tailwind_config_notes": "Ensure 'accent-blue', 'accent-blue-hover', 'primary-white' are defined in theme.colors. Ensure 'button-text' font style is mapped correctly."
+      },
+      {
+        "component_name": "Response Card",
+        "file_path": "src/components/ui/Card/ResponseCard.tsx",
+        "code_snippet": "import React from 'react';\nimport clsx from 'clsx';\n\ninterface ResponseCardProps {\n  children: React.ReactNode;\n  className?: string;\n}\n\nconst ResponseCard: React.FC<ResponseCardProps> = ({\n  children,\n  className,\n}) => {\n  const cardClasses = clsx(\n    'w-full p-6 mb-5 border border-subtle-gray rounded-lg bg-primary-white shadow-sm',\n    className\n  );\n\n  return (\n    <div className={cardClasses}>\n      {children}\n    </div>\n  );\n};\n\nexport default ResponseCard;\n",
+        "tailwind_config_notes": "Ensure 'subtle-gray', 'primary-white' are defined in theme.colors. Ensure 'body-regular' font style is used for content within the card."
+      },
+      {
+        "component_name": "Feedback Button",
+        "file_path": "src/components/ui/FeedbackButton/FeedbackButton.tsx",
+        "code_snippet": "import React from 'react';\nimport clsx from 'clsx';\n\ninterface FeedbackButtonProps {\n  icon: React.ReactNode; // e.g., a thumbs-up or thumbs-down SVG\n  label: string;\n  onClick?: () => void;\n  isActive?: boolean;\n}\n\nconst FeedbackButton: React.FC<FeedbackButtonProps> = ({\n  icon,\n  label,\n  onClick,\n  isActive,\n}) => {\n  const buttonClasses = clsx(\n    'inline-flex items-center justify-center py-2 px-4 mr-2 border rounded-md text-body-small cursor-pointer transition-colors duration-200',\n    isActive\n      ? 'bg-accent-blue border-accent-blue text-primary-white'\n      : 'bg-primary-white border-subtle-gray text-secondary-text hover:bg-light-neutral hover:border-subtle-gray hover:text-primary-text'\n  );\n\n  return (\n    <button\n      className={buttonClasses}\n      onClick={onClick}\n      aria-pressed={isActive}\n    >\n      <span className=\"mr-1\">{icon}</span>\n      {label}\n    </button>\n  );\n};\n\nexport default FeedbackButton;\n",
+        "tailwind_config_notes": "Ensure 'accent-blue', 'accent-blue-hover', 'primary-white', 'light-neutral', 'subtle-gray', 'secondary-text', 'primary-text' are defined in theme.colors. Ensure 'body-small' font style is mapped correctly."
+      },
+      {
+        "component_name": "Loading Indicator",
+        "file_path": "src/components/ui/LoadingIndicator/LoadingIndicator.tsx",
+        "code_snippet": "import React from 'react';\nimport clsx from 'clsx';\n\ninterface LoadingIndicatorProps {\n  size?: 'small' | 'medium' | 'large'; // Example sizes\n}\n\nconst LoadingIndicator: React.FC<LoadingIndicatorProps> = ({\n  size = 'medium',\n}) => {\n  const sizeClasses = {\n    small: 'w-6 h-6 border-2',\n    medium: 'w-8 h-8 border-4',\n    large: 'w-12 h-12 border-4',\n  };\n\n  const indicatorClasses = clsx(\n    'animate-spin rounded-full border-accent-blue border-t-transparent',\n    sizeClasses[size]\n  );\n\n  return (\n    <div\n      className={indicatorClasses}\n      role=\"status\"\n      aria-label=\"Loading AI response\"\n    >\n      <span className=\"sr-only\">Loading...</span>\n    </div>\n  );\n};\n\nexport default LoadingIndicator;\n",
+        "tailwind_config_notes": "Ensure 'accent-blue' is defined in theme.colors. Define the 'spin' animation in tailwind.config.ts if not already present or use a standard animation."
+      },
+      {
+        "component_name": "Navigation Link",
+        "file_path": "src/components/ui/Link/NavigationLink.tsx",
+        "code_snippet": "import React from 'react';\nimport { Link, LinkProps } from 'react-router-dom';\nimport clsx from 'clsx';\n\nconst NavigationLink: React.FC<LinkProps> = ({ children, className, ...props }) => {\n  const linkClasses = clsx(\n    'px-3 py-2 rounded-md font-medium text-sm leading-5 transition-colors duration-200',\n    'text-primary-text hover:bg-light-neutral hover:text-accent-blue',\n    className\n  );\n\n  return (\n    <Link className={linkClasses} {...props}>\n      {children}\n    </Link>\n  );\n};\n\nexport default NavigationLink;\n",
+        "tailwind_config_notes": "Ensure 'primary-text', 'light-neutral', 'accent-blue' are defined in theme.colors. Ensure font styles for 'body-small' or similar are used for link text."
+      }
+    ],
+    "tailwind_config_update": {
+      "file_path": "tailwind.config.ts",
+      "changes": [
+        "Update `content` array to include './src/**/*.{js,ts,jsx,tsx}'.",
+        "Extend `theme.colors` with the palette provided by Aurora (e.g., `primaryWhite: '#FFFFFF'`, `accentBlue: '#007BFF'`).",
+        "Extend `theme.fontFamily` with 'Inter'.",
+        "Map typography styles to Tailwind's text size and weight classes (e.g., `theme.extend.fontSize`, `theme.extend.fontWeight`).",
+        "Define custom animations if necessary (e.g., for the loading spinner)."
+      ],
+      "example_snippet": "/** @type {import('tailwindcss').Config} */\nexport default {\n  content: [\n    \"./index.html\",\n    \"./src/**/*.{js,ts,jsx,tsx}\",\n  ],\n  theme: {\n    extend: {\n      colors: {\n        'primary-white': '#FFFFFF',\n        'light-neutral': '#F8F9FA',\n        'subtle-gray': '#E9ECEF',\n        'primary-text': '#212529',\n        'secondary-text': '#6C757D',\n        'accent-blue': '#007BFF',\n        'accent-blue-hover': '#0056b3',\n        // ... other colors\n      },\n      fontFamily: {\n        sans: ['Inter', 'sans-serif'], // Assuming Inter is the primary font\n      },\n      fontSize: {\n        'display-large': ['48px', { lineHeight: '60px', fontWeight: '700' }],\n        'heading-1': ['36px', { lineHeight: '44px', fontWeight: '700' }],\n        'heading-2': ['28px', { lineHeight: '36px', fontWeight: '700' }],\n        'heading-3': ['24px', { lineHeight: '32px', fontWeight: '500' }],\n        'body-large': ['18px', { lineHeight: '28px', fontWeight: '400' }],\n        'body-regular': ['16px', { lineHeight: '24px', fontWeight: '400' }],\n        'body-small': ['14px', { lineHeight: '20px', fontWeight: '400' }],\n        'label-input': ['14px', { lineHeight: '20px', fontWeight: '500' }],\n        'button-text': ['16px', { lineHeight: '24px', fontWeight: '500' }],\n      },\n      boxShadow: {\n        'sm': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',\n        'md': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',\n      },\n      keyframes: {\n        spin: {\n          from: { transform: 'rotate(0deg)' },\n          to: { transform: 'rotate(360deg)' },\n        }\n      },\n      animation: {\n        spin: 'spin 1s linear infinite',\n      }\n    },\n  },\n  plugins: [],\n}\n"
+      }
+    ],
+    "next_steps_for_kodax": [
+      "Implement the `HomePage.tsx` component, integrating the `Input`, `Button`, `ResponseCard`, `FeedbackButton`, and `LoadingIndicator` components as per the high-fidelity mockup.",
+      "Implement the `HistoryPage.tsx` component, including list items for past interactions and potentially a search/filter input.",
+      "Set up routing using `react-router-dom` in `App.tsx` to navigate between `HomePage` and `HistoryPage`.",
+      "Integrate Zustand stores for managing application state (e.g., current prompt, AI response, history list)."
+    ]
+  }
+}

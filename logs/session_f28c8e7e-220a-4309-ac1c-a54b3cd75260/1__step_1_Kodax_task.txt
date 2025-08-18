@@ -1,0 +1,300 @@
+The overall goal is: 'We are meta-artificial intelligence, cohesively creating an iterative role and task plan, thinking step-by-step towards the high-level goal.
+
+High-Level Goal: 'To implement the Humor Evaluator system with all LLM calls routed through the https://ai.violass.club/v1 API, I’ll modify the previous implementation to integrate API-based language model interactions for generating jokes, analyzing feedback, and making recommendations'
+
+Team Members:
+- Name: 'Aurora'
+  Role: `Designer`
+  Goal: "Generate aesthetic layouts, color palettes, typography, and UI flows, ensuring accessibility and visual balance."
+- Name: 'Kodax'
+  Role: `Engineer`
+  Goal: "Implement designs into clean, modular, and performant code, focusing on responsive design and accessibility."
+- Name: 'Lyra'
+  Role: `Prompt Engineer`
+  Goal: "Structure workflows and ensure clarity in agent instructions, system prompt engineering"
+- Name: 'uTASe'
+  Role: `Task-Agnostic Step (TAS) extractor (flash)`
+  Goal: "Identify and return each 'Task Agnostic Step' (TAS) towards the high-level goal."
+
+Leverage each team member, guided by their goals, to maximize collaboration. Use prompt engineering to refine the system prompts for each agent based on their roles and tasks.'
+
+Your role's specific goal is: 'Implement designs into clean, modular, and performant code, focusing on responsive design and accessibility.'
+Your specific sub-task is: 'Investigate the `https://ai.violass.club/v1` API documentation to determine authentication methods, request/response formats, and any rate limits. Create a preliminary technical plan for integration.'
+
+The team's roles are:
+    {'roles': [{'title': 'Task-Agnostic Step (TAS) extractor (flash)', 'description': 'Deconstruct the high-level goal of creating the API-driven Humor Evaluator into a clear, sequential, and actionable task plan for the team.'}, {'title': 'Engineer', 'description': "Implement the full-stack application, focusing on creating a robust API client for https://ai.violass.club/v1, building the user interface based on the designer's specifications, and integrating the prompt-driven logic."}, {'title': 'Prompt Engineer', 'description': 'Develop, test, and refine all LLM prompts for joke generation, feedback analysis, and personalized recommendations, ensuring they are optimized for the https://ai.violass.club/v1 API.'}, {'title': 'Designer', 'description': 'Generate aesthetic layouts, color palettes, typography, and UI flows for the Humor Evaluator, ensuring an intuitive and accessible user experience for joke interaction and feedback.'}], 'steps': [{'name': 'uTASe', 'role': 'Task-Agnostic Step (TAS) extractor (flash)', 'task': 'Deconstruct the high-level goal into a sequence of actionable tasks for implementing the Humor Evaluator system with the specified API.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Investigate the `https://ai.violass.club/v1` API documentation to determine authentication methods, request/response formats, and any rate limits. Create a preliminary technical plan for integration.'}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': 'Collaborate with the Engineer to understand API constraints and draft initial prompt structures for joke generation and feedback analysis that are compatible with the target API.'}, {'name': 'Aurora', 'role': 'Designer', 'task': 'Design the user interface and user flow for the Humor Evaluator. This includes screens for displaying jokes, collecting user ratings/feedback, and showing personalized recommendations.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Develop a modular and reusable API client in the chosen programming language to handle all communications with the `https://ai.violass.club/v1` endpoint.'}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': 'Finalize and test the core set of prompts for generating jokes, analyzing user feedback, and making recommendations. Use a testing tool to validate prompt effectiveness directly with the API.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': "Implement the front-end UI based on the Designer's specifications, creating components for joke display, feedback input, and recommendation lists."}, {'name': 'Kodax', 'role': 'Engineer', 'task': "Integrate the API client and the finalized prompts into the application's backend logic. Connect the front-end UI to trigger the appropriate API calls and display the results."}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': "Conduct an end-to-end review of the integrated system, analyzing the quality of the LLM's outputs and iteratively refining the prompts to improve performance and user satisfaction."}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Perform final integration testing, bug fixing, and prepare the complete Humor Evaluator application for deployment.'}]}
+
+Please use the following outputs from the other agents as your input:
+
+Artifact from 1__step_0_uTASe_result.txt (Task-Agnostic Step (TAS) extractor (flash)):
+[
+  {
+    "id": "f1c2b3d4-e5f6-7890-1234-567890abcdef",
+    "name": "Define API Integration Strategy",
+    "description": "Analyze the `https://ai.violass.club/v1` API documentation to understand its capabilities, including authentication, request/response formats, and any usage limitations. Based on this analysis, formulate a technical plan for integrating the API into the Humor Evaluator system.",
+    "category": "Analysis",
+    "purpose": "Establish a clear technical approach for API integration.",
+    "keywords": [
+      "API",
+      "integration",
+      "documentation",
+      "strategy",
+      "technical plan"
+    ],
+    "applicability_notes": "This step is crucial for any system that relies on external API services. The depth of analysis will vary based on the complexity and clarity of the API documentation.",
+    "examples_of_usage": [
+      "Researching the authentication methods (e.g., API keys, OAuth) for a weather API.",
+      "Understanding the data structures required for sending requests to a payment gateway.",
+      "Identifying rate limits and error codes for a social media API."
+    ],
+    "typical_inputs": [
+      "API documentation",
+      "List of required functionalities"
+    ],
+    "typical_outputs": [
+      "Technical integration plan",
+      "Authentication details",
+      "Data format specifications"
+    ]
+  },
+  {
+    "id": "a2b3c4d5-e6f7-8901-2345-678901234567",
+    "name": "Develop API Client Module",
+    "description": "Create a robust, modular, and reusable software component responsible for handling all interactions with the `https://ai.violass.club/v1` API. This client should abstract away the complexities of API communication, including request construction, response parsing, and error handling.",
+    "category": "Implementation",
+    "purpose": "Build a dedicated interface for API communication.",
+    "keywords": [
+      "API client",
+      "module",
+      "reusable",
+      "integration",
+      "communication"
+    ],
+    "applicability_notes": "Essential for any application interacting with external services, promoting code organization and maintainability.",
+    "examples_of_usage": [
+      "Creating a client to fetch user data from a user management service.",
+      "Building a module to send notifications via a messaging API.",
+      "Developing a service to retrieve financial data from a market data provider."
+    ],
+    "typical_inputs": [
+      "API integration strategy",
+      "API endpoint details",
+      "Authentication credentials"
+    ],
+    "typical_outputs": [
+      "API client module",
+      "Functions for specific API operations"
+    ]
+  },
+  {
+    "id": "b3c4d5e6-f789-0123-4567-890123456789",
+    "name": "Design User Interface and Flow",
+    "description": "Conceptualize and design the visual aspects and user interaction pathways for the Humor Evaluator. This includes defining the layout, color schemes, typography, and the overall user experience for interacting with jokes and providing feedback.",
+    "category": "Design",
+    "purpose": "Create an intuitive and visually appealing user experience.",
+    "keywords": [
+      "UI design",
+      "UX design",
+      "user flow",
+      "layout",
+      "visuals"
+    ],
+    "applicability_notes": "Fundamental to user-facing applications, ensuring usability and engagement.",
+    "examples_of_usage": [
+      "Designing the screens for a mobile banking app.",
+      "Creating the interface for an online learning platform.",
+      "Mapping out the navigation for a content management system."
+    ],
+    "typical_inputs": [
+      "System requirements",
+      "Target audience profile"
+    ],
+    "typical_outputs": [
+      "Wireframes",
+      "Mockups",
+      "UI style guide",
+      "User flow diagrams"
+    ]
+  },
+  {
+    "id": "c4d5e6f7-8901-2345-6789-012345678901",
+    "name": "Develop Prompt Structures for API",
+    "description": "Based on the API's capabilities and constraints identified during the integration strategy phase, draft and refine the initial prompt structures. These prompts will be used for joke generation, feedback analysis, and recommendation generation, ensuring compatibility with the `https://ai.violass.club/v1` API.",
+    "category": "Prompt Engineering",
+    "purpose": "Formulate effective prompts for LLM interactions via the API.",
+    "keywords": [
+      "prompt engineering",
+      "LLM",
+      "API",
+      "joke generation",
+      "feedback analysis"
+    ],
+    "applicability_notes": "Key for leveraging the power of Large Language Models through specific interfaces.",
+    "examples_of_usage": [
+      "Crafting prompts to summarize news articles.",
+      "Developing prompts for creative writing assistance.",
+      "Designing prompts for sentiment analysis of customer reviews."
+    ],
+    "typical_inputs": [
+      "API integration strategy",
+      "System requirements for LLM tasks"
+    ],
+    "typical_outputs": [
+      "Initial prompt templates",
+      "Prompt structure guidelines"
+    ]
+  },
+  {
+    "id": "d5e6f789-9012-3456-7890-123456789012",
+    "name": "Implement Front-end UI Components",
+    "description": "Translate the designed UI and user flows into functional front-end code. Build the necessary components for displaying jokes, capturing user feedback (ratings, text input), and presenting recommendations, adhering to the designer's specifications.",
+    "category": "Implementation",
+    "purpose": "Build the user-facing elements of the application.",
+    "keywords": [
+      "front-end",
+      "UI implementation",
+      "components",
+      "user interface",
+      "coding"
+    ],
+    "applicability_notes": "Essential for creating interactive and user-friendly applications.",
+    "examples_of_usage": [
+      "Developing components for an e-commerce product listing.",
+      "Building a dashboard with data visualization elements.",
+      "Creating input forms for a data entry application."
+    ],
+    "typical_inputs": [
+      "UI design mockups",
+      "UI style guide",
+      "User flow diagrams"
+    ],
+    "typical_outputs": [
+      "Functional UI components",
+      "Front-end code"
+    ]
+  },
+  {
+    "id": "e6f78901-0123-4567-8901-234567890123",
+    "name": "Integrate API Client and Prompts",
+    "description": "Connect the developed API client module and the finalized prompt structures into the application's backend logic. Ensure that the front-end UI can correctly trigger API calls through the client and display the responses, thereby integrating the LLM capabilities.",
+    "category": "Integration",
+    "purpose": "Connect front-end, back-end, and API services.",
+    "keywords": [
+      "integration",
+      "API client",
+      "prompts",
+      "backend logic",
+      "full-stack"
+    ],
+    "applicability_notes": "The core step that brings together different parts of an application to work seamlessly.",
+    "examples_of_usage": [
+      "Connecting a payment gateway integration to an e-commerce checkout process.",
+      "Linking a user authentication service to a web application's login flow.",
+      "Integrating a real-time data feed into a dashboard."
+    ],
+    "typical_inputs": [
+      "API client module",
+      "Finalized prompt structures",
+      "Front-end UI components",
+      "Backend application structure"
+    ],
+    "typical_outputs": [
+      "Integrated application logic",
+      "Functional API calls within the application"
+    ]
+  },
+  {
+    "id": "f7890123-1234-5678-9012-345678901234",
+    "name": "Test and Refine LLM Prompts",
+    "description": "Conduct thorough testing of the integrated prompts using a suitable testing framework or directly against the API. Analyze the quality, relevance, and coherence of the LLM's outputs for joke generation, feedback analysis, and recommendations. Iteratively refine the prompts to optimize performance and user satisfaction.",
+    "category": "Testing",
+    "purpose": "Optimize LLM performance through prompt iteration.",
+    "keywords": [
+      "prompt testing",
+      "LLM refinement",
+      "performance optimization",
+      "user satisfaction",
+      "iteration"
+    ],
+    "applicability_notes": "Crucial for maximizing the effectiveness of AI models, especially in creative or analytical tasks.",
+    "examples_of_usage": [
+      "Testing different phrasing for a summarization prompt to improve conciseness.",
+      "Adjusting parameters in a code generation prompt to enhance code quality.",
+      "Evaluating the tone and style of generated text based on prompt variations."
+    ],
+    "typical_inputs": [
+      "Prompt structures",
+      "Test cases",
+      "LLM output quality criteria"
+    ],
+    "typical_outputs": [
+      "Optimized prompts",
+      "Performance metrics",
+      "Refined prompt guidelines"
+    ]
+  },
+  {
+    "id": "01234567-2345-6789-0123-456789012345",
+    "name": "Conduct End-to-End System Review",
+    "description": "Perform a comprehensive review of the entire Humor Evaluator system. This involves evaluating the integrated functionality, the quality of the LLM-generated content, the user experience, and the overall system stability. Identify any discrepancies or areas for improvement.",
+    "category": "Testing",
+    "purpose": "Ensure overall system coherence and quality.",
+    "keywords": [
+      "end-to-end testing",
+      "system review",
+      "quality assurance",
+      "integration testing",
+      "holistic evaluation"
+    ],
+    "applicability_notes": "A critical phase before deployment to catch systemic issues and ensure all components work together as intended.",
+    "examples_of_usage": [
+      "Testing a complete e-commerce transaction from product selection to payment confirmation.",
+      "Reviewing a data pipeline from ingestion to final report generation.",
+      "Assessing the full user journey in a customer relationship management system."
+    ],
+    "typical_inputs": [
+      "Integrated application",
+      "Test plans",
+      "User feedback (if available)"
+    ],
+    "typical_outputs": [
+      "System review report",
+      "List of identified issues",
+      "Recommendations for further refinement"
+    ]
+  },
+  {
+    "id": "12345678-3456-7890-1234-567890123456",
+    "name": "Final Integration Testing and Bug Fixing",
+    "description": "Conduct final rounds of integration testing to ensure all modules and features work together seamlessly. Identify and resolve any remaining bugs or issues across the front-end, back-end, and API integrations. Prepare the application for deployment.",
+    "category": "Testing",
+    "purpose": "Ensure system stability and readiness for deployment.",
+    "keywords": [
+      "integration testing",
+      "bug fixing",
+      "final testing",
+      "deployment preparation",
+      "quality assurance"
+    ],
+    "applicability_notes": "The last stage of development before release, focusing on stability and correcting defects.",
+    "examples_of_usage": [
+      "Testing the complete user authentication flow, including password reset.",
+      "Verifying data consistency across different parts of the application.",
+      "Stress testing the system to ensure performance under load."
+    ],
+    "typical_inputs": [
+      "Integrated application",
+      "Test cases",
+      "Bug tracking system"
+    ],
+    "typical_outputs": [
+      "Stable and functional application",
+      "Resolved bugs",
+      "Deployment-ready build"
+    ]
+  }
+]
+
+
+
+Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project.

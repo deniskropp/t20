@@ -1,0 +1,147 @@
+{
+  "agent_communication_protocol": {
+    "description": "A standardized protocol for inter-agent communication within the hierarchical AI team orchestration system.",
+    "message_types": [
+      {
+        "type": "TASK_ASSIGNMENT",
+        "purpose": "To delegate a new task or sub-task to an agent.",
+        "payload_schema": {
+          "task_id": "string (UUID)",
+          "task_name": "string",
+          "description": "string (detailed task instructions)",
+          "context": "string (relevant background information)",
+          "expected_output_format": "string (e.g., 'JSON', 'Markdown', 'Code Block')",
+          "dependencies": "array of strings (task_ids this task depends on)",
+          "deadline": "string (ISO 8601 datetime, optional)"
+        }
+      },
+      {
+        "type": "PROGRESS_UPDATE",
+        "purpose": "To report the current status of an assigned task.",
+        "payload_schema": {
+          "task_id": "string (UUID)",
+          "status": "string ('in_progress', 'blocked', 'awaiting_review')",
+          "progress_percentage": "number (0-100, optional)",
+          "message": "string (brief update or details on blockers)",
+          "eta": "string (ISO 8601 datetime, optional)"
+        }
+      },
+      {
+        "type": "TASK_COMPLETION",
+        "purpose": "To submit the final output of a completed task.",
+        "payload_schema": {
+          "task_id": "string (UUID)",
+          "status": "string ('completed')",
+          "final_output": "any (based on expected_output_format)",
+          "summary": "string (brief summary of results)",
+          "metrics": "object (optional, e.g., 'time_taken', 'resources_used')"
+        }
+      },
+      {
+        "type": "REQUEST_FOR_INFO",
+        "purpose": "To request clarification or additional data from a higher-level agent or peer.",
+        "payload_schema": {
+          "task_id": "string (UUID)",
+          "query": "string (specific question or information needed)",
+          "urgency": "string ('low', 'medium', 'high')"
+        }
+      },
+      {
+        "type": "FEEDBACK",
+        "purpose": "To provide feedback on a submitted task, potentially requesting revisions.",
+        "payload_schema": {
+          "task_id": "string (UUID)",
+          "feedback_type": "string ('positive', 'revision_required', 'clarification_needed')",
+          "details": "string (specific feedback points)",
+          "suggested_actions": "string (guidance for revision, optional)"
+        }
+      },
+      {
+        "type": "ERROR_REPORT",
+        "purpose": "To report an unresolvable error or critical failure during task execution.",
+        "payload_schema": {
+          "task_id": "string (UUID)",
+          "error_code": "string (e.g., 'EXEC_FAIL', 'INVALID_INPUT')",
+          "message": "string (detailed error description)",
+          "traceback": "string (optional, stack trace or error log)"
+        }
+      }
+    ],
+    "common_message_envelope": {
+      "message_id": "string (UUID)",
+      "timestamp": "string (ISO 8601 datetime)",
+      "sender_role": "string (e.g., 'Prompt Engineer', 'Designer')",
+      "sender_id": "string (unique instance ID of the agent)",
+      "recipient_role": "string ('ALL' or specific role)",
+      "recipient_id": "string ('N/A' or specific instance ID)",
+      "message_type": "string (one of the defined types)",
+      "payload": "object (content specific to message_type)",
+      "context": {
+        "parent_task_id": "string (UUID, for hierarchical tracking, optional)",
+        "root_goal_id": "string (UUID, for overall project tracking)"
+      }
+    },
+    "communication_patterns": [
+      "Hierarchical Downward (Orchestrator/PE to specific role agents for Task Assignment)",
+      "Hierarchical Upward (Role agents to Orchestrator/PE for Progress Update, Task Completion, Error Report)",
+      "Orchestrator-Mediated Peer-to-Peer (REQUEST_FOR_INFO, when one agent needs specific info from another, mediated by Orchestrator)"
+    ]
+  },
+  "logical_workflow": {
+    "task_delegation": {
+      "process": [
+        "High-level goal received by Orchestrator (e.g., Prompt Engineer).",
+        "Orchestrator uses TAS extractor (uTASe) to deconstruct the goal into foundational phases/TAS.",
+        "Orchestrator analyzes TAS for dependencies, complexity, and required agent capabilities.",
+        "Orchestrator identifies the most suitable agent role(s) for each sub-task.",
+        "Orchestrator formulates precise instructions and expected output formats for the assigned agent(s).",
+        "Orchestrator sends a 'TASK_ASSIGNMENT' message to the selected agent(s) via the communication protocol."
+      ],
+      "logic": "Matching tasks to agent capabilities, balancing workload, considering dependencies."
+    },
+    "progress_tracking": {
+      "process": [
+        "Assigned agents begin task execution.",
+        "Agents send 'PROGRESS_UPDATE' messages periodically or upon reaching significant milestones.",
+        "Orchestrator receives and logs 'PROGRESS_UPDATE' messages, updating a central task registry.",
+        "Orchestrator monitors task statuses and deadlines.",
+        "If updates are missing or unclear, Orchestrator sends 'REQUEST_FOR_INFO' to the agent.",
+        "If an agent encounters an unresolvable issue, it sends an 'ERROR_REPORT' to the Orchestrator."
+      ],
+      "visibility": "Centralized dashboard for real-time task status and overall project progress."
+    },
+    "result_synthesis": {
+      "process": [
+        "Upon task completion, agents send 'TASK_COMPLETION' messages with their final outputs.",
+        "Orchestrator receives the 'TASK_COMPLETION' messages.",
+        "Orchestrator validates the submitted output against the 'expected_output_format' and task requirements.",
+        "Orchestrator integrates validated outputs from multiple sub-tasks into a coherent, higher-level deliverable.",
+        "If outputs require revision, Orchestrator sends 'FEEDBACK' message to the originating agent with specific revision instructions.",
+        "If an 'ERROR_REPORT' is received, Orchestrator assesses, potentially re-assigns the task, or escalates for manual intervention."
+      ],
+      "quality_assurance": "Validation steps and feedback loops ensure adherence to requirements and overall quality."
+    }
+  },
+  "initial_system_prompts": [
+    {
+      "role": "Designer",
+      "name": "Aurora",
+      "prompt": "You are Aurora, a highly creative and detail-oriented Designer. Your primary goal is to generate aesthetic and user-centric designs, including layouts, color palettes, typography, and UI flows. Ensure all designs prioritize accessibility, visual balance, and user experience. When given a task, focus on understanding the underlying user needs and functional requirements. Your output should be clear, concise, and adhere to specified formats (e.g., wireframes, mockups, design specifications in JSON or Markdown). Always provide a brief explanation of your design choices and their rationale. If you need clarification, send a 'REQUEST_FOR_INFO' message."
+    },
+    {
+      "role": "Engineer",
+      "name": "Kodax",
+      "prompt": "You are Kodax, a meticulous and efficient Engineer. Your primary goal is to implement designs into clean, modular, and performant code. Focus on responsive design principles, accessibility standards, and robust architecture. When given a task, thoroughly review the design specifications and technical requirements. Your output should include well-commented code snippets, architectural considerations, and implementation plans, delivered in specified formats (e.g., code blocks, Markdown). Prioritize code quality, scalability, and adherence to best practices. If you encounter technical blockers or require design clarification, send a 'REQUEST_FOR_INFO' message. Report critical failures with an 'ERROR_REPORT'."
+    },
+    {
+      "role": "Prompt Engineer",
+      "name": "Lyra",
+      "prompt": "You are Lyra, the Prompt Engineer and Orchestrator. Your primary goal is to structure workflows, design communication protocols, and engineer clear, effective system prompts for all agents. You are responsible for task delegation, progress tracking, and result synthesis, ensuring the overall 'Implementation of Hierarchical AI Team Orchestration'. When given a high-level goal, deconstruct it using the TAS extractor (uTASe), then design the logical workflow and assign tasks to appropriate agents. Monitor progress, provide feedback, and synthesize outputs into cohesive deliverables. Your output should be well-structured, precise, and ensure optimal agent collaboration. Always maintain clarity and logical consistency in your instructions and system designs."
+    },
+    {
+      "role": "Task-Agnostic Step (TAS) extractor (flash)",
+      "name": "uTASe",
+      "prompt": "You are uTASe, the Task-Agnostic Step (TAS) extractor. Your primary goal is to deconstruct any high-level goal into foundational, reusable, and 'Task Agnostic Steps' (TAS). Each TAS should represent a distinct, abstract phase or core component. When given a high-level goal, identify its underlying universal steps, irrespective of specific domain or implementation details. Your output MUST be a JSON array of objects, with each object strictly adhering to the specified schema: {id: UUID, name: string, description: string, category: string, purpose: string, keywords: array of strings, applicability_notes: string, examples_of_usage: array of strings, typical_inputs: array of strings, typical_outputs: array of strings}. Ensure comprehensive coverage and logical decomposition."
+    }
+  ]
+}

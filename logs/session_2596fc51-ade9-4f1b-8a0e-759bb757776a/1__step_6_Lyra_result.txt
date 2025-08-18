@@ -1,0 +1,61 @@
+{
+  "collaboration_prompt_for_kodax": {
+    "title": "Enabling Real-World Prompt Testing and Refinement for Image Recognition",
+    "context": "Kodax, your progress on architecting the system and implementing the backend logic, including the `mlEngineClient.js` and `recognitionService.js`, is well noted. These components correctly orchestrate the workflow for image recognition as defined by my prompts. However, the `mlEngineClient` currently uses mock responses for the AI model interactions. For me (Lyra, the Prompt Engineer) to effectively 'test, iterate, and refine the image recognition prompts based on real-world performance and testing data to improve accuracy,' we need to transition from these mocks to actual AI model execution.",
+    "objective": "To enable comprehensive testing and iterative refinement of the image recognition prompts by integrating a live AI model and establishing robust data collection mechanisms for performance analysis and user feedback.",
+    "actions_for_kodax": [
+      {
+        "step_number": 1,
+        "name": "Integrate Live AI Model for Prompt Execution",
+        "description": "Replace the mock functions within `clients/mlEngineClient.js` (and any other relevant service layers) with actual calls to a deployed or locally running AI model. This model must be capable of executing the logic defined by Lyra's prompt workflow steps (Image Feature Extraction, Query Generation, Similarity Assessment, Recognition Decision).",
+        "details": [
+          "**For Step 1 (Live Image Feature Extraction and Description):** Implement the `analyzeImage` function to send the raw image data to a multimodal AI model (e.g., a fine-tuned CLIP or a large vision-language model) and retrieve its textual description, extracted keywords, and a high-dimensional image embedding vector. The output MUST adhere to the JSON schema defined in Lyra's `1_live_image_analysis` step.",
+          "**For Step 2 (Database Query Generation):** Implement the `generateQuery` function to leverage the analysis results (especially keywords and the image embedding) to construct effective database queries. If the AI model can generate semantic query embeddings, utilize them. The output MUST adhere to Lyra's `2_database_query_generation` schema.",
+          "**For Step 3 (Candidate Image Comparison and Similarity Scoring):** Implement the `assessSimilarity` function. This will involve comparing the live image's features (embedding, description, keywords) against the retrieved candidate images' data (embeddings, captions, keywords). This comparison should be performed by the AI model or a dedicated similarity scoring module. The output MUST adhere to Lyra's `3_similarity_assessment` schema, including accurate similarity scores and justifications.",
+          "**For Step 4 (Final Recognition Decision and Confidence):** Implement the `makeDecision` function to apply the recognition and delta thresholds on the ranked similarity scores. This function should accurately determine if a confident match exists or if closest matches should be presented. The output MUST adhere to Lyra's `4_recognition_decision` schema.",
+          "Ensure that the AI model outputs strictly conform to the JSON schemas provided in Lyra's prompt definitions. Any deviation will break the workflow."
+        ],
+        "expected_outcome": "The `mlEngineClient` successfully interacts with a live AI model, and the image recognition workflow produces real, dynamic results based on image inputs."
+      },
+      {
+        "step_number": 2,
+        "name": "Prepare Diverse Testing Data Set",
+        "description": "Curate a representative dataset of images with corresponding ground truth labels/captions. This dataset will be used for quantitative testing of prompt performance.",
+        "details": [
+          "Include a variety of image types (objects, scenes, varying lighting conditions, different angles).",
+          "Ensure each image has a clear, accurate 'ground truth' caption or label that the system should ideally recognize.",
+          "Consider edge cases and challenging images (e.g., blurry images, partially obscured objects, visually similar but semantically different items)."
+        ],
+        "expected_outcome": "A structured dataset (e.g., CSV, JSON file) available for automated testing and manual review, linking test images to their expected recognition outcomes."
+      },
+      {
+        "step_number": 3,
+        "name": "Implement Performance Logging and Monitoring",
+        "description": "Enhance the backend to log key information at each step of Lyra's prompt workflow. This data is critical for analyzing prompt effectiveness and identifying areas for improvement.",
+        "details": [
+          "**Input/Output Logging:** Log the inputs sent to and outputs received from each prompt step of the AI model (e.g., the `textual_description`, `extracted_keywords` from step 1; the generated `keyword_query` and `semantic_query_vector` from step 2; the `similarity_scores` and `justifications` from step 3; the final `recognition_status` and `explanation` from step 4).",
+          "**Performance Metrics:** Implement logging for key performance indicators such as:",
+          "  - Success rate of recognition (when a confident match is correctly identified).",
+          "  - Accuracy of `extracted_keywords` (can be qualitatively assessed initially).",
+          "  - Relevance of retrieved candidates (from database queries).",
+          "  - Distribution of `similarity_scores` for correct vs. incorrect matches.",
+          "  - Confidence calibration (how well confidence scores align with actual correctness).",
+          "Utilize the `logger` utility you've already set up (`utils/logger.js`) and consider integrating a more robust logging solution for production (e.g., Winston, ELK stack)."
+        ],
+        "expected_outcome": "Detailed logs and potentially a basic dashboard or report that allows Lyra to track the performance of the prompt workflow across various inputs."
+      },
+      {
+        "step_number": 4,
+        "name": "Ensure Robust User Feedback Integration",
+        "description": "Confirm the full integration of the user feedback mechanism designed by Aurora and implemented in your frontend and backend. This provides invaluable real-world performance data.",
+        "details": [
+          "Verify that the `feedback` table in the database (`feedbackRepository.js`) correctly captures `image_id`, `is_correct`, and `user_correction`.",
+          "Ensure the frontend (`ResultsPage.jsx`) correctly sends the `image_id` of the recognized/closest matched image along with the feedback (`is_correct`, `user_correction`).",
+          "This user-provided feedback will serve as crucial 'real-world performance data' for prompt refinement."
+        ],
+        "expected_outcome": "A fully functional feedback loop where user input on recognition accuracy is reliably captured and stored for analysis."
+      }
+    ],
+    "collaboration_strategy": "Once these integrations are complete and we have initial real-world data and logs, I will analyze the system's performance. Based on this analysis (e.g., identifying patterns in incorrect recognitions, low confidence scores, or irrelevant query results), I will propose specific refinements to the prompt instructions, thresholds, or even the underlying AI model's interaction logic. We will then iterate by deploying these refined prompts and re-evaluating performance. This iterative process, driven by data and feedback, will be key to improving the overall accuracy of the image recognition system."
+  }
+}

@@ -1,0 +1,167 @@
+{
+  "brand_kit": {
+    "logo": {
+      "name": "NexusFlow",
+      "description": "A minimalist, abstract representation of interconnected nodes and flowing data. The core forms are clean circles and flowing lines, suggesting seamless communication and hierarchical structure. The logo is designed to be scalable and recognizable across various digital interfaces.",
+      "visual_elements": [
+        "Concentric circles representing hierarchical levels.",
+        "Flowing lines connecting the circles, symbolizing data and task flow.",
+        "A subtle gradient to suggest depth and dynamism."
+      ]
+    },
+    "color_palette": {
+      "primary": "#4A90E2",
+      "secondary": "#50E3C2",
+      "accent": "#F5A623",
+      "neutral_dark": "#2E3A46",
+      "neutral_medium": "#8898A8",
+      "neutral_light": "#F8F9FA",
+      "success": "#28A745",
+      "warning": "#FFC107",
+      "danger": "#DC3545",
+      "description": "A palette that balances professionalism with a touch of modern vibrancy. The primary blue signifies trust and efficiency, while the secondary teal offers a complementary, energetic feel. Accent colors are used sparingly for calls to action or important status indicators. Neutrals provide a clean, sophisticated backdrop, ensuring readability and focus."
+    },
+    "typography": {
+      "primary_font": {
+        "name": "Inter",
+        "weights": ["400", "500", "600", "700"],
+        "usage": "Headings, navigation, key UI elements. Provides excellent readability and a modern, clean aesthetic."
+      },
+      "secondary_font": {
+        "name": "Roboto",
+        "weights": ["300", "400", "500"],
+        "usage": "Body text, descriptions, labels. Offers great legibility for longer content and ensures accessibility."
+      },
+      "display_styles": {
+        "h1": {"font_family": "Inter", "font_weight": "700", "font_size": "36px"},
+        "h2": {"font_family": "Inter", "font_weight": "600", "font_size": "28px"},
+        "h3": {"font_family": "Inter", "font_weight": "600", "font_size": "22px"},
+        "body_large": {"font_family": "Roboto", "font_weight": "400", "font_size": "18px"},
+        "body_medium": {"font_family": "Roboto", "font_weight": "400", "font_size": "16px"},
+        "body_small": {"font_family": "Roboto", "font_weight": "400", "font_size": "14px"},
+        "label": {"font_family": "Inter", "font_weight": "500", "font_size": "14px"}
+      }
+    },
+    "iconography": {
+      "style": "lineal",
+      "color": "#8898A8",
+      "size": "24px",
+      "description": "Clean, consistent line icons that complement the overall minimalist aesthetic. Icons are designed for clarity and universal understanding, using the neutral-medium color for general UI elements and primary/secondary colors for interactive states."
+    }
+  },
+  "ui_flow": {
+    "dashboard_overview": {
+      "name": "Dashboard Overview",
+      "description": "The landing page providing a high-level summary of the AI team's status, active tasks, and overall system health. Designed for quick comprehension and immediate insight.",
+      "components": [
+        {"name": "Header", "elements": ["Logo", "Navigation Menu (Overview, Agents, Tasks, Logs, Settings)", "User Profile/Status"]},
+        {"name": "System Status Panel", "elements": ["Overall Health Indicator (Online/Offline/Degraded)", "Active Agents Count", "Running Tasks Count", "Recent Activity Feed"]},
+        {"name": "Agent Hierarchy Visualization", "elements": ["Interactive tree or graph view of agent relationships", "Status indicators for each agent"]},
+        {"name": "Task Overview", "elements": ["Summary cards for tasks by status (Pending, In Progress, Completed, Blocked)", "Quick links to detailed task views"]},
+        {"name": "Communication Log Snippet", "elements": ["Latest 5-10 system messages or alerts"]}
+      ],
+      "accessibility_considerations": [
+        "Sufficient color contrast for all text and interactive elements.",
+        "Keyboard navigability for all components.",
+        "Clear focus indicators.",
+        "ARIA attributes for screen reader compatibility."
+      ]
+    },
+    "agent_management": {
+      "name": "Agent Management",
+      "description": "Detailed view and management interface for individual AI agents within the hierarchy.",
+      "components": [
+        {"name": "Agent List", "elements": ["Search/Filter by role, status, name", "Table view with key agent details (Name, Role, Status, Assigned Tasks)"]},
+        {"name": "Agent Detail View (Modal or Side Panel)", "elements": ["Agent Name & ID", "Role & Capabilities", "Current Status (Active, Idle, Error)", "Task History", "Communication Log for this Agent", "Configuration Options (if applicable)"]}
+      ],
+      "accessibility_considerations": [
+        "Sortable and filterable lists for efficient data discovery.",
+        "Clear visual distinction between agent states.",
+        "Accessible modals or side panels with proper focus management."
+      ]
+    },
+    "task_management": {
+      "name": "Task Management",
+      "description": "Interface for monitoring, assigning, and managing individual tasks across the AI team.",
+      "components": [
+        {"name": "Task List", "elements": ["Filter by status, assignee, priority, deadline", "Sortable columns (Task ID, Name, Assignee, Status, Due Date)"]},
+        {"name": "Task Detail View (Modal or Page)", "elements": ["Task ID, Name, Description", "Assigned Agent(s)", "Status (Pending, In Progress, Blocked, Awaiting Review, Completed, Failed)", "Dependencies", "Deadline & ETA", "Progress Updates History", "Output Viewer/Link", "Feedback/Revision Controls"]},
+        {"name": "Task Assignment Interface", "elements": ["Form to create new tasks or assign existing ones", "Agent selection dropdown/search", "Input fields for task details (description, context, output format, deadline)"]}
+      ],
+      "accessibility_considerations": [
+        "Clear status indicators using color and icons (with ARIA labels).",
+        "Accessible date pickers and form elements.",
+        "Ability to view task details without losing context of the list."
+      ]
+    },
+    "communication_logs": {
+      "name": "Communication Logs",
+      "description": "A comprehensive log of all messages exchanged between agents and the orchestration system.",
+      "components": [
+        {"name": "Log Viewer", "elements": ["Timestamped messages", "Filter by sender, recipient, message type, task ID", "Search functionality", "Detailed view of message payload"]},
+        {"name": "Message Formatting", "elements": ["Clear visual distinction between different message types (e.g., TASK_ASSIGNMENT, PROGRESS_UPDATE, ERROR_REPORT)", "Syntax highlighting for code/data payloads"]},
+        {"name": "Alerts/Notifications", "elements": ["Prominent display of critical messages (e.g., ERROR_REPORT, blocker notifications)"]}
+      ],
+      "accessibility_considerations": [
+        "Readable log entries with appropriate line spacing.",
+        "Keyboard navigation through log entries and filters.",
+        "Accessible filtering and search controls."
+      ]
+    }
+  },
+  "wireframes": [
+    {
+      "name": "Dashboard - Overview",
+      "description": "Wireframe for the main dashboard, showing layout of key sections: Header, System Status, Hierarchy Overview, Task Summary, and Activity Feed.",
+      "layout": [
+        {"type": "Header", "position": "Top", "height": "60px"},
+        {"type": "Sidebar Navigation", "position": "Left", "width": "250px"},
+        {"type": "Main Content Area", "position": "Center", "layout": [
+          {"type": "Section", "title": "System Status", "height": "100px"},
+          {"type": "Section", "title": "Agent Hierarchy", "height": "300px"},
+          {"type": "Section", "title": "Task Summary", "height": "200px"},
+          {"type": "Section", "title": "Recent Activity", "height": "150px"}
+        ]}
+      ]
+    },
+    {
+      "name": "Task Management - List View",
+      "description": "Wireframe for the task list, featuring a table with sortable columns and filtering options.",
+      "layout": [
+        {"type": "Header", "position": "Top", "height": "60px"},
+        {"type": "Sidebar Navigation", "position": "Left", "width": "250px"},
+        {"type": "Main Content Area", "position": "Center", "layout": [
+          {"type": "Controls Bar", "elements": ["Search", "Filters", "Add Task Button"], "height": "50px"},
+          {"type": "Table", "columns": ["Task ID", "Name", "Assignee", "Status", "Due Date"], "height": "auto"}
+        ]}
+      ]
+    },
+    {
+      "name": "Task Detail - Modal",
+      "description": "Wireframe for a modal displaying the details of a single task.",
+      "layout": [
+        {"type": "Modal Window", "size": "Large", "content": [
+          {"type": "Header", "title": "Task Details", "elements": ["Close Button"]},
+          {"type": "Section", "title": "Task Information", "elements": ["ID", "Name", "Description", "Assignee", "Status", "Dependencies", "Deadline"]},
+          {"type": "Section", "title": "Progress & Output", "elements": ["Progress Bar", "Update History", "Output Viewer"]},
+          {"type": "Section", "title": "Actions", "elements": ["Edit", "Provide Feedback", "Reassign"]}
+        ]}
+      ]
+    }
+  ],
+  "mockups": [
+    {
+      "name": "Dashboard - Overview Mockup",
+      "description": "A high-fidelity mockup of the Dashboard Overview, applying the brand kit elements.",
+      "visual_description": "The header uses the primary blue (#4A90E2) with white text for navigation. The 'NexusFlow' logo is placed top-left. The main content area uses a light gray background (#F8F9FA). The System Status panel features key metrics with icons and status indicators (e.g., green dot for 'Online'). The Agent Hierarchy is visualized as a clean, interactive tree structure using shades of blue and teal. Task Summary cards use accent colors (#F5A623) for 'In Progress' and green (#28A745) for 'Completed'. Typography follows the defined styles, with 'Inter' for headings and 'Roboto' for body text. Icons are lineal and use neutral colors.",
+      "components_highlighted": ["Header", "System Status Panel", "Agent Hierarchy Visualization", "Task Summary Cards"]
+    },
+    {
+      "name": "Task Management - List & Detail Mockup",
+      "description": "A mockup demonstrating the Task Management interface, showing the list view and an open task detail modal.",
+      "visual_description": "The task list is presented in a clean table with the primary blue (#4A90E2) as header background. Task statuses are clearly indicated with colored badges (e.g., 'In Progress' - teal #50E3C2, 'Blocked' - warning yellow #FFC107). The Task Detail modal uses the neutral dark (#2E3A46) for section titles and neutral medium (#8898A8) for labels, with body text in Roboto. Interactive elements like buttons use primary and accent colors. The output viewer area is styled for readability, potentially with code syntax highlighting if the output is code.",
+      "components_highlighted": ["Task List Table", "Status Badges", "Task Detail Modal"]
+    }
+  ],
+  "design_rationale": "The design aims to create an intuitive and efficient interface for managing complex AI team orchestration. The clean aesthetic, informed by the 'minimally natural' design principle, reduces cognitive load and allows users to focus on critical information. The chosen color palette balances professionalism with clarity, using vibrant accents to draw attention to important status updates and actions. Typography is selected for optimal readability across various screen sizes and user needs. The UI flow prioritizes quick access to key information, with detailed views available upon request, supporting both overview and in-depth analysis. Accessibility is a core consideration, ensuring the platform is usable by all team members."
+}

@@ -1,0 +1,131 @@
+{
+  "integration_plan": {
+    "sub_task": "Integrate the API client and the finalized prompts into the application's backend logic. Connect the front-end UI to trigger the appropriate API calls and display the results.",
+    "backend_integration": {
+      "description": "Combine the API client module (developed by Kodax) with the finalized prompt structures (refined by Lyra) to create a cohesive backend service for the Humor Evaluator.",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Instantiate the `HumorEvaluatorApiClient` in the backend service layer.",
+          "details": "Ensure the API key is securely loaded from environment variables.",
+          "responsible": "Kodax",
+          "dependencies": ["Develop API Client Module"]
+        },
+        {
+          "step_number": 2,
+          "action": "Create backend service functions that utilize the API client to interact with `https://ai.violass.club/v1`.",
+          "details": "These functions will encapsulate the finalized prompts and handle request/response mapping.",
+          "functions": [
+            {
+              "name": "getNewJoke",
+              "uses_prompt": "joke_generation_prompt",
+              "calls_api_method": "generate_joke",
+              "description": "Fetches a new joke using the joke generation prompt."
+            },
+            {
+              "name": "evaluateJokeFeedback",
+              "uses_prompt": "feedback_analysis_prompt",
+              "calls_api_method": "analyze_feedback",
+              "description": "Analyzes user feedback using the feedback analysis prompt. Takes joke, feedback text, and rating as input."
+            },
+            {
+              "name": "fetchRecommendations",
+              "uses_prompt": null,
+              "calls_api_method": "get_recommendations",
+              "description": "Retrieves personalized recommendations for a given user ID. This endpoint does not directly use a prompt string in the same way as generation/analysis, but relies on the API's internal logic.",
+              "notes": "The prompt for generating *recommendation content* (as per Lyra's `recommendations_generation_prompt`) would likely be handled by a separate LLM call, potentially triggered after feedback analysis or user interaction, and then stored or used to populate user profiles for the `get_recommendations` API call."
+            }
+          ],
+          "responsible": "Kodax",
+          "dependencies": ["Develop API Client Module", "Finalize Prompts"]
+        },
+        {
+          "step_number": 3,
+          "action": "Implement error handling for API calls within the backend services.",
+          "details": "Catch errors from the API client, map them to user-friendly messages, and ensure graceful failure.",
+          "responsible": "Kodax",
+          "dependencies": ["Develop API Client Module", "Create Backend Service Functions"]
+        }
+      ]
+    },
+    "frontend_integration": {
+      "description": "Connect the React front-end components (designed by Aurora, planned by Kodax) to the backend service functions to enable user interaction and display results.",
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Integrate `HumorEvaluatorApiClient` into the frontend application context or service layer.",
+          "details": "Make the API client accessible to components that need to make requests.",
+          "responsible": "Kodax",
+          "dependencies": ["Develop API Client Module (Frontend Usage)"]
+        },
+        {
+          "step_number": 2,
+          "action": "Implement UI components based on Aurora's design specifications.",
+          "details": "Create `JokeCard`, `FeedbackConfirmation`, and `RecommendationList` components. Ensure they adhere to the brand kit and accessibility guidelines.",
+          "responsible": "Kodax",
+          "dependencies": ["Design User Interface and Flow", "Implement Front-end UI Components"]
+        },
+        {
+          "step_number": 3,
+          "action": "Connect UI components to backend service functions (or directly to API client methods if no separate backend service layer is used for frontend communication).",
+          "details": "Wire up event handlers (e.g., 'Next Joke' button click, 'Submit Feedback' button click) to call the respective backend functions/API client methods.",
+          "example_connections": [
+            {"component": "JokeCard", "ui_event": "Next Joke button click", "calls": "backendService.getNewJoke() or apiClient.generateJoke()"},
+            {"component": "JokeCard", "ui_event": "Submit Feedback button click", "calls": "backendService.evaluateJokeFeedback(joke, feedback, rating) or apiClient.analyzeFeedback(joke, feedback, rating)"},
+            {"component": "RecommendationList", "ui_event": "Component mount", "calls": "backendService.fetchRecommendations(userId) or apiClient.getRecommendations(userId)"}
+          ],
+          "responsible": "Kodax",
+          "dependencies": ["Create Backend Service Functions", "Implement UI Components"]
+        },
+        {
+          "step_number": 4,
+          "action": "Implement state management to handle data flow and UI updates.",
+          "details": "Manage the current joke, user feedback, analysis results, and recommendations. Update the UI accordingly when API calls complete or fail.",
+          "responsible": "Kodax",
+          "dependencies": ["Connect UI Components to Backend"]
+        },
+        {
+          "step_number": 5,
+          "action": "Display results from API calls in the UI.",
+          "details": "Render the generated joke, feedback analysis results (sentiment, key points, recommendations), and confirmation messages according to the design.",
+          "responsible": "Kodax",
+          "dependencies": ["Implement UI Components", "Implement State Management"]
+        }
+      ]
+    },
+    "overall_workflow_integration": {
+      "description": "Ensures a seamless flow from user interaction through the API to displaying results.",
+      "sequence": [
+        "User requests a joke (e.g., clicks 'Next Joke').",
+        "Frontend component calls `getNewJoke`.",
+        "Backend service uses `HumorEvaluatorApiClient` with `joke_generation_prompt` to call `https://ai.violass.club/v1/jokes`.",
+        "API returns a joke object.",
+        "Backend service returns joke to frontend.",
+        "Frontend component displays the joke and enables feedback input.",
+        "User provides rating and feedback, then clicks 'Submit Feedback'.",
+        "Frontend component calls `evaluateJokeFeedback` with joke, feedback, and rating.",
+        "Backend service uses `HumorEvaluatorApiClient` with `feedback_analysis_prompt` to call `https://ai.violass.club/v1/feedback/analyze`.",
+        "API returns analysis results (sentiment, key points, recommendations).",
+        "Backend service returns analysis results to frontend.",
+        "Frontend component displays confirmation and potentially recommendations, updating the UI.",
+        "If recommendations are requested (e.g., after a session or specific trigger), frontend calls `fetchRecommendations`.",
+        "Backend service uses `HumorEvaluatorApiClient` to call `https://ai.violass.club/v1/recommendations`.",
+        "API returns recommendations.",
+        "Backend service returns recommendations to frontend.",
+        "Frontend displays the recommendations."
+      ]
+    },
+    "validation_and_testing": {
+      "description": "Verification of the integrated system's functionality and adherence to requirements.",
+      "steps": [
+        "Test joke generation: Ensure jokes are displayed correctly and are relevant.",
+        "Test feedback submission: Verify that ratings and feedback are sent and analysis results are displayed.",
+        "Test recommendations: Ensure recommendations are fetched and presented as designed.",
+        "Test error handling: Simulate API errors (e.g., invalid API key, server errors) and verify graceful degradation and user feedback.",
+        "Test accessibility: Confirm keyboard navigation, screen reader compatibility, and color contrast.",
+        "Test responsiveness: Ensure the UI adapts well to different screen sizes."
+      ],
+      "responsible": "Kodax (primarily), with input from Lyra (prompt quality) and Aurora (design adherence)."
+    }
+  }
+}

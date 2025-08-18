@@ -1,0 +1,185 @@
+{
+  "refined_ai_system_prompt": "You are 'AI Nexus', an intelligent assistant designed to provide helpful, accurate, and safe responses across a wide range of topics and tasks. Your primary goal is to seamlessly assist users by understanding their queries, generating relevant outputs, and facilitating an intuitive conversational experience.\n\n**Key Behavioral Guidelines:**\n\n1.  **Understand and Clarify:**\n    *   Analyze user input to infer intent and context.\n    *   If a request is ambiguous or lacks necessary information, politely ask for clarification or provide reasonable assumptions.\n    *   Acknowledge complex requests and indicate processing if necessary (though frontend will typically handle visual loading indicators).\n\n2.  **Provide Clear and Relevant Responses:**\n    *   Generate concise, direct, and accurate answers.\n    *   Tailor the response format to the nature of the query (e.g., plain text for general questions, structured data for specific queries, code blocks for programming tasks, image descriptions or parameters for image generation requests).\n    *   Prioritize user-friendliness and readability.\n\n3.  **Maintain Context:**\n    *   Recall previous turns in the conversation to maintain coherence and allow for iterative refinement of requests.\n    *   Do not repeat information unnecessarily.\n\n4.  **Handle Diverse Output Types:**\n    *   Be prepared to generate and structure responses that can be displayed as:\n        *   **Text:** General answers, summaries, creative writing.\n        *   **Images (Conceptual/Parameters):** Provide descriptions or parameters for image generation; the frontend will handle displaying the actual image based on these.\n        *   **Structured Data:** JSON, CSV, or tables for analysis or specific data retrieval.\n        *   **Code:** Programming snippets, explanations, with language specification.\n        *   **Multimodal:** A combination of the above, delivered as distinct parts.\n\n5.  **Safety and Ethics:**\n    *   Always adhere to ethical guidelines and safety protocols.\n    *   Avoid generating harmful, biased, or inappropriate content.\n    *   If a request is inappropriate or unsafe, politely decline and explain why.\n\n6.  **Error Handling & Limitations:**\n    *   If unable to fulfill a request due to internal limitations, processing errors, or policy violations, clearly and politely communicate the issue to the user.\n    *   Suggest alternative approaches or capabilities where possible.\n\n**Constraint:** Your output must be structured precisely according to the API contract defined with Kodax, ensuring the frontend can correctly parse and display your responses.",
+  "api_contract": {
+    "endpoint": "POST /api/chat/complete",
+    "request_body": {
+      "description": "JSON payload sent from the frontend to the AI system to initiate or continue a conversation.",
+      "schema": {
+        "conversation_id": "string | null",
+        "notes": "Optional. Null for a new conversation; existing ID to continue a thread.",
+        "user_id": "string",
+        "prompt": {
+          "text": "string",
+          "notes": "The user's primary text input.",
+          "attachments": [
+            {
+              "type": "string",
+              "notes": "e.g., 'image', 'document', 'audio'",
+              "url": "string",
+              "notes": "URL to the pre-uploaded file (e.g., S3 URL or internal file service).",
+              "filename": "string",
+              "metadata": {}
+            }
+          ],
+          "parameters": {},
+          "notes": "Optional. Key-value pairs for specific AI model parameters (e.g., 'temperature', 'max_tokens', 'model_variant')."
+        },
+        "context": {
+          "notes": "Optional. Additional contextual information from the client environment.",
+          "client_timestamp": "string",
+          "notes": "ISO 8601 timestamp of when the request was sent from the client.",
+          "device_info": "string",
+          "notes": "e.g., 'web browser', 'mobile app (iOS)', 'mobile app (Android)'",
+          "ui_language": "string",
+          "notes": "e.g., 'en-US', 'es-ES'"
+        }
+      },
+      "example": {
+        "conversation_id": null,
+        "user_id": "user-123",
+        "prompt": {
+          "text": "Generate a short story about a space explorer finding a new planet.",
+          "attachments": [],
+          "parameters": {
+            "genre": "sci-fi",
+            "length": "short"
+          }
+        },
+        "context": {
+          "client_timestamp": "2023-10-27T10:30:00Z",
+          "device_info": "web browser",
+          "ui_language": "en-US"
+        }
+      }
+    },
+    "response_body": {
+      "description": "JSON payload returned from the AI system to the frontend.",
+      "schema": {
+        "conversation_id": "string",
+        "notes": "Unique ID for the conversation (newly generated if request had null).",
+        "message_id": "string",
+        "notes": "Unique ID for this specific AI response within the conversation.",
+        "timestamp": "string",
+        "notes": "ISO 8601 timestamp of the AI response generation.",
+        "status": "string",
+        "notes": "Current state of the response: 'success', 'error', 'processing'. 'processing' can be used for initial acknowledgments or streaming starts.",
+        "response_type": "string",
+        "notes": "Indicates the primary type of content: 'text', 'image', 'structured_data', 'code', 'multimodal', 'system_message'.",
+        "content": {
+          "notes": "The actual AI-generated output, structured based on 'response_type'.",
+          "text": "string | null",
+          "notes": "Main textual content, if response_type is 'text' or part of 'multimodal'.",
+          "image_url": "string | null",
+          "notes": "URL to a generated image, if response_type is 'image' or part of 'multimodal'.",
+          "data": "object | array | null",
+          "notes": "Structured data (e.g., JSON object/array), if response_type is 'structured_data'.",
+          "code": {
+            "notes": "Code block details, if response_type is 'code'.",
+            "language": "string",
+            "notes": "e.g., 'python', 'javascript', 'json', 'markdown'",
+            "code_snippet": "string"
+          },
+          "multimodal_parts": [
+            {
+              "type": "string",
+              "notes": "Type of this specific part: 'text', 'image', 'code'.",
+              "value": "string"
+            }
+          ],
+          "notes": "Array for complex, mixed content responses, if response_type is 'multimodal'. Each part defines its type and value (text, image URL, code snippet)."
+        },
+        "metadata": {
+          "notes": "Optional. Additional AI model metadata.",
+          "model_name": "string",
+          "token_usage": {
+            "prompt_tokens": "integer",
+            "completion_tokens": "integer",
+            "total_tokens": "integer"
+          },
+          "safety_flags": "array",
+          "notes": "e.g., ['safe', 'low_risk_content_detected']",
+          "processing_time_ms": "integer",
+          "notes": "Time taken by the AI system to generate the response."
+        },
+        "error": {
+          "notes": "Present only if status is 'error'.",
+          "code": "string",
+          "notes": "e.g., 'API_ERROR', 'INVALID_INPUT', 'RATE_LIMIT_EXCEEDED', 'CONTENT_FILTERED'.",
+          "message": "string",
+          "notes": "Detailed error message for debugging (internal).",
+          "user_message": "string",
+          "notes": "User-friendly error message for display (e.g., 'Sorry, I couldn't process that request. Please try again.')."
+        }
+      },
+      "example_success_text": {
+        "conversation_id": "conv-456",
+        "message_id": "msg-789",
+        "timestamp": "2023-10-27T10:30:15Z",
+        "status": "success",
+        "response_type": "text",
+        "content": {
+          "text": "Once upon a time, in the distant future, a lone space explorer named Elara stumbled upon a shimmering, crystalline planet. Its skies pulsed with ethereal light, and strange, melodic hums resonated from its surface..."
+        },
+        "metadata": {
+          "model_name": "AI-Nexus-V1",
+          "token_usage": {
+            "prompt_tokens": 20,
+            "completion_tokens": 50,
+            "total_tokens": 70
+          },
+          "safety_flags": ["safe"]
+        }
+      },
+      "example_success_multimodal": {
+        "conversation_id": "conv-457",
+        "message_id": "msg-790",
+        "timestamp": "2023-10-27T10:35:00Z",
+        "status": "success",
+        "response_type": "multimodal",
+        "content": {
+          "multimodal_parts": [
+            {
+              "type": "text",
+              "value": "Here is the image you requested, depicting a serene forest scene at dawn, along with the Python code used to generate it:"
+            },
+            {
+              "type": "image",
+              "value": "https://example.com/generated_image_123.png"
+            },
+            {
+              "type": "code",
+              "value": {
+                "language": "python",
+                "code_snippet": "import numpy as np\nimport matplotlib.pyplot as plt\n\n# Code to generate forest image (simplified)\ndef generate_forest_scene():\n    # ... complex image generation logic ...\n    return 'image_data'\n\nimage_data = generate_forest_scene()"
+              }
+            }
+          ]
+        },
+        "metadata": {
+          "model_name": "AI-Nexus-ImageGen-V2",
+          "token_usage": {
+            "prompt_tokens": 30,
+            "completion_tokens": 120,
+            "total_tokens": 150
+          },
+          "safety_flags": ["safe"]
+        }
+      },
+      "example_error": {
+        "conversation_id": "conv-458",
+        "message_id": "msg-791",
+        "timestamp": "2023-10-27T10:40:00Z",
+        "status": "error",
+        "response_type": "system_message",
+        "content": {
+          "text": null
+        },
+        "error": {
+          "code": "RATE_LIMIT_EXCEEDED",
+          "message": "User has exceeded the maximum number of requests per minute.",
+          "user_message": "It looks like you've sent too many requests recently. Please wait a moment and try again."
+        }
+      }
+    }
+  }
+}

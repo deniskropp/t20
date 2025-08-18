@@ -1,0 +1,169 @@
+{
+  "design_system": {
+    "color_palette": {
+      "primary": "#4A90E2",
+      "secondary": "#50E3C2",
+      "accent": "#F5A623",
+      "background": "#F8F9FA",
+      "surface": "#FFFFFF",
+      "text_primary": "#333333",
+      "text_secondary": "#666666",
+      "border_light": "#E0E0E0",
+      "border_dark": "#BDBDBD",
+      "error": "#D0021B",
+      "success": "#7ED321"
+    },
+    "typography": {
+      "font_family_base": "'Inter', sans-serif",
+      "font_family_heading": "'Inter', sans-serif",
+      "weights": {
+        "regular": 400,
+        "medium": 500,
+        "bold": 700
+      },
+      "sizes": {
+        "h1": "2.5rem",
+        "h2": "2rem",
+        "h3": "1.75rem",
+        "body_large": "1.125rem",
+        "body_default": "1rem",
+        "body_small": "0.875rem",
+        "button": "1rem"
+      },
+      "line_heights": {
+        "default": 1.5,
+        "heading": 1.2
+      }
+    },
+    "logo": {
+      "description": "A minimalist, abstract representation of a neural network or a connection. It could be a simple geometric shape with interconnected nodes or lines, conveying intelligence and flow. The primary color (#4A90E2) could be used for the main element, with a subtle accent of #50E3C2.",
+      "usage": "Placed in the header of the application, potentially as a favicon."
+    },
+    "component_mockups": [
+      {
+        "component_name": "Header",
+        "description": "Clean header displaying the logo and application title. Minimalistic and unobtrusive.",
+        "elements": [
+          {
+            "type": "Logo",
+            "style": "Height: 32px; Color: #4A90E2;"
+          },
+          {
+            "type": "Title",
+            "content": "AI Assistant",
+            "style": "font-family: 'Inter', sans-serif; font-weight: 700; font-size: 1.75rem; color: #333333; margin-left: 16px;"
+          }
+        ],
+        "layout": "Horizontal alignment, padding: 16px 32px;",
+        "accessibility": "Ensure sufficient contrast for the title and logo against the background. Logo should have an appropriate alt text or ARIA label."
+      },
+      {
+        "component_name": "Chat/Response Area",
+        "description": "A scrollable container for messages, designed to clearly differentiate user and AI messages.",
+        "elements": [
+          {
+            "type": "Message Bubble (User)",
+            "content": "Example user message text.",
+            "style": "background-color: #4A90E2; color: #FFFFFF; padding: 12px 20px; border-radius: 10px 10px 0 10px; margin-bottom: 16px; align-self: flex-end; max-width: 70%;",
+            "typography": "font-family: 'Inter', sans-serif; font-size: 1rem; line-height: 1.5;"
+          },
+          {
+            "type": "Message Bubble (AI)",
+            "content": "Example AI response text. This is a slightly longer response to demonstrate wrapping.",
+            "style": "background-color: #F8F9FA; color: #333333; padding: 12px 20px; border-radius: 10px 10px 10px 0; margin-bottom: 16px; align-self: flex-start; max-width: 70%; border: 1px solid #E0E0E0;",
+            "typography": "font-family: 'Inter', sans-serif; font-size: 1rem; line-height: 1.5;"
+          },
+          {
+            "type": "Loading Indicator",
+            "content": "AI is thinking...",
+            "style": "color: #666666; font-style: italic; align-self: flex-start; margin-bottom: 16px;"
+          }
+        ],
+        "layout": "Vertical stacking, padding: 16px; overflow-y: auto; flex-grow: 1;",
+        "accessibility": "Messages should be focusable. Use semantic HTML (e.g., `ul` for messages, `li` for each message). Ensure ARIA live regions for new messages if implemented dynamically."
+      },
+      {
+        "component_name": "Input Form",
+        "description": "Container for the text input field and send button.",
+        "elements": [
+          {
+            "type": "Text Input",
+            "placeholder": "Ask me anything...",
+            "style": "flex-grow: 1; padding: 12px 20px; border: 1px solid #BDBDBD; border-radius: 8px; font-size: 1rem; font-family: 'Inter', sans-serif; margin-right: 12px; outline: none; transition: border-color 0.2s ease-in-out;",
+            "focus_style": "border-color: #4A90E2;"
+          },
+          {
+            "type": "Send Button",
+            "content": "Send",
+            "style": "padding: 12px 24px; background-color: #4A90E2; color: #FFFFFF; border: none; border-radius: 8px; font-family: 'Inter', sans-serif; font-weight: 500; font-size: 1rem; cursor: pointer; transition: background-color 0.2s ease-in-out;",
+            "hover_style": "background-color: #357ABD;"
+          }
+        ],
+        "layout": "Horizontal alignment, padding: 16px 32px; width: 100%; box-sizing: border-box;",
+        "accessibility": "Input field needs a clear label (visually hidden if necessary). Button must be focusable and have clear hover/focus states. Ensure Enter key submission is also functional."
+      },
+      {
+        "component_name": "Settings Modal",
+        "description": "A modal overlay for adjusting AI parameters.",
+        "elements": [
+          {
+            "type": "Modal Header",
+            "content": "Settings",
+            "style": "font-size: 1.75rem; font-weight: 700; color: #333333; margin-bottom: 24px;"
+          },
+          {
+            "type": "Control Group (Example: Tone)",
+            "elements": [
+              {
+                "type": "Label",
+                "content": "Tone:",
+                "style": "display: block; font-size: 1rem; font-weight: 500; color: #333333; margin-bottom: 8px;"
+              },
+              {
+                "type": "Dropdown",
+                "options": ["Neutral", "Friendly", "Formal"],
+                "style": "width: 100%; padding: 10px 15px; border: 1px solid #BDBDBD; border-radius: 8px; font-size: 1rem; font-family: 'Inter', sans-serif; cursor: pointer; appearance: none; background-color: #FFFFFF; background-repeat: no-repeat; background-position: right 15px center; background-size: 12px auto; background-image: url('data:image/svg+xml;charset=utf8,<svg fill=\'%23333333\' height=\'24\' viewBox=\'0 0 24 24\' width=\'24\' xmlns=\'http://www.w3.org/2000/svg\'><path d=\'M7 10l5 5 5-5z\'/></svg>');"
+              }
+            ],
+            "style": "margin-bottom: 20px;"
+          },
+          {
+            "type": "Control Group (Example: Creativity Level)",
+            "elements": [
+              {
+                "type": "Label",
+                "content": "Creativity Level:",
+                "style": "display: block; font-size: 1rem; font-weight: 500; color: #333333; margin-bottom: 8px;"
+              },
+              {
+                "type": "Dropdown",
+                "options": ["Low", "Medium", "High"],
+                "style": "width: 100%; padding: 10px 15px; border: 1px solid #BDBDBD; border-radius: 8px; font-size: 1rem; font-family: 'Inter', sans-serif; cursor: pointer; appearance: none; background-color: #FFFFFF; background-repeat: no-repeat; background-position: right 15px center; background-size: 12px auto; background-image: url('data:image/svg+xml;charset=utf8,<svg fill=\'%23333333\' height=\'24\' viewBox=\'0 0 24 24\' width=\'24\' xmlns=\'http://www.w3.org/2000/svg\'><path d=\'M7 10l5 5 5-5z\'/></svg>');"
+              }
+            ],
+            "style": "margin-bottom: 20px;"
+          },
+          {
+            "type": "Action Buttons Container",
+            "elements": [
+              {
+                "type": "Button (Save)",
+                "content": "Save",
+                "style": "padding: 10px 20px; background-color: #50E3C2; color: #FFFFFF; border: none; border-radius: 8px; font-family: 'Inter', sans-serif; font-weight: 500; font-size: 1rem; cursor: pointer; margin-right: 12px;"
+              },
+              {
+                "type": "Button (Cancel)",
+                "content": "Cancel",
+                "style": "padding: 10px 20px; background-color: transparent; color: #666666; border: 1px solid #BDBDBD; border-radius: 8px; font-family: 'Inter', sans-serif; font-weight: 500; font-size: 1rem; cursor: pointer;"
+              }
+            ],
+            "layout": "display: flex; justify-content: flex-end; margin-top: 24px;"
+          }
+        ],
+        "layout": "Positioned centrally, background overlay, padding: 32px; border-radius: 12px; background-color: #FFFFFF; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 500px;",
+        "accessibility": "Modal should be keyboard trap. All form elements must be labeled. Focus management is critical: focus should move into the modal when opened and return to the trigger element when closed. Close button should be prominent."
+      }
+    ],
+    "thematic_cohesion": "The design embraces a 'minimally natural' aesthetic with a clean, modern feel. The color palette balances professional blues and greens with warm accents and a neutral background, creating an inviting yet efficient interface. Typography is modern and legible, prioritizing readability for long-form content and clear calls to action. The use of rounded corners and ample whitespace contributes to a sense of calm and order, making the interaction with the AI feel approachable and intuitive. The overall theme is one of clarity, intelligence, and ease of use."
+  }
+}

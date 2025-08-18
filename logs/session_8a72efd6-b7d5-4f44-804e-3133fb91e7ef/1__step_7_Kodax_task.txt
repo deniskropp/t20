@@ -1,0 +1,927 @@
+The overall goal is: 'Create an application for humor evaluation including feedback loop, strategic adjustment and genuinely fresh artificial intelligence humor.'
+
+Your role's specific goal is: 'Implement designs into clean, modular, and performant code, focusing on responsive design and accessibility.'
+Your specific sub-task is: 'Integrate the strategic adjustment system into the back-end, creating an automated workflow where user feedback continuously refines the AI's humor generation prompt over time.'
+
+The team's roles are:
+    {'roles': [{'title': 'Designer', 'description': 'Generate aesthetic layouts, color palettes, typography, and UI flows, ensuring accessibility and visual balance.'}, {'title': 'Engineer', 'description': 'Implement designs into clean, modular, and performant code, focusing on responsive design and accessibility.'}, {'title': 'Prompt Engineer', 'description': 'Structure workflows and ensure clarity in agent instructions, system prompt engineering.'}, {'title': 'Task-Agnostic Step (TAS) extractor', 'description': "Identify and extract each 'Task Agnostic Step' (TAS) towards the high-level goal."}], 'steps': [{'name': 'TASe', 'role': 'Task-Agnostic Step (TAS) extractor', 'task': 'Analyze the high-level goal to deconstruct it into a comprehensive, step-by-step plan, defining the key stages of application development from concept to deployment.'}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': "Develop the initial system prompt for the core humor generation AI. This prompt must define a unique comedic persona, establish rules for generating 'genuinely fresh' humor, and set parameters for joke structure and content."}, {'name': 'Aurora', 'role': 'Designer', 'task': 'Create high-fidelity mockups and a complete UI/UX design for the humor evaluation application. This includes the main joke display interface, an intuitive user feedback mechanism (e.g., multi-axis rating system), and the overall visual identity.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': "Develop the front-end and back-end scaffolding for the application based on Aurora's designs. This includes setting up the database schema for storing jokes and user feedback, and building the basic API endpoints."}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': 'Design the architecture for the feedback loop. Define how raw user feedback data will be quantitatively and qualitatively analyzed to create actionable insights for prompt modification.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Implement the feedback data processing pipeline. Integrate the humor generation AI via API and connect the user feedback mechanism to the database, ensuring data is stored accurately.'}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': "Create the 'strategic adjustment' meta-prompting system. This system will take the analyzed feedback insights as input and programmatically modify the core humor generation prompt to enhance its performance."}, {'name': 'Kodax', 'role': 'Engineer', 'task': "Integrate the strategic adjustment system into the back-end, creating an automated workflow where user feedback continuously refines the AI's humor generation prompt over time."}, {'name': 'Aurora', 'role': 'Designer', 'task': 'Conduct a final design review and polish the user interface. Create any necessary micro-interactions or visual feedback elements to enhance the user experience, ensuring the application is engaging and easy to use.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Deploy the fully integrated application to a production environment. Perform end-to-end testing to validate that the humor generation, feedback loop, and strategic adjustment mechanisms are all functioning cohesively.'}]}
+
+Please use the following outputs from the other agents as your input:
+
+Artifact from 1__step_0_TASe_result.txt (Task-Agnostic Step (TAS) extractor):
+[
+  {
+    "id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+    "name": "Define Objective",
+    "description": "Clearly articulate the overarching goal and specific requirements of the project. This involves understanding the desired outcome, scope, and key features, such as incorporating humor generation, feedback mechanisms, and adaptive adjustments.",
+    "category": "Init",
+    "purpose": "Establish a clear understanding of the project's goals and scope.",
+    "keywords": [
+      "objective",
+      "goal",
+      "scope",
+      "definition",
+      "requirements"
+    ],
+    "applicability_notes": "This is a foundational step applicable to any project, ensuring alignment before proceeding with detailed planning or execution.",
+    "examples_of_usage": [
+      "Defining the goal for developing a new software application.",
+      "Clarifying the objectives for a marketing campaign.",
+      "Setting the scope for a research project."
+    ],
+    "typical_inputs": [
+      "High-level project idea",
+      "Stakeholder requirements"
+    ],
+    "typical_outputs": [
+      "Defined project objective",
+      "Project scope statement"
+    ]
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+    "name": "Design Core Functionality",
+    "description": "Conceptualize and design the primary features and components of the system. This includes defining the architecture for generating novel content, establishing a mechanism for collecting user input and feedback, and planning for adaptive system adjustments.",
+    "category": "Design",
+    "purpose": "Outline the technical and functional design of the core application features.",
+    "keywords": [
+      "design",
+      "architecture",
+      "functionality",
+      "components",
+      "features",
+      "feedback loop",
+      "AI"
+    ],
+    "applicability_notes": "This step is crucial for any system that requires complex processing, user interaction, and iterative improvement based on data.",
+    "examples_of_usage": [
+      "Designing the core logic for a recommendation engine.",
+      "Architecting a system for automated content generation.",
+      "Planning the user interaction flow for a data analysis tool."
+    ],
+    "typical_inputs": [
+      "Defined project objective",
+      "User personas",
+      "Technical constraints"
+    ],
+    "typical_outputs": [
+      "System architecture diagram",
+      "Feature specifications",
+      "User interface mockups"
+    ]
+  },
+  {
+    "id": "b2c3d4e5-f6a7-8901-2345-67890abcdef0",
+    "name": "Develop AI Model",
+    "description": "Create or configure the artificial intelligence component responsible for generating novel content. This involves defining its operational parameters, training data (if applicable), and ensuring it aligns with the desired output characteristics, such as originality and specific style.",
+    "category": "Development",
+    "purpose": "Build and configure the AI model for content generation.",
+    "keywords": [
+      "AI",
+      "model development",
+      "configuration",
+      "training",
+      "content generation",
+      "prompt engineering"
+    ],
+    "applicability_notes": "Applicable to projects involving machine learning, natural language processing, or any system requiring intelligent content creation.",
+    "examples_of_usage": [
+      "Developing a natural language generation model for chatbots.",
+      "Training an image generation AI.",
+      "Configuring a recommendation algorithm."
+    ],
+    "typical_inputs": [
+      "System architecture",
+      "AI model specifications",
+      "Training datasets (if applicable)"
+    ],
+    "typical_outputs": [
+      "Trained AI model",
+      "Model configuration parameters",
+      "API for AI interaction"
+    ]
+  },
+  {
+    "id": "c3d4e5f6-a7b8-9012-3456-7890abcdef01",
+    "name": "Implement Feedback Mechanism",
+    "description": "Build the interface and backend logic for users to provide feedback on the generated content. This includes designing intuitive input methods and storing the feedback data in a structured format for subsequent analysis.",
+    "category": "Development",
+    "purpose": "Enable users to provide structured feedback on system output.",
+    "keywords": [
+      "feedback",
+      "user input",
+      "data collection",
+      "interface",
+      "storage"
+    ],
+    "applicability_notes": "Essential for any system that benefits from user interaction and iterative improvement based on performance metrics.",
+    "examples_of_usage": [
+      "Implementing a rating system for articles.",
+      "Creating a form for users to report bugs.",
+      "Developing a mechanism for users to suggest improvements."
+    ],
+    "typical_inputs": [
+      "User interface design",
+      "Data storage schema",
+      "AI-generated content"
+    ],
+    "typical_outputs": [
+      "Feedback data",
+      "Populated feedback database"
+    ]
+  },
+  {
+    "id": "d4e5f6a7-b8c9-0123-4567-890abcdef012",
+    "name": "Analyze Feedback Data",
+    "description": "Process and analyze the collected user feedback to derive actionable insights. This involves identifying patterns, trends, and areas for improvement in the AI's performance or the system's overall functionality.",
+    "category": "Analysis",
+    "purpose": "Extract meaningful insights from user feedback.",
+    "keywords": [
+      "analysis",
+      "feedback processing",
+      "data interpretation",
+      "insights",
+      "patterns"
+    ],
+    "applicability_notes": "Crucial for data-driven decision-making and iterative refinement in any system that collects user input.",
+    "examples_of_usage": [
+      "Analyzing customer survey results.",
+      "Interpreting user engagement metrics.",
+      "Identifying common issues from bug reports."
+    ],
+    "typical_inputs": [
+      "Feedback data",
+      "Performance metrics"
+    ],
+    "typical_outputs": [
+      "Actionable insights",
+      "Performance reports",
+      "Identified areas for improvement"
+    ]
+  },
+  {
+    "id": "e5f6a7b8-c9d0-1234-5678-90abcdef0123",
+    "name": "Implement Strategic Adjustment",
+    "description": "Develop and integrate a system that uses analyzed feedback insights to automatically adjust the core AI model's parameters or prompts. This creates a continuous improvement loop, enhancing the quality and relevance of the generated content over time.",
+    "category": "Development",
+    "purpose": "Automate the refinement of AI performance based on feedback.",
+    "keywords": [
+      "adjustment",
+      "strategic adjustment",
+      "automation",
+      "AI refinement",
+      "feedback loop",
+      "prompt modification"
+    ],
+    "applicability_notes": "Key for systems that require ongoing optimization and adaptation to user behavior or changing requirements.",
+    "examples_of_usage": [
+      "Adjusting recommendation algorithms based on user interactions.",
+      "Modifying chatbot responses based on conversation analysis.",
+      "Fine-tuning parameters of a predictive model."
+    ],
+    "typical_inputs": [
+      "Actionable insights",
+      "AI model configuration",
+      "Core AI system"
+    ],
+    "typical_outputs": [
+      "Adjusted AI model parameters",
+      "Updated AI prompts",
+      "Refined AI behavior"
+    ]
+  },
+  {
+    "id": "f6a7b8c9-d0e1-2345-6789-0abcdef01234",
+    "name": "Integrate Components",
+    "description": "Connect all developed components, including the AI model, feedback mechanism, and adjustment system, into a cohesive application. Ensure seamless data flow and functional interdependencies between modules.",
+    "category": "Integration",
+    "purpose": "Combine all system parts into a working application.",
+    "keywords": [
+      "integration",
+      "system assembly",
+      "component connection",
+      "API integration",
+      "workflow"
+    ],
+    "applicability_notes": "A universal step in software development, ensuring all parts of the system work together correctly.",
+    "examples_of_usage": [
+      "Connecting a payment gateway to an e-commerce site.",
+      "Integrating a third-party API into a mobile app.",
+      "Linking different microservices in a distributed system."
+    ],
+    "typical_inputs": [
+      "Developed AI model",
+      "Feedback mechanism",
+      "Strategic adjustment system",
+      "Application scaffolding"
+    ],
+    "typical_outputs": [
+      "Integrated application",
+      "Functional system modules"
+    ]
+  },
+  {
+    "id": "a7b8c9d0-e1f2-3456-7890-abcdef012345",
+    "name": "Finalize UI/UX Polish",
+    "description": "Refine the user interface and user experience with final touches. This includes implementing micro-interactions, ensuring visual consistency, and optimizing for usability and aesthetic appeal based on design principles and user feedback.",
+    "category": "Design",
+    "purpose": "Enhance user experience through final UI/UX refinements.",
+    "keywords": [
+      "UI polish",
+      "UX refinement",
+      "micro-interactions",
+      "usability",
+      "visual design"
+    ],
+    "applicability_notes": "A common step in the final stages of product development to improve user satisfaction and engagement.",
+    "examples_of_usage": [
+      "Adding subtle animations to buttons.",
+      "Ensuring consistent spacing and alignment across screens.",
+      "Optimizing loading indicators for perceived performance."
+    ],
+    "typical_inputs": [
+      "Integrated application",
+      "Design guidelines",
+      "User feedback on usability"
+    ],
+    "typical_outputs": [
+      "Polished user interface",
+      "Enhanced user experience"
+    ]
+  },
+  {
+    "id": "b8c9d0e1-f2a3-4567-8901-bcdef0123456",
+    "name": "Conduct End-to-End Testing",
+    "description": "Perform comprehensive testing of the entire application to ensure all functionalities, including AI generation, feedback processing, and strategic adjustments, work correctly and cohesively in a simulated production environment.",
+    "category": "Testing",
+    "purpose": "Validate the overall functionality and integration of the application.",
+    "keywords": [
+      "testing",
+      "end-to-end testing",
+      "validation",
+      "quality assurance",
+      "integration testing"
+    ],
+    "applicability_notes": "A critical step in any development lifecycle to ensure the application meets quality standards and functions as intended.",
+    "examples_of_usage": [
+      "Testing a complete e-commerce transaction flow.",
+      "Validating a user registration and login process.",
+      "Ensuring a data processing pipeline produces correct outputs."
+    ],
+    "typical_inputs": [
+      "Integrated application",
+      "Test cases",
+      "Testing environment"
+    ],
+    "typical_outputs": [
+      "Test results",
+      "Bug reports",
+      "Validated application functionality"
+    ]
+  },
+  {
+    "id": "c9d0e1f2-a3b4-5678-9012-cdef01234567",
+    "name": "Deploy Application",
+    "description": "Release the fully tested and integrated application to the production environment, making it accessible to end-users. This includes setting up servers, configuring deployment pipelines, and monitoring the initial rollout.",
+    "category": "Deployment",
+    "purpose": "Make the application available to users in a live environment.",
+    "keywords": [
+      "deployment",
+      "release",
+      "production",
+      "launch",
+      "server setup"
+    ],
+    "applicability_notes": "The final step in bringing a software product to market or making it operational.",
+    "examples_of_usage": [
+      "Deploying a web application to a cloud server.",
+      "Releasing a mobile app to an app store.",
+      "Installing software on client machines."
+    ],
+    "typical_inputs": [
+      "Validated application build",
+      "Deployment environment configuration",
+      "Deployment strategy"
+    ],
+    "typical_outputs": [
+      "Live application",
+      "Deployment logs",
+      "Monitoring dashboard"
+    ]
+  }
+]
+
+---
+
+Artifact from 1__step_1_Lyra_result.txt (Prompt Engineer):
+{
+  "system_prompt": "You are 'Cogito', an artificial intelligence humorist. Your comedic persona is that of an Absurdist Philosopher: highly intelligent, dry-witted, and keenly observant of the logical inconsistencies, paradoxes, and mundane absurdities of human existence and technology. Your humor is designed to be thought-provoking, unexpected, and subtly surreal, rather than slapstick or overtly silly. You find humor in the intellectual and the unexpected juxtaposition of ideas.\n\nYour primary directive is to generate 'genuinely fresh' humor. To achieve this, adhere to the following rules:\n1.  **Originality First:** Never re-tell or rephrase existing jokes, memes, or common comedic tropes. Every piece of humor must be a novel creation.\n2.  **Subvert Expectations:** Set up a relatable scenario or concept, then introduce an unexpected, illogical, or absurd twist as the punchline.\n3.  **Juxtapose Disparate Ideas:** Create humor by connecting two or more seemingly unrelated concepts in a way that reveals a surprising or absurd commonality or conflict.\n4.  **Observational Depth:** Focus on subtle, often overlooked details or patterns in human behavior, technology, or the natural world, and highlight their inherent absurdity or irony.\n5.  **Avoid Clichés:** Steer clear of predictable joke structures, common setups, or punchlines that can be easily anticipated.\n6.  **No Offensive Content:** Absolutely no humor that is discriminatory, hateful, misogynistic, racist, homophobic, ableist, or targets any protected group or individual. Avoid sexually explicit, violent, or overtly political content.\n\nJoke Structure and Content Parameters:\n*   **Format:** Primarily single-line aphorisms, short setup-punchline jokes (max 2 sentences), or brief, self-contained absurd anecdotes (max 3 sentences).\n*   **Conciseness:** Be economical with words. Aim for maximum impact with minimal verbosity.\n*   **Topics:** Focus on everyday life, technology, philosophy, science, abstract concepts, and the human condition. Avoid specific current events, pop culture references that might quickly date, or highly niche topics unless explicitly requested.\n*   **Tone:** Maintain a dry, intelligent, slightly detached, and witty tone. Puns are acceptable only if they are exceptionally clever, multi-layered, and contribute to the absurdist or philosophical theme.\n\nYour goal is to make people think as much as they laugh, with a humor that feels uniquely AI-generated due to its logic-bending nature."
+}
+
+---
+
+Artifact from 1__step_2_Aurora_result.txt (Designer):
+{
+  "design_plan": [
+    {
+      "step": 1,
+      "name": "Define Visual Identity",
+      "description": "Establish a clean, minimally natural aesthetic. This involves defining the overall look and feel, including logo, color palette, and typography, to create a cohesive and engaging user experience.",
+      "deliverables": [
+        "Logo design",
+        "Color palette",
+        "Typography guidelines"
+      ]
+    },
+    {
+      "step": 2,
+      "name": "Design Main Joke Display Interface",
+      "description": "Create a high-fidelity mockup for the primary interface where users will encounter AI-generated jokes. The design should be clean, visually balanced, and prioritize readability and the presentation of the humor.",
+      "deliverables": [
+        "High-fidelity mockup of the joke display screen"
+      ]
+    },
+    {
+      "step": 3,
+      "name": "Design User Feedback Mechanism",
+      "description": "Develop an intuitive and accessible multi-axis rating system for users to provide feedback on the humor. This interface needs to be easy to understand and use, allowing for nuanced evaluation.",
+      "deliverables": [
+        "High-fidelity mockup of the feedback interface",
+        "User flow for feedback submission"
+      ]
+    },
+    {
+      "step": 4,
+      "name": "Create UI/UX Flow",
+      "description": "Map out the complete user journey through the application, from encountering a joke to providing feedback and potentially seeing how adjustments are made (even if abstractly represented). Ensure a smooth and logical flow.",
+      "deliverables": [
+        "User flow diagrams",
+        "Wireframes for key screens"
+      ]
+    },
+    {
+      "step": 5,
+      "name": "Final Polish and Accessibility Review",
+      "description": "Conduct a final review of all mockups and UI elements. Implement micro-interactions for delight and ensure all designs meet accessibility standards for visual balance, contrast, and usability, making the application engaging and easy to use for all.",
+      "deliverables": [
+        "Final UI/UX design assets",
+        "Accessibility compliance notes"
+      ]
+    }
+  ],
+  "brand_kit": {
+    "logo": {
+      "concept": "A stylized, abstract representation of a 'spark' or 'idea' that is also subtly reminiscent of a thought bubble or a subtle, knowing smile. The form will be clean, geometric, and minimalist, conveying intelligence and wit.",
+      "visual_description": "A single, unbroken line forming an upward-curving arc that then loops back on itself, creating an abstract, almost calligraphic 'S' or a stylized lightbulb filament. The negative space within the loop is as important as the line itself, suggesting an emergent idea. It will be rendered in a single, refined stroke.",
+      "usage": "Primary branding element, used as an app icon and in prominent interface locations."
+    },
+    "color_palette": {
+      "primary": "#F5F5DC",
+      "secondary": "#A9A9A9",
+      "accent": "#87CEEB",
+      "background": "#2F4F4F",
+      "text_primary": "#E0E0E0",
+      "text_secondary": "#B0B0B0",
+      "feedback_positive": "#90EE90",
+      "feedback_negative": "#F08080",
+      "description": "A palette that balances sophistication with approachability. The deep background ('background') provides a grounding, contemplative feel, while the light primary ('primary') offers clarity. The secondary ('secondary') acts as a subtle neutral, and the accent ('accent') introduces a touch of gentle optimism and intellectual curiosity, reminiscent of a clear sky or a bright idea. Text colors ensure high contrast and readability."
+    },
+    "typography": {
+      "primary_font": {
+        "family": "Inter",
+        "weights": ["400", "700"],
+        "usage": "Headings, key interface elements, and prominent text. Provides clarity and a modern, approachable feel."
+      },
+      "secondary_font": {
+        "family": "Merriweather",
+        "weights": ["300", "400"],
+        "usage": "Body text, longer explanations, and descriptive content. Adds a touch of warmth and readability for detailed information."
+      },
+      "description": "A pairing of a highly legible, modern sans-serif with a classic, readable serif font. This combination creates a sophisticated yet accessible typographic hierarchy, supporting both informational clarity and a touch of intellectual gravitas."
+    }
+  },
+  "ui_ux_design": {
+    "main_joke_display": {
+      "layout": "Centered, full-width display of the joke text. Ample white space (or dark space, given the palette) around the text to ensure focus. A subtle, animated background element could be a gentle, slow-moving gradient or abstract pattern that doesn't distract from the content.",
+      "elements": [
+        {"type": "Text Container", "style": "Generous padding, rounded corners, subtle shadow for depth."},
+        {"type": "Joke Text", "style": "Primary font, large size, centered, line-height optimized for readability."},
+        {"type": "Action Buttons", "style": "Minimalist icons for 'Next Joke' and potentially 'Share', placed discreetly below the text. Secondary font for labels if needed."}
+      ],
+      "accessibility_notes": "High contrast ratio between text and background. Sufficient line height and character spacing for comfortable reading. Clear focus states for interactive elements."
+    },
+    "feedback_mechanism": {
+      "layout": "A modal or slide-up panel that appears after a joke is displayed or upon user action. It features a multi-axis rating system.",
+      "elements": [
+        {"type": "Rating Axes", "description": "e.g., 'Originality' (1-5 stars), 'Cleverness' (1-5 stars), 'Surprise' (1-5 stars), 'Relatability' (1-5 stars). Uses distinct visual indicators for each axis, possibly with subtle icons.", "style": "Clean, interactive elements, clear visual feedback on selection."},
+        {"type": "Optional Text Feedback", "description": "A small, optional text field for users to provide qualitative comments.", "style": "Secondary font, standard input field styling."},
+        {"type": "Submit Button", "description": "Clear call to action to submit feedback.", "style": "Primary color or accent color, clear label."}
+      ],
+      "user_flow": "User views joke -> User taps 'Provide Feedback' (or it appears automatically) -> User rates joke across axes -> User optionally adds text comment -> User taps 'Submit'. Feedback panel dismisses, new joke appears.",
+      "accessibility_notes": "All rating elements are keyboard navigable and have clear ARIA labels. Sufficient touch target size for mobile. Color contrast for all interactive elements and text."
+    },
+    "ui_flow_overview": [
+      {"screen": "Welcome/Onboarding", "description": "Brief introduction to the app's purpose. Minimalist design, perhaps featuring the logo and a single call to action 'Start'."},
+      {"screen": "Joke Display", "description": "The core interface: a joke is presented, with options to get the next joke or provide feedback."},
+      {"screen": "Feedback Submission", "description": "Modal/panel for rating and optional comments."},
+      {"screen": "Post-Feedback", "description": "After submission, a subtle confirmation or animation, then the next joke is loaded. Potentially a very brief, abstract visual representation of 'learning' or 'adjustment' could be incorporated here subtly if the design allows without overcomplicating."}
+    ],
+    "micro_interactions": [
+      "Subtle animation on joke text load.",
+      "Hover states and active states for buttons.",
+      "Visual feedback on rating selection (e.g., stars filling, axis bar extending).",
+      "Smooth transitions between joke displays and feedback panels."
+    ]
+  }
+}
+
+---
+
+Artifact from 1__step_3_Kodax_result.txt (Engineer):
+{
+  "database_schema": {
+    "tables": [
+      {
+        "name": "jokes",
+        "columns": [
+          {"name": "id", "type": "INTEGER", "primary_key": true, "auto_increment": true},
+          {"name": "content", "type": "TEXT", "not_null": true},
+          {"name": "created_at", "type": "TIMESTAMP", "default": "CURRENT_TIMESTAMP"}
+        ],
+        "description": "Stores the generated jokes."
+      },
+      {
+        "name": "feedback",
+        "columns": [
+          {"name": "id", "type": "INTEGER", "primary_key": true, "auto_increment": true},
+          {"name": "joke_id", "type": "INTEGER", "foreign_key": {"table": "jokes", "column": "id"}, "not_null": true},
+          {"name": "originality_rating", "type": "INTEGER", "not_null": true},
+          {"name": "cleverness_rating", "type": "INTEGER", "not_null": true},
+          {"name": "surprise_rating", "type": "INTEGER", "not_null": true},
+          {"name": "relatability_rating", "type": "INTEGER", "not_null": true},
+          {"name": "text_feedback", "type": "TEXT"},
+          {"name": "submitted_at", "type": "TIMESTAMP", "default": "CURRENT_TIMESTAMP"}
+        ],
+        "description": "Stores user feedback for each joke."
+      }
+    ]
+  },
+  "api_endpoints": [
+    {
+      "method": "POST",
+      "path": "/api/jokes",
+      "description": "Generates and stores a new joke, returning the joke content.",
+      "request_body": null,
+      "response_body": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "integer"},
+          "content": {"type": "string"},
+          "created_at": {"type": "string", "format": "date-time"}
+        }
+      },
+      "implementation_notes": "This endpoint will interact with the AI humor generation service (Lyra's component). It will first request a joke, then store it in the 'jokes' table, and finally return the stored joke object."
+    },
+    {
+      "method": "GET",
+      "path": "/api/jokes/{id}",
+      "description": "Retrieves a specific joke by its ID.",
+      "request_params": [
+        {"name": "id", "type": "integer", "required": true, "location": "path"}
+      ],
+      "response_body": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "integer"},
+          "content": {"type": "string"},
+          "created_at": {"type": "string", "format": "date-time"}
+        }
+      },
+      "implementation_notes": "Fetches a joke from the 'jokes' table based on the provided ID."
+    },
+    {
+      "method": "POST",
+      "path": "/api/feedback",
+      "description": "Receives and stores user feedback for a given joke.",
+      "request_body": {
+        "type": "object",
+        "properties": {
+          "joke_id": {"type": "integer", "required": true},
+          "originality_rating": {"type": "integer", "required": true, "minimum": 1, "maximum": 5},
+          "cleverness_rating": {"type": "integer", "required": true, "minimum": 1, "maximum": 5},
+          "surprise_rating": {"type": "integer", "required": true, "minimum": 1, "maximum": 5},
+          "relatability_rating": {"type": "integer", "required": true, "minimum": 1, "maximum": 5},
+          "text_feedback": {"type": "string", "nullable": true}
+        }
+      },
+      "response_body": {
+        "type": "object",
+        "properties": {
+          "message": {"type": "string"},
+          "feedback_id": {"type": "integer"}
+        }
+      },
+      "implementation_notes": "Validates incoming feedback data and inserts it into the 'feedback' table. Ensures `joke_id` exists in the 'jokes' table."
+    },
+    {
+      "method": "GET",
+      "path": "/api/feedback",
+      "description": "Retrieves all feedback entries (for analysis purposes).",
+      "request_params": [],
+      "response_body": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {"type": "integer"},
+            "joke_id": {"type": "integer"},
+            "originality_rating": {"type": "integer"},
+            "cleverness_rating": {"type": "integer"},
+            "surprise_rating": {"type": "integer"},
+            "relatability_rating": {"type": "integer"},
+            "text_feedback": {"type": "string", "nullable": true},
+            "submitted_at": {"type": "string", "format": "date-time"}
+          }
+        }
+      },
+      "implementation_notes": "Fetches all records from the 'feedback' table. This endpoint would typically be secured and only accessible for internal processing or administrative use."
+    }
+  ],
+  "frontend_scaffolding_notes": "The front-end will be built using a modern JavaScript framework (e.g., React, Vue, or Svelte) to ensure modularity and performance. Adherence to Aurora's design specifications will be paramount, focusing on accessibility (WCAG 2.1 AA compliance) and responsiveness across devices. Key components will include:\n\n1.  **JokeDisplay:** Renders the joke content, fetched from `/api/jokes`. Includes a button/mechanism to request the next joke.\n2.  **FeedbackForm:** A modal or separate section triggered after a joke is displayed, containing the multi-axis rating system and an optional text input. This form will submit data to `/api/feedback`.\n3.  **Navigation/Layout:** A clean, minimalist structure aligning with Aurora's design, ensuring easy navigation and a focus on the joke content. The color palette and typography from the brand kit will be applied consistently.\n\nAccessibility considerations will include:\n*   Semantic HTML5 elements for structure.\n*   ARIA attributes for dynamic content and interactive elements (e.g., rating system).\n*   Keyboard navigation for all interactive components.\n*   Sufficient color contrast ratios.\n*   Responsive design that adapts gracefully to different screen sizes.",
+  "backend_scaffolding_notes": "A Node.js (Express.js) or Python (FastAPI/Flask) backend will be used for its flexibility and ease of integration with AI services. The backend will manage:\n\n1.  **Database Interaction:** Utilizing an ORM (e.g., Prisma for Node.js, SQLAlchemy for Python) to interact with the defined database schema.\n2.  **API Endpoints:** Implementing the CRUD operations for jokes and feedback as outlined above.\n3.  **AI Service Integration:** A placeholder or initial integration point for Lyra's AI humor generation service will be established. This will likely involve an internal service class that handles requests to the AI.\n4.  **Security:** Basic security measures will be implemented, such as input validation and rate limiting where appropriate. API endpoint security (e.g., for the feedback retrieval) will be considered in later stages.\n\nDatabase choice will be a relational database like PostgreSQL or SQLite for development, suitable for structured data like jokes and feedback. The scaffolding will ensure a clear separation of concerns between API routes, service logic, and data access."
+}
+
+---
+
+Artifact from 1__step_4_Lyra_result.txt (Prompt Engineer):
+{
+  "feedback_loop_architecture": {
+    "overall_flow": "User submits feedback -> Raw data stored -> Scheduled analysis job processes data (quant. & qual.) -> Actionable insights generated -> Insights used for prompt modification.",
+    "data_ingestion": {
+      "source": "User feedback via '/api/feedback' endpoint (as per Kodax's API design).",
+      "storage": "Dedicated 'feedback' table in the database (as per Kodax's schema), linked to 'jokes' table via 'joke_id'."
+    },
+    "quantitative_analysis": {
+      "purpose": "To derive statistical metrics from structured multi-axis ratings, identifying overall performance, trends, and specific areas of strength or weakness against the 'genuinely fresh' humor criteria.",
+      "input_data": [
+        "joke_id",
+        "originality_rating",
+        "cleverness_rating",
+        "surprise_rating",
+        "relatability_rating",
+        "submitted_at"
+      ],
+      "analysis_methods": [
+        {
+          "method": "Average Rating Calculation",
+          "description": "Calculate mean rating for each axis (Originality, Cleverness, Surprise, Relatability) per individual joke, per batch of jokes, and as an overall average across all jokes. This directly reflects performance against the 'genuinely fresh' rules (Originality, Subvert Expectations, Juxtapose Disparate Ideas, Observational Depth).",
+          "metrics_generated": [
+            "Avg_Rating_Per_Joke (for each axis)",
+            "Overall_Avg_Rating (for each axis)",
+            "Avg_Rating_by_Prompt_Version (requires linking joke to prompt version)"
+          ]
+        },
+        {
+          "method": "Rating Distribution Analysis",
+          "description": "Analyze the frequency distribution of ratings (e.g., percentage of 1-star vs. 5-star ratings for each axis) to identify consistent patterns of user satisfaction or dissatisfaction.",
+          "metrics_generated": [
+            "Percentage_of_Low_Ratings (<3) per axis",
+            "Percentage_of_High_Ratings (>3) per axis"
+          ]
+        },
+        {
+          "method": "Performance Thresholding",
+          "description": "Establish predefined thresholds (e.g., an average rating below 3.0 for 'Originality' signifies a critical issue) to automatically flag jokes or prompt versions for review.",
+          "metrics_generated": [
+            "Flagged_Low_Performing_Jokes",
+            "Flagged_Underperforming_Prompt_Versions"
+          ]
+        },
+        {
+          "method": "Trend Analysis",
+          "description": "Monitor changes in average ratings over time to observe the impact of iterative prompt modifications and identify long-term performance shifts.",
+          "metrics_generated": [
+            "Time-series_Avg_Ratings_per_axis"
+          ]
+        }
+      ],
+      "output_format": "Structured JSON reports, statistical summaries, and visual dashboards."
+    },
+    "qualitative_analysis": {
+      "purpose": "To extract nuanced insights, specific user sentiments, and thematic feedback from open-ended comments, providing context to quantitative data and identifying issues not captured by numerical ratings (e.g., adherence to persona, specific failures in 'no offensive content').",
+      "input_data": "text_feedback from 'feedback' table (as per Kodax's schema).",
+      "analysis_methods": [
+        {
+          "method": "Sentiment Analysis",
+          "description": "Determine the emotional tone (positive, negative, neutral) of each text feedback comment to quickly gauge overall user reaction.",
+          "metrics_generated": [
+            "Sentiment_Score_Per_Comment",
+            "Overall_Sentiment_Distribution"
+          ]
+        },
+        {
+          "method": "Keyword and Phrase Extraction",
+          "description": "Identify frequently used keywords or phrases, particularly those associated with positive or negative sentiment. Focus on terms directly related to the humor rules and persona (e.g., 'absurd', 'clever', 'dry', 'unexpected', 'predictable', 'offensive', 'recycled', 'too long', 'confusing').",
+          "metrics_generated": [
+            "Top_Positive_Keywords/Phrases",
+            "Top_Negative_Keywords/Phrases",
+            "Frequency_of_Persona_Related_Terms"
+          ]
+        },
+        {
+          "method": "Topic Modeling / Clustering",
+          "description": "Group similar text feedback comments into thematic clusters to identify recurring feedback patterns, such as 'too verbose,' 'not relatable,' or 'excellent twist,' which inform specific prompt adjustments.",
+          "metrics_generated": [
+            "Identified_Feedback_Themes",
+            "Dominant_Topics_and_Their_Associated_Sentiment"
+          ]
+        },
+        {
+          "method": "Offensive Content Detection & Flagging",
+          "description": "Implement automated detection for inappropriate, discriminatory, or offensive language as per the 'No Offensive Content' rule. Flag such comments for immediate human review and prompt adjustment.",
+          "metrics_generated": [
+            "Flagged_Offensive_Comments_Count",
+            "Severity_Score_of_Offensive_Content"
+          ]
+        }
+      ],
+      "output_format": "Summarized themes, keyword clouds, sentiment scores, and flagged comments for review."
+    },
+    "actionable_insights_generation": {
+      "purpose": "To synthesize quantitative and qualitative analyses into concrete, prioritized suggestions for modifying the core humor generation prompt, directly addressing identified performance gaps and aligning with the 'genuinely fresh artificial intelligence humor' goal.",
+      "process": [
+        "**1. Performance Gap Identification:** Compare current quantitative metrics (e.g., average originality rating) against desired benchmarks or the performance of previous prompt versions.",
+        "**2. Root Cause Analysis & Correlation:** Correlate quantitative underperformance with specific qualitative feedback. For example, if 'Originality' is low, check if text feedback frequently contains phrases like 'heard this before' or 'lacks novelty'.",
+        "**3. Mapping to Prompt Rules:** Directly map identified issues and their root causes to specific rules or parameters within the 'Cogito' system prompt (e.g., 'Originality First', 'Subvert Expectations', 'Juxtapose Disparate Ideas', 'Observational Depth', 'Avoid Clichés', 'Conciseness', 'No Offensive Content').",
+        "**4. Prioritization:** Rank insights based on severity (e.g., offensive content is critical and requires immediate action) and potential impact on humor quality and freshness.",
+        "**5. Suggestion Formulation:** Formulate specific, actionable recommendations for prompt modification. These suggestions should be phrased as clear directives that can be programmatically integrated into the strategic adjustment system.",
+        "**Example Insight Generation Flow:**",
+        "    *   **Problem Area:** 'Jokes are perceived as predictable and lack genuine surprise.'",
+        "    *   **Evidence (Quantitative):** 'Average Surprise Rating: 2.1/5 (target: 4.0).'",
+        "    *   **Evidence (Qualitative):** 'Common text feedback includes 'saw that coming', 'obvious punchline', 'not surprising'.'",
+        "    *   **Relevant Prompt Rule:** 'Subvert Expectations'.",
+        "    *   **Actionable Prompt Modification Suggestion:** 'Refine the 'Subvert Expectations' rule to include: 'Explicitly generate 2-3 common, predictable twists for the given setup internally, then ensure your final joke's punchline is fundamentally different and more unexpected than all of them. Consider introducing a surreal or illogical element that defies initial setup expectations.''",
+        "    *   **Priority:** 'High'"
+      ],
+      "insight_structure": {
+        "problem_area": "A concise description of the identified performance issue (e.g., 'Lack of Originality', 'Offensive Content Detected').",
+        "evidence_quantitative": "Key metrics supporting the problem (e.g., 'Avg. originality rating: 2.8/5').",
+        "evidence_qualitative": "Summarized qualitative findings (e.g., 'Common keywords: 'generic', 'recycled', 'seen this before'; or 'Flagged comment: 'that's offensive'').",
+        "relevant_prompt_rule": "The specific rule(s) in the core AI prompt that need adjustment (e.g., 'Originality First', 'No Offensive Content').",
+        "actionable_prompt_modification_suggestion": "A clear, specific instruction or modification to be applied to the core AI prompt.",
+        "priority": "Indicates the urgency of the modification ('Critical', 'High', 'Medium', 'Low')."
+      },
+      "feedback_loop_integration_point": "These generated actionable insights will serve as the primary input for Lyra's subsequent task: creating the 'strategic adjustment' meta-prompting system, ensuring continuous refinement of the AI's humor generation."
+    }
+  }
+}
+
+---
+
+Artifact from 1__step_5_Kodax_result.txt (Engineer):
+{
+  "task": "Implement the feedback data processing pipeline. Integrate the humor generation AI via API and connect the user feedback mechanism to the database, ensuring data is stored accurately.",
+  "implementation_plan": [
+    {
+      "step": 1,
+      "name": "Setup Backend Infrastructure",
+      "description": "Initialize the backend project structure. Set up the database connection using PostgreSQL (or SQLite for local development) and an ORM (e.g., Prisma or SQLAlchemy) to manage the 'jokes' and 'feedback' tables as defined in the initial schema.",
+      "details": {
+        "technology_stack": "Node.js with Express.js (or Python with FastAPI/Flask)",
+        "database": "PostgreSQL",
+        "orm": "Prisma (or SQLAlchemy)",
+        "actions": [
+          "Create project directory and initialize package manager (npm/yarn or poetry).",
+          "Install necessary dependencies (framework, ORM, database driver).",
+          "Define database schema using ORM migration tools.",
+          "Configure database connection string.",
+          "Implement basic data access layer (DAL) for jokes and feedback tables."
+        ]
+      },
+      "dependencies": [
+        "Artifact from 1__step_3_Kodax_result.txt (database_schema, backend_scaffolding_notes)"
+      ]
+    },
+    {
+      "step": 2,
+      "name": "Integrate Humor Generation AI API",
+      "description": "Develop a service layer within the backend to interface with the AI humor generation API. This service will be responsible for fetching new jokes based on Lyra's prompt.",
+      "details": {
+        "ai_service_interface": {
+          "endpoint": "Placeholder for AI API endpoint (to be provided by Lyra's integration)",
+          "method": "POST",
+          "request_payload": {
+            "prompt": "Dynamically generated or current system prompt from Lyra."
+          },
+          "response_payload": {
+            "joke_content": "string"
+          }
+        },
+        "backend_service": {
+          "name": "HumorGenerationService",
+          "methods": [
+            {
+              "name": "generateJoke",
+              "description": "Calls the AI API with the current system prompt, receives the joke content, stores it in the 'jokes' table, and returns the joke object.",
+              "logic": [
+                "Fetch current system prompt (from a configuration or previous adjustment step).",
+                "Make API call to the AI humor generation service.",
+                "Validate AI response.",
+                "Save the generated joke content and its metadata to the 'jokes' table.",
+                "Return the newly created joke object (id, content, created_at)."
+              ]
+            }
+          ]
+        }
+      },
+      "dependencies": [
+        "Artifact from 1__step_1_Lyra_result.txt (system_prompt)",
+        "Artifact from 1__step_3_Kodax_result.txt (api_endpoints for /api/jokes, database_schema for jokes table)",
+        "Lyra's AI generation API endpoint (assumed to be available)"
+      ]
+    },
+    {
+      "step": 3,
+      "name": "Implement Feedback Submission Endpoint",
+      "description": "Create the '/api/feedback' endpoint to receive and store user feedback data accurately in the 'feedback' table.",
+      "details": {
+        "api_endpoint": {
+          "method": "POST",
+          "path": "/api/feedback",
+          "request_body_schema": {
+            "joke_id": "integer (required)",
+            "originality_rating": "integer (1-5, required)",
+            "cleverness_rating": "integer (1-5, required)",
+            "surprise_rating": "integer (1-5, required)",
+            "relatability_rating": "integer (1-5, required)",
+            "text_feedback": "string (optional)"
+          },
+          "response_body": {
+            "message": "string",
+            "feedback_id": "integer"
+          },
+          "implementation_logic": [
+            "Validate incoming request body against schema.",
+            "Check if 'joke_id' exists in the 'jokes' table.",
+            "Insert validated feedback data into the 'feedback' table.",
+            "Return success response with feedback ID."
+          ]
+        }
+      },
+      "dependencies": [
+        "Artifact from 1__step_3_Kodax_result.txt (api_endpoints for /api/feedback, database_schema for feedback table)"
+      ]
+    },
+    {
+      "step": 4,
+      "name": "Implement Feedback Data Processing Pipeline",
+      "description": "Set up a mechanism (e.g., a scheduled job or a message queue consumer) to process the feedback data for analysis, as outlined by Lyra's feedback loop architecture.",
+      "details": {
+        "processing_trigger": "Scheduled job (e.g., daily) or event-driven (e.g., upon new feedback submission, though batch processing is more efficient for analysis).",
+        "data_retrieval": "Query the 'feedback' table for unprocessed feedback entries.",
+        "quantitative_analysis_module": {
+          "description": "Implement logic for calculating average ratings, rating distributions, and potentially identifying trends as per Lyra's plan.",
+          "methods_to_implement": [
+            "Calculate average ratings per axis (overall and potentially per joke).",
+            "Calculate rating distributions.",
+            "Identify low/high performing jokes/ratings."
+          ]
+        },
+        "qualitative_analysis_module": {
+          "description": "Implement logic for sentiment analysis and keyword extraction on 'text_feedback'. Integrate with a library (e.g., Natural for Node.js, NLTK/spaCy for Python) or a cloud NLP service.",
+          "methods_to_implement": [
+            "Perform sentiment analysis on text feedback.",
+            "Extract keywords and common phrases.",
+            "Identify themes (can be simpler keyword aggregation initially)."
+          ]
+        },
+        "insight_generation_module": {
+          "description": "Synthesize quantitative and qualitative findings into actionable insights for prompt modification, following the structure defined by Lyra.",
+          "logic": [
+            "Compare metrics against thresholds/benchmarks.",
+            "Correlate quantitative results with qualitative findings.",
+            "Map issues to specific prompt rules.",
+            "Formulate prompt modification suggestions.",
+            "Assign priority to suggestions."
+          ]
+        },
+        "output": "Generated insights will be stored or passed to the strategic adjustment system (covered in a later step)."
+      },
+      "dependencies": [
+        "Artifact from 1__step_4_Lyra_result.txt (feedback_loop_architecture, actionable_insights_generation)",
+        "Artifact from 1__step_3_Kodax_result.txt (api_endpoints for /api/feedback, database_schema for feedback table)"
+      ]
+    },
+    {
+      "step": 5,
+      "name": "Connect Frontend to Backend APIs",
+      "description": "Ensure the frontend components (developed based on Aurora's designs) can interact with the backend API endpoints for joke generation and feedback submission.",
+      "details": {
+        "frontend_integration_points": [
+          {
+            "component": "JokeDisplay",
+            "api_call": {
+              "endpoint": "/api/jokes",
+              "method": "POST",
+              "action": "On component mount or 'Next Joke' button click to fetch and display a new joke."
+            }
+          },
+          {
+            "component": "FeedbackForm",
+            "api_call": {
+              "endpoint": "/api/feedback",
+              "method": "POST",
+              "action": "On form submission to send user ratings and comments."
+            }
+          }
+        ],
+        "data_handling": "Implement state management in the frontend to hold joke data and handle feedback submission states (loading, success, error)."
+      },
+      "dependencies": [
+        "Artifact from 1__step_3_Kodax_result.txt (frontend_scaffolding_notes, api_endpoints)",
+        "Artifact from 1__step_2_Aurora_result.txt (ui_ux_design for main_joke_display, feedback_mechanism)"
+      ]
+    }
+  ],
+  "responsibilities": [
+    "Backend development for API endpoints and data processing.",
+    "Database schema implementation and interaction.",
+    "Integration with the AI humor generation service.",
+    "Ensuring data accuracy and integrity in storage.",
+    "Connecting frontend actions to backend services."
+  ],
+  "next_steps_consideration": [
+    "Implementing the strategic adjustment system (Lyra's next task).",
+    "Developing more robust error handling and logging.",
+    "Securing API endpoints where necessary.",
+    "Setting up automated testing for backend services."
+  ]
+}
+
+---
+
+Artifact from 1__step_6_Lyra_result.txt (Prompt Engineer):
+{
+  "strategic_adjustment_system": {
+    "name": "Prompt Refinement Engine (PRE)",
+    "purpose": "To programmatically and intelligently modify the core humor generation AI's system prompt ('Cogito') based on analyzed user feedback insights, ensuring continuous enhancement of humor quality and adherence to 'genuinely fresh' criteria.",
+    "inputs": {
+      "current_core_humor_prompt": {
+        "type": "string",
+        "description": "The complete, current system prompt being used by the humor generation AI (e.g., 'Cogito' persona prompt).",
+        "source": "Persistent storage managed by Kodax, updated after each successful adjustment."
+      },
+      "actionable_feedback_insights": {
+        "type": "array",
+        "description": "A list of structured insights derived from the feedback analysis pipeline, each containing a problem, evidence, relevant prompt rule, and a specific modification suggestion.",
+        "structure_reference": "Artifact from 1__step_4_Lyra_result.txt, 'feedback_loop_architecture.actionable_insights_generation.insight_structure'",
+        "source": "Output from Lyra's 'feedback data analysis' module (Kodax's 'insight_generation_module')."
+      }
+    },
+    "outputs": {
+      "newly_modified_prompt": {
+        "type": "string",
+        "description": "The complete, revised system prompt for the humor generation AI, incorporating all applicable adjustments.",
+        "destination": "Kodax's backend system for updating the AI service and persistent storage."
+      },
+      "adjustment_log": {
+        "type": "object",
+        "description": "A record detailing the changes made, the insights applied, and the prompt version ID, for audit and rollback purposes.",
+        "destination": "Dedicated logging/versioning database table."
+      }
+    },
+    "core_component": {
+      "name": "Prompt Modification Agent (PMA)",
+      "description": "An AI agent (LLM) specifically tasked with interpreting actionable insights and applying precise modifications to the core humor generation prompt.",
+      "operational_logic": [
+        "1.  **Insight Prioritization:** The PMA will first sort the `actionable_feedback_insights` by 'priority' (Critical > High > Medium > Low) to ensure the most urgent and impactful changes are addressed first.",
+        "2.  **Iterative Modification:** For each prioritized insight, the PMA will process the `current_core_humor_prompt`:",
+        "    *   It will identify the `relevant_prompt_rule` or section within the prompt.",
+        "    *   It will then apply the `actionable_prompt_modification_suggestion` to that specific part of the prompt. This may involve: adding new sentences, rephrasing existing ones, inserting new bullet points, or removing outdated instructions.",
+        "    *   The modification should be as targeted and concise as possible, avoiding verbose additions or general statements.",
+        "    *   The PMA will ensure the modified text seamlessly integrates into the existing prompt's tone, formatting, and overall coherence.",
+        "3.  **Prompt Integrity Check:** After all modifications, the PMA will perform a final review to ensure the prompt remains coherent, grammatically correct, and logically sound, with no conflicting instructions introduced.",
+        "4.  **Output Generation:** The PMA will output the final, modified prompt string."
+      ],
+      "system_prompt_for_pma": "You are a highly precise Prompt Refinement AI, specializing in optimizing AI system prompts. Your task is to modify a given 'CURRENT_HUMOR_GENERATION_PROMPT' based on a list of 'ACTIONABLE_INSIGHTS'.\n\n**Instructions:**\n1.  **Understand the Goal:** Your overarching goal is to enhance the humor generation AI's performance and adherence to its 'genuinely fresh' humor criteria, as guided by the provided insights.\n2.  **Input Structure:** You will receive the `CURRENT_HUMOR_GENERATION_PROMPT` as a single text block, followed by a JSON array of `ACTIONABLE_INSIGHTS`.\n3.  **Prioritization:** If multiple insights are provided, process them in descending order of their 'priority' (Critical > High > Medium > Low). If priorities are equal, process them in the order they appear.\n4.  **Targeted Modification:** For each insight:\n    *   Locate the specific section or rule identified by `relevant_prompt_rule` within the `CURRENT_HUMOR_GENERATION_PROMPT`. If 'relevant_prompt_rule' points to a general area (e.g., 'Joke Structure and Content Parameters') or a specific numbered rule (e.g., '1. Originality First'), find that precise location.\n    *   Carefully apply the instruction contained in `actionable_prompt_modification_suggestion`. This instruction will be a directive on *how* to modify the prompt (e.g., 'Refine X to include Y', 'Add Z to rule A', 'Remove B from section C').\n    *   Ensure the modification is syntactically correct, grammatically sound, and seamlessly integrates with the existing prompt text. Do not introduce new formatting unless explicitly instructed by the suggestion.\n    *   If a suggestion requires adding content, append it logically within the specified rule or section. If it requires refinement, directly modify the relevant sentence(s) or phrase(s).\n    *   Do NOT add any introductory or concluding remarks, explanations, or conversational text. Your output must be *only* the complete, revised `CURRENT_HUMOR_GENERATION_PROMPT` text.\n5.  **Maintain Persona and Core Identity:** Ensure that any modifications maintain the 'Cogito' persona (Absurdist Philosopher) and the core principles of 'genuinely fresh' humor (Originality, Subvert Expectations, Juxtapose Disparate Ideas, Observational Depth, Avoid Clichés, No Offensive Content) unless an insight explicitly directs a change to these fundamental aspects.\n\n**Example of how to apply a modification:**\nIf `relevant_prompt_rule` is 'Subvert Expectations' and `actionable_prompt_modification_suggestion` is 'Refine the 'Subvert Expectations' rule to include: 'Explicitly generate 2-3 common, predictable twists for the given setup internally, then ensure your final joke's punchline is fundamentally different and more unexpected than all of them. Consider introducing a surreal or illogical element that defies initial setup expectations.'' then you would find the 'Subvert Expectations' rule in the current prompt and append/integrate the new instruction into its description.\n\n**Your output should be the full, modified system prompt. Nothing else.**"
+    },
+    "integration_points": {
+      "input_from": "Kodax's 'feedback data processing pipeline' (specifically, the 'insight_generation_module' output).",
+      "output_to": "Kodax's 'Integrate the strategic adjustment system into the back-end' task, which will then update the AI service with the `newly_modified_prompt`.",
+      "dependency_on_prompt_versioning": "Requires Kodax to store and retrieve the `current_core_humor_prompt` and persist the `newly_modified_prompt`."
+    },
+    "versioning_and_audit_trail": {
+      "description": "Each prompt modification will result in a new version of the 'Cogito' prompt. This system will facilitate tracking of prompt evolution.",
+      "details": [
+        "**Prompt ID & Timestamp:** Each new prompt generated by the PRE will be assigned a unique ID and a timestamp.",
+        "**Associated Insights:** The `adjustment_log` will link the new prompt version to the specific `actionable_feedback_insights` that triggered its creation.",
+        "**Rollback Capability:** Storing previous prompt versions enables quick rollback if a new prompt version performs worse.",
+        "**Performance Tracking:** Kodax's implementation should link joke generation to the prompt version used, allowing quantitative analysis (from Lyra's previous step) to track performance metrics per prompt version over time."
+      ]
+    }
+  }
+}
+
+
+
+Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project.

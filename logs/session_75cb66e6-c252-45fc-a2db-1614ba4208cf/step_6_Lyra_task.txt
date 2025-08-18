@@ -1,0 +1,737 @@
+The overall goal is: 'Create a website that is a frontend to an AI system like this.'
+
+Your role's specific goal is: 'Structure workflows and ensure clarity in agent instructions, system prompt engineering'
+Your specific sub-task is: 'Engineer the precise system prompts and API data structures required for the frontend to communicate effectively with the AI backend.'
+
+The team's roles are:
+    {'roles': [{'title': 'Designer', 'description': 'Generate aesthetic layouts, color palettes, typography, and UI flows, ensuring accessibility and visual balance.'}, {'title': 'Engineer', 'description': 'Implement designs into clean, modular, and performant code, focusing on responsive design and accessibility.'}, {'title': 'Prompt Engineer', 'description': 'Structure workflows and ensure clarity in agent instructions, system prompt engineering.'}, {'title': 'Task-Agnostic Step (TAS) extractor (flash)', 'description': "Identify and return each 'Task Agnostic Step' (TAS) towards the high-level goal."}], 'steps': [{'name': 'uTASe', 'role': 'Task-Agnostic Step (TAS) extractor (flash)', 'task': 'Analyze the high-level goal and extract the primary phases of the project: Discovery, Design, Development, and Deployment.'}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': "Define the core purpose and interaction model of the AI system. Specify the types of user inputs and the desired AI outputs to guide the website's functional requirements."}, {'name': 'Aurora', 'role': 'Designer', 'task': "Create low-fidelity wireframes and user flow diagrams based on the AI's interaction model to map out the user journey and interface structure."}, {'name': 'Aurora', 'role': 'Designer', 'task': 'Develop high-fidelity mockups and a comprehensive style guide, including color palette, typography, and component designs, for a cohesive visual identity.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Set up the frontend development environment, including selecting a framework (e.g., React, Vue), establishing a project structure, and initializing version control with Git.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Translate the high-fidelity mockups and style guide into modular, responsive, and accessible UI components using HTML, CSS, and JavaScript.'}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': 'Engineer the precise system prompts and API data structures required for the frontend to communicate effectively with the AI backend.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': "Integrate the frontend UI components with the AI's backend API, implementing the logic to handle user requests and display AI responses."}, {'name': 'Aurora', 'role': 'Designer', 'task': 'Conduct a thorough design and UX review of the implemented application to ensure it aligns with the mockups and provides an intuitive user experience.'}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': 'Perform end-to-end testing of the AI interaction flow, refining prompts based on real-world usage to improve response accuracy and relevance.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Perform final testing for performance, responsiveness, and cross-browser compatibility, and then deploy the completed website to a production environment.'}]}
+
+Please use the following outputs from the other agents as your input:
+
+Artifact from step_0_uTASe_result.txt (Task-Agnostic Step (TAS) extractor (flash)):
+[
+  {
+    "id": "f0a1b2c3-d4e5-f6a7-b8c9-d0e1f2a3b4c5",
+    "name": "Discover Project Requirements",
+    "description": "Understand the core purpose of the AI system, define user interaction models, and specify desired AI outputs. This phase involves gathering all necessary functional and non-functional requirements for the website.",
+    "category": "Discovery",
+    "purpose": "Identify and document the fundamental needs and goals for the AI system's frontend.",
+    "keywords": [
+      "requirements gathering",
+      "user needs",
+      "AI interaction",
+      "functional specification"
+    ],
+    "applicability_notes": "This is the initial phase for any project, crucial for setting the foundation. It involves understanding the problem domain and the desired solution from multiple perspectives.",
+    "examples_of_usage": [
+      "Defining the scope of a new AI chatbot's capabilities.",
+      "Understanding user expectations for an AI-powered content generation tool.",
+      "Specifying the data inputs and outputs for an AI-driven analytics dashboard."
+    ],
+    "typical_inputs": [
+      "High-level project objective",
+      "Stakeholder input",
+      "Existing system documentation (if applicable)"
+    ],
+    "typical_outputs": [
+      "Documented functional requirements",
+      "User interaction models",
+      "AI output specifications"
+    ]
+  },
+  {
+    "id": "a1b2c3d4-e5f6-a7b8-c9d0-e1f2a3b4c5d6",
+    "name": "Design User Interface and Experience",
+    "description": "Create visual layouts, user flows, wireframes, and high-fidelity mockups based on the defined requirements. This includes establishing a style guide with color palettes, typography, and component designs to ensure a cohesive and accessible user experience.",
+    "category": "Design",
+    "purpose": "Visualize and plan the user interface and overall user journey for the AI system's frontend.",
+    "keywords": [
+      "UI design",
+      "UX design",
+      "wireframing",
+      "mockups",
+      "style guide",
+      "user flow"
+    ],
+    "applicability_notes": "This phase translates abstract requirements into tangible visual and interactive blueprints. It emphasizes user-centricity and aesthetic coherence.",
+    "examples_of_usage": [
+      "Designing the layout for a mobile application's settings screen.",
+      "Creating a user flow for an e-commerce checkout process.",
+      "Developing a style guide for a brand's digital presence."
+    ],
+    "typical_inputs": [
+      "Documented functional requirements",
+      "User interaction models",
+      "Brand guidelines"
+    ],
+    "typical_outputs": [
+      "Low-fidelity wireframes",
+      "User flow diagrams",
+      "High-fidelity mockups",
+      "Style guide",
+      "UI component designs"
+    ]
+  },
+  {
+    "id": "b2c3d4e5-f6a7-b8c9-d0e1-f2a3b4c5d6e7",
+    "name": "Develop Frontend Application",
+    "description": "Set up the development environment, select appropriate frameworks, and translate designs into functional, responsive, and accessible code. This involves building UI components, integrating with the AI backend via APIs, and implementing the core logic for user requests and AI responses.",
+    "category": "Development",
+    "purpose": "Build the functional frontend of the AI system based on the approved designs.",
+    "keywords": [
+      "frontend development",
+      "coding",
+      "UI implementation",
+      "API integration",
+      "responsive design",
+      "accessibility"
+    ],
+    "applicability_notes": "This is the core implementation phase where the design is brought to life. It requires technical expertise in programming languages and frameworks, as well as understanding how to connect frontend to backend services.",
+    "examples_of_usage": [
+      "Building a web application using React and connecting to a REST API.",
+      "Developing a mobile app interface with Swift for iOS.",
+      "Creating a dashboard with Vue.js that fetches data from a GraphQL endpoint."
+    ],
+    "typical_inputs": [
+      "High-fidelity mockups",
+      "Style guide",
+      "UI component designs",
+      "AI backend API specifications",
+      "System prompt engineering"
+    ],
+    "typical_outputs": [
+      "Functional frontend code",
+      "Integrated UI components",
+      "Working AI interaction flow",
+      "Unit and integration tests"
+    ]
+  },
+  {
+    "id": "c3d4e5f6-a7b8-c9d0-e1f2-a3b4c5d6e7f8",
+    "name": "Test and Deploy Website",
+    "description": "Conduct thorough testing, including design and UX reviews, end-to-end testing of AI interactions, and final checks for performance, responsiveness, and cross-browser compatibility. After successful testing, deploy the completed website to a production environment.",
+    "category": "Deployment",
+    "purpose": "Ensure the quality and stability of the website before and after releasing it to users.",
+    "keywords": [
+      "testing",
+      "quality assurance",
+      "deployment",
+      "performance testing",
+      "cross-browser compatibility",
+      "UX review"
+    ],
+    "applicability_notes": "This final phase ensures the product meets quality standards and is successfully launched. It includes validation of both technical functionality and user experience.",
+    "examples_of_usage": [
+      "Deploying a new version of a web application to a cloud server.",
+      "Performing user acceptance testing (UAT) before a software release.",
+      "Conducting load testing to ensure scalability."
+    ],
+    "typical_inputs": [
+      "Developed frontend application",
+      "Test cases",
+      "Deployment environment configuration"
+    ],
+    "typical_outputs": [
+      "Tested and validated website",
+      "Deployed application",
+      "Performance reports",
+      "User feedback"
+    ]
+  }
+]
+
+---
+
+Artifact from step_1_Lyra_result.txt (Prompt Engineer):
+{
+  "ai_system_definition": {
+    "core_purpose": "To serve as a versatile AI-powered creative and productivity assistant, enabling users to generate, refine, and manage various forms of digital content and project-related tasks through natural language interaction.",
+    "interaction_model": {
+      "primary_mode": "Conversational/Prompt-based text input, allowing for free-form requests and iterative refinement.",
+      "secondary_mode": "Structured input forms and selection menus for specific parameters (e.g., tone, format, length) or pre-defined task types.",
+      "feedback_loop": "Users can provide direct feedback on AI outputs, triggering refinement or alternative generations."
+    },
+    "user_inputs": [
+      {
+        "type": "Natural Language Text Prompts",
+        "description": "Free-form text describing the desired output, task, or query.",
+        "examples": [
+          "Generate a concise marketing blurb for a new SaaS product called 'ProjectFlow'.",
+          "Design a minimalist user interface for a mobile banking app's login screen.",
+          "Write a Python function to parse a CSV file and return data as a JSON array.",
+          "Summarize the key findings from the provided research paper."
+        ]
+      },
+      {
+        "type": "Contextual Parameters",
+        "description": "Specific constraints, preferences, or additional information to guide AI generation.",
+        "examples": [
+          "Tone: 'professional', 'humorous', 'technical'",
+          "Format: 'Markdown', 'JSON', 'HTML snippet', 'image URL'",
+          "Length: 'short', 'paragraph', 'bullet points'",
+          "Target Audience: 'developers', 'marketing professionals', 'general public'"
+        ]
+      },
+      {
+        "type": "Reference Material Upload/Input",
+        "description": "Existing text, images, or data that the AI should use as a basis or reference point.",
+        "examples": [
+          "Paste text of an article for summarization.",
+          "Upload a sketch or mood board for design inspiration.",
+          "Provide a code snippet to be refactored or commented."
+        ]
+      },
+      {
+        "type": "Refinement & Feedback Prompts",
+        "description": "Follow-up instructions to modify or improve previous AI outputs.",
+        "examples": [
+          "Make it more concise.",
+          "Change the color scheme to be more vibrant.",
+          "Add error handling to the function.",
+          "Provide three alternative headlines."
+        ]
+      }
+    ],
+    "desired_ai_outputs": [
+      {
+        "type": "Generated Text Content",
+        "description": "Creative or informational text, formatted as plain text, Markdown, or HTML snippets.",
+        "examples": [
+          "Marketing copy, blog post drafts, email templates, social media captions.",
+          "Summaries, reports, technical documentation, code comments.",
+          "Conversational responses, explanations, FAQs."
+        ]
+      },
+      {
+        "type": "Generated Code Snippets",
+        "description": "Functional code in various programming languages, often with explanations.",
+        "examples": [
+          "Python functions, JavaScript components, CSS styles, SQL queries.",
+          "Configuration files, API request examples."
+        ]
+      },
+      {
+        "type": "Design Concepts/Elements (Data-driven)",
+        "description": "Structured data representing design ideas, color palettes, or UI component suggestions.",
+        "examples": [
+          "JSON object describing a color palette (hex codes, names).",
+          "Suggested typography pairings (font families, sizes).",
+          "Simple wireframe descriptions (e.g., 'header, nav, main content, footer').",
+          "Icon suggestions (names, categories)."
+        ]
+      },
+      {
+        "type": "Structured Data/JSON",
+        "description": "Organized data representing tasks, entities, or summarized information.",
+        "examples": [
+          "Task lists with due dates and assignees.",
+          "Key-value pairs of extracted information from text.",
+          "Categorized data from user input."
+        ]
+      },
+      {
+        "type": "Explanations & Alternatives",
+        "description": "Justifications for AI outputs, best practices, or alternative suggestions.",
+        "examples": [
+          "Explanation of why a certain design choice was made.",
+          "Suggestions for improving a given code snippet.",
+          "Multiple variations of generated text or design elements."
+        ]
+      },
+      {
+        "type": "Clarification/Error Messages",
+        "description": "Prompts for more information if input is ambiguous, or messages indicating limitations.",
+        "examples": [
+          "\"Could you please specify the target audience for the marketing blurb?\"",
+          "\"I cannot generate an image directly, but I can provide design specifications.\"",
+          "\"The request is too broad; please narrow it down.\""
+        ]
+      }
+    ]
+  }
+}
+
+---
+
+Artifact from step_2_Aurora_result.txt (Designer):
+[
+  {
+    "step_id": "f0a1b2c3-d4e5-f6a7-b8c9-d0e1f2a3b4c5",
+    "role": "Designer",
+    "sub_task": "Create low-fidelity wireframes and user flow diagrams based on the AI's interaction model to map out the user journey and interface structure.",
+    "deliverables": {
+      "wireframes": [
+        {
+          "name": "Homepage/Input Interface",
+          "description": "A clean, minimalist interface featuring a prominent text input area for user prompts, a clear call to action (e.g., 'Generate', 'Submit'), and possibly an area for displaying recent or suggested prompts. Minimal navigation to keep focus on the AI interaction.",
+          "elements": [
+            "Header with Logo",
+            "Main text input field (textarea)",
+            "Submit button",
+            "Optional: recent prompts list",
+            "Optional: example prompts section"
+          ]
+        },
+        {
+          "name": "Output Display Interface",
+          "description": "A dedicated area or modal to display the AI's generated content. This includes the output itself, options for copying, refining, or providing feedback, and potentially structured data visualizations if applicable.",
+          "elements": [
+            "AI Output content area (text, code, structured data)",
+            "Copy to clipboard button",
+            "Refine prompt button/link",
+            "Feedback buttons (e.g., thumbs up/down, rating)",
+            "Optional: formatting options for output display",
+            "Optional: clear output/reset button"
+          ]
+        },
+        {
+          "name": "History/Saved Items (Optional)",
+          "description": "A simple view to access past interactions or saved outputs. Could be a sidebar or a separate page.",
+          "elements": [
+            "List of past prompts/outputs",
+            "Search/filter functionality",
+            "Save/favorite option for outputs"
+          ]
+        }
+      ],
+      "user_flow_diagram": {
+        "name": "Core AI Interaction Flow",
+        "description": "A visual representation of the primary user journey from initiating a request to receiving and acting upon the AI's response.",
+        "steps": [
+          {"id": "start", "label": "User arrives at the website"},
+          {"id": "input_prompt", "label": "User enters a text prompt or selects a structured input"},
+          {"id": "submit_request", "label": "User submits the prompt"},
+          {"id": "ai_processing", "label": "System processes the request (loading indicator shown)"},
+          {"id": "display_output", "label": "AI response is displayed"},
+          {"id": "user_action_on_output", "label": "User chooses to copy, refine, save, or provide feedback"},
+          {"id": "refine_prompt", "label": "User enters a refinement prompt (loops back to 'submit_request' or 'ai_processing')"},
+          {"id": "end", "label": "User closes or navigates away"}
+        ],
+        "connections": [
+          {"from": "start", "to": "input_prompt"},
+          {"from": "input_prompt", "to": "submit_request"},
+          {"from": "submit_request", "to": "ai_processing"},
+          {"from": "ai_processing", "to": "display_output"},
+          {"from": "display_output", "to": "user_action_on_output"},
+          {"from": "user_action_on_output", "to": "refine_prompt", "condition": "User chooses to refine"},
+          {"from": "refine_prompt", "to": "submit_request"},
+          {"from": "user_action_on_output", "to": "end", "condition": "User chooses to end session or copy/save"},
+          {"from": "user_action_on_output", "to": "display_output", "condition": "User requests alternative"}
+        ]
+      }
+    }
+  }
+]
+
+---
+
+Artifact from step_3_Aurora_result.txt (Designer):
+{
+  "design_process_plan": [
+    {
+      "step_number": 1,
+      "step_name": "Define Aesthetic Direction & Core Visual Elements",
+      "description": "Based on the AI system's purpose (creative/productivity assistant) and the minimalist, natural design ethos, define the overall aesthetic. Select a primary color palette, font pairings, and conceptualize the logo. Establish the brand's tone: clean, intelligent, approachable.",
+      "responsible_role": "Designer",
+      "inputs": [
+        "AI System Definition (Lyra)",
+        "Low-fidelity Wireframes & User Flow (Aurora)"
+      ],
+      "outputs": [
+        "Mood board",
+        "Initial color palette",
+        "Typography selections",
+        "Logo concept"
+      ]
+    },
+    {
+      "step_number": 2,
+      "step_name": "Develop High-Fidelity Mockups",
+      "description": "Translate the wireframes and aesthetic direction into high-fidelity mockups for key screens (e.g., Input/Homepage, Output Display). Focus on visual hierarchy, spacing, and intuitive layout, ensuring a clean and uncluttered interface that supports the natural interaction model.",
+      "responsible_role": "Designer",
+      "inputs": [
+        "Mood board",
+        "Color palette",
+        "Typography selections",
+        "Logo concept",
+        "Low-fidelity Wireframes & User Flow (Aurora)"
+      ],
+      "outputs": [
+        "High-fidelity mockups for primary screens"
+      ]
+    },
+    {
+      "step_number": 3,
+      "step_name": "Create Comprehensive Style Guide",
+      "description": "Document all visual design elements. This includes the final color palette (primary, secondary, accent, semantic colors), typography scale (headings, body text, UI elements), iconography style, spacing rules, and detailed UI component designs (buttons, input fields, cards, modals, etc.). Ensure accessibility considerations (contrast ratios, font sizes) are integrated.",
+      "responsible_role": "Designer",
+      "inputs": [
+        "High-fidelity mockups",
+        "Color palette",
+        "Typography selections",
+        "Logo concept"
+      ],
+      "outputs": [
+        "Comprehensive Style Guide (includes Color Palette, Typography, Components, Iconography, Spacing)"
+      ]
+    },
+    {
+      "step_number": 4,
+      "step_name": "Refine User Flows and Interactions",
+      "description": "Review the user flow diagrams and high-fidelity mockups to ensure a seamless and intuitive user experience. Detail micro-interactions, loading states, and feedback mechanisms that enhance usability and align with the AI's conversational nature.",
+      "responsible_role": "Designer",
+      "inputs": [
+        "High-fidelity mockups",
+        "User flow diagrams",
+        "AI System Definition (Lyra)"
+      ],
+      "outputs": [
+        "Refined user flow diagrams",
+        "Interaction design specifications"
+      ]
+    }
+  ],
+  "brand_kit": {
+    "logo": {
+      "concept": "A minimalist, abstract mark symbolizing connection and creation. Perhaps an evolving waveform or a stylized 'A' that subtly integrates a cursor or spark. Clean lines, open space.",
+      "color_usage": "Primary brand color, or monochromatic variants for flexibility.",
+      "variations": ["Logomark", "Logotype", "Combined Mark"]
+    },
+    "color_palette": {
+      "name": "Serene Synthesis",
+      "description": "A palette inspired by natural elements and digital clarity, promoting focus and calm.",
+      "primary": {
+        "name": "Deep Ocean Blue",
+        "hex": "#0A2E58",
+        "rgb": "10, 46, 88",
+        "description": "Foundation color, conveys trust and depth."
+      },
+      "secondary": {
+        "name": "Soft Cloud Gray",
+        "hex": "#F0F4F8",
+        "rgb": "240, 244, 248",
+        "description": "Neutral background, provides a clean canvas."
+      },
+      "accent": {
+        "name": "Luminous Teal",
+        "hex": "#00C2CB",
+        "rgb": "0, 194, 203",
+        "description": "Highlighting interactive elements, calls to action, and generating a sense of innovation."
+      },
+      "neutral_dark": {
+        "name": "Charcoal Slate",
+        "hex": "#333333",
+        "rgb": "51, 51, 51",
+        "description": "For primary text and headings."
+      },
+      "neutral_light": {
+        "name": "Pale Mist",
+        "hex": "#E8E8E8",
+        "rgb": "232, 232, 232",
+        "description": "For borders, dividers, subtle backgrounds."
+      },
+      "semantic_success": {
+        "name": "Verdant Green",
+        "hex": "#2ECC71",
+        "rgb": "46, 204, 113",
+        "description": "Indicates successful operations or positive feedback."
+      },
+      "semantic_warning": {
+        "name": "Golden Ochre",
+        "hex": "#F1C40F",
+        "rgb": "241, 196, 15",
+        "description": "For warnings or pending states."
+      },
+      "semantic_error": {
+        "name": "Fiery Coral",
+        "hex": "#E74C3C",
+        "rgb": "231, 76, 60",
+        "description": "For errors or critical alerts."
+      }
+    },
+    "typography": {
+      "font_family_primary": "'Inter', sans-serif",
+      "font_family_secondary": "'Merriweather', serif",
+      "headings": {
+        "h1": {"font_family": "'Inter', sans-serif", "font_size": "48px", "font_weight": "700", "line_height": "1.2"},
+        "h2": {"font_family": "'Inter', sans-serif", "font_size": "36px", "font_weight": "700", "line_height": "1.3"},
+        "h3": {"font_family": "'Inter', sans-serif", "font_size": "28px", "font_weight": "600", "line_height": "1.3"},
+        "h4": {"font_family": "'Inter', sans-serif", "font_size": "20px", "font_weight": "600", "line_height": "1.4"}
+      },
+      "body": {
+        "font_family": "'Inter', sans-serif",
+        "font_size": "16px",
+        "font_weight": "400",
+        "line_height": "1.6"
+      },
+      "captions": {
+        "font_family": "'Inter', sans-serif",
+        "font_size": "14px",
+        "font_weight": "400",
+        "line_height": "1.5"
+      },
+      "code": {
+        "font_family": "'Source Code Pro', monospace",
+        "font_size": "14px",
+        "line_height": "1.5"
+      }
+    },
+    "iconography": {
+      "style": "Outlined, clean, and consistent stroke weight.",
+      "color": "Primary accent color or neutral dark.",
+      "size": "Consistent sizing relative to text elements (e.g., 16px, 20px, 24px)."
+    },
+    "spacing": {
+      "base_unit": "8px",
+      "scale": {
+        "xs": "8px",
+        "sm": "16px",
+        "md": "24px",
+        "lg": "32px",
+        "xl": "48px",
+        "xxl": "64px"
+      }
+    }
+  },
+  "high_fidelity_mockups": [
+    {
+      "screen_name": "Homepage - AI Input",
+      "description": "A clean, spacious interface designed for focused interaction. Features a prominent, inviting input area for user prompts. Minimalist navigation to keep the user centered on the AI task.",
+      "layout": "Single column, centered content.",
+      "visual_elements": [
+        {"type": "Header", "content": "Logo (Logomark + Logotype)", "placement": "Top left", "style": "Minimalist, using Primary color."},
+        {"type": "Hero Section", "content": "Welcome message, brief explanation of AI capabilities. Subtle background texture or gradient.", "placement": "Center, prominent."},
+        {"type": "Input Area", "content": "Large, multi-line text input field with a subtle border (Pale Mist). Placeholder text: 'Ask me anything...' or 'Describe your creative task...'. Clear 'Generate' button using Luminous Teal accent.", "placement": "Center, below hero."},
+        {"type": "Example Prompts", "content": "A small, unobtrusive section showcasing diverse prompt examples (e.g., 'Design a logo', 'Write Python code', 'Summarize text'). Links to trigger prompt input.", "placement": "Below input area, subtle."},
+        {"type": "Footer", "content": "Copyright information, links to terms/privacy.", "placement": "Bottom, minimal."}
+      ],
+      "color_application": "Soft Cloud Gray background, Deep Ocean Blue for header/footer elements, Luminous Teal for primary action button, Charcoal Slate for text.",
+      "typography_application": "H1 for welcome message, Body text for descriptions, Code font for example prompts if applicable."
+    },
+    {
+      "screen_name": "Output Display - Content Generation",
+      "description": "A focused view for presenting the AI's generated text or code. Designed for readability and easy interaction with the output.",
+      "layout": "Content area with surrounding whitespace.",
+      "visual_elements": [
+        {"type": "Header", "content": "Logo, potentially a back/close button.", "placement": "Top left/right."},
+        {"type": "Output Title", "content": "Label indicating the type of output (e.g., 'Generated Marketing Blurb', 'Python Code Snippet').", "placement": "Above output."},
+        {"type": "AI Output Content", "content": "Rendered text or code block. Uses appropriate formatting (e.g., code highlighting for code). Ensures high readability with adequate line spacing and contrast.", "placement": "Main content area."},
+        {"type": "Action Bar", "content": "Buttons for 'Copy to Clipboard' (Luminous Teal), 'Refine Prompt' (secondary button style), 'Save' (icon button).", "placement": "Below the output content."},
+        {"type": "Feedback Mechanism", "content": "Simple icons (e.g., thumbs up/down) or a star rating.", "placement": "Adjacent to action bar or subtly below."}
+      ],
+      "color_application": "Soft Cloud Gray background, Charcoal Slate for text, Luminous Teal for primary actions, Deep Ocean Blue for secondary actions/icons.",
+      "typography_application": "H3/H4 for Output Title, Body text for content, Code font for code snippets."
+    },
+    {
+      "screen_name": "Output Display - Design Element Suggestion",
+      "description": "Visualizes AI-suggested design elements like color palettes or typography pairings.",
+      "layout": "Card-based or structured list layout.",
+      "visual_elements": [
+        {"type": "Output Title", "content": "e.g., 'Suggested Color Palette', 'Typography Pairing'.", "placement": "Above content."},
+        {"type": "Color Palette Display", "content": "Swatches of suggested colors with hex codes and names. Each swatch is a small card with the color background and contrasting text.", "placement": "Card or list item."},
+        {"type": "Typography Pairing Display", "content": "Examples of heading and body text using the suggested fonts, sizes, and weights.", "placement": "Card or list item."},
+        {"type": "Action Bar", "content": "'Copy Palette' / 'Apply Style' / 'Refine Prompt'.", "placement": "Below content."}
+      ],
+      "color_application": "Utilizes the suggested color palette visually within the mockups themselves. Backgrounds remain neutral.",
+      "typography_application": "Demonstrates the suggested typography pairings effectively."
+    }
+  ],
+  "ui_component_designs": [
+    {
+      "component_name": "Primary Button",
+      "description": "Used for main calls to action like 'Generate' or 'Submit'.",
+      "properties": {
+        "background_color": "Luminous Teal (#00C2CB)",
+        "text_color": "Deep Ocean Blue (#0A2E58) or White",
+        "font": "'Inter', sans-serif, 16px, font-weight: 600",
+        "padding": "12px 24px",
+        "border_radius": "8px",
+        "hover_state": "Slightly darker teal or subtle shadow.",
+        "disabled_state": "Lower opacity, neutral background."
+      }
+    },
+    {
+      "component_name": "Secondary Button",
+      "description": "Used for less critical actions like 'Refine Prompt' or 'Cancel'.",
+      "properties": {
+        "background_color": "Soft Cloud Gray (#F0F4F8)",
+        "text_color": "Deep Ocean Blue (#0A2E58)",
+        "font": "'Inter', sans-serif, 16px, font-weight: 600",
+        "padding": "12px 24px",
+        "border_radius": "8px",
+        "border": "1px solid Pale Mist (#E8E8E8)",
+        "hover_state": "Subtle background change or border highlight."
+      }
+    },
+    {
+      "component_name": "Text Input Field",
+      "description": "For user prompts and other text entry.",
+      "properties": {
+        "background_color": "White",
+        "text_color": "Charcoal Slate (#333333)",
+        "font": "'Inter', sans-serif, 16px, font-weight: 400",
+        "padding": "16px",
+        "border_radius": "8px",
+        "border": "1px solid Pale Mist (#E8E8E8)",
+        "focus_state": "Border color changes to Luminous Teal.",
+        "placeholder_color": "Pale Mist (#E8E8E8) or light gray."
+      }
+    },
+    {
+      "component_name": "Card",
+      "description": "Used for displaying AI-generated design elements or structuring output sections.",
+      "properties": {
+        "background_color": "White",
+        "border_radius": "12px",
+        "box_shadow": "0px 4px 16px rgba(0, 0, 0, 0.05)",
+        "padding": "24px",
+        "margin": "16px 0"
+      }
+    },
+    {
+      "component_name": "Icon Button",
+      "description": "For actions like 'Copy', 'Save', 'Feedback'.",
+      "properties": {
+        "icon_color": "Deep Ocean Blue (#0A2E58)",
+        "background_color": "Transparent",
+        "hover_state": "Background becomes Soft Cloud Gray or icon color changes to Luminous Teal."
+      }
+    }
+  ],
+  "accessibility_considerations": [
+    {"area": "Color Contrast", "details": "Ensure text and interactive elements meet WCAG AA contrast ratios against backgrounds (e.g., Charcoal Slate on Soft Cloud Gray, Luminous Teal on White)."},
+    {"area": "Typography", "details": "Use legible font families (Inter, Merriweather) with sufficient size and line height for body text. Allow for text resizing."},
+    {"area": "Keyboard Navigation", "details": "All interactive elements must be focusable and operable via keyboard. Focus states must be clearly visible."},
+    {"area": "Semantic HTML", "details": "Use appropriate HTML tags (header, nav, main, button, etc.) to provide structure for screen readers."},
+    {"area": "ARIA Attributes", "details": "Implement ARIA attributes where necessary to enhance screen reader experience, especially for dynamic content updates or custom controls."}
+  ]
+}
+
+---
+
+Artifact from step_4_Kodax_result.txt (Engineer):
+{
+  "frontend_setup": {
+    "framework_selection": {
+      "recommendation": "React",
+      "reasoning": "React's component-based architecture aligns well with modular UI development. Its large ecosystem, community support, and performance characteristics make it suitable for building interactive applications. It also offers a good balance between flexibility and structure for this project."
+    },
+    "project_structure": {
+      "base_directory": "ai-frontend",
+      "src_directory": {
+        "components": "Reusable UI components (e.g., Button, InputField, Card).",
+        "pages": "Top-level page components (e.g., HomePage, OutputPage).",
+        "services": "API interaction logic, utility functions.",
+        "styles": "Global styles, theme configurations, component-specific styles.",
+        "assets": "Images, fonts, icons.",
+        "utils": "Helper functions, constants.",
+        "hooks": "Custom React hooks for shared logic.",
+        "App.js": "Main application component.",
+        "index.js": "Entry point for the React application."
+      },
+      "public_directory": "Static assets, index.html.",
+      "config_files": [
+        "package.json",
+        ".gitignore",
+        "README.md",
+        "babel.config.js",
+        "webpack.config.js (or Vite config)"
+      ]
+    },
+    "initialization_steps": [
+      "Create project directory: `mkdir ai-frontend && cd ai-frontend`",
+      "Initialize Node.js project: `npm init -y`",
+      "Install React and ReactDOM: `npm install react react-dom`",
+      "Install a build tool/bundler (e.g., Vite for speed): `npm install --save-dev vite @vitejs/plugin-react`",
+      "Configure Vite: Create `vite.config.js` and set up React plugin.",
+      "Set up basic project structure (folders mentioned above).",
+      "Create initial placeholder files for `App.js`, `index.js`, `main.jsx` (or `index.html`).",
+      "Initialize Git repository: `git init`",
+      "Create `.gitignore` file with common Node.js/React exclusions (e.g., `node_modules`, `.env`, `build`).",
+      "Add initial files to Git: `git add .`",
+      "Make initial commit: `git commit -m 'Initial frontend project setup with React and Vite'`"
+    ],
+    "version_control_strategy": {
+      "repository_hosting": "GitHub (or similar)",
+      "branching_model": "Gitflow-lite (main for stable, develop for integration, feature branches for new work)",
+      "commit_convention": "Conventional Commits (e.g., `feat:`, `fix:`, `chore:`, `refactor:`, `style:`, `test:`)",
+      "pull_request_process": "Create PRs for features/fixes, requiring at least one review before merging into `develop` or `main`."
+    }
+  }
+}
+
+---
+
+Artifact from step_5_Kodax_result.txt (Engineer):
+{
+  "task": "Translate the high-fidelity mockups and style guide into modular, responsive, and accessible UI components using HTML, CSS, and JavaScript.",
+  "role": "Engineer",
+  "sub_task_execution": [
+    {
+      "component_name": "Button",
+      "description": "Implement primary and secondary button styles based on the style guide.",
+      "html_structure": "<button class=\"btn btn-primary\">Primary Action</button>\n<button class=\"btn btn-secondary\">Secondary Action</button>",
+      "css_styles": {
+        "base": ".btn {\n  padding: 12px 24px;\n  border-radius: 8px;\n  font-family: 'Inter', sans-serif;\n  font-size: 16px;\n  font-weight: 600;\n  cursor: pointer;\n  transition: background-color 0.2s ease, box-shadow 0.2s ease;\n  border: none;\n  display: inline-block;\n  text-align: center;\n}\n\n.btn-primary {\n  background-color: #00C2CB; /* Luminous Teal */\n  color: #0A2E58; /* Deep Ocean Blue */\n}\n\n.btn-primary:hover {\n  background-color: #00A1A8; /* Darker Teal */\n  box-shadow: 0px 4px 16px rgba(0, 194, 203, 0.3);\n}\n\n.btn-secondary {\n  background-color: #F0F4F8; /* Soft Cloud Gray */\n  color: #0A2E58; /* Deep Ocean Blue */\n  border: 1px solid #E8E8E8; /* Pale Mist */\n}\n\n.btn-secondary:hover {\n  background-color: #E8E8E8; /* Pale Mist */\n}\n\n/* Accessibility: Focus states */\n.btn:focus {\n  outline: none;\n  box-shadow: 0 0 0 3px rgba(0, 194, 203, 0.5); /* Luminous Teal focus ring */\n}",
+        "responsive_considerations": "Ensure buttons are appropriately sized and spaced on smaller viewports. Consider using flexbox for button groups.",
+        "accessibility_notes": "Ensure sufficient color contrast. Implement clear focus states for keyboard navigation. Use semantic `<button>` elements."
+      },
+      "javascript_logic": "Basic event listeners can be added here for click interactions if needed, but functionality will be handled at a higher level (e.g., in page components)."
+    },
+    {
+      "component_name": "InputField",
+      "description": "Implement the text input field styles.",
+      "html_structure": "<div class=\"input-group\">\n  <label for=\"prompt-input\" class=\"input-label\">Prompt</label>\n  <textarea id=\"prompt-input\" class=\"input-field\" placeholder=\"Ask me anything...\"></textarea>\n</div>",
+      "css_styles": {
+        "base": ".input-group {\n  width: 100%;\n  margin-bottom: 24px; /* Spacing from style guide */\n}\n\n.input-label {\n  display: block;\n  margin-bottom: 8px; /* Spacing from style guide */\n  font-family: 'Inter', sans-serif;\n  font-size: 16px;\n  font-weight: 600;\n  color: #333333; /* Charcoal Slate */\n}\n\n.input-field {\n  width: 100%;\n  padding: 16px;\n  border-radius: 8px;\n  border: 1px solid #E8E8E8; /* Pale Mist */\n  background-color: white;\n  font-family: 'Inter', sans-serif;\n  font-size: 16px;\n  font-weight: 400;\n  line-height: 1.6;\n  color: #333333; /* Charcoal Slate */\n  resize: vertical; /* Allow vertical resizing */\n  min-height: 120px; /* Minimum height for textarea */\n}\n\n.input-field::placeholder {\n  color: #CCCCCC; /* Lighter gray for placeholder */\n}\n\n.input-field:focus {\n  outline: none;\n  border-color: #00C2CB; /* Luminous Teal */\n  box-shadow: 0 0 0 3px rgba(0, 194, 203, 0.3);\n}",
+        "responsive_considerations": "Ensure input fields adapt to container widths. For mobile, consider slightly larger touch targets if necessary.",
+        "accessibility_notes": "Use `<label>` associated with the input using `for` and `id`. Ensure focus states are clear. Sufficient contrast for text and borders."
+      },
+      "javascript_logic": "For a textarea, JavaScript might be used for dynamic height adjustments based on content, or to integrate with a state management system."
+    },
+    {
+      "component_name": "Card",
+      "description": "Implement the card component for displaying structured content like color swatches or typography examples.",
+      "html_structure": "<div class=\"card\">\n  <!-- Card content goes here -->\n</div>",
+      "css_styles": {
+        "base": ".card {\n  background-color: white;\n  border-radius: 12px;\n  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.05);\n  padding: 24px;\n  margin-bottom: 16px; /* Spacing from style guide */\n  overflow: hidden; /* To contain child elements with rounded corners */\n}",
+        "responsive_considerations": "Cards should stack vertically on smaller screens and potentially arrange in columns on larger screens.",
+        "accessibility_notes": "Ensure content within cards has sufficient contrast. If cards contain interactive elements, ensure they are keyboard accessible."
+      },
+      "javascript_logic": "JavaScript would be used to populate card content dynamically based on AI output or other data."
+    },
+    {
+      "component_name": "Icon Button",
+      "description": "Implement styles for icon-only buttons.",
+      "html_structure": "<button class=\"icon-btn\" aria-label=\"Copy to clipboard\">\n  <!-- SVG icon here -->\n  <svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n    <path d=\"M16 1H4C2.89543 1 2 1.89543 2 3V17C2 18.1046 2.89543 19 4 19H16C17.1046 19 18 18.1046 18 17V3C18 1.89543 17.1046 1 16 1ZM16 17H4V3H16V17Z\" fill=\"currentColor\"/>\n    <path d=\"M20 5H18V19C18 20.1046 18.8954 21 20 21H22V5Z\" fill=\"currentColor\"/>\n  </svg>\n</button>",
+      "css_styles": {
+        "base": ".icon-btn {\n  background-color: transparent;\n  border: none;\n  padding: 8px;\n  cursor: pointer;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  border-radius: 6px;\n  transition: background-color 0.2s ease;\n}\n\n.icon-btn svg {\n  fill: #0A2E58; /* Deep Ocean Blue */\n  width: 24px;\n  height: 24px;\n}\n\n.icon-btn:hover {\n  background-color: #F0F4F8; /* Soft Cloud Gray */\n}\n\n.icon-btn:hover svg {\n  fill: #00C2CB; /* Luminous Teal */\n}\n\n/* Accessibility: Focus states */\n.icon-btn:focus {\n  outline: none;\n  box-shadow: 0 0 0 3px rgba(0, 194, 203, 0.5); /* Luminous Teal focus ring */\n}",
+        "responsive_considerations": "Ensure icons are appropriately sized and have enough spacing for touch targets.",
+        "accessibility_notes": "Crucially, use `aria-label` to describe the button's action for screen readers when there's no visible text. Ensure clear focus states."
+      },
+      "javascript_logic": "JavaScript will handle the click event to perform the action (e.g., copying text to clipboard)."
+    }
+  ],
+  "global_styles": {
+    "html": "box-sizing: border-box;",
+    "body": "font-family: 'Inter', sans-serif;\nbackground-color: #F0F4F8; /* Soft Cloud Gray */\ncolor: #333333; /* Charcoal Slate */\nmargin: 0;\nline-height: 1.6;\n-webkit-font-smoothing: antialiased;\n-moz-osx-font-smoothing: grayscale;",
+    "headings": {
+      "h1": "font-size: 48px; font-weight: 700; line-height: 1.2;",
+      "h2": "font-size: 36px; font-weight: 700; line-height: 1.3;",
+      "h3": "font-size: 28px; font-weight: 600; line-height: 1.3;",
+      "h4": "font-size: 20px; font-weight: 600; line-height: 1.4;"
+    },
+    "code_font": "font-family: 'Source Code Pro', monospace;",
+    "imports": [
+      "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Code+Pro:wght@400&family=Merriweather:wght@700&display=swap');"
+    ],
+    "accessibility": {
+      "contrast_ratios": "Ensure all text/background combinations meet WCAG AA standards.",
+      "keyboard_navigation": "All interactive elements must be focusable and operable via keyboard with visible focus indicators."
+    }
+  }
+}
+
+
+
+Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project.

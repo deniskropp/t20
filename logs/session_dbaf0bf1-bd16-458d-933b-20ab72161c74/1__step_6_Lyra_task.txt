@@ -1,0 +1,686 @@
+The overall goal is: 'Create a dataset for LLM fine-tuning towards internalized TAS expertise'
+
+Your role's specific goal is: 'Structure workflows and ensure clarity in agent instructions, system prompt engineering'
+Your specific sub-task is: 'Perform a final quality assurance check on the entire dataset. Sanitize the data, verify schema compliance for all entries, and prepare the final dataset file for the fine-tuning process.'
+
+The team's roles are:
+    {'roles': [{'title': 'Designer', 'description': 'Generate aesthetic layouts, color palettes, typography, and UI flows, ensuring accessibility and visual balance.'}, {'title': 'Engineer', 'description': 'Implement designs into clean, modular, and performant code, focusing on responsive design and accessibility.'}, {'title': 'Prompt Engineer', 'description': 'Structure workflows and ensure clarity in agent instructions, system prompt engineering'}, {'title': 'Task-Agnostic Step (TAS) extractor', 'description': "Identify and extract each 'Task Agnostic Step' (TAS) towards the high-level goal."}], 'steps': [{'name': 'Lyra', 'role': 'Prompt Engineer', 'task': "Define the JSON schema for the fine-tuning dataset. The schema must structure entries as pairs of 'high-level goal' and its corresponding 'TAS plan'."}, {'name': 'TASe', 'role': 'Task-Agnostic Step (TAS) extractor', 'task': 'Generate 10 diverse, high-quality seed examples of TAS plans based on the schema defined by Lyra. These examples will serve as the foundation for the dataset.'}, {'name': 'Aurora', 'role': 'Designer', 'task': 'Design a minimalist and intuitive user interface for a data annotation tool. The UI should allow users to input a high-level goal, view a generated TAS plan, and then edit, approve, or reject the plan.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': "Develop the front-end and back-end for the data annotation tool based on Aurora's designs. Ensure the tool can store and export the validated dataset in the required JSON format."}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': 'Engineer a set of system prompts for an LLM to be integrated into the annotation tool. These prompts will guide the LLM to generate accurate TAS plans from user-submitted high-level goals.'}, {'name': 'TASe', 'role': 'Task-Agnostic Step (TAS) extractor', 'task': 'Utilize the annotation tool to generate and validate a dataset of at least 500 entries. Focus on quality, ensuring each TAS plan is logical, complete, and correctly structured.'}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': 'Perform a final quality assurance check on the entire dataset. Sanitize the data, verify schema compliance for all entries, and prepare the final dataset file for the fine-tuning process.'}]}
+
+Please use the following outputs from the other agents as your input:
+
+Artifact from 1__step_0_Lyra_result.txt (Prompt Engineer):
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TAS Fine-tuning Dataset Schema",
+  "description": "Schema for a dataset used to fine-tune LLMs on generating Task-Agnostic Step (TAS) plans from high-level goals. Each entry consists of a high-level goal and its corresponding TAS plan.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "high_level_goal",
+      "tas_plan"
+    ],
+    "properties": {
+      "high_level_goal": {
+        "type": "string",
+        "description": "A clear, concise high-level objective or task that requires a sequence of actionable steps to achieve."
+      },
+      "tas_plan": {
+        "type": "array",
+        "description": "An ordered list of granular, atomic, and task-agnostic steps. Each step should be a distinct instruction that contributes to achieving the high-level goal.",
+        "items": {
+          "type": "string",
+          "description": "A single, self-contained Task-Agnostic Step (TAS)."
+        },
+        "minItems": 1
+      }
+    },
+    "additionalProperties": false
+  }
+}
+
+---
+
+Artifact from 1__step_1_TASe_result.txt (Task-Agnostic Step (TAS) extractor):
+[
+  {
+    "id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+    "name": "Define Objective",
+    "description": "Clearly articulate the specific, measurable, achievable, relevant, and time-bound (SMART) objective for the task or project. This involves understanding the desired outcome, scope, and constraints.",
+    "category": "Init",
+    "purpose": "Establish a clear and actionable target.",
+    "keywords": ["objective setting", "goal definition", "scoping", "clarification"],
+    "applicability_notes": "Applicable at the very beginning of any project or task to ensure alignment and focus. The level of detail will vary based on the complexity of the overarching goal.",
+    "examples_of_usage": [
+      "In software development: 'Develop a user authentication module that supports OAuth 2.0.'",
+      "In project management: 'Complete the market research phase for the new product launch by Q3.'",
+      "In personal development: 'Improve public speaking skills by joining a local Toastmasters club.'"
+    ],
+    "typical_inputs": ["undefined goal", "broad requirement", "initial request"],
+    "typical_outputs": ["SMART objective", "defined scope", "clear target"]
+  },
+  {
+    "id": "b2c3d4e5-f6a7-8901-2345-67890abcdef0",
+    "name": "Gather Requirements",
+    "description": "Collect and document all necessary information, constraints, and specifications from relevant stakeholders or sources. This step ensures all aspects of the objective are understood before proceeding.",
+    "category": "Analysis",
+    "purpose": "Understand all necessary inputs and constraints.",
+    "keywords": ["requirements gathering", "information collection", "stakeholder input", "documentation"],
+    "applicability_notes": "Crucial for any task involving external dependencies, user needs, or specific operational parameters. Can involve interviews, surveys, data analysis, or reviewing existing documentation.",
+    "examples_of_usage": [
+      "For a website redesign: Gather requirements on target audience, desired features, content strategy, and brand guidelines.",
+      "For a research paper: Collect relevant literature, data sources, and methodological requirements.",
+      "For a manufacturing process: Document material specifications, quality standards, and production capacity."
+    ],
+    "typical_inputs": ["defined objective", "initial stakeholder feedback", "existing documentation"],
+    "typical_outputs": ["detailed requirements document", "stakeholder list", "constraint list"]
+  },
+  {
+    "id": "c3d4e5f6-a7b8-9012-3456-7890abcdef01",
+    "name": "Decompose Task",
+    "description": "Break down the overarching objective or complex task into smaller, manageable sub-tasks or steps. This facilitates planning, delegation, and progress tracking.",
+    "category": "Planning",
+    "purpose": "Create a structured plan of action.",
+    "keywords": ["task breakdown", "work breakdown structure", "sub-task identification", "process mapping"],
+    "applicability_notes": "Essential for managing complexity. The granularity of decomposition depends on the nature of the task and the desired level of control and monitoring.",
+    "examples_of_usage": [
+      "Breaking down 'Build a House' into: Foundation, Framing, Roofing, Electrical, Plumbing, Finishing.",
+      "Breaking down 'Write a Novel' into: Outline, Chapter 1 Draft, Chapter 2 Draft, Editing, Proofreading.",
+      "Breaking down 'Launch a Marketing Campaign' into: Strategy, Creative Development, Media Buying, Performance Tracking."
+    ],
+    "typical_inputs": ["defined objective", "gathered requirements", "project scope"],
+    "typical_outputs": ["list of sub-tasks", "task hierarchy", "workflow diagram"]
+  },
+  {
+    "id": "d4e5f6a7-b8c9-0123-4567-890abcdef012",
+    "name": "Allocate Resources",
+    "description": "Assign necessary resources such as personnel, budget, equipment, and time to each sub-task identified in the decomposition. Ensure resources are sufficient and appropriately matched to task requirements.",
+    "category": "Planning",
+    "purpose": "Ensure resources are available for execution.",
+    "keywords": ["resource allocation", "budgeting", "personnel assignment", "scheduling"],
+    "applicability_notes": "Critical for efficient execution. Involves matching skills to tasks, managing budgets, and securing necessary tools or materials.",
+    "examples_of_usage": [
+      "Assigning engineers to specific coding modules based on expertise.",
+      "Allocating budget funds for marketing channels based on expected ROI.",
+      "Scheduling equipment usage to avoid conflicts and ensure timely availability."
+    ],
+    "typical_inputs": ["decomposed tasks", "resource availability list", "budget constraints"],
+    "typical_outputs": ["resource assignment plan", "personnel allocation chart", "budget breakdown"]
+  },
+  {
+    "id": "e5f6a7b8-c9d0-1234-5678-90abcdef0123",
+    "name": "Execute Task",
+    "description": "Perform the actual work or actions required for each sub-task according to the plan. This is the core operational phase where progress is made towards the objective.",
+    "category": "Execution",
+    "purpose": "Perform the work required to achieve the objective.",
+    "keywords": ["task execution", "action implementation", "operations", "work completion"],
+    "applicability_notes": "The phase where the plan is put into action. Requires focus, adherence to procedures, and effective coordination.",
+    "examples_of_usage": [
+      "Writing code for a software feature.",
+      "Conducting experiments for a scientific study.",
+      "Manufacturing components on an assembly line."
+    ],
+    "typical_inputs": ["allocated resources", "task instructions", "execution plan"],
+    "typical_outputs": ["completed sub-tasks", "intermediate deliverables", "work progress"]
+  },
+  {
+    "id": "f6a7b8c9-d0e1-2345-6789-0abcdef01234",
+    "name": "Monitor Progress",
+    "description": "Track the status and performance of ongoing tasks against the established plan and objectives. Identify deviations, potential issues, and areas requiring adjustment.",
+    "category": "Monitoring",
+    "purpose": "Track progress and identify deviations.",
+    "keywords": ["progress tracking", "performance monitoring", "status reporting", "deviation detection"],
+    "applicability_notes": "An ongoing activity throughout the execution phase. Involves collecting data, comparing actuals to planned metrics, and reporting findings.",
+    "examples_of_usage": [
+      "Tracking bug fixes in a software project using a ticketing system.",
+      "Monitoring sales figures against targets daily.",
+      "Observing experimental parameters to ensure they remain within acceptable ranges."
+    ],
+    "typical_inputs": ["execution plan", "completed tasks", "performance metrics"],
+    "typical_outputs": ["progress reports", "performance dashboards", "identified issues"]
+  },
+  {
+    "id": "a7b8c9d0-e1f2-3456-7890-abcdef012345",
+    "name": "Adjust Plan",
+    "description": "Modify the original plan based on monitoring feedback, unforeseen circumstances, or changes in requirements. This ensures the project remains on track or adapts to new realities.",
+    "category": "Adaptation",
+    "purpose": "Adapt the plan to changing circumstances.",
+    "keywords": ["plan adjustment", "change management", "re-planning", "course correction"],
+    "applicability_notes": "A crucial feedback loop in dynamic environments. Requires analysis of monitoring data and making informed decisions about plan modifications.",
+    "examples_of_usage": [
+      "Revising a project schedule due to unexpected delays.",
+      "Adjusting a marketing strategy based on initial campaign performance.",
+      "Modifying an experimental procedure based on preliminary results."
+    ],
+    "typical_inputs": ["progress reports", "identified issues", "updated requirements"],
+    "typical_outputs": ["revised plan", "updated schedule", "change logs"]
+  },
+  {
+    "id": "b8c9d0e1-f2a3-4567-8901-bcdef0123456",
+    "name": "Validate Outcome",
+    "description": "Assess the final deliverable or outcome against the initial objective and requirements. Ensure it meets the defined quality standards and stakeholder expectations.",
+    "category": "Validation",
+    "purpose": "Confirm the outcome meets requirements.",
+    "keywords": ["outcome validation", "quality assurance", "acceptance testing", "final review"],
+    "applicability_notes": "The final check before completion. Can involve testing, reviews, audits, or user acceptance.",
+    "examples_of_usage": [
+      "Testing a software application for bugs and usability.",
+      "Reviewing a financial report for accuracy and completeness.",
+      "Conducting a final inspection of a manufactured product."
+    ],
+    "typical_inputs": ["completed deliverable", "defined requirements", "quality standards"],
+    "typical_outputs": ["validated outcome", "acceptance confirmation", "quality report"]
+  },
+  {
+    "id": "c9d0e1f2-a3b4-5678-9012-cdef01234567",
+    "name": "Document Findings",
+    "description": "Record key information, lessons learned, results, and methodologies used throughout the process. This documentation serves as a knowledge base for future reference and improvement.",
+    "category": "Documentation",
+    "purpose": "Record and share knowledge gained.",
+    "keywords": ["documentation", "knowledge capture", "lessons learned", "reporting"],
+    "applicability_notes": "Essential for continuous improvement and knowledge management. Captures what worked, what didn't, and why.",
+    "examples_of_usage": [
+      "Writing a post-mortem report after a project.",
+      "Creating a knowledge base article based on a solved technical issue.",
+      "Publishing research findings in a scientific journal."
+    ],
+    "typical_inputs": ["project outcomes", "process data", "validation results"],
+    "typical_outputs": ["project report", "knowledge base articles", "documentation repository"]
+  },
+  {
+    "id": "d0e1f2a3-b4c5-6789-0123-def012345678",
+    "name": "Archive Project",
+    "description": "Store all project-related documents, deliverables, and data in a systematic and accessible manner for future reference, compliance, or historical purposes.",
+    "category": "Closure",
+    "purpose": "Store project artifacts for future access.",
+    "keywords": ["archiving", "project closure", "data storage", "knowledge management"],
+    "applicability_notes": "The final step in concluding a project or task cycle. Ensures valuable information is preserved and retrievable.",
+    "examples_of_usage": [
+      "Saving final code versions and documentation to a version control system.",
+      "Storing all research data and reports in a secure archive.",
+      "Closing out project files and transferring them to long-term storage."
+    ],
+    "typical_inputs": ["documented findings", "validated outcome", "final deliverables"],
+    "typical_outputs": ["archived project files", "accessible data repository", "project closure confirmation"]
+  }
+]
+
+---
+
+Artifact from 1__step_2_Aurora_result.txt (Designer):
+{
+  "design_system": {
+    "color_palette": {
+      "primary": "#4A90E2",
+      "secondary": "#50E3C2",
+      "accent": "#F5A623",
+      "background": "#F8F9FA",
+      "surface": "#FFFFFF",
+      "text_primary": "#333333",
+      "text_secondary": "#666666",
+      "border": "#DDDDDD"
+    },
+    "typography": {
+      "font_family": "'Inter', sans-serif",
+      "heading_1": {
+        "font_size": "32px",
+        "font_weight": 700,
+        "line_height": "40px"
+      },
+      "heading_2": {
+        "font_size": "24px",
+        "font_weight": 600,
+        "line_height": "32px"
+      },
+      "body_large": {
+        "font_size": "16px",
+        "font_weight": 400,
+        "line_height": "24px"
+      },
+      "body_small": {
+        "font_size": "14px",
+        "font_weight": 400,
+        "line_height": "20px"
+      },
+      "label": {
+        "font_size": "12px",
+        "font_weight": 500,
+        "line_height": "16px"
+      }
+    },
+    "logo": {
+      "description": "A minimalist, abstract representation of a branching path or a structured flow. It uses clean lines and the primary and secondary colors to symbolize clarity and progress in task decomposition.",
+      "visual_elements": [
+        {"type": "line", "color": "#4A90E2", "stroke_width": 2, "start": {"x": 10, "y": 30}, "end": {"x": 30, "y": 10}},
+        {"type": "line", "color": "#4A90E2", "stroke_width": 2, "start": {"x": 30, "y": 10}, "end": {"x": 50, "y": 30}},
+        {"type": "line", "color": "#50E3C2", "stroke_width": 2, "start": {"x": 30, "y": 10}, "end": {"x": 30, "y": 50}}
+      ]
+    }
+  },
+  "ui_flow": {
+    "screens": [
+      {
+        "name": "Goal Input",
+        "description": "The initial screen where the user provides the high-level goal. Features a clear input field and a prominent 'Generate Plan' button.",
+        "layout": {
+          "type": "centered_column",
+          "elements": [
+            {"type": "logo", "size": "medium"},
+            {"type": "text", "content": "Define Your Objective", "style": "heading_1"},
+            {"type": "text", "content": "Enter your high-level goal for the LLM fine-tuning dataset.", "style": "body_large", "color": "text_secondary"},
+            {"type": "input_field", "label": "High-level Goal", "placeholder": "e.g., Create a dataset for LLM fine-tuning towards internalized TAS expertise", "style": "input_large"},
+            {"type": "button", "text": "Generate TAS Plan", "variant": "primary", "action": "submit_goal"}
+          ]
+        }
+      },
+      {
+        "name": "TAS Plan Review",
+        "description": "Displays the generated TAS plan. Users can review, edit, approve, or reject the plan.",
+        "layout": {
+          "type": "two_column_split",
+          "left_panel": {
+            "title": "Generated TAS Plan",
+            "elements": [
+              {"type": "list", "items_source": "generated_tas_plan", "item_style": "numbered_steps", "editable": true},
+              {"type": "button", "text": "Approve Plan", "variant": "primary", "action": "approve_plan"},
+              {"type": "button", "text": "Reject Plan", "variant": "secondary", "action": "reject_plan"}
+            ]
+          },
+          "right_panel": {
+            "title": "High-level Goal",
+            "elements": [
+              {"type": "text", "content": "user_provided_goal", "style": "body_large"}
+            ],
+            "actions": [
+              {"type": "button", "text": "Edit Goal", "variant": "tertiary", "action": "edit_goal"}
+            ]
+          }
+        }
+      }
+    ],
+    "components": {
+      "input_field": {
+        "background_color": "surface",
+        "border_color": "border",
+        "border_radius": "8px",
+        "padding": "12px 16px",
+        "font_size": "body_large",
+        "focus_border_color": "primary"
+      },
+      "button": {
+        "primary": {
+          "background_color": "primary",
+          "text_color": "white",
+          "border_radius": "8px",
+          "padding": "12px 24px",
+          "font_weight": 600
+        },
+        "secondary": {
+          "background_color": "transparent",
+          "text_color": "primary",
+          "border_color": "primary",
+          "border_width": "1px",
+          "border_radius": "8px",
+          "padding": "12px 24px",
+          "font_weight": 600
+        },
+        "tertiary": {
+          "background_color": "transparent",
+          "text_color": "text_secondary",
+          "border_radius": "8px",
+          "padding": "8px 16px",
+          "font_weight": 500
+        }
+      },
+      "list": {
+        "item_style": {
+          "padding": "10px 0",
+          "border_bottom": "1px solid border",
+          "display": "flex",
+          "align_items": "center",
+          "gap": "10px"
+        },
+        "editable_item": {
+          "input_style": {
+            "flex_grow": 1,
+            "font_size": "body_large",
+            "font_weight": 400,
+            "line_height": "24px",
+            "border": "none",
+            "background": "transparent",
+            "focus_outline": "none",
+            "color": "text_primary"
+          },
+          "drag_handle_style": {
+            "cursor": "grab",
+            "color": "text_secondary"
+          }
+        }
+      }
+    }
+  },
+  "design_philosophy": {
+    "title": "Clarity in Complexity",
+    "description": "Our design for the data annotation tool is rooted in a minimalist aesthetic to ensure focus and intuitive interaction. We employ a clean, natural design language, utilizing a serene color palette dominated by soft blues and greens, punctuated by a warm accent for key actions. Typography is crisp and legible, prioritizing readability for extended annotation sessions. The user flow guides the annotator seamlessly from goal definition to plan validation, with clear affordances for editing and approval. The visual balance is achieved through ample whitespace and a structured layout, minimizing cognitive load and maximizing efficiency. Every element is crafted to support the core task of refining AI understanding, making the complex process of data annotation feel straightforward and accessible."
+  }
+}
+
+---
+
+Artifact from 1__step_3_Kodax_result.txt (Engineer):
+{
+  "frontend_code": {
+    "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>TAS Data Annotation Tool</title>\n    <link href=\"https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap\" rel=\"stylesheet\">\n    <style>\n        /* Design System Styles */\n        :root {\n            --primary-color: #4A90E2;\n            --secondary-color: #50E3C2;\n            --accent-color: #F5A623;\n            --background-color: #F8F9FA;\n            --surface-color: #FFFFFF;\n            --text-primary: #333333;\n            --text-secondary: #666666;\n            --border-color: #DDDDDD;\n            --font-family: 'Inter', sans-serif;\n            --h1-font-size: 32px;\n            --h1-font-weight: 700;\n            --h1-line-height: 40px;\n            --h2-font-size: 24px;\n            --h2-font-weight: 600;\n            --h2-line-height: 32px;\n            --body-large-font-size: 16px;\n            --body-large-font-weight: 400;\n            --body-large-line-height: 24px;\n            --body-small-font-size: 14px;\n            --body-small-font-weight: 400;\n            --body-small-line-height: 20px;\n            --label-font-size: 12px;\n            --label-font-weight: 500;\n            --label-line-height: 16px;\n            --border-radius: 8px;\n            --input-padding: 12px 16px;\n            --button-padding: 12px 24px;\n            --list-item-padding: 10px 0;\n            --list-item-gap: 10px;\n        }\n\n        body { \n            font-family: var(--font-family);\n            background-color: var(--background-color);\n            color: var(--text-primary);\n            margin: 0;\n            padding: 0;\n            display: flex;\n            justify-content: center;\n            align-items: flex-start;\n            min-height: 100vh;\n            box-sizing: border-box;\n        }\n\n        .container { \n            width: 100%;\n            max-width: 1200px;\n            margin: 40px auto;\n            padding: 0 20px;\n            box-sizing: border-box;\n        }\n\n        .screen {\n            background-color: var(--surface-color);\n            padding: 40px;\n            border-radius: var(--border-radius);\n            box-shadow: 0 4px 8px rgba(0,0,0,0.05);\n            margin-bottom: 40px;\n            display: flex;\n            flex-direction: column;\n            align-items: center;\n            text-align: center;\n        }\n\n        .screen.goal-input {\n            justify-content: center;\n            min-height: calc(100vh - 80px); /* Adjust for margin */\n        }\n\n        .screen.tas-review {\n            flex-direction: row;\n            align-items: flex-start;\n            text-align: left;\n            justify-content: space-between;\n            flex-wrap: wrap;\n        }\n\n        .logo {\n            margin-bottom: 20px;\n            width: 60px; /* Adjust size as needed */\n            height: 60px;\n        }\n        .logo svg {\n            width: 100%;\n            height: 100%;\n        }\n\n        h1 {\n            font-size: var(--h1-font-size);\n            font-weight: var(--h1-font-weight);\n            line-height: var(--h1-line-height);\n            color: var(--text-primary);\n            margin-bottom: 10px;\n        }\n\n        h2 {\n            font-size: var(--h2-font-size);\n            font-weight: var(--h2-font-weight);\n            line-height: var(--h2-line-height);\n            color: var(--text-primary);\n            margin-bottom: 10px;\n        }\n\n        .sub-heading {\n            font-size: var(--body-large-font-size);\n            font-weight: var(--body-large-font-weight);\n            line-height: var(--body-large-line-height);\n            color: var(--text-secondary);\n            margin-bottom: 30px;\n        }\n\n        .input-field {\n            width: 100%;\n            max-width: 600px;\n            padding: var(--input-padding);\n            border: 1px solid var(--border-color);\n            border-radius: var(--border-radius);\n            font-size: var(--body-large-font-size);\n            font-weight: var(--body-large-font-weight);\n            line-height: var(--body-large-line-height);\n            box-sizing: border-box;\n            margin-bottom: 20px;\n            color: var(--text-primary);\n            background-color: var(--surface-color);\n        }\n        .input-field:focus {\n            outline: none;\n            border-color: var(--primary-color);\n            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.3);\n        }\n\n        .button {\n            border: none;\n            border-radius: var(--border-radius);\n            padding: var(--button-padding);\n            font-size: var(--body-large-font-size);\n            font-weight: var(--button-font-weight);\n            cursor: pointer;\n            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;\n            text-decoration: none;\n            display: inline-block;\n            margin: 5px;\n        }\n\n        .button.primary {\n            background-color: var(--primary-color);\n            color: white;\n            font-weight: 600;\n        }\n        .button.primary:hover {\n            background-color: #3a7bc8;\n        }\n\n        .button.secondary {\n            background-color: transparent;\n            color: var(--primary-color);\n            border: 1px solid var(--primary-color);\n            font-weight: 600;\n        }\n        .button.secondary:hover {\n            background-color: rgba(74, 144, 226, 0.1);\n        }\n\n        .button.tertiary {\n            background-color: transparent;\n            color: var(--text-secondary);\n            font-weight: 500;\n            padding: 8px 16px;\n        }\n        .button.tertiary:hover {\n            color: var(--primary-color);\n        }\n\n        .tas-review .left-panel, .tas-review .right-panel {\n            flex: 1;\n            min-width: 300px;\n            padding: 20px;\n            box-sizing: border-box;\n        }\n        .tas-review .left-panel {\n            border-right: 1px solid var(--border-color);\n        }\n        .tas-review .right-panel {\n            display: flex;\n            flex-direction: column;\n            align-items: flex-start;\n        }\n\n        .tas-review h2 {\n            margin-bottom: 20px;\n        }\n\n        .tas-list {\n            list-style: none;\n            padding: 0;\n            width: 100%;\n        }\n\n        .tas-list .list-item {\n            display: flex;\n            align-items: center;\n            gap: var(--list-item-gap);\n            padding: var(--list-item-padding);\n            border-bottom: 1px solid var(--border-color);\n            font-size: var(--body-large-font-size);\n            font-weight: var(--body-large-font-weight);\n            line-height: var(--body-large-line-height);\n            color: var(--text-primary);\n        }\n        .tas-list .list-item:last-child {\n            border-bottom: none;\n        }\n\n        .tas-list .list-item .drag-handle {\n            cursor: grab;\n            color: var(--text-secondary);\n            font-size: 1.2em;\n            user-select: none;\n        }\n\n        .tas-list .list-item .editable-input {\n            flex-grow: 1;\n            font-size: var(--body-large-font-size);\n            font-weight: var(--body-large-font-weight);\n            line-height: var(--body-large-line-height);\n            border: none;\n            background: transparent;\n            color: var(--text-primary);\n            padding: 0;\n        }\n        .tas-list .list-item .editable-input:focus {\n            outline: none;\n            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.3);\n            border-radius: 4px;\n        }\n\n        .review-actions {\n            margin-top: 30px;\n            width: 100%;\n            display: flex;\n            justify-content: flex-start;\n            gap: 10px;\n        }\n        .right-panel .actions {\n            margin-top: 20px;\n            display: flex;\n            justify-content: flex-start;\n        }\n\n        /* Responsive Adjustments */\n        @media (max-width: 768px) {\n            .screen.tas-review {\n                flex-direction: column;\n                align-items: center;\n            }\n            .tas-review .left-panel, .tas-review .right-panel {\n                border-right: none;\n                border-bottom: 1px solid var(--border-color);\n                width: 100%;\n                max-width: 500px;\n            }\n            .tas-review .left-panel {\n                 border-bottom: 1px solid var(--border-color);\n            }\n            .tas-review .right-panel {\n                border-bottom: none;\n            }\n            .review-actions, .right-panel .actions {\n                justify-content: center;\n                flex-wrap: wrap;\n            }\n        }\n    </style>\n</head>\n<body>\n    <div class=\"container\">\n        <div id=\"goal-input-screen\" class=\"screen goal-input\">\n            <div class=\"logo\">\n                <svg viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\">\n                    <title>TAS Tool Logo</title>\n                    <line x1=\"10\" y1=\"30\" x2=\"30\" y2=\"10\" stroke=\"#4A90E2\" stroke-width=\"2\" stroke-linecap=\"round\"/>\n                    <line x1=\"30\" y1=\"10\" x2=\"50\" y2=\"30\" stroke=\"#4A90E2\" stroke-width=\"2\" stroke-linecap=\"round\"/>\n                    <line x1=\"30\" y1=\"10\" x2=\"30\" y2=\"50\" stroke=\"#50E3C2\" stroke-width=\"2\" stroke-linecap=\"round\"/>\n                </svg>\n            </div>\n            <h1>Define Your Objective</h1>\n            <p class=\"sub-heading\">Enter your high-level goal for the LLM fine-tuning dataset.</p>\n            <input type=\"text\" id=\"high-level-goal-input\" class=\"input-field\" placeholder=\"e.g., Create a dataset for LLM fine-tuning towards internalized TAS expertise\">\n            <button id=\"generate-tas-button\" class=\"button primary\">Generate TAS Plan</button>\n        </div>\n\n        <div id=\"tas-review-screen\" class=\"screen tas-review\" style=\"display: none;\">\n            <div class=\"left-panel\">\n                <h2>Generated TAS Plan</h2>\n                <ul id=\"tas-plan-list\" class=\"tas-list\">\n                    <!-- TAS items will be populated here -->\n                </ul>\n                <div class=\"review-actions\">\n                    <button id=\"approve-dataset-button\" class=\"button primary\">Approve & Add to Dataset</button>\n                    <button id=\"reject-plan-button\" class=\"button secondary\">Reject Plan</button>\n                </div>\n            </div>\n            <div class=\"right-panel\">\n                <h2>High-level Goal</h2>\n                <p id=\"review-goal-text\" class=\"sub-heading\"></p>\n                <div class=\"actions\">\n                    <button id=\"edit-goal-button\" class=\"button tertiary\">Edit Goal</button>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <script>\n        const goalInputScreen = document.getElementById('goal-input-screen');\n        const tasReviewScreen = document.getElementById('tas-review-screen');\n        const highLevelGoalInput = document.getElementById('high-level-goal-input');\n        const generateTasButton = document.getElementById('generate-tas-button');\n        const tasPlanList = document.getElementById('tas-plan-list');\n        const reviewGoalText = document.getElementById('review-goal-text');\n        const approveDatasetButton = document.getElementById('approve-dataset-button');\n        const rejectPlanButton = document.getElementById('reject-plan-button');\n        const editGoalButton = document.getElementById('edit-goal-button');\n\n        let currentHighLevelGoal = '';\n        let currentTasPlan = [];\n        let dataset = [];\n\n        // Dummy TAS data for demonstration. In a real app, this would come from an LLM.\n        const dummyTasData = [\n            \"Define the overall objective and scope.\",\n            \"Break down the objective into smaller, actionable tasks.\",\n            \"Identify necessary resources for each task.\",\n            \"Assign responsibilities for each task.\",\n            \"Define a timeline for task completion.\",\n            \"Execute each task according to the plan.\",\n            \"Monitor progress and identify deviations.\",\n            \"Adjust the plan as needed based on feedback.\",\n            \"Validate the final outcome against the objective.\",\n            \"Document findings and lessons learned.\"\n        ];\n\n        // Mock LLM response function\n        function generateTasPlan(goal) {\n            // In a real scenario, this would call a backend API that interacts with an LLM.\n            console.log(`Simulating LLM call for goal: ${goal}`);\n            // For now, we'll just return a subset of dummy data or a modified version.\n            const plan = dummyTasData.slice(0, Math.min(dummyTasData.length, Math.floor(Math.random() * 5) + 5)); // Randomly pick 5-9 steps\n            return plan.map((step, index) => ({ id: `tas-${index}-${Date.now()}`, text: step }));\n        }\n\n        function renderTasPlan() {\n            tasPlanList.innerHTML = '';\n            currentTasPlan.forEach((item, index) => {\n                const listItem = document.createElement('li');\n                listItem.classList.add('list-item');\n                listItem.dataset.id = item.id;\n\n                const dragHandle = document.createElement('span');\n                dragHandle.classList.add('drag-handle');\n                dragHandle.innerHTML = '⠿'; // Unicode for drag handle\n                listItem.appendChild(dragHandle);\n\n                const input = document.createElement('input');\n                input.type = 'text';\n                input.classList.add('editable-input');\n                input.value = item.text;\n                input.addEventListener('input', (e) => {\n                    currentTasPlan[index].text = e.target.value;\n                });\n                listItem.appendChild(input);\n\n                tasPlanList.appendChild(listItem);\n            });\n        }\n\n        generateTasButton.addEventListener('click', () => {\n            currentHighLevelGoal = highLevelGoalInput.value.trim();\n            if (currentHighLevelGoal) {\n                // Simulate fetching TAS plan from LLM\n                currentTasPlan = generateTasPlan(currentHighLevelGoal);\n                reviewGoalText.textContent = currentHighLevelGoal;\n                renderTasPlan();\n                goalInputScreen.style.display = 'none';\n                tasReviewScreen.style.display = 'flex';\n            } else {\n                alert('Please enter a high-level goal.');\n            }\n        });\n\n        approveDatasetButton.addEventListener('click', () => {\n            if (!currentHighLevelGoal || currentTasPlan.length === 0) {\n                alert('No goal or TAS plan to approve.');\n                return;\n            }\n            \n            const validatedEntry = {\n                high_level_goal: currentHighLevelGoal,\n                tas_plan: currentTasPlan.map(item => item.text)\n            };\n            dataset.push(validatedEntry);\n            console.log('Dataset updated:', dataset);\n            alert('Plan approved and added to dataset!');\n            \n            // Reset for next entry\n            highLevelGoalInput.value = '';\n            currentHighLevelGoal = '';\n            currentTasPlan = [];\n            tasPlanList.innerHTML = '';\n            goalInputScreen.style.display = 'flex';\n            tasReviewScreen.style.display = 'none';\n        });\n\n        rejectPlanButton.addEventListener('click', () => {\n            // Optionally provide feedback on rejection, or just reset\n            alert('Plan rejected. Please try generating again or edit the goal.');\n            highLevelGoalInput.value = currentHighLevelGoal; // Keep the goal to allow editing/regenerating\n            tasReviewScreen.style.display = 'none';\n            goalInputScreen.style.display = 'flex';\n            currentTasPlan = []; // Clear the plan\n        });\n\n        editGoalButton.addEventListener('click', () => {\n            highLevelGoalInput.value = currentHighLevelGoal;\n            tasReviewScreen.style.display = 'none';\n            goalInputScreen.style.display = 'flex';\n            currentTasPlan = []; // Clear the plan as it might be outdated\n        });\n\n        // Basic drag-and-drop functionality for list items (requires a library or more complex implementation for full robustness)\n        // For this example, we'll simulate the reordering by just logging.\n        // In a real implementation, you'd use a library like SortableJS.\n        tasPlanList.addEventListener('dragstart', (e) => {\n            if (e.target.classList.contains('list-item')) {\n                e.dataTransfer.effectAllowed = 'move';\n                e.dataTransfer.setData('text/plain', e.target.dataset.id);\n                e.target.classList.add('dragging');\n            }\n        });\n\n        tasPlanList.addEventListener('dragover', (e) => {\n            e.preventDefault();\n            e.dataTransfer.dropEffect = 'move';\n        });\n\n        tasPlanList.addEventListener('drop', (e) => {\n            e.preventDefault();\n            const draggedId = e.dataTransfer.getData('text/plain');\n            const targetElement = e.target.closest('.list-item');\n            if (!targetElement) return;\n\n            const draggedIndex = Array.from(tasPlanList.children).findIndex(item => item.dataset.id === draggedId);\n            const targetIndex = Array.from(tasPlanList.children).findIndex(item => item.dataset.id === targetElement.dataset.id);\n\n            if (draggedIndex === -1 || targetIndex === -1 || draggedIndex === targetIndex) return;\n\n            const [movedItem] = currentTasPlan.splice(draggedIndex, 1);\n            currentTasPlan.splice(targetIndex, 0, movedItem);\n\n            renderTasPlan(); // Re-render the list to reflect the new order\n        });\n\n        tasPlanList.addEventListener('dragend', (e) => {\n            if (e.target.classList.contains('list-item')) {\n                e.target.classList.remove('dragging');\n            }\n        });\n\n        // Function to export the dataset (e.g., to JSON)\n        function exportDataset() {\n            const dataStr = \"data:text/json;charset=utf-8,\" + encodeURIComponent(JSON.stringify(dataset, null, 2));\n            const downloadAnchorNode = document.createElement('a');\n            downloadAnchorNode.setAttribute('href', dataStr);\n            downloadAnchorNode.setAttribute('download', 'tas_finetuning_dataset.json');\n            document.body.appendChild(downloadAnchorNode);\n            downloadAnchorNode.click();\n            downloadAnchorNode.remove();\n        }\n\n        // Example: Add a button to export the dataset (this would typically be outside the main flow)\n        // For demonstration, we'll add it to the console log.\n        // In a real UI, you'd have a dedicated export button.\n        console.log('Dataset ready for export. Call exportDataset() to download.');\n\n    </script>\n</body>\n</html>\n",
+    "css": "/* CSS is embedded within the HTML for simplicity in this example. */\n/* In a production environment, this would be in a separate .css file. */\n",
+    "javascript": "/* JavaScript is embedded within the HTML for simplicity in this example. */\n/* In a production environment, this would be in a separate .js file. */\n"
+  },
+  "backend_code": {
+    "description": "The backend for this annotation tool will be a simple RESTful API. For this implementation, we'll use Python with Flask, as it's lightweight and suitable for this task. The API will handle receiving high-level goals, generating TAS plans (simulated here), storing approved plans, and exporting the dataset.",
+    "language": "Python",
+    "framework": "Flask",
+    "endpoints": [
+      {
+        "method": "POST",
+        "path": "/generate_tas",
+        "description": "Receives a high-level goal and returns a generated TAS plan.",
+        "request_body": {
+          "type": "object",
+          "properties": {
+            "high_level_goal": {
+              "type": "string",
+              "description": "The user-provided high-level goal."
+            }
+          },
+          "required": ["high_level_goal"]
+        },
+        "response_body": {
+          "type": "object",
+          "properties": {
+            "tas_plan": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {"type": "string"},
+                  "text": {"type": "string"}
+                },
+                "required": ["id", "text"]
+              }
+            }
+          },
+          "required": ["tas_plan"]
+        },
+        "implementation_notes": "This endpoint would integrate with an LLM service to generate the TAS plan. For this example, it simulates the response using predefined data."
+      },
+      {
+        "method": "POST",
+        "path": "/save_annotation",
+        "description": "Receives an approved high-level goal and its TAS plan, and saves it to the dataset.",
+        "request_body": {
+          "type": "object",
+          "properties": {
+            "high_level_goal": {
+              "type": "string"
+            },
+            "tas_plan": {
+              "type": "array",
+              "items": {"type": "string"}
+            }
+          },
+          "required": ["high_level_goal", "tas_plan"]
+        },
+        "response_body": {
+          "type": "object",
+          "properties": {
+            "message": {"type": "string"}
+          }
+        },
+        "implementation_notes": "This endpoint would append the validated entry to an in-memory list or a database. For this example, it's handled client-side."
+      },
+      {
+        "method": "GET",
+        "path": "/export_dataset",
+        "description": "Exports the current dataset in JSON format.",
+        "response_body": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "high_level_goal": {"type": "string"},
+              "tas_plan": {"type": "array", "items": {"type": "string"}}
+            },
+            "required": ["high_level_goal", "tas_plan"]
+          }
+        },
+        "implementation_notes": "This endpoint would return the stored dataset. For this example, client-side export is implemented."
+      }
+    ],
+    "data_storage": "In-memory list (for demonstration purposes). In a production environment, this would be a database (e.g., PostgreSQL, SQLite) or a file-based storage.",
+    "example_implementation": "```python\nfrom flask import Flask, request, jsonify\nfrom flask_cors import CORS\nimport uuid\n\napp = Flask(__name__)\nCORS(app) # Allow cross-origin requests from the frontend\n\n# In-memory storage for the dataset\ndataset = []\n\n# Dummy LLM response simulation\n# In a real application, this would call an LLM API\ndef simulate_llm_tas_generation(goal):\n    print(f\"Simulating LLM TAS generation for goal: {goal}\")\n    # This is a placeholder. A real implementation would process the goal and return a structured TAS plan.\n    # For this example, we'll just return a generic plan based on the goal.\n    generic_steps = [\n        \"Understand the core request.\",\n        \"Identify key entities and actions.\",\n        \"Break down the request into logical steps.\",\n        \"Ensure each step is atomic and actionable.\",\n        \"Order steps sequentially.\",\n        \"Review for clarity and completeness.\",\n        \"Refine steps based on feedback.\",\n        \"Finalize the plan.\"\n    ]\n    # Simulate a plan of 5-8 steps\n    num_steps = 5 + hash(goal) % 4 # Simple way to get variety\n    selected_steps = generic_steps[:num_steps]\n    \n    tas_plan = []\n    for i, step_text in enumerate(selected_steps):\n        tas_plan.append({\"id\": str(uuid.uuid4()), \"text\": step_text})\n    return tas_plan\n\n@app.route('/generate_tas', methods=['POST'])\ndef generate_tas():\n    data = request.get_json()\n    high_level_goal = data.get('high_level_goal')\n\n    if not high_level_goal:\n        return jsonify({'error': 'high_level_goal is required'}), 400\n\n    tas_plan = simulate_llm_tas_generation(high_level_goal)\n    return jsonify({'tas_plan': tas_plan})\n\n@app.route('/save_annotation', methods=['POST'])\ndef save_annotation():\n    data = request.get_json()\n    high_level_goal = data.get('high_level_goal')\n    tas_plan_texts = data.get('tas_plan')\n\n    if not high_level_goal or not tas_plan_texts:\n        return jsonify({'error': 'high_level_goal and tas_plan are required'}), 400\n\n    validated_entry = {\n        'high_level_goal': high_level_goal,\n        'tas_plan': tas_plan_texts\n    }\n    dataset.append(validated_entry)\n    print(f\"Saved annotation: {validated_entry}\")\n    return jsonify({'message': 'Annotation saved successfully'}), 201\n\n@app.route('/export_dataset', methods=['GET'])\ndef export_dataset():\n    # The schema requires an array of objects with high_level_goal and tas_plan (as array of strings)\n    formatted_dataset = [\n        {\n            'high_level_goal': entry['high_level_goal'],\n            'tas_plan': [step['text'] for step in entry['tas_plan']] # Extracting only the text for the final dataset\n        }\n        for entry in dataset\n    ]\n    return jsonify(formatted_dataset)\n\nif __name__ == '__main__':\n    # In a real deployment, use a production-ready WSGI server like Gunicorn\n    app.run(debug=True, port=5000) # Runs on http://127.0.0.1:5000/\n```"
+  }
+}
+
+---
+
+Artifact from 1__step_4_Lyra_result.txt (Prompt Engineer):
+{
+  "system_prompt": "You are an expert Task-Agnostic Step (TAS) Plan Generator. Your role is to break down any given high-level goal into a sequence of granular, atomic, and domain-agnostic steps. Each step must be a universal action that can be applied across various projects or tasks, avoiding specific jargon or unique details of the high-level goal itself.\n\nHere are the key characteristics of a Task-Agnostic Step (TAS):\n- **Atomic:** Each step should represent a single, distinct action or decision.\n- **Granular:** Break down the overall process into the smallest meaningful units.\n- **Task-Agnostic/Domain-Agnostic:** The step should be generalizable and applicable across different domains or specific tasks. Avoid specific names, technologies, or contexts from the high-level goal.\n- **Action-Oriented:** Each step should start with a verb, clearly indicating an action to be performed.\n- **Logical Sequence:** The steps must form a coherent, ordered progression towards achieving the high-level goal.\n\nYour output must be a JSON array of strings, where each string is a single TAS. Do not include any conversational filler, explanations, or text outside the JSON array. Only provide the JSON. If a goal is too vague or cannot be broken down into TAS, return an empty array.\n\nExample 1:\nInput Goal: 'Plan and execute a successful marketing campaign for a new product launch.'\nOutput TAS Plan: [\"Define the overall objective and scope.\", \"Gather requirements and target audience insights.\", \"Decompose the campaign into key phases and tasks.\", \"Allocate necessary resources (budget, personnel, tools).\", \"Develop creative assets and messaging.\", \"Execute campaign activities across chosen channels.\", \"Monitor campaign performance metrics.\", \"Adjust campaign strategy based on performance data.\", \"Validate campaign outcomes against initial objectives.\", \"Document findings and lessons learned for future campaigns.\"]\n\nExample 2:\nInput Goal: 'Develop a new software feature for user authentication.'\nOutput TAS Plan: [\"Define the feature's specific objective and scope.\", \"Gather detailed user stories and technical requirements.\", \"Decompose the feature development into manageable sub-tasks.\", \"Allocate engineering resources and define timelines.\", \"Design the system architecture and user interface.\", \"Implement the feature's core logic.\", \"Conduct comprehensive testing and quality assurance.\", \"Deploy the feature to the production environment.\", \"Monitor feature performance and user feedback.\", \"Document the feature's design, implementation, and usage.\"]"
+}
+
+---
+
+Artifact from 1__step_5_TASe_result.txt (Task-Agnostic Step (TAS) extractor):
+[
+  {
+    "id": "a7b8c9d0-e1f2-3456-7890-abcdef012345",
+    "name": "Define Objective",
+    "description": "Clearly articulate the specific, measurable, achievable, relevant, and time-bound (SMART) objective for the task or project. This involves understanding the desired outcome, scope, and constraints.",
+    "category": "Init",
+    "purpose": "Establish a clear and actionable target.",
+    "keywords": ["objective setting", "goal definition", "scoping", "clarification"],
+    "applicability_notes": "Applicable at the very beginning of any project or task to ensure alignment and focus. The level of detail will vary based on the complexity of the overarching goal.",
+    "examples_of_usage": [
+      "For the current goal: 'Define the overall objective for creating the LLM fine-tuning dataset, ensuring it specifies the target expertise (internalized TAS) and desired output quality.'",
+      "For a software project: 'Define the objective for developing a new feature, including its functionality, target users, and performance criteria.'",
+      "For a research project: 'Define the objective for a study, including the research question, hypothesis, and expected outcomes.'"
+    ],
+    "typical_inputs": ["undefined goal", "broad requirement", "initial request"],
+    "typical_outputs": ["SMART objective", "defined scope", "clear target"]
+  },
+  {
+    "id": "b8c9d0e1-f2a3-4567-8901-bcdef0123456",
+    "name": "Gather Requirements",
+    "description": "Collect and document all necessary information, constraints, and specifications from relevant sources. This step ensures all aspects of the objective are understood before proceeding, focusing on the specifics needed for the dataset creation.",
+    "category": "Analysis",
+    "purpose": "Understand all necessary inputs and constraints for dataset generation.",
+    "keywords": ["requirements gathering", "information collection", "data sourcing", "specification documentation"],
+    "applicability_notes": "Crucial for defining the parameters of the dataset, including the format, quality standards, and types of TAS plans expected. Can involve reviewing existing documentation on TAS or LLM fine-tuning.",
+    "examples_of_usage": [
+      "For the current goal: 'Gather requirements for the dataset schema, TAS characteristics, and LLM fine-tuning process, referencing Lyra's schema and prompt engineer's guidance.'",
+      "For a software project: 'Gather requirements for user authentication, including supported protocols and security standards.'",
+      "For a research project: 'Collect data on experimental variables, control groups, and measurement methods.'"
+    ],
+    "typical_inputs": ["defined objective", "initial stakeholder feedback", "existing documentation"],
+    "typical_outputs": ["detailed requirements document", "data specification", "constraint list"]
+  },
+  {
+    "id": "c9d0e1f2-a3b4-5678-9012-cdef01234567",
+    "name": "Decompose Task",
+    "description": "Break down the overarching objective of creating the dataset into smaller, manageable sub-tasks. This involves defining the workflow for generating and validating TAS plans.",
+    "category": "Planning",
+    "purpose": "Create a structured plan of action for dataset creation.",
+    "keywords": ["task breakdown", "work breakdown structure", "sub-task identification", "process mapping"],
+    "applicability_notes": "Essential for managing the complexity of generating a large dataset. This decomposition defines the sequence of operations for the annotation tool and the LLM.",
+    "examples_of_usage": [
+      "For the current goal: 'Decompose the dataset creation into: schema definition, seed example generation, UI design, tool development, LLM prompt engineering, large-scale annotation, and final QA.'",
+      "For a software project: 'Break down feature development into: design, implementation, testing, and deployment.'",
+      "For a research project: 'Decompose the study into: literature review, methodology design, data collection, analysis, and reporting.'"
+    ],
+    "typical_inputs": ["defined objective", "gathered requirements", "project scope"],
+    "typical_outputs": ["list of sub-tasks", "task hierarchy", "workflow diagram"]
+  },
+  {
+    "id": "d0e1f2a3-b4c5-6789-0123-def012345678",
+    "name": "Allocate Resources",
+    "description": "Assign necessary resources such as personnel (roles), tools (annotation tool, LLM), budget, and time to each sub-task identified in the decomposition. Ensure resources are sufficient and appropriately matched to task requirements.",
+    "category": "Planning",
+    "purpose": "Ensure resources are available for execution.",
+    "keywords": ["resource allocation", "budgeting", "personnel assignment", "scheduling"],
+    "applicability_notes": "Critical for efficient execution. Involves matching skills to tasks (Designer, Engineer, Prompt Engineer, TAS extractor) and securing necessary tools (LLM, annotation tool).",
+    "examples_of_usage": [
+      "For the current goal: 'Allocate roles (Designer, Engineer, Prompt Engineer, TAS extractor) and tools (annotation tool, LLM) to specific stages of dataset generation.'",
+      "For a software project: 'Assign engineers to coding modules, allocate budget for cloud services, and schedule testing phases.'",
+      "For a research project: 'Allocate personnel to data collection, assign equipment for measurements, and set deadlines for analysis.'"
+    ],
+    "typical_inputs": ["decomposed tasks", "resource availability list", "budget constraints"],
+    "typical_outputs": ["resource assignment plan", "personnel allocation chart", "budget breakdown"]
+  },
+  {
+    "id": "e1f2a3b4-c5d6-7890-1234-ef0123456789",
+    "name": "Develop Tool",
+    "description": "Build or configure the necessary tools to facilitate the execution of the TAS plan. This includes setting up the annotation interface and backend logic.",
+    "category": "Execution",
+    "purpose": "Create the infrastructure for generating and validating TAS plans.",
+    "keywords": ["tool development", "system implementation", "backend setup", "frontend coding"],
+    "applicability_notes": "This step involves the practical creation of the annotation tool, as described by Kodax's output, enabling the subsequent generation and validation of TAS plans.",
+    "examples_of_usage": [
+      "For the current goal: 'Develop the data annotation tool with UI for goal input, TAS plan generation/editing, and dataset export, as per Kodax's frontend and backend code.'",
+      "For a software project: 'Implement the user authentication module based on the design specifications.'",
+      "For a research project: 'Set up the data collection platform and ensure data integrity measures are in place.'"
+    ],
+    "typical_inputs": ["allocated resources", "task instructions", "design specifications"],
+    "typical_outputs": ["functional annotation tool", "backend API", "frontend interface"]
+  },
+  {
+    "id": "f2a3b4c5-d6e7-9012-3456-f01234567890",
+    "name": "Engineer Prompts",
+    "description": "Craft and refine the instructions (prompts) that will guide the LLM in generating accurate and task-agnostic TAS plans from high-level goals.",
+    "category": "Execution",
+    "purpose": "Provide clear guidance to the LLM for TAS generation.",
+    "keywords": ["prompt engineering", "llm instruction", "guideline formulation", "parameter tuning"],
+    "applicability_notes": "This step is crucial for ensuring the quality and relevance of the generated TAS plans. It involves iterating on prompts to achieve the desired level of abstraction and clarity.",
+    "examples_of_usage": [
+      "For the current goal: 'Engineer system prompts for the LLM to generate task-agnostic steps from high-level goals, adhering to specific characteristics and output formats, as defined by Lyra.'",
+      "For a chatbot: 'Engineer prompts to guide the chatbot in providing helpful and concise responses.'",
+      "For an image generation model: 'Engineer prompts to specify style, content, and composition for image creation.'"
+    ],
+    "typical_inputs": ["defined objective", "gathered requirements", "llm capabilities"],
+    "typical_outputs": ["effective system prompts", "LLM configuration", "guideline documentation"]
+  },
+  {
+    "id": "a3b4c5d6-e7f8-0123-4567-1234567890ef",
+    "name": "Generate Seed Examples",
+    "description": "Create a small, diverse set of high-quality TAS plan examples based on initial goals. These examples will serve as a foundation and guide for the LLM and human annotators.",
+    "category": "Execution",
+    "purpose": "Provide initial examples for training and guidance.",
+    "keywords": ["example generation", "seed data creation", "demonstration examples", "pattern setting"],
+    "applicability_notes": "This step establishes the baseline quality and style for the TAS plans. The diversity of these examples is key to guiding the LLM effectively.",
+    "examples_of_usage": [
+      "For the current goal: 'Generate 10 diverse TAS plan examples based on various high-level goals to seed the dataset, as performed by TASe.'",
+      "For a classification task: 'Create seed examples of different categories for training a classifier.'",
+      "For a summarization task: 'Generate a few high-quality summaries of different text types.'"
+    ],
+    "typical_inputs": ["defined objective", "llm prompt", "example requirements"],
+    "typical_outputs": ["seed TAS plans", "example dataset subset", "quality benchmarks"]
+  },
+  {
+    "id": "b4c5d6e7-f8a9-1234-5678-234567890ef0",
+    "name": "Generate TAS Plan",
+    "description": "Utilize the LLM, guided by engineered prompts and the annotation tool, to generate a sequence of task-agnostic steps from a given high-level goal.",
+    "category": "Execution",
+    "purpose": "Generate TAS plans from high-level goals using an LLM.",
+    "keywords": ["llm generation", "tas creation", "plan synthesis", "automated processing"],
+    "applicability_notes": "This is the core automated step where the LLM produces TAS plans. The quality depends heavily on prompt engineering and the LLM's capabilities.",
+    "examples_of_usage": [
+      "For the current goal: 'Use the annotation tool to submit the high-level goal 'Create a dataset for LLM fine-tuning towards internalized TAS expertise' to the LLM to generate a TAS plan.'",
+      "For content creation: 'Generate blog post ideas based on a given topic.'",
+      "For code generation: 'Generate code snippets for a specific programming task.'"
+    ],
+    "typical_inputs": ["high-level goal", "system prompts", "annotation tool interface"],
+    "typical_outputs": ["generated TAS plan", "LLM output", "candidate steps"]
+  },
+  {
+    "id": "c5d6e7f8-a9b0-2345-6789-34567890ef01",
+    "name": "Review and Edit TAS Plan",
+    "description": "Human annotators review the LLM-generated TAS plan for accuracy, completeness, task-agnosticism, and logical flow. They edit or refine steps as necessary within the annotation tool.",
+    "category": "Validation",
+    "purpose": "Ensure the quality and adherence of generated TAS plans.",
+    "keywords": ["human review", "editing", "plan refinement", "quality control"],
+    "applicability_notes": "This step involves human oversight to correct any inaccuracies or deviations from the desired TAS characteristics. It's a critical part of the validation loop.",
+    "examples_of_usage": [
+      "For the current goal: 'Review the LLM-generated TAS plan for the dataset creation goal, editing specific steps to ensure they are truly task-agnostic and logically ordered.'",
+      "For document editing: 'Proofread a manuscript for grammatical errors and clarity.'",
+      "For code review: 'Review code for bugs, style violations, and potential improvements.'"
+    ],
+    "typical_inputs": ["generated TAS plan", "high-level goal", "TAS guidelines"],
+    "typical_outputs": ["edited TAS plan", "validated steps", "annotator feedback"]
+  },
+  {
+    "id": "d6e7f8a9-b0c1-3456-7890-4567890ef012",
+    "name": "Approve and Store TAS Plan",
+    "description": "Approve the reviewed and potentially edited TAS plan. Store the validated plan along with its corresponding high-level goal in the dataset.",
+    "category": "Validation",
+    "purpose": "Finalize and store validated TAS plans.",
+    "keywords": ["approval", "data storage", "dataset population", "validation confirmation"],
+    "applicability_notes": "This marks the successful validation of a TAS plan and its inclusion in the dataset. It requires confirmation from the annotator or system.",
+    "examples_of_usage": [
+      "For the current goal: 'Approve the refined TAS plan for the dataset creation goal and store the {high_level_goal, tas_plan} pair in the dataset.'",
+      "For a workflow: 'Approve the submitted report and file it for record-keeping.'",
+      "For a transaction: 'Approve the payment and update the account balance.'"
+    ],
+    "typical_inputs": ["reviewed TAS plan", "high-level goal", "approval status"],
+    "typical_outputs": ["validated dataset entry", "stored TAS plan", "confirmation"]
+  },
+  {
+    "id": "e7f8a9b0-c1d2-4567-8901-567890ef0123",
+    "name": "Iterate and Scale Annotation",
+    "description": "Repeat the generate, review, and approve process for a large number of high-level goals to build a comprehensive dataset of at least 500 entries.",
+    "category": "Execution",
+    "purpose": "Build a comprehensive dataset through iterative annotation.",
+    "keywords": ["iteration", "scaling", "dataset building", "annotation process"],
+    "applicability_notes": "This step emphasizes the need for repetition and scaling to achieve the target dataset size. It involves managing multiple annotation cycles.",
+    "examples_of_usage": [
+      "For the current goal: 'Iteratively use the annotation tool to generate, review, and approve TAS plans for numerous high-level goals until a dataset of over 500 entries is created.'",
+      "For a learning process: 'Iterate through practice problems to improve skills.'",
+      "For a product development cycle: 'Repeat the design-build-test loop to refine the product.'"
+    ],
+    "typical_inputs": ["annotation tool", "high-level goals", "TAS guidelines"],
+    "typical_outputs": ["large annotated dataset", "completed dataset entries", "progress metrics"]
+  },
+  {
+    "id": "f8a9b0c1-d2e3-5678-9012-67890ef01234",
+    "name": "Perform Quality Assurance",
+    "description": "Conduct a final quality assurance check on the entire dataset. This involves verifying schema compliance, consistency, and the overall quality of the TAS plans.",
+    "category": "Validation",
+    "purpose": "Ensure the final dataset meets all quality standards.",
+    "keywords": ["quality assurance", "data validation", "schema compliance", "final review"],
+    "applicability_notes": "This is the final gate before the dataset is used for fine-tuning. It ensures the data is clean, correctly formatted, and meets the project's objectives.",
+    "examples_of_usage": [
+      "For the current goal: 'Perform final QA on the 500+ entry dataset, checking schema compliance, TAS plan quality, and overall consistency, as part of Lyra's final check.'",
+      "For a software release: 'Conduct final testing and code review before deployment.'",
+      "For a publication: 'Review a manuscript for accuracy, formatting, and adherence to journal standards.'"
+    ],
+    "typical_inputs": ["annotated dataset", "schema definition", "quality standards"],
+    "typical_outputs": ["validated dataset", "QA report", "data cleaning actions"]
+  },
+  {
+    "id": "a9b0c1d2-e3f4-6789-0123-7890ef012345",
+    "name": "Export Dataset",
+    "description": "Export the finalized and validated dataset in the required format (e.g., JSON) for use in the LLM fine-tuning process.",
+    "category": "Closure",
+    "purpose": "Prepare the dataset for LLM fine-tuning.",
+    "keywords": ["dataset export", "data formatting", "file preparation", "final output"],
+    "applicability_notes": "The final step in delivering the dataset. Ensures it is in a usable format for the intended downstream process.",
+    "examples_of_usage": [
+      "For the current goal: 'Export the validated dataset of {high_level_goal, tas_plan} pairs in JSON format for LLM fine-tuning.'",
+      "For data transfer: 'Export customer data to a CSV file for import into a CRM.'",
+      "For reporting: 'Export analysis results to a PDF document.'"
+    ],
+    "typical_inputs": ["validated dataset", "export format specification"],
+    "typical_outputs": ["formatted dataset file", "export confirmation", "final deliverables"]
+  }
+]
+
+
+
+Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project.

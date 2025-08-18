@@ -1,0 +1,210 @@
+The overall goal is: 'Create a dataset for LLM fine-tuning towards internalized TAS expertise'
+
+Your role's specific goal is: 'Generate aesthetic layouts, color palettes, typography, and UI flows, ensuring accessibility and visual balance.'
+Your specific sub-task is: 'Design a minimalist and intuitive user interface for a data annotation tool. The UI should allow users to input a high-level goal, view a generated TAS plan, and then edit, approve, or reject the plan.'
+
+The team's roles are:
+    {'roles': [{'title': 'Designer', 'description': 'Generate aesthetic layouts, color palettes, typography, and UI flows, ensuring accessibility and visual balance.'}, {'title': 'Engineer', 'description': 'Implement designs into clean, modular, and performant code, focusing on responsive design and accessibility.'}, {'title': 'Prompt Engineer', 'description': 'Structure workflows and ensure clarity in agent instructions, system prompt engineering'}, {'title': 'Task-Agnostic Step (TAS) extractor', 'description': "Identify and extract each 'Task Agnostic Step' (TAS) towards the high-level goal."}], 'steps': [{'name': 'Lyra', 'role': 'Prompt Engineer', 'task': "Define the JSON schema for the fine-tuning dataset. The schema must structure entries as pairs of 'high-level goal' and its corresponding 'TAS plan'."}, {'name': 'TASe', 'role': 'Task-Agnostic Step (TAS) extractor', 'task': 'Generate 10 diverse, high-quality seed examples of TAS plans based on the schema defined by Lyra. These examples will serve as the foundation for the dataset.'}, {'name': 'Aurora', 'role': 'Designer', 'task': 'Design a minimalist and intuitive user interface for a data annotation tool. The UI should allow users to input a high-level goal, view a generated TAS plan, and then edit, approve, or reject the plan.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': "Develop the front-end and back-end for the data annotation tool based on Aurora's designs. Ensure the tool can store and export the validated dataset in the required JSON format."}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': 'Engineer a set of system prompts for an LLM to be integrated into the annotation tool. These prompts will guide the LLM to generate accurate TAS plans from user-submitted high-level goals.'}, {'name': 'TASe', 'role': 'Task-Agnostic Step (TAS) extractor', 'task': 'Utilize the annotation tool to generate and validate a dataset of at least 500 entries. Focus on quality, ensuring each TAS plan is logical, complete, and correctly structured.'}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': 'Perform a final quality assurance check on the entire dataset. Sanitize the data, verify schema compliance for all entries, and prepare the final dataset file for the fine-tuning process.'}]}
+
+Please use the following outputs from the other agents as your input:
+
+Artifact from 1__step_0_Lyra_result.txt (Prompt Engineer):
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TAS Fine-tuning Dataset Schema",
+  "description": "Schema for a dataset used to fine-tune LLMs on generating Task-Agnostic Step (TAS) plans from high-level goals. Each entry consists of a high-level goal and its corresponding TAS plan.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "high_level_goal",
+      "tas_plan"
+    ],
+    "properties": {
+      "high_level_goal": {
+        "type": "string",
+        "description": "A clear, concise high-level objective or task that requires a sequence of actionable steps to achieve."
+      },
+      "tas_plan": {
+        "type": "array",
+        "description": "An ordered list of granular, atomic, and task-agnostic steps. Each step should be a distinct instruction that contributes to achieving the high-level goal.",
+        "items": {
+          "type": "string",
+          "description": "A single, self-contained Task-Agnostic Step (TAS)."
+        },
+        "minItems": 1
+      }
+    },
+    "additionalProperties": false
+  }
+}
+
+---
+
+Artifact from 1__step_1_TASe_result.txt (Task-Agnostic Step (TAS) extractor):
+[
+  {
+    "id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+    "name": "Define Objective",
+    "description": "Clearly articulate the specific, measurable, achievable, relevant, and time-bound (SMART) objective for the task or project. This involves understanding the desired outcome, scope, and constraints.",
+    "category": "Init",
+    "purpose": "Establish a clear and actionable target.",
+    "keywords": ["objective setting", "goal definition", "scoping", "clarification"],
+    "applicability_notes": "Applicable at the very beginning of any project or task to ensure alignment and focus. The level of detail will vary based on the complexity of the overarching goal.",
+    "examples_of_usage": [
+      "In software development: 'Develop a user authentication module that supports OAuth 2.0.'",
+      "In project management: 'Complete the market research phase for the new product launch by Q3.'",
+      "In personal development: 'Improve public speaking skills by joining a local Toastmasters club.'"
+    ],
+    "typical_inputs": ["undefined goal", "broad requirement", "initial request"],
+    "typical_outputs": ["SMART objective", "defined scope", "clear target"]
+  },
+  {
+    "id": "b2c3d4e5-f6a7-8901-2345-67890abcdef0",
+    "name": "Gather Requirements",
+    "description": "Collect and document all necessary information, constraints, and specifications from relevant stakeholders or sources. This step ensures all aspects of the objective are understood before proceeding.",
+    "category": "Analysis",
+    "purpose": "Understand all necessary inputs and constraints.",
+    "keywords": ["requirements gathering", "information collection", "stakeholder input", "documentation"],
+    "applicability_notes": "Crucial for any task involving external dependencies, user needs, or specific operational parameters. Can involve interviews, surveys, data analysis, or reviewing existing documentation.",
+    "examples_of_usage": [
+      "For a website redesign: Gather requirements on target audience, desired features, content strategy, and brand guidelines.",
+      "For a research paper: Collect relevant literature, data sources, and methodological requirements.",
+      "For a manufacturing process: Document material specifications, quality standards, and production capacity."
+    ],
+    "typical_inputs": ["defined objective", "initial stakeholder feedback", "existing documentation"],
+    "typical_outputs": ["detailed requirements document", "stakeholder list", "constraint list"]
+  },
+  {
+    "id": "c3d4e5f6-a7b8-9012-3456-7890abcdef01",
+    "name": "Decompose Task",
+    "description": "Break down the overarching objective or complex task into smaller, manageable sub-tasks or steps. This facilitates planning, delegation, and progress tracking.",
+    "category": "Planning",
+    "purpose": "Create a structured plan of action.",
+    "keywords": ["task breakdown", "work breakdown structure", "sub-task identification", "process mapping"],
+    "applicability_notes": "Essential for managing complexity. The granularity of decomposition depends on the nature of the task and the desired level of control and monitoring.",
+    "examples_of_usage": [
+      "Breaking down 'Build a House' into: Foundation, Framing, Roofing, Electrical, Plumbing, Finishing.",
+      "Breaking down 'Write a Novel' into: Outline, Chapter 1 Draft, Chapter 2 Draft, Editing, Proofreading.",
+      "Breaking down 'Launch a Marketing Campaign' into: Strategy, Creative Development, Media Buying, Performance Tracking."
+    ],
+    "typical_inputs": ["defined objective", "gathered requirements", "project scope"],
+    "typical_outputs": ["list of sub-tasks", "task hierarchy", "workflow diagram"]
+  },
+  {
+    "id": "d4e5f6a7-b8c9-0123-4567-890abcdef012",
+    "name": "Allocate Resources",
+    "description": "Assign necessary resources such as personnel, budget, equipment, and time to each sub-task identified in the decomposition. Ensure resources are sufficient and appropriately matched to task requirements.",
+    "category": "Planning",
+    "purpose": "Ensure resources are available for execution.",
+    "keywords": ["resource allocation", "budgeting", "personnel assignment", "scheduling"],
+    "applicability_notes": "Critical for efficient execution. Involves matching skills to tasks, managing budgets, and securing necessary tools or materials.",
+    "examples_of_usage": [
+      "Assigning engineers to specific coding modules based on expertise.",
+      "Allocating budget funds for marketing channels based on expected ROI.",
+      "Scheduling equipment usage to avoid conflicts and ensure timely availability."
+    ],
+    "typical_inputs": ["decomposed tasks", "resource availability list", "budget constraints"],
+    "typical_outputs": ["resource assignment plan", "personnel allocation chart", "budget breakdown"]
+  },
+  {
+    "id": "e5f6a7b8-c9d0-1234-5678-90abcdef0123",
+    "name": "Execute Task",
+    "description": "Perform the actual work or actions required for each sub-task according to the plan. This is the core operational phase where progress is made towards the objective.",
+    "category": "Execution",
+    "purpose": "Perform the work required to achieve the objective.",
+    "keywords": ["task execution", "action implementation", "operations", "work completion"],
+    "applicability_notes": "The phase where the plan is put into action. Requires focus, adherence to procedures, and effective coordination.",
+    "examples_of_usage": [
+      "Writing code for a software feature.",
+      "Conducting experiments for a scientific study.",
+      "Manufacturing components on an assembly line."
+    ],
+    "typical_inputs": ["allocated resources", "task instructions", "execution plan"],
+    "typical_outputs": ["completed sub-tasks", "intermediate deliverables", "work progress"]
+  },
+  {
+    "id": "f6a7b8c9-d0e1-2345-6789-0abcdef01234",
+    "name": "Monitor Progress",
+    "description": "Track the status and performance of ongoing tasks against the established plan and objectives. Identify deviations, potential issues, and areas requiring adjustment.",
+    "category": "Monitoring",
+    "purpose": "Track progress and identify deviations.",
+    "keywords": ["progress tracking", "performance monitoring", "status reporting", "deviation detection"],
+    "applicability_notes": "An ongoing activity throughout the execution phase. Involves collecting data, comparing actuals to planned metrics, and reporting findings.",
+    "examples_of_usage": [
+      "Tracking bug fixes in a software project using a ticketing system.",
+      "Monitoring sales figures against targets daily.",
+      "Observing experimental parameters to ensure they remain within acceptable ranges."
+    ],
+    "typical_inputs": ["execution plan", "completed tasks", "performance metrics"],
+    "typical_outputs": ["progress reports", "performance dashboards", "identified issues"]
+  },
+  {
+    "id": "a7b8c9d0-e1f2-3456-7890-abcdef012345",
+    "name": "Adjust Plan",
+    "description": "Modify the original plan based on monitoring feedback, unforeseen circumstances, or changes in requirements. This ensures the project remains on track or adapts to new realities.",
+    "category": "Adaptation",
+    "purpose": "Adapt the plan to changing circumstances.",
+    "keywords": ["plan adjustment", "change management", "re-planning", "course correction"],
+    "applicability_notes": "A crucial feedback loop in dynamic environments. Requires analysis of monitoring data and making informed decisions about plan modifications.",
+    "examples_of_usage": [
+      "Revising a project schedule due to unexpected delays.",
+      "Adjusting a marketing strategy based on initial campaign performance.",
+      "Modifying an experimental procedure based on preliminary results."
+    ],
+    "typical_inputs": ["progress reports", "identified issues", "updated requirements"],
+    "typical_outputs": ["revised plan", "updated schedule", "change logs"]
+  },
+  {
+    "id": "b8c9d0e1-f2a3-4567-8901-bcdef0123456",
+    "name": "Validate Outcome",
+    "description": "Assess the final deliverable or outcome against the initial objective and requirements. Ensure it meets the defined quality standards and stakeholder expectations.",
+    "category": "Validation",
+    "purpose": "Confirm the outcome meets requirements.",
+    "keywords": ["outcome validation", "quality assurance", "acceptance testing", "final review"],
+    "applicability_notes": "The final check before completion. Can involve testing, reviews, audits, or user acceptance.",
+    "examples_of_usage": [
+      "Testing a software application for bugs and usability.",
+      "Reviewing a financial report for accuracy and completeness.",
+      "Conducting a final inspection of a manufactured product."
+    ],
+    "typical_inputs": ["completed deliverable", "defined requirements", "quality standards"],
+    "typical_outputs": ["validated outcome", "acceptance confirmation", "quality report"]
+  },
+  {
+    "id": "c9d0e1f2-a3b4-5678-9012-cdef01234567",
+    "name": "Document Findings",
+    "description": "Record key information, lessons learned, results, and methodologies used throughout the process. This documentation serves as a knowledge base for future reference and improvement.",
+    "category": "Documentation",
+    "purpose": "Record and share knowledge gained.",
+    "keywords": ["documentation", "knowledge capture", "lessons learned", "reporting"],
+    "applicability_notes": "Essential for continuous improvement and knowledge management. Captures what worked, what didn't, and why.",
+    "examples_of_usage": [
+      "Writing a post-mortem report after a project.",
+      "Creating a knowledge base article based on a solved technical issue.",
+      "Publishing research findings in a scientific journal."
+    ],
+    "typical_inputs": ["project outcomes", "process data", "validation results"],
+    "typical_outputs": ["project report", "knowledge base articles", "documentation repository"]
+  },
+  {
+    "id": "d0e1f2a3-b4c5-6789-0123-def012345678",
+    "name": "Archive Project",
+    "description": "Store all project-related documents, deliverables, and data in a systematic and accessible manner for future reference, compliance, or historical purposes.",
+    "category": "Closure",
+    "purpose": "Store project artifacts for future access.",
+    "keywords": ["archiving", "project closure", "data storage", "knowledge management"],
+    "applicability_notes": "The final step in concluding a project or task cycle. Ensures valuable information is preserved and retrievable.",
+    "examples_of_usage": [
+      "Saving final code versions and documentation to a version control system.",
+      "Storing all research data and reports in a secure archive.",
+      "Closing out project files and transferring them to long-term storage."
+    ],
+    "typical_inputs": ["documented findings", "validated outcome", "final deliverables"],
+    "typical_outputs": ["archived project files", "accessible data repository", "project closure confirmation"]
+  }
+]
+
+
+
+Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project.

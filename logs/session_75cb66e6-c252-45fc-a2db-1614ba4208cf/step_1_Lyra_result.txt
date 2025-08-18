@@ -1,0 +1,107 @@
+{
+  "ai_system_definition": {
+    "core_purpose": "To serve as a versatile AI-powered creative and productivity assistant, enabling users to generate, refine, and manage various forms of digital content and project-related tasks through natural language interaction.",
+    "interaction_model": {
+      "primary_mode": "Conversational/Prompt-based text input, allowing for free-form requests and iterative refinement.",
+      "secondary_mode": "Structured input forms and selection menus for specific parameters (e.g., tone, format, length) or pre-defined task types.",
+      "feedback_loop": "Users can provide direct feedback on AI outputs, triggering refinement or alternative generations."
+    },
+    "user_inputs": [
+      {
+        "type": "Natural Language Text Prompts",
+        "description": "Free-form text describing the desired output, task, or query.",
+        "examples": [
+          "Generate a concise marketing blurb for a new SaaS product called 'ProjectFlow'.",
+          "Design a minimalist user interface for a mobile banking app's login screen.",
+          "Write a Python function to parse a CSV file and return data as a JSON array.",
+          "Summarize the key findings from the provided research paper."
+        ]
+      },
+      {
+        "type": "Contextual Parameters",
+        "description": "Specific constraints, preferences, or additional information to guide AI generation.",
+        "examples": [
+          "Tone: 'professional', 'humorous', 'technical'",
+          "Format: 'Markdown', 'JSON', 'HTML snippet', 'image URL'",
+          "Length: 'short', 'paragraph', 'bullet points'",
+          "Target Audience: 'developers', 'marketing professionals', 'general public'"
+        ]
+      },
+      {
+        "type": "Reference Material Upload/Input",
+        "description": "Existing text, images, or data that the AI should use as a basis or reference point.",
+        "examples": [
+          "Paste text of an article for summarization.",
+          "Upload a sketch or mood board for design inspiration.",
+          "Provide a code snippet to be refactored or commented."
+        ]
+      },
+      {
+        "type": "Refinement & Feedback Prompts",
+        "description": "Follow-up instructions to modify or improve previous AI outputs.",
+        "examples": [
+          "Make it more concise.",
+          "Change the color scheme to be more vibrant.",
+          "Add error handling to the function.",
+          "Provide three alternative headlines."
+        ]
+      }
+    ],
+    "desired_ai_outputs": [
+      {
+        "type": "Generated Text Content",
+        "description": "Creative or informational text, formatted as plain text, Markdown, or HTML snippets.",
+        "examples": [
+          "Marketing copy, blog post drafts, email templates, social media captions.",
+          "Summaries, reports, technical documentation, code comments.",
+          "Conversational responses, explanations, FAQs."
+        ]
+      },
+      {
+        "type": "Generated Code Snippets",
+        "description": "Functional code in various programming languages, often with explanations.",
+        "examples": [
+          "Python functions, JavaScript components, CSS styles, SQL queries.",
+          "Configuration files, API request examples."
+        ]
+      },
+      {
+        "type": "Design Concepts/Elements (Data-driven)",
+        "description": "Structured data representing design ideas, color palettes, or UI component suggestions.",
+        "examples": [
+          "JSON object describing a color palette (hex codes, names).",
+          "Suggested typography pairings (font families, sizes).",
+          "Simple wireframe descriptions (e.g., 'header, nav, main content, footer').",
+          "Icon suggestions (names, categories)."
+        ]
+      },
+      {
+        "type": "Structured Data/JSON",
+        "description": "Organized data representing tasks, entities, or summarized information.",
+        "examples": [
+          "Task lists with due dates and assignees.",
+          "Key-value pairs of extracted information from text.",
+          "Categorized data from user input."
+        ]
+      },
+      {
+        "type": "Explanations & Alternatives",
+        "description": "Justifications for AI outputs, best practices, or alternative suggestions.",
+        "examples": [
+          "Explanation of why a certain design choice was made.",
+          "Suggestions for improving a given code snippet.",
+          "Multiple variations of generated text or design elements."
+        ]
+      },
+      {
+        "type": "Clarification/Error Messages",
+        "description": "Prompts for more information if input is ambiguous, or messages indicating limitations.",
+        "examples": [
+          "\"Could you please specify the target audience for the marketing blurb?\"",
+          "\"I cannot generate an image directly, but I can provide design specifications.\"",
+          "\"The request is too broad; please narrow it down.\""
+        ]
+      }
+    ]
+  }
+}

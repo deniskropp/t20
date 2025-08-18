@@ -1,0 +1,60 @@
+{
+  "raw_data_sourcing_criteria": {
+    "description": "Criteria to ensure the sourced raw data (high-level goals, project descriptions) is suitable for LLM fine-tuning towards internalized TAS expertise.",
+    "criteria_list": [
+      {
+        "name": "Relevance to TAS Extraction",
+        "description": "The input text must be a high-level goal, project description, problem statement, or a similar overarching objective from which discrete, task-agnostic steps can be logically derived. It should not already contain an explicit list of sub-tasks or detailed instructions."
+      },
+      {
+        "name": "Diversity of Domain",
+        "description": "Examples should span a wide range of domains and industries (e.g., technology, business, education, healthcare, creative arts, personal development, non-profit, engineering, research, marketing) to ensure the LLM learns generalized TAS extraction."
+      },
+      {
+        "name": "Diversity of Scope and Complexity",
+        "description": "Prompts should vary in scale, from relatively small, personal projects (e.g., 'Plan a weekend trip') to large-scale organizational initiatives (e.g., 'Launch a new global product line') to reflect different levels of complexity in goal decomposition."
+      },
+      {
+        "name": "Clarity and Actionability",
+        "description": "While high-level, the prompt must be sufficiently clear and imply a pathway towards action or achievement. Avoid overly ambiguous, abstract, or purely factual statements that do not lend themselves to step-by-step breakdown."
+      },
+      {
+        "name": "Natural Language Representation",
+        "description": "Data should be in natural, idiomatic language, reflecting how real-world goals and project descriptions are typically articulated, rather than highly structured or technical jargon unless it's domain-specific and representative."
+      }
+    ]
+  },
+  "data_gathering_plan": {
+    "description": "A phased plan for systematically gathering diverse examples of high-level goals and project descriptions.",
+    "plan_phases": [
+      {
+        "phase_name": "Phase 1: Internal Brainstorming & Generation (Seed Data)",
+        "details": "Team members (Lyra, Aurora, Kodax, uTASe) will individually generate 10-20 unique high-level goals or project descriptions based on their experience or imagination. This initial set will serve as controlled seed data to refine understanding of criteria and prompt characteristics.",
+        "output": "Initial corpus of diverse, internally consistent prompts."
+      },
+      {
+        "phase_name": "Phase 2: Curated Public & Semi-Public Sources (Targeted Collection)",
+        "details": "Systematically collect prompts from various external sources, focusing on diversity and adherence to criteria. Sources include:\n- **Business/Tech:** Company 'About Us' pages (rephrased as goals), product roadmaps, startup pitch decks, project management blogs ('How to start X', 'Strategic planning examples'), open-source project READMEs/vision docs.\n- **Education/Non-Profit:** Course objectives, grant proposals, NGO mission statements, campaign goals.\n- **Creative/Personal:** Book/movie synopses, personal development goals (e.g., 'Learn a new skill', 'Complete a marathon'), DIY project descriptions.\n- **News/Publications:** Articles detailing new initiatives, strategies, or large-scale projects.",
+        "search_keywords": [
+          "project proposal example",
+          "strategic objective",
+          "business plan summary",
+          "product vision statement",
+          "organizational goal",
+          "problem statement",
+          "project brief",
+          "mission statement"
+        ],
+        "output": "Large, diverse corpus of real-world-inspired prompts."
+      },
+      {
+        "phase_name": "Phase 3: Synthetic Data Augmentation (Scalability & Edge Cases - Conditional)",
+        "details": "If the real-world data is insufficient in quantity or lacks diversity in specific areas, LLMs will be used to generate additional prompts. This process will be carefully controlled to ensure generated data aligns with established criteria and avoids 'model collapse' by leveraging existing high-quality examples as few-shot prompts. This phase is conditional upon assessment of data gathered in Phases 1 & 2.",
+        "output": "Augmented dataset, filling gaps in domain/scope diversity."
+      }
+    ],
+    "review_and_selection_process": {
+      "process": "All gathered prompts will undergo a rigorous review by Lyra (Prompt Engineer), and potentially other team members, to ensure strict adherence to the defined 'raw_data_sourcing_criteria'. Prompts that are too specific, too vague, or outside the scope of high-level goals will be discarded or refined. The aim is to create a balanced distribution across domains, scopes, and linguistic styles before proceeding to TAS extraction."
+    }
+  }
+}

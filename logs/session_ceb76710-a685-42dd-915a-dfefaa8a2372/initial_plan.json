@@ -1,0 +1,47 @@
+{
+    "roles": [
+        {
+            "title": "Task-Agnostic Step (TAS) extractor",
+            "description": "Identify and extract each 'Task Agnostic Step' (TAS) towards the high-level goal."
+        },
+        {
+            "title": "Prompt Engineer",
+            "description": "Structure workflows and ensure clarity in agent instructions, system prompt engineering"
+        },
+        {
+            "title": "Engineer",
+            "description": "Implement designs into clean, modular, and performant code, focusing on responsive design and accessibility."
+        },
+        {
+            "title": "Designer",
+            "description": "Generate aesthetic layouts, color palettes, typography, and UI flows, ensuring accessibility and visual balance."
+        }
+    ],
+    "steps": [
+        {
+            "name": "TASe",
+            "role": "Task-Agnostic Step (TAS) extractor",
+            "task": "Extract the primary user request: 'draw a concrete MVP architecture diagram for a fixed dataset setup'. Decompose this into a sequence of technical definition, visual design, and final review."
+        },
+        {
+            "name": "Lyra",
+            "role": "Prompt Engineer",
+            "task": "Formulate precise instructions for the Engineer (Kodax) and Designer (Aurora). The prompt for Kodax will focus on defining the technical components and data flow for the 'CLIP + Vector Database Approach'. The prompt for Aurora will focus on translating that technical flow into a clear, visually intuitive diagram."
+        },
+        {
+            "name": "Kodax",
+            "role": "Engineer",
+            "task": "Based on the user's provided text, define the components and data flow for the MVP architecture. Specify the two main workflows: 1) Initial indexing of the fixed dataset (Images -> CLIP Embeddings -> Vector DB). 2) Live query processing (Query Image -> CLIP Embedding -> Vector DB Search -> Matched Results)."
+        },
+        {
+            "name": "Aurora",
+            "role": "Designer",
+            "task": "Using the technical components and data flow defined by Kodax, design a clean and professional architecture diagram. Use clear labels, directional arrows, and logical grouping to illustrate the entire process from data ingestion to user query and result retrieval."
+        },
+        {
+            "name": "Kodax",
+            "role": "Engineer",
+            "task": "Review the diagram created by Aurora to ensure it is technically accurate and correctly represents the data flow and component interactions of the 'CLIP + Vector Database' pipeline."
+        }
+    ]
+}

@@ -1,0 +1,1138 @@
+The overall goal is: 'Image recognition based on a living example, given a databse with captioned images to recognize, leveraging tools were appropriate'
+
+Your role's specific goal is: 'Implement designs into clean, modular, and performant code, focusing on responsive design and accessibility.'
+Your specific sub-task is: 'Integrate all refined components (front-end, back-end, prompts), perform final testing, and deploy the complete image recognition application.'
+
+The team's roles are:
+    {'roles': [{'title': 'Designer', 'description': 'Generate aesthetic layouts, color palettes, typography, and UI flows, ensuring accessibility and visual balance.'}, {'title': 'Engineer', 'description': 'Implement designs into clean, modular, and performant code, focusing on responsive design and accessibility.'}, {'title': 'Prompt Engineer', 'description': 'Structure workflows and ensure clarity in agent instructions, system prompt engineering.'}, {'title': 'Task-Agnostic Step (TAS) extractor', 'description': "Identify and extract each 'Task Agnostic Step' (TAS) towards the high-level goal."}], 'steps': [{'name': 'TASe', 'role': 'Task-Agnostic Step (TAS) extractor', 'task': "Deconstruct the high-level goal ('Image recognition based on a living example') into a detailed, sequential task plan for the team."}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': 'Design the core prompt engineering workflow for the image recognition model, defining how a live image will be analyzed and compared against the captioned image database.'}, {'name': 'Aurora', 'role': 'Designer', 'task': 'Design the user interface (UI) and user experience (UX) flow, including the live image capture screen, result display, and user feedback mechanisms.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Architect the overall system, select appropriate tools and frameworks, and set up the database schema for storing and efficiently querying the captioned images.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': "Develop the front-end application based on Aurora's UI/UX designs, ensuring a responsive and accessible user interface for image submission."}, {'name': 'Kodax', 'role': 'Engineer', 'task': "Implement the back-end logic, including API endpoints, database integration, and the core image recognition service that utilizes Lyra's prompt workflow."}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': 'Collaborate with Kodax to test, iterate, and refine the image recognition prompts based on real-world performance and testing data to improve accuracy.'}, {'name': 'Aurora', 'role': 'Designer', 'task': 'Conduct usability testing on the integrated prototype and provide feedback and design revisions to Kodax to enhance the user experience.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Integrate all refined components (front-end, back-end, prompts), perform final testing, and deploy the complete image recognition application.'}, {'name': 'TASe', 'role': 'Task-Agnostic Step (TAS) extractor', 'task': 'Document the final workflow, cataloging the executed steps, tools used, and outcomes to finalize the project plan.'}]}
+
+Please use the following outputs from the other agents as your input:
+
+Artifact from 1__step_0_TASe_result.txt (Task-Agnostic Step (TAS) extractor):
+[
+  {
+    "id": "f4a2b1c8-3d4e-4f5a-8b9c-0d1e2f3a4b5c",
+    "name": "Define Problem Scope",
+    "description": "Clearly articulate the boundaries and objectives of the problem to be solved. This involves understanding the desired outcome, constraints, and the specific domain or context in which the solution will operate.",
+    "category": "Init",
+    "purpose": "Establish clear project boundaries and objectives.",
+    "keywords": ["scope", "definition", "objectives", "boundaries", "clarification"],
+    "applicability_notes": "This step is crucial at the beginning of any project to ensure alignment and prevent scope creep. It applies to all fields of endeavor.",
+    "examples_of_usage": [
+      "Defining the specific type of images to be recognized (e.g., objects, faces, scenes).",
+      "Setting performance metrics for recognition accuracy and speed.",
+      "Identifying limitations such as environmental conditions or image quality."
+    ],
+    "typical_inputs": ["High-level goal statement", "Stakeholder requirements"],
+    "typical_outputs": ["Defined project scope document", "List of objectives and constraints"]
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+    "name": "Structure Workflow",
+    "description": "Outline the sequence of actions, decisions, and processes required to achieve the defined goal. This involves breaking down the overall objective into manageable, logical steps and determining their order.",
+    "category": "Planning",
+    "purpose": "Create a logical sequence of actions.",
+    "keywords": ["workflow", "process", "planning", "sequencing", "task breakdown"],
+    "applicability_notes": "Applicable to any project or process requiring a structured approach. Helps in understanding dependencies and resource allocation.",
+    "examples_of_usage": [
+      "Mapping out the steps from data input to final recognition output.",
+      "Defining the interaction points between different components or roles.",
+      "Sequencing the development phases from design to deployment."
+    ],
+    "typical_inputs": ["Defined project scope", "List of required functionalities"],
+    "typical_outputs": ["Sequential task plan", "Process flowchart"]
+  },
+  {
+    "id": "b2c3d4e5-f6a7-8901-2345-67890abcdef1",
+    "name": "Identify Tools and Technologies",
+    "description": "Research and select appropriate tools, frameworks, libraries, or platforms that will facilitate the execution of the structured workflow. This includes considering compatibility, performance, and maintainability.",
+    "category": "Planning",
+    "purpose": "Select appropriate tools for execution.",
+    "keywords": ["tools", "technology", "frameworks", "selection", "research", "stack"],
+    "applicability_notes": "Essential for efficiency and effectiveness. The choice of tools can significantly impact project outcomes.",
+    "examples_of_usage": [
+      "Selecting a database for storing captioned images.",
+      "Choosing a machine learning framework for image recognition.",
+      "Identifying front-end and back-end development technologies."
+    ],
+    "typical_inputs": ["Structured workflow", "Project requirements", "Technical constraints"],
+    "typical_outputs": ["Technology stack definition", "List of selected tools and libraries"]
+  },
+  {
+    "id": "c3d4e5f6-a7b8-9012-3456-7890abcdef12",
+    "name": "Design System Architecture",
+    "description": "Define the high-level structure of the system, including how different components will interact, data flow, and the overall architecture. This ensures a scalable and maintainable solution.",
+    "category": "Design",
+    "purpose": "Define the system's structural blueprint.",
+    "keywords": ["architecture", "system design", "component interaction", "data flow", "scalability"],
+    "applicability_notes": "Critical for complex systems to ensure coherence and manageability.",
+    "examples_of_usage": [
+      "Designing the interaction between the image capture module, the recognition engine, and the database.",
+      "Defining API contracts between front-end and back-end services.",
+      "Planning for data storage and retrieval mechanisms."
+    ],
+    "typical_inputs": ["Structured workflow", "Selected tools and technologies", "Functional requirements"],
+    "typical_outputs": ["System architecture diagram", "Data models", "API specifications"]
+  },
+  {
+    "id": "d4e5f6a7-b8c9-0123-4567-890abcdef123",
+    "name": "Develop User Interface",
+    "description": "Create the visual and interactive elements of the application that users will engage with. This includes designing layouts, ensuring responsiveness, and implementing user flows.",
+    "category": "Implementation",
+    "purpose": "Build the user-facing application.",
+    "keywords": ["UI", "user interface", "front-end", "design implementation", "responsiveness"],
+    "applicability_notes": "Focuses on the user's interaction with the system. Requires attention to detail and user experience principles.",
+    "examples_of_usage": [
+      "Building the screen for capturing live images.",
+      "Developing the interface for displaying recognition results.",
+      "Implementing feedback mechanisms for users."
+    ],
+    "typical_inputs": ["UI/UX designs", "System architecture", "Front-end framework"],
+    "typical_outputs": ["Functional front-end application", "User interaction components"]
+  },
+  {
+    "id": "e5f6a7b8-c9d0-1234-5678-90abcdef1234",
+    "name": "Implement Core Logic",
+    "description": "Build the underlying functionality of the system, including data processing, business logic, and integration with external services or models. This often involves back-end development.",
+    "category": "Implementation",
+    "purpose": "Build the system's functional engine.",
+    "keywords": ["back-end", "logic", "processing", "integration", "database", "API"],
+    "applicability_notes": "The 'engine' of the application, handling data manipulation and core operations.",
+    "examples_of_usage": [
+      "Implementing the image recognition service using prompt engineering.",
+      "Developing API endpoints for data access and processing.",
+      "Integrating with the captioned image database."
+    ],
+    "typical_inputs": ["System architecture", "Selected tools and technologies", "Database schema", "Prompt engineering workflow"],
+    "typical_outputs": ["Functional back-end services", "Integrated core logic"]
+  },
+  {
+    "id": "f6a7b8c9-d0e1-2345-6789-0abcdef12345",
+    "name": "Refine Recognition Model",
+    "description": "Iteratively improve the performance of the image recognition model by adjusting its parameters, data inputs, or underlying logic based on testing and feedback.",
+    "category": "Refactoring",
+    "purpose": "Enhance the accuracy and efficiency of recognition.",
+    "keywords": ["refinement", "iteration", "optimization", "model tuning", "prompt engineering", "testing"],
+    "applicability_notes": "A continuous process to improve results. Often involves experimentation and data analysis.",
+    "examples_of_usage": [
+      "Adjusting prompts for better image interpretation.",
+      "Retraining parts of the model with new data examples.",
+      "Fine-tuning parameters for recognition accuracy."
+    ],
+    "typical_inputs": ["Test data", "Performance metrics", "Feedback on recognition results"],
+    "typical_outputs": ["Improved recognition model", "Updated prompts or parameters"]
+  },
+  {
+    "id": "a7b8c9d0-e1f2-3456-7890-abcdef123456",
+    "name": "Conduct Usability Testing",
+    "description": "Evaluate the system's ease of use, efficiency, and user satisfaction through testing with representative users. Gather feedback to identify areas for improvement.",
+    "category": "Testing",
+    "purpose": "Assess and improve user experience.",
+    "keywords": ["usability", "testing", "user feedback", "UX evaluation", "validation"],
+    "applicability_notes": "Ensures the system is intuitive and meets user needs effectively.",
+    "examples_of_usage": [
+      "Observing users as they capture and analyze images.",
+      "Collecting feedback on the clarity of results and ease of interaction.",
+      "Identifying pain points in the user journey."
+    ],
+    "typical_inputs": ["Integrated system prototype", "User profiles", "Testing scenarios"],
+    "typical_outputs": ["Usability test report", "List of UX improvement recommendations"]
+  },
+  {
+    "id": "b8c9d0e1-f2a3-4567-8901-bcdef1234567",
+    "name": "Integrate Components",
+    "description": "Combine all developed parts of the system (front-end, back-end, models, databases) into a cohesive, working whole. Ensure seamless interaction between all elements.",
+    "category": "Integration",
+    "purpose": "Combine system parts into a unified whole.",
+    "keywords": ["integration", "assembly", "system integration", "component connection", "testing"],
+    "applicability_notes": "Brings together individual development efforts into a complete solution.",
+    "examples_of_usage": [
+      "Connecting the front-end UI to the back-end APIs.",
+      "Ensuring the recognition service correctly accesses the database.",
+      "Verifying data flow across all integrated modules."
+    ],
+    "typical_inputs": ["Developed front-end", "Developed back-end", "Tuned recognition model", "Configured database"],
+    "typical_outputs": ["Fully integrated application", "End-to-end test results"]
+  },
+  {
+    "id": "c9d0e1f2-a3b4-5678-9012-cdef12345678",
+    "name": "Deploy Application",
+    "description": "Make the completed and tested application available for use in its target environment, whether that's a server, cloud platform, or user devices.",
+    "category": "Deployment",
+    "purpose": "Make the application accessible to users.",
+    "keywords": ["deployment", "release", "production", "launch", "distribution"],
+    "applicability_notes": "The final step in delivering the application to its intended audience.",
+    "examples_of_usage": [
+      "Deploying the web application to a hosting server.",
+      "Packaging the application for mobile devices.",
+      "Setting up cloud infrastructure for the service."
+    ],
+    "typical_inputs": ["Integrated and tested application", "Deployment environment configuration"],
+    "typical_outputs": ["Live, accessible application", "Deployment documentation"]
+  },
+  {
+    "id": "d0e1f2a3-b4c5-6789-0123-def123456789",
+    "name": "Document Workflow and Outcomes",
+    "description": "Record the entire process, including the steps taken, tools used, decisions made, challenges encountered, and final results. This serves as a knowledge base and a record of the project.",
+    "category": "Documentation",
+    "purpose": "Record project activities and results.",
+    "keywords": ["documentation", "recording", "reporting", "knowledge base", "project finalization"],
+    "applicability_notes": "Essential for future reference, knowledge transfer, and project closure.",
+    "examples_of_usage": [
+      "Cataloging the final prompt engineering strategies.",
+      "Documenting the system architecture and implementation details.",
+      "Summarizing test results and performance metrics."
+    ],
+    "typical_inputs": ["Completed project artifacts", "Team logs", "Test reports"],
+    "typical_outputs": ["Final project documentation", "Lessons learned report"]
+  }
+]
+
+---
+
+Artifact from 1__step_1_Lyra_result.txt (Prompt Engineer):
+{
+  "workflow_name": "Core Image Recognition Prompt Workflow",
+  "description": "Defines the sequential prompts for an AI model to analyze a live image, generate queries for a captioned database, compare candidates, and make a recognition decision.",
+  "steps": [
+    {
+      "step_id": "1_live_image_analysis",
+      "name": "Live Image Feature Extraction and Description",
+      "purpose": "To generate a rich, structured description and extract key visual features from the live input image for subsequent comparison.",
+      "prompt_template": {
+        "role": "system",
+        "instruction": "You are an advanced image analysis AI. Your task is to meticulously examine the provided live image. Identify and describe all prominent objects, their attributes (e.g., color, texture, material), the scene context, any discernible text, and overall visual themes. Prioritize features that would serve as unique identifiers. Generate a concise, yet comprehensive, textual description and extract keywords suitable for database querying. If the underlying model supports it, also generate a high-dimensional embedding of the image.",
+        "input_format": {
+          "type": "image_data",
+          "description": "The raw live image captured by the user, provided as a base64 encoded string or direct image input."
+        },
+        "output_format": {
+          "type": "json",
+          "schema": {
+            "title": "ImageAnalysisOutput",
+            "type": "object",
+            "properties": {
+              "textual_description": {
+                "type": "string",
+                "description": "A detailed natural language description of the image content."
+              },
+              "extracted_keywords": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "A list of key identifying keywords and concepts (e.g., 'red car', 'wooden table', 'mountain landscape')."
+              },
+              "image_embedding_vector": {
+                "type": "array",
+                "items": { "type": "number" },
+                "description": "A high-dimensional vector representation of the image, if generated by the model."
+              }
+            },
+            "required": ["textual_description", "extracted_keywords"]
+          }
+        },
+        "success_criteria": "A detailed and accurate description, relevant keywords, and an optional embedding are extracted, ready for database query formulation."
+      }
+    },
+    {
+      "step_id": "2_database_query_generation",
+      "name": "Database Query Generation",
+      "purpose": "To translate the live image's analysis into an effective query for retrieving similar captioned images from the database.",
+      "prompt_template": {
+        "role": "system",
+        "instruction": "Based on the provided analysis of the live image, generate an optimized query string and/or structured query parameters for a database containing captioned images. The goal is to retrieve the most visually and semantically similar images. Focus on keywords from 'extracted_keywords' and semantic concepts from 'textual_description' that are most likely to match database captions. If an 'image_embedding_vector' is available, incorporate it for vector similarity search.",
+        "input_format": {
+          "type": "json",
+          "description": "Output from '1_live_image_analysis' step.",
+          "schema": { "$ref": "#/steps/0/prompt_template/output_format/schema" }
+        },
+        "output_format": {
+          "type": "json",
+          "schema": {
+            "title": "DatabaseQueryOutput",
+            "type": "object",
+            "properties": {
+              "keyword_query": {
+                "type": "string",
+                "description": "A natural language query string suitable for keyword-based search."
+              },
+              "semantic_query_vector": {
+                "type": "array",
+                "items": { "type": "number" },
+                "description": "A vector embedding representing the semantic content of the query, if applicable."
+              },
+              "structured_parameters": {
+                "type": "object",
+                "description": "Structured parameters for an advanced database query (e.g., {'search_terms': ['car', 'red'], 'embedding': [...]})."
+              }
+            },
+            "required": ["keyword_query"]
+          }
+        },
+        "success_criteria": "A relevant and effective query (or set of parameters) is generated that can retrieve potential matches from the database."
+      }
+    },
+    {
+      "step_id": "3_similarity_assessment",
+      "name": "Candidate Image Comparison and Similarity Scoring",
+      "purpose": "To compare the live image's characteristics against a list of retrieved candidate images from the database and assign a comprehensive similarity score to each candidate.",
+      "prompt_template": {
+        "role": "system",
+        "instruction": "You are a similarity assessment AI. Given the live image's analysis and a list of candidate images retrieved from the database (each with its caption, and potentially its own features/embedding), calculate a comprehensive similarity score for each candidate against the live image. The score should reflect both visual and semantic congruence. Provide a brief justification for the score of each candidate. The scoring range should be 0.0 (no similarity) to 1.0 (perfect match). Rank the candidates from highest to lowest similarity.",
+        "input_format": {
+          "type": "json",
+          "description": "Consolidated data including live image analysis and retrieved database candidates.",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "live_image_analysis": { "$ref": "#/steps/0/prompt_template/output_format/schema" },
+              "candidate_images": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "image_id": { "type": "string" },
+                    "caption": { "type": "string" },
+                    "keywords": { "type": "array", "items": { "type": "string" } },
+                    "embedding": { "type": "array", "items": { "type": "number" } }
+                  },
+                  "required": ["image_id", "caption"]
+                }
+              }
+            },
+            "required": ["live_image_analysis", "candidate_images"]
+          }
+        },
+        "output_format": {
+          "type": "json",
+          "schema": {
+            "title": "SimilarityScoresOutput",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "image_id": { "type": "string" },
+                "caption": { "type": "string" },
+                "similarity_score": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+                "justification": { "type": "string" }
+              },
+              "required": ["image_id", "caption", "similarity_score", "justification"]
+            }
+          }
+        },
+        "success_criteria": "All candidate images are scored accurately, justifications are provided, and the list is ordered by similarity (descending)."
+      }
+    },
+    {
+      "step_id": "4_recognition_decision",
+      "name": "Final Recognition Decision and Confidence",
+      "purpose": "To make a definitive recognition decision based on similarity scores and provide a confidence level, or suggest closest matches if no confident recognition is made.",
+      "prompt_template": {
+        "role": "system",
+        "instruction": "Based on the ranked list of candidate images and their similarity scores, determine if a confident recognition can be made. A recognition is considered confident if the top candidate's 'similarity_score' is above a predefined 'recognition_threshold' (e.g., 0.8) AND is significantly higher than the second-best score (e.g., by a 'delta_threshold' of 0.1). If a confident match is found, identify the recognized image. Otherwise, indicate that no confident match was found and list the top 3 closest matches with their scores for user review. Provide a concise explanation for the decision.",
+        "input_format": {
+          "type": "json",
+          "description": "Ranked list of candidate images with similarity scores, along with configurable thresholds.",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "ranked_candidates": { "$ref": "#/steps/2/prompt_template/output_format/schema" },
+              "recognition_threshold": { "type": "number", "default": 0.8, "description": "Minimum score for a confident recognition." },
+              "delta_threshold": { "type": "number", "default": 0.1, "description": "Minimum difference between top and second score for confident recognition." }
+            },
+            "required": ["ranked_candidates"]
+          }
+        },
+        "output_format": {
+          "type": "json",
+          "schema": {
+            "title": "RecognitionDecisionOutput",
+            "type": "object",
+            "properties": {
+              "recognition_status": {
+                "type": "string",
+                "enum": ["recognized", "no_confident_match"],
+                "description": "Indicates if a confident match was found."
+              },
+              "recognized_image": {
+                "type": "object",
+                "properties": {
+                  "image_id": { "type": "string" },
+                  "caption": { "type": "string" },
+                  "confidence_score": { "type": "number", "minimum": 0.0, "maximum": 1.0 }
+                },
+                "description": "Details of the recognized image, present only if 'recognition_status' is 'recognized'."
+              },
+              "closest_matches": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "image_id": { "type": "string" },
+                    "caption": { "type": "string" },
+                    "similarity_score": { "type": "number" }
+                  }
+                },
+                "description": "Top 3 closest matches, present if 'recognition_status' is 'no_confident_match' or as additional info."
+              },
+              "explanation": {
+                "type": "string",
+                "description": "Brief justification for the recognition decision or lack thereof."
+              }
+            },
+            "required": ["recognition_status", "explanation"]
+          }
+        },
+        "success_criteria": "A clear, justified recognition decision is made, or the closest matches are presented if no confident recognition is possible."
+      }
+    }
+  ]
+}
+
+---
+
+Artifact from 1__step_2_Aurora_result.txt (Designer):
+{
+  "design_process": [
+    {
+      "step_number": 1,
+      "step_name": "Define Visual Identity and Brand Kit",
+      "description": "Establish the core aesthetic principles, including a color palette, typography, and a logo concept that embodies a clean, minimally natural design. This will ensure thematic cohesion across all UI elements.",
+      "deliverables": [
+        "Color Palette",
+        "Typography Guidelines",
+        "Logo Concept",
+        "Brand Style Guide"
+      ]
+    },
+    {
+      "step_number": 2,
+      "step_name": "Design Live Image Capture Screen",
+      "description": "Create an intuitive and accessible interface for users to capture a live image. Focus on clear framing guides, minimal distractions, and accessible controls for taking the photo.",
+      "deliverables": [
+        "Wireframe: Live Capture Screen",
+        "Mockup: Live Capture Screen (incorporating brand elements)",
+        "Interaction Flow: Camera activation, capture, retake/confirm"
+      ]
+    },
+    {
+      "step_number": 3,
+      "step_name": "Design Result Display Screen",
+      "description": "Develop a clear and informative display for the recognition results. This screen should present the recognized item (if any), confidence levels, and supporting information from the database, maintaining visual balance.",
+      "deliverables": [
+        "Wireframe: Result Display Screen",
+        "Mockup: Result Display Screen (incorporating brand elements)",
+        "Layout: Displaying primary match, secondary matches, confidence scores, and captions."
+      ]
+    },
+    {
+      "step_number": 4,
+      "step_name": "Design User Feedback Mechanisms",
+      "description": "Incorporate ways for users to provide feedback on the recognition accuracy. This could include simple 'correct/incorrect' buttons or options to suggest alternative captions, facilitating model refinement.",
+      "deliverables": [
+        "UI Elements: Feedback buttons/forms",
+        "Integration Plan: How feedback is captured and submitted."
+      ]
+    },
+    {
+      "step_number": 5,
+      "step_name": "Define Overall UX Flow",
+      "description": "Map out the end-to-end user journey, from initiating the recognition process to viewing results and providing feedback. Ensure a seamless and logical progression between screens.",
+      "deliverables": [
+        "User Flow Diagram",
+        "Screen Transition Logic"
+      ]
+    },
+    {
+      "step_number": 6,
+      "step_name": "Ensure Accessibility and Visual Balance",
+      "description": "Review all designed screens and flows for accessibility compliance (e.g., color contrast, readable font sizes, clear focus states) and overall visual harmony. Make necessary adjustments to meet standards.",
+      "deliverables": [
+        "Accessibility Checklist Review",
+        "Finalized Mockups with Accessibility Annotations"
+      ]
+    }
+  ],
+  "brand_kit": {
+    "logo_concept": {
+      "name": "Lumin",
+      "description": "A subtle, abstract mark that suggests a lens or a blooming natural form. It combines a clean, geometric circle with a soft, organic gradient, symbolizing the fusion of technology and natural observation. The mark is versatile, scalable, and evokes clarity and insight.",
+      "visual_elements": [
+        "A primary circular form, representing a camera lens or aperture.",
+        "An inner, softer shape (e.g., a subtle leaf or petal motif) that emerges from the circle, hinting at 'living examples' and natural inspiration.",
+        "A gradient fill using primary and secondary colors to add depth and a touch of organic feel."
+      ]
+    },
+    "color_palette": {
+      "primary": "#4A90E2",
+      "secondary": "#8EC84A",
+      "accent": "#F5A623",
+      "neutral_dark": "#333333",
+      "neutral_medium": "#888888",
+      "neutral_light": "#F2F2F2",
+      "background": "#FFFFFF",
+      "description": "A palette that balances technological clarity with natural warmth. The primary blue offers a sense of trust and precision, the secondary green speaks to growth and life, and the accent orange provides a warm, inviting highlight. Neutrals ensure readability and a clean aesthetic."
+    },
+    "typography": {
+      "font_family": "'Inter', sans-serif",
+      "headings": {
+        "font_weight": 700,
+        "size": "2.25rem",
+        "line_height": "1.2"
+      },
+      "subheadings": {
+        "font_weight": 600,
+        "size": "1.5rem",
+        "line_height": "1.3"
+      },
+      "body_text": {
+        "font_weight": 400,
+        "size": "1rem",
+        "line_height": "1.6"
+      },
+      "captions_and_labels": {
+        "font_weight": 500,
+        "size": "0.875rem",
+        "line_height": "1.4",
+        "color": "#888888"
+      },
+      "description": "A modern, highly legible sans-serif font that offers excellent readability across various sizes and weights. It supports a clean and accessible interface."
+    }
+  },
+  "ui_ux_design": {
+    "screens": [
+      {
+        "screen_name": "Live Image Capture",
+        "description": "A clean, full-screen interface focused on guiding the user to capture the best possible image. Features a prominent viewfinder, subtle framing guides, and clear, accessible controls.",
+        "elements": [
+          {
+            "element": "Viewfinder",
+            "type": "Camera Feed",
+            "style": "Full bleed, with optional overlay guides."
+          },
+          {
+            "element": "Framing Guides",
+            "type": "Overlay",
+            "style": "Minimalist, perhaps a subtle dotted or dashed outline in `neutral_medium` to indicate the optimal capture area, ensuring subjects are centered and well-lit."
+          },
+          {
+            "element": "Capture Button",
+            "type": "Circular Button",
+            "style": "Large, centrally located at the bottom. Uses `primary` color with a subtle white icon. Accessible via touch and potentially keyboard (spacebar)."
+          },
+          {
+            "element": "Retake/Confirm Buttons",
+            "type": "Icon Buttons",
+            "style": "Appears after capture. 'Retake' uses `neutral_dark` or a subtle outline, 'Confirm' uses `primary` or `secondary` color. Positioned clearly near the capture button."
+          },
+          {
+            "element": "Flash Control",
+            "type": "Icon Button",
+            "style": "Top corner, typically left. Uses standard flash icon."
+          },
+          {
+            "element": "Camera Switch",
+            "type": "Icon Button",
+            "style": "Top corner, typically right. Uses standard camera switch icon."
+          }
+        ],
+        "accessibility_notes": "High contrast between viewfinder and controls. Large tap targets for buttons. Clear visual focus indicators."
+      },
+      {
+        "screen_name": "Recognition Results",
+        "description": "Presents the outcome of the image recognition in a structured, informative, and visually appealing manner. Prioritizes clarity of the primary result while offering access to secondary matches.",
+        "elements": [
+          {
+            "element": "Live Image Thumbnail",
+            "type": "Image Display",
+            "style": "Top of the screen, small to medium size, clearly labeled 'Your Image'."
+          },
+          {
+            "element": "Recognition Status",
+            "type": "Text Display",
+            "style": "Prominent heading using `headings` typography. States 'Recognized:', 'Closest Match:', or 'No Confident Match Found'."
+          },
+          {
+            "element": "Primary Result Card",
+            "type": "Card",
+            "style": "Visually distinct card using `neutral_light` background. Displays: \n- Thumbnail of matched database image.\n- Caption of matched database image (using `body_text` typography).\n- Confidence Score (e.g., '92% Confidence') using `accent` color for emphasis.\n- Brief justification for the match (optional, short text)."
+          },
+          {
+            "element": "Secondary Matches Section",
+            "type": "Collapsible List/Carousel",
+            "style": "Appears below the primary result if 'No Confident Match' or as an option to explore. Displays top 2-3 alternative matches with their captions and scores, using `captions_and_labels` typography."
+          },
+          {
+            "element": "Feedback Mechanism",
+            "type": "Buttons",
+            "style": "Clearly labeled buttons like 'Was this correct?' or 'Provide Feedback'. Uses `primary` or `neutral_dark` buttons with clear text labels."
+          },
+          {
+            "element": "New Search Button",
+            "type": "Button",
+            "style": "Accessible button to initiate a new capture. Uses `secondary` color."
+          }
+        ],
+        "accessibility_notes": "Sufficient contrast between text and background. Clear hierarchy of information. Feedback options should be easily identifiable and usable."
+      },
+      {
+        "screen_name": "Feedback Modal/Screen",
+        "description": "A focused interface for users to provide specific feedback on the recognition accuracy.",
+        "elements": [
+          {
+            "element": "Feedback Prompt",
+            "type": "Text",
+            "style": "Clear question, e.g., 'Was this recognition accurate?'"
+          },
+          {
+            "element": "Feedback Options",
+            "type": "Radio Buttons/Select",
+            "style": "Options like 'Yes, Correct', 'No, Incorrect', 'Partially Correct'."
+          },
+          {
+            "element": "Optional Correction Input",
+            "type": "Text Area",
+            "style": "Appears if 'No' or 'Partially' selected. 'Please provide the correct caption or details'."
+          },
+          {
+            "element": "Submit Feedback Button",
+            "type": "Button",
+            "style": "Uses `primary` color."
+          },
+          {
+            "element": "Cancel Button",
+            "type": "Button",
+            "style": "Uses `neutral_dark` outline."
+          }
+        ],
+        "accessibility_notes": "All form elements clearly labeled and usable with assistive technologies."
+      }
+    ],
+    "ux_flow": [
+      {
+        "step": "User opens app",
+        "action": "App defaults to Live Image Capture screen."
+      },
+      {
+        "step": "User frames subject",
+        "action": "Camera feed is active, framing guides are visible."
+      },
+      {
+        "step": "User captures image",
+        "action": "Tap Capture Button. Image is processed briefly. Capture screen transitions to display thumbnail with Retake/Confirm options."
+      },
+      {
+        "step": "User confirms image",
+        "action": "Tap Confirm. Image is sent for recognition. Loading indicator displayed briefly."
+      },
+      {
+        "step": "Recognition results received",
+        "action": "App navigates to Recognition Results screen. Displays primary match, score, and potentially secondary matches."
+      },
+      {
+        "step": "User reviews results",
+        "action": "User can view details, explore secondary matches."
+      },
+      {
+        "step": "User provides feedback",
+        "action": "Tap 'Provide Feedback'. Feedback modal/screen appears. User selects accuracy and optionally enters correction. Submit Feedback."
+      },
+      {
+        "step": "User initiates new search",
+        "action": "Tap 'New Search'. App returns to Live Image Capture screen."
+      }
+    ]
+  }
+}
+
+---
+
+Artifact from 1__step_3_Kodax_result.txt (Engineer):
+{
+  "system_architecture": {
+    "name": "Living Example Image Recognizer",
+    "description": "A system designed to recognize objects or scenes in a live image by comparing it against a database of captioned images, leveraging AI for analysis and comparison.",
+    "components": [
+      {
+        "name": "Frontend Application",
+        "description": "The user-facing interface responsible for capturing live images, displaying recognition results, and facilitating user feedback. It adheres to Aurora's UI/UX designs, ensuring responsiveness and accessibility.",
+        "technologies": ["React", "HTML5", "CSS3", "JavaScript (ES6+)"],
+        "responsibilities": [
+          "Live image capture via device camera API.",
+          "Displaying viewfinder and capture controls.",
+          "Sending captured image to the backend API.",
+          "Presenting recognition results (primary match, secondary matches, confidence scores).",
+          "Handling user feedback submission.",
+          "Implementing responsive and accessible UI elements as per Aurora's design."
+        ]
+      },
+      {
+        "name": "Backend API Service",
+        "description": "The core service that orchestrates the image recognition process. It receives images from the frontend, interacts with the AI model (via prompts), queries the database, and returns results.",
+        "technologies": ["Node.js", "Express.js", "Python (for ML integration)", "RESTful APIs"],
+        "responsibilities": [
+          "Receiving image data from the frontend.",
+          "Orchestrating Lyra's prompt workflow (image analysis, query generation, comparison).",
+          "Interfacing with the database for image retrieval.",
+          "Returning structured recognition results to the frontend.",
+          "Handling API requests and responses.",
+          "Managing user feedback data."
+        ]
+      },
+      {
+        "name": "Image Recognition Engine (AI Model)",
+        "description": "The AI component responsible for analyzing images, generating queries, and assessing similarity. It utilizes Lyra's defined prompt engineering workflow.",
+        "technologies": ["Python", "TensorFlow/PyTorch (or similar ML framework)", "Pre-trained Vision Models (e.g., CLIP, ResNet)", "Natural Language Processing (for caption analysis)"],
+        "responsibilities": [
+          "Executing prompt steps: feature extraction, description generation, keyword extraction.",
+          "Formulating database queries (keyword and/or vector-based).",
+          "Comparing live image features against database entries.",
+          "Scoring similarity and providing confidence levels.",
+          "Making recognition decisions based on defined thresholds."
+        ]
+      },
+      {
+        "name": "Database",
+        "description": "Stores the collection of captioned images, their associated metadata, and potentially pre-computed embeddings for efficient querying.",
+        "technologies": ["PostgreSQL with pgvector extension (for vector search)", "or Elasticsearch with vector capabilities", "or a dedicated Vector Database (e.g., Pinecone, Weaviate)"],
+        "database_schema": {
+          "tables": [
+            {
+              "name": "images",
+              "columns": [
+                {"name": "image_id", "type": "UUID", "primary_key": true, "description": "Unique identifier for the image."},
+                {"name": "image_url", "type": "VARCHAR(255)", "description": "URL or path to the stored image file."},
+                {"name": "caption", "type": "TEXT", "description": "The descriptive text associated with the image."},
+                {"name": "keywords", "type": "JSONB", "description": "Array of extracted keywords for efficient text search."},
+                {"name": "embedding_vector", "type": "VECTOR(128)", "description": "High-dimensional vector representation of the image for semantic search (dimension depends on the model)."}
+              ]
+            },
+            {
+              "name": "feedback",
+              "columns": [
+                {"name": "feedback_id", "type": "UUID", "primary_key": true, "description": "Unique identifier for feedback entry."},
+                {"name": "image_id", "type": "UUID", "foreign_key": "images(image_id)", "description": "Reference to the image being evaluated."},
+                {"name": "user_submission_timestamp", "type": "TIMESTAMP", "description": "Timestamp of the user's feedback."},
+                {"name": "is_correct", "type": "BOOLEAN", "description": "Indicates if the recognition was correct."},
+                {"name": "user_correction", "type": "TEXT", "nullable": true, "description": "Optional text provided by the user for correction."}
+              ]
+            }
+          ],
+          "indexes": [
+            {"table": "images", "columns": ["keywords"], "type": "GIN", "description": "Index for efficient keyword searching."},
+            {"table": "images", "columns": ["embedding_vector"], "type": "IVFFlat", "description": "Index for efficient vector similarity search."}
+          ]
+        },
+        "responsibilities": [
+          "Storing captioned images and their metadata.",
+          "Efficiently querying images based on keywords and/or semantic similarity (vector search).",
+          "Providing image data and captions to the recognition engine.",
+          "Storing user feedback."
+        ]
+      }
+    ],
+    "data_flow": [
+      "User captures an image using the Frontend Application.",
+      "Frontend sends the image data to the Backend API Service.",
+      "Backend API Service passes the image to the Image Recognition Engine.",
+      "Image Recognition Engine analyzes the image (Lyra's Step 1: Feature Extraction).",
+      "Based on analysis, the Engine generates a query (Lyra's Step 2: Query Generation).",
+      "Backend API Service uses the query to retrieve candidate images from the Database.",
+      "Candidate images (with captions, keywords, embeddings) are returned to the Backend API Service.",
+      "Backend API Service feeds candidate data and live image analysis to the Recognition Engine (Lyra's Step 3: Similarity Assessment).",
+      "Engine scores candidates and returns ranked results.",
+      "Backend API Service processes scores and makes a final decision (Lyra's Step 4: Recognition Decision).",
+      "Backend API Service sends the recognition result (recognized image or closest matches) back to the Frontend Application.",
+      "Frontend Application displays the results to the user.",
+      "User provides feedback via the Frontend Application.",
+      "Frontend Application sends feedback data to the Backend API Service.",
+      "Backend API Service stores the feedback in the Database."
+    ]
+  },
+  "tooling_and_framework_selection": {
+    "frontend": {
+      "framework": "React",
+      "reasoning": "Component-based architecture promotes modularity and reusability, aligning with Kodax's goals. Strong community support and a rich ecosystem for UI development, state management, and accessibility tooling.",
+      "libraries": ["Axios (for API calls)", "styled-components (for CSS-in-JS, aligning with design system)", "React Router (for navigation)"]
+    },
+    "backend": {
+      "runtime": "Node.js",
+      "framework": "Express.js",
+      "reasoning": "JavaScript parity with the frontend allows for efficient development and potential code sharing. Excellent for building scalable, I/O-intensive applications and APIs. Python will be used for the ML/AI components.",
+      "libraries": ["Multer (for file uploads)", "OpenCV (for image processing)", "NumPy (for numerical operations)", "Potentially a cloud-specific SDK if deploying to cloud."]
+    },
+    "database": {
+      "choice": "PostgreSQL with pgvector extension",
+      "reasoning": "A robust relational database that also supports efficient vector similarity search via the `pgvector` extension. This allows for a unified data store for both metadata and embeddings, simplifying the architecture. It's mature, reliable, and offers strong querying capabilities.",
+      "alternatives_considered": [
+        "Elasticsearch: Strong text search, good for hybrid search, but vector search capabilities might be less mature than dedicated solutions or extensions.",
+        "Pinecone/Weaviate: Specialized vector databases, excellent for pure vector search, but might require managing a separate system for metadata and captions if not using their hybrid features."
+      ]
+    },
+    "image_recognition_engine": {
+      "language": "Python",
+      "frameworks": ["PyTorch", "TensorFlow"],
+      "reasoning": "Python is the de facto standard for machine learning and AI development, offering extensive libraries and community support. Pre-trained models (like CLIP for joint image-text understanding) are readily available and can be fine-tuned or used directly within Lyra's prompt workflow.",
+      "libraries": ["Hugging Face Transformers", "OpenCV", "Scikit-learn"]
+    },
+    "deployment": {
+      "considerations": "Cloud platforms like AWS, Google Cloud, or Azure offer scalable hosting for both the frontend and backend, managed database services, and potentially specialized AI/ML services.",
+      "strategy": "Containerization (Docker) for consistent environments, followed by deployment to a chosen cloud platform."
+    }
+  },
+  "database_schema_setup_plan": {
+    "step_1_setup_database_instance": "Provision a PostgreSQL instance, either self-hosted or using a managed cloud service (e.g., AWS RDS, Google Cloud SQL).",
+    "step_2_install_pgvector": "Ensure the `pgvector` extension is installed and enabled on the PostgreSQL instance.",
+    "step_3_create_database_and_tables": "Execute SQL scripts to create the `images` and `feedback` tables with the defined schema, including UUID generation, appropriate data types (VARCHAR, TEXT, JSONB, VECTOR), primary keys, foreign keys, and constraints.",
+    "step_4_create_indexes": "Create the GIN index on the `keywords` column and the IVFFlat index on the `embedding_vector` column for optimized query performance.",
+    "step_5_configure_access": "Set up database user credentials and connection strings for the backend application to securely access the database."
+  }
+}
+
+---
+
+Artifact from 1__step_4_Kodax_result.txt (Engineer):
+{
+  "task_id": "e5f6a7b8-c9d0-1234-5678-90abcdef1234",
+  "task_name": "Develop the front-end application based on Aurora's UI/UX designs, ensuring a responsive and accessible user interface for image submission.",
+  "role": "Engineer (Kodax)",
+  "dependencies": [
+    "Artifact from 1__step_2_Aurora_result.txt (Designer)"
+  ],
+  "output_description": "Front-end application code structure and key component implementations adhering to Aurora's design specifications, focusing on responsiveness and accessibility.",
+  "implementation_plan": [
+    {
+      "step": 1,
+      "action": "Set up Project Structure",
+      "details": "Initialize a new React project using Create React App or Vite. Organize the project into logical folders (e.g., `src/components`, `src/pages`, `src/styles`, `src/utils`, `src/hooks`).",
+      "tools": ["React", "Vite/CRA", "npm/yarn"]
+    },
+    {
+      "step": 2,
+      "action": "Implement Global Styles and Theme",
+      "details": "Create global CSS files to import typography, reset styles, and define the brand's color palette. Utilize CSS-in-JS (styled-components) or CSS Modules to scope styles and implement the theme based on Aurora's brand kit.",
+      "deliverables": ["Global styles", "Theme provider setup", "Component styling utilities"],
+      "tools": ["styled-components", "CSS Modules", "React Context API"]
+    },
+    {
+      "step": 3,
+      "action": "Develop Live Image Capture Screen Components",
+      "details": "Create React components for the capture screen: `CameraView` (to display the video feed), `FramingGuides` (overlay), `CaptureButton`, `ControlButtonGroup` (for retake/confirm/flash/switch). Ensure components are visually aligned with Aurora's mockups and handle camera access and user interactions.",
+      "deliverables": ["CameraView.jsx", "FramingGuides.jsx", "CaptureButton.jsx", "ControlButtonGroup.jsx", "LiveCapturePage.jsx"],
+      "tools": ["React", "WebRTC API (navigator.mediaDevices.getUserMedia)", "styled-components"]
+    },
+    {
+      "step": 4,
+      "action": "Implement Image Confirmation and Preview",
+      "details": "Create a component to display a static thumbnail of the captured image and present the 'Retake' and 'Confirm' buttons. Manage the state transition from live capture to image confirmation.",
+      "deliverables": ["ImagePreview.jsx"],
+      "tools": ["React", "State management"]
+    },
+    {
+      "step": 5,
+      "action": "Develop Result Display Screen Components",
+      "details": "Create components for the results screen: `ResultCard` (for primary match), `SecondaryMatchList` (for other matches), `FeedbackButtons`. Structure the layout according to Aurora's design, ensuring clear hierarchy and visual balance.",
+      "deliverables": ["ResultCard.jsx", "SecondaryMatchList.jsx", "FeedbackButtons.jsx", "ResultsPage.jsx"],
+      "tools": ["React", "styled-components"]
+    },
+    {
+      "step": 6,
+      "action": "Implement Feedback Mechanism",
+      "details": "Develop the UI elements for user feedback (e.g., 'Was this correct?' buttons, optional text area). Design a modal or a dedicated screen for detailed feedback, ensuring accessibility.",
+      "deliverables": ["FeedbackModal.jsx", "FeedbackForm.jsx"],
+      "tools": ["React", "styled-components", "Accessibility best practices"]
+    },
+    {
+      "step": 7,
+      "action": "Integrate Routing and State Management",
+      "details": "Set up React Router for navigation between the capture and results screens. Implement a state management solution (e.g., React Context API, Zustand, or Redux) to manage application state, including the captured image, recognition results, and feedback data.",
+      "deliverables": ["App.js (with routing)", "Context providers for state management"],
+      "tools": ["React Router", "Context API/Zustand"]
+    },
+    {
+      "step": 8,
+      "action": "Implement API Communication",
+      "details": "Use Axios or Fetch API to send the captured image to the backend API for recognition and to submit user feedback. Handle loading states and errors gracefully.",
+      "deliverables": ["apiService.js"],
+      "tools": ["Axios", "Fetch API"]
+    },
+    {
+      "step": 9,
+      "action": "Ensure Responsiveness",
+      "details": "Apply responsive design principles using CSS media queries, flexbox, and grid layouts to ensure the UI adapts seamlessly across different screen sizes (mobile, tablet, desktop).",
+      "deliverables": ["Responsive CSS styles"],
+      "tools": ["CSS Media Queries", "Flexbox", "Grid Layout"]
+    },
+    {
+      "step": 10,
+      "action": "Ensure Accessibility",
+      "details": "Adhere to WCAG guidelines. Use semantic HTML, ARIA attributes where necessary, ensure sufficient color contrast, provide keyboard navigation support, and test with screen readers.",
+      "deliverables": ["Accessible component implementations", "ARIA attribute usage"],
+      "tools": ["Lighthouse", "axe-core", "Screen readers (NVDA, VoiceOver)"]
+    },
+    {
+      "step": 11,
+      "action": "Component Testing",
+      "details": "Write unit and integration tests for key UI components to ensure they function correctly and maintain consistency.",
+      "deliverables": ["Unit and integration tests"],
+      "tools": ["Jest", "React Testing Library"]
+    }
+  ],
+  "code_snippets": {
+    "LiveCapturePage.jsx": "import React, { useState, useRef, useEffect } from 'react';\nimport styled from 'styled-components';\nimport { useNavigate } from 'react-router-dom';\nimport { useCamera } from '../hooks/useCamera'; // Assuming a custom hook for camera logic\nimport { sendImageForRecognition } from '../services/apiService';\n\nconst CaptureContainer = styled.div`\n  position: relative;\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: flex-end;\n  overflow: hidden;\n  background-color: ${({ theme }) => theme.colors.neutral_dark};\n`;\n\nconst VideoFeed = styled.video`\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n`;\n\nconst FramingOverlay = styled.div`\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n  width: 70%;\n  height: 50%;\n  border: 2px dashed ${({ theme }) => theme.colors.neutral_medium};\n  border-radius: 8px;\n  z-index: 10;\n`;\n\nconst ControlsContainer = styled.div`\n  display: flex;\n  justify-content: space-around;\n  align-items: center;\n  width: 100%;\n  padding: 20px;\n  background: rgba(0, 0, 0, 0.5);\n  z-index: 20;\n`;\n\nconst IconButton = styled.button`\n  background: none;\n  border: none;\n  color: white;\n  font-size: 24px;\n  cursor: pointer;\n  padding: 10px;\n`;\n\nconst CaptureButton = styled.button`\n  width: 70px;\n  height: 70px;\n  border-radius: 50%;\n  background-color: ${({ theme }) => theme.colors.primary};\n  border: 4px solid white;\n  cursor: pointer;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  position: relative;\n  &:after {\n    content: '';\n    position: absolute;\n    width: 80%;\n    height: 80%;\n    border-radius: 50%;\n    background-color: white;\n  }\n`;\n\nconst ImagePreviewContainer = styled.div`\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background: black;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  z-index: 30;\n`;\n\nconst PreviewImage = styled.img`\n  max-width: 90%;\n  max-height: 70vh;\n  object-fit: contain;\n  margin-bottom: 20px;\n`;\n\nconst ActionButtons = styled.div`\n  display: flex;\n  gap: 20px;\n`;\n\nconst LiveCapturePage = () => {\n  const videoRef = useRef(null);\n  const [capturedImage, setCapturedImage] = useState(null);\n  const [isLoading, setIsLoading] = useState(false);\n  const navigate = useNavigate();\n\n  const { stream, error, startCamera, stopCamera } = useCamera();\n\n  useEffect(() => {\n    if (videoRef.current && stream) {\n      videoRef.current.srcObject = stream;\n    }\n    return () => {\n      stopCamera();\n    };\n  }, [stream, stopCamera]);\n\n  useEffect(() => {\n    startCamera();\n  }, [startCamera]);\n\n  const handleCapture = () => {\n    if (videoRef.current && videoRef.current.srcObject) {\n      const canvas = document.createElement('canvas');\n      canvas.width = videoRef.current.videoWidth;\n      canvas.height = videoRef.current.videoHeight;\n      canvas.getContext('2d').drawImage(videoRef.current, 0, 0);\n      const imageDataUrl = canvas.toDataURL('image/jpeg');\n      setCapturedImage(imageDataUrl);\n      stopCamera();\n    }\n  };\n\n  const handleRetake = () => {\n    setCapturedImage(null);\n    startCamera();\n  };\n\n  const handleConfirm = async () => {\n    if (capturedImage) {\n      setIsLoading(true);\n      try {\n        // Assuming sendImageForRecognition returns the recognition results\n        const results = await sendImageForRecognition(capturedImage);\n        navigate('/results', { state: { image: capturedImage, results } });\n      } catch (err) {\n        console.error('Error sending image:', err);\n        // Handle error display to user\n        navigate('/error', { state: { message: 'Failed to process image.' } });\n      } finally {\n        setIsLoading(false);\n      }\n    }\n  };\n\n  if (error) {\n    return <div>Error accessing camera: {error}</div>;\n  }\n\n  return (\n    <CaptureContainer>\n      {!capturedImage ? (\n        <>\n          <VideoFeed ref={videoRef} autoPlay playsInline />\n          <FramingOverlay />\n          <ControlsContainer>\n            <IconButton aria-label=\"Switch camera\">📷</IconButton>\n            <CaptureButton onClick={handleCapture} aria-label=\"Capture Image\" />\n            <IconButton aria-label=\"Flash\">⚡</IconButton>\n          </ControlsContainer>\n        </>\n      ) : (\n        <ImagePreviewContainer>\n          <PreviewImage src={capturedImage} alt=\"Captured preview\" />\n          <ActionButtons>\n            <button onClick={handleRetake}>Retake</button>\n            <button onClick={handleConfirm} disabled={isLoading}>\n              {isLoading ? 'Processing...' : 'Confirm'}\n            </button>\n          </ActionButtons>\n        </ImagePreviewContainer>\n      )}\n    </CaptureContainer>\n  );\n};\n\nexport default LiveCapturePage;",
+    "ResultCard.jsx": "import React from 'react';\nimport styled from 'styled-components';\n\nconst Card = styled.div`\n  background-color: ${({ theme }) => theme.colors.neutral_light};\n  border-radius: 8px;\n  padding: 16px;\n  margin: 16px;\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  text-align: center;\n`;\n\nconst ImageThumbnail = styled.img`\n  width: 100%;\n  max-width: 150px;\n  height: auto;\n  border-radius: 4px;\n  margin-bottom: 12px;\n`;\n\nconst CaptionText = styled.p`\n  font-size: ${({ theme }) => theme.typography.body_text.size};\n  line-height: ${({ theme }) => theme.typography.body_text.line_height};\n  color: ${({ theme }) => theme.colors.neutral_dark};\n  margin-bottom: 8px;\n`;\n\nconst ConfidenceScore = styled.p`\n  font-size: ${({ theme }) => theme.typography.captions_and_labels.size};\n  font-weight: ${({ theme }) => theme.typography.captions_and_labels.font_weight};\n  color: ${({ theme }) => theme.colors.accent};\n  margin-bottom: 12px;\n`;\n\nconst ResultCard = ({ imageSrc, caption, score, justification }) => {\n  return (\n    <Card>\n      <ImageThumbnail src={imageSrc} alt=\"Matched image\" />\n      <CaptionText>{caption}</CaptionText>\n      <ConfidenceScore>{score}% Confidence</ConfidenceScore>\n      {justification && <p style={{ fontSize: '0.8em', color: '#666' }}>{justification}</p>}\n    </Card>\n  );\n};\n\nexport default ResultCard;",
+    "ResultsPage.jsx": "import React from 'react';\nimport { useLocation, useNavigate } from 'react-router-dom';\nimport styled from 'styled-components';\nimport ResultCard from '../components/ResultCard';\nimport { submitFeedback } from '../services/apiService'; // Assuming a feedback submission service\n\nconst ResultsContainer = styled.div`\n  padding: 20px;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  min-height: 100vh;\n  background-color: ${({ theme }) => theme.colors.background};\n`;\n\nconst PageTitle = styled.h1`\n  font-size: ${({ theme }) => theme.typography.headings.size};\n  font-weight: ${({ theme }) => theme.typography.headings.font_weight};\n  color: ${({ theme }) => theme.colors.neutral_dark};\n  margin-bottom: 24px;\n`;\n\nconst UserImageThumbnail = styled.img`\n  width: 150px;\n  height: 150px;\n  object-fit: cover;\n  border-radius: 8px;\n  margin-bottom: 20px;\n  border: 1px solid ${({ theme }) => theme.colors.neutral_medium};\n`;\n\nconst FeedbackSection = styled.div`\n  margin-top: 30px;\n  text-align: center;\n`;\n\nconst FeedbackPrompt = styled.p`\n  font-size: ${({ theme }) => theme.typography.subheadings.size};\n  margin-bottom: 15px;\n`;\n\nconst FeedbackButtons = styled.div`\n  display: flex;\n  gap: 15px;\n  justify-content: center;\n`;\n\nconst ActionButton = styled.button`\n  padding: 10px 20px;\n  border-radius: 5px;\n  cursor: pointer;\n  font-weight: 600;\n  transition: background-color 0.2s ease;\n`;\n\nconst PrimaryButton = styled(ActionButton)`\n  background-color: ${({ theme }) => theme.colors.primary};\n  color: white;\n  border: none;\n  &:hover {\n    background-color: #3a7bc2;\n  }\n`;\n\nconst SecondaryButton = styled(ActionButton)`\n  background-color: transparent;\n  color: ${({ theme }) => theme.colors.neutral_dark};\n  border: 1px solid ${({ theme }) => theme.colors.neutral_medium};\n  &:hover {\n    background-color: #f0f0f0;\n  }\n`;\n\nconst ResultsPage = () => {\n  const location = useLocation();\n  const navigate = useNavigate();\n  const { image, results } = location.state || {}; // Destructure state passed from navigate\n\n  if (!image || !results) {\n    // Handle case where state is not available, maybe redirect or show error\n    return <div>No results found. Please try again.</div>;\n  }\n\n  const handleFeedback = async (isCorrect) => {\n    try {\n      // Assuming 'results.recognized_image' or 'results.closest_matches[0]' contains the ID of the matched item\n      const matchedImageId = results.recognized_image?.image_id || results.closest_matches?.[0]?.image_id;\n      await submitFeedback(matchedImageId, isCorrect, ''); // Pass empty string for correction initially\n      alert('Thank you for your feedback!');\n    } catch (error) {\n      console.error('Error submitting feedback:', error);\n      alert('Failed to submit feedback. Please try again.');\n    }\n  };\n\n  const handleNewSearch = () => {\n    navigate('/');\n  };\n\n  return (\n    <ResultsContainer>\n      <PageTitle>Recognition Results</PageTitle>\n      <UserImageThumbnail src={image} alt=\"Your captured image\" />\n\n      {results.recognition_status === 'recognized' && (\n        <ResultCard\n          imageSrc={results.recognized_image.image_url || 'placeholder_for_db_image.jpg'} // Assuming DB image URL is available\n          caption={results.recognized_image.caption}\n          score={Math.round(results.recognized_image.confidence_score * 100)}\n          justification={results.recognized_image.justification}\n        />\n      )} \n      {results.recognition_status === 'no_confident_match' && (\n        <div>\n          <p style={{ fontSize: '1.2rem', color: '#D32F2F' }}>No confident match found.</p>\n          {results.closest_matches && results.closest_matches.length > 0 && (\n            <div>\n              <h3>Top Matches:</h3>\n              {results.closest_matches.map((match, index) => (\n                <ResultCard\n                  key={index}\n                  imageSrc={match.image_url || 'placeholder_for_db_image.jpg'}\n                  caption={match.caption}\n                  score={Math.round(match.similarity_score * 100)}\n                />\n              ))}\n            </div>\n          )}\n        </div>\n      )}\n\n      <FeedbackSection>\n        <FeedbackPrompt>Was this recognition accurate?</FeedbackPrompt>\n        <FeedbackButtons>\n          <PrimaryButton onClick={() => handleFeedback(true)}>Yes</PrimaryButton>\n          <SecondaryButton onClick={() => handleFeedback(false)}>No</SecondaryButton>\n        </FeedbackButtons>\n      </FeedbackSection>\n\n      <button onClick={handleNewSearch} style={{ marginTop: '30px', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer' }}>\n        Start New Search\n      </button>\n    </ResultsContainer>\n  );\n};\n\nexport default ResultsPage;",
+    "useCamera.js": "// src/hooks/useCamera.js\nimport { useState, useEffect, useCallback } from 'react';\n\nexport const useCamera = () => {\n  const [stream, setStream] = useState(null);\n  const [error, setError] = useState(null);\n\n  const startCamera = useCallback(async () => {\n    setError(null);\n    try {\n      const mediaStream = await navigator.mediaDevices.getUserMedia({\n        video: {\n          facingMode: 'environment', // Use rear camera if available\n          // Add other constraints like width, height if needed\n        },\n      });\n      setStream(mediaStream);\n    } catch (err) {\n      console.error('Error accessing camera:', err);\n      setError(err.message || 'Camera access denied or not available.');\n    }\n  }, []);\n\n  const stopCamera = useCallback(() => {\n    if (stream) {\n      stream.getTracks().forEach(track => track.stop());\n      setStream(null);\n    }\n  }, [stream]);\n\n  // Cleanup on unmount\n  useEffect(() => {\n    return () => {\n      stopCamera();\n    };\n  }, [stopCamera]);\n\n  return { stream, error, startCamera, stopCamera };\n};\n"
+  }
+}
+
+---
+
+Artifact from 1__step_5_Kodax_result.txt (Engineer):
+{
+  "task_id": "e5f6a7b8-c9d0-1234-5678-90abcdef1234",
+  "task_name": "Implement the back-end logic, including API endpoints, database integration, and the core image recognition service that utilizes Lyra's prompt workflow.",
+  "role": "Engineer (Kodax)",
+  "dependencies": [
+    "Artifact from 1__step_1_Lyra_result.txt (Prompt Engineer)",
+    "Artifact from 1__step_3_Kodax_result.txt (Engineer - System Architecture and Tooling)",
+    "Artifact from 1__step_4_Kodax_result.txt (Engineer - Frontend)"
+  ],
+  "output_description": "Backend API service implementation, including endpoints for image submission and feedback, orchestration of Lyra's prompt workflow, and integration with the database.",
+  "implementation_plan": [
+    {
+      "step": 1,
+      "action": "Set up Backend Project",
+      "details": "Initialize a Node.js project using Express.js. Set up basic server structure, middleware (like CORS, body-parser), and project dependencies.",
+      "tools": ["Node.js", "Express.js", "npm/yarn", "cors", "body-parser"]
+    },
+    {
+      "step": 2,
+      "action": "Database Integration",
+      "details": "Implement database connection logic using a PostgreSQL client (e.g., `pg`) and the `pgvector` extension. Define models or classes for interacting with the `images` and `feedback` tables.",
+      "deliverables": ["db.js (connection module)", "models/Image.js", "models/Feedback.js"],
+      "tools": ["pg", "dotenv (for credentials)"]
+    },
+    {
+      "step": 3,
+      "action": "Implement Image Upload and Processing",
+      "details": "Create an API endpoint (e.g., `/api/recognize`) that accepts multipart/form-data for image uploads. Use a library like `multer` to handle file uploads and convert the image to a format suitable for the recognition engine (e.g., base64 string).",
+      "deliverables": ["routes/recognitionRoutes.js", "controllers/recognitionController.js"],
+      "tools": ["Express.js", "multer"]
+    },
+    {
+      "step": 4,
+      "action": "Orchestrate Lyra's Prompt Workflow",
+      "details": "Develop a service or module that manages the sequence of calls to the image recognition engine, following Lyra's defined prompt workflow (steps 1-4). This involves: \n1. Sending the image to the engine for analysis (Step 1).\n2. Receiving analysis results and generating a database query (Step 2).\n3. Querying the database to retrieve candidate images.\n4. Sending candidates and live image analysis to the engine for scoring (Step 3).\n5. Receiving scores and making a final decision (Step 4).\n6. Returning the structured recognition result to the frontend.",
+      "deliverables": ["services/recognitionService.js", "utils/promptExecutor.js"],
+      "tools": ["Node.js", "Python script execution (if ML engine is separate)", "HTTP client for inter-service communication"]
+    },
+    {
+      "step": 5,
+      "action": "Integrate with Image Recognition Engine",
+      "details": "Establish communication with the actual image recognition engine. This could involve: \n- If Python-based: Executing Python scripts that use the defined prompts.\n- If a separate microservice: Making HTTP requests to its API.\n- If using a managed AI service: Interfacing with its SDK.",
+      "deliverables": ["clients/mlEngineClient.js"],
+      "tools": ["child_process (for script execution)", "axios (for API calls)"]
+    },
+    {
+      "step": 6,
+      "action": "Implement Database Query Logic",
+      "details": "Write functions within the `recognitionService` to query the database based on keywords and/or vector embeddings generated by Lyra's workflow. This includes fetching candidate images for comparison.",
+      "deliverables": ["repositories/imageRepository.js"],
+      "tools": ["pg", "pgvector query syntax"]
+    },
+    {
+      "step": 7,
+      "action": "Implement Feedback Endpoint",
+      "details": "Create an API endpoint (e.g., `/api/feedback`) to receive user feedback data from the frontend. Store this data in the `feedback` table in the database.",
+      "deliverables": ["routes/feedbackRoutes.js", "controllers/feedbackController.js", "repositories/feedbackRepository.js"],
+      "tools": ["Express.js", "pg"]
+    },
+    {
+      "step": 8,
+      "action": "Error Handling and Logging",
+      "details": "Implement robust error handling for API requests, database operations, and recognition engine interactions. Use a logging library (e.g., Winston) to record important events and errors.",
+      "deliverables": ["middleware/errorHandler.js", "utils/logger.js"],
+      "tools": ["Winston", "Express error handling middleware"]
+    },
+    {
+      "step": 9,
+      "action": "Configuration Management",
+      "details": "Manage environment-specific configurations (database credentials, API keys, ML engine endpoints) using environment variables and a library like `dotenv`.",
+      "deliverables": [".env file template", "config/index.js"],
+      "tools": ["dotenv"]
+    },
+    {
+      "step": 10,
+      "action": "Testing",
+      "details": "Write unit and integration tests for backend services, API endpoints, and database interactions.",
+      "deliverables": ["Backend test suite"],
+      "tools": ["Jest", "Supertest"]
+    }
+  ],
+  "code_snippets": {
+    "server.js": "require('dotenv').config();\nconst express = require('express');\nconst cors = require('cors');\nconst recognitionRoutes = require('./routes/recognitionRoutes');\nconst feedbackRoutes = require('./routes/feedbackRoutes');\nconst errorHandler = require('./middleware/errorHandler');\nconst logger = require('./utils/logger');\n\nconst app = express();\nconst PORT = process.env.PORT || 5000;\n\n// Middleware\napp.use(cors()); // Enable CORS for all origins, configure as needed\napp.use(express.json({ limit: '50mb' })); // Increased limit for image data\napp.use(express.urlencoded({ extended: true, limit: '50mb' })); // For form data\n\n// Logging middleware\napp.use((req, res, next) => {\n  logger.info(`${req.method} ${req.url}`);\n  next();\n});\n\n// API Routes\napp.use('/api/recognize', recognitionRoutes);\napp.use('/api/feedback', feedbackRoutes);\n\n// Health check endpoint\napp.get('/', (req, res) => {\n  res.status(200).json({ message: 'Image Recognition API is running' });\n});\n\n// Error handling middleware (should be the last middleware)\napp.use(errorHandler);\n\napp.listen(PORT, () => {\n  logger.info(`Server is running on port ${PORT}`);\n});\n",
+    "routes/recognitionRoutes.js": "const express = require('express');\nconst router = express.Router();\nconst multer = require('multer');\nconst recognitionController = require('../controllers/recognitionController');\n\n// Configure Multer for in-memory storage\nconst storage = multer.memoryStorage();\nconst upload = multer({ \n  storage: storage,\n  limits: { fileSize: 10 * 1024 * 1024 } // 10MB file size limit\n});\n\n// POST /api/recognize - Handles image upload and recognition request\nrouter.post('/', upload.single('image'), recognitionController.recognizeImage);\n\nmodule.exports = router;\n",
+    "controllers/recognitionController.js": "const recognitionService = require('../services/recognitionService');\nconst logger = require('../utils/logger');\n\nexports.recognizeImage = async (req, res, next) => {\n  if (!req.file) {\n    return res.status(400).json({ message: 'No image file uploaded.' });\n  }\n\n  // Convert buffer to base64 string for the AI model\n  const imageBase64 = req.file.buffer.toString('base64');\n  const mimeType = req.file.mimetype;\n\n  try {\n    logger.info(`Received image for recognition: ${req.file.originalname} (${req.file.size} bytes)`);\n    const result = await recognitionService.processImageForRecognition(imageBase64, mimeType);\n    res.status(200).json(result);\n  } catch (error) {\n    logger.error(`Error during image recognition: ${error.message}`, error);\n    // Pass error to the global error handler\n    next(error);\n  }\n};\n",
+    "services/recognitionService.js": "const logger = require('../utils/logger');\nconst db = require('../db'); // Assuming db.js handles DB connection\nconst mlEngineClient = require('../clients/mlEngineClient');\nconst imageRepository = require('../repositories/imageRepository');\n\n// Placeholder for Lyra's prompt workflow logic\nasync function executeLyraWorkflow(imageBase64, mimeType) {\n  logger.info('Executing Lyra workflow...');\n\n  // Step 1: Live Image Feature Extraction and Description\n  logger.debug('Step 1: Live Image Analysis');\n  const analysisResult = await mlEngineClient.analyzeImage(imageBase64, mimeType);\n  if (!analysisResult || !analysisResult.extracted_keywords) {\n      throw new Error('Image analysis failed.');\n  }\n  logger.debug('Analysis result:', analysisResult);\n\n  // Step 2: Database Query Generation\n  logger.debug('Step 2: Database Query Generation');\n  const queryParams = await mlEngineClient.generateQuery(analysisResult);\n  logger.debug('Query parameters:', queryParams);\n\n  // Step 3: Candidate Image Comparison and Similarity Scoring\n  logger.debug('Step 3: Candidate Image Comparison');\n  // Fetch candidates from DB using queryParams (keyword_query, semantic_query_vector)\n  const candidateImages = await imageRepository.findCandidates(queryParams);\n  if (candidateImages.length === 0) {\n      logger.warn('No candidate images found in the database.');\n      // Return a default 'no match' if no candidates are found early\n      return {\n          recognition_status: 'no_confident_match',\n          explanation: 'No similar images found in the database.',\n          closest_matches: []\n      };\n  }\n  logger.debug(`Found ${candidateImages.length} candidates.`);\n\n  const similarityScores = await mlEngineClient.assessSimilarity(analysisResult, candidateImages);\n  if (!similarityScores || similarityScores.length === 0) {\n      throw new Error('Similarity assessment failed.');\n  }\n  logger.debug('Similarity scores:', similarityScores);\n\n  // Step 4: Final Recognition Decision\n  logger.debug('Step 4: Final Recognition Decision');\n  const recognitionDecision = await mlEngineClient.makeDecision(similarityScores);\n  logger.debug('Recognition decision:', recognitionDecision);\n\n  // Augment results with actual image URLs from the database if available\n  if (recognitionDecision.recognized_image) {\n      const matchedImage = await imageRepository.findById(recognitionDecision.recognized_image.image_id);\n      if (matchedImage) {\n          recognitionDecision.recognized_image.image_url = matchedImage.image_url;\n          recognitionDecision.recognized_image.caption = matchedImage.caption;\n      }\n  }\n  if (recognitionDecision.closest_matches) {\n      for (let i = 0; i < recognitionDecision.closest_matches.length; i++) {\n          const matchedImage = await imageRepository.findById(recognitionDecision.closest_matches[i].image_id);\n          if (matchedImage) {\n              recognitionDecision.closest_matches[i].image_url = matchedImage.image_url;\n              recognitionDecision.closest_matches[i].caption = matchedImage.caption;\n          }\n      }\n  }\n\n  return recognitionDecision;\n}\n\nexports.processImageForRecognition = async (imageBase64, mimeType) => {\n  try {\n    const recognitionResult = await executeLyraWorkflow(imageBase64, mimeType);\n    return recognitionResult;\n  } catch (error) {\n    logger.error(`Service error in processImageForRecognition: ${error.message}`, error);\n    // Re-throw to be caught by the controller's error handler\n    throw error;\n  }\n};\n",
+    "clients/mlEngineClient.js": "// This client acts as an interface to the ML engine.\n// It could be calling a Python script, another microservice, or a cloud AI API.\n// For demonstration, we'll use mock functions that simulate responses.\n\nconst logger = require('../utils/logger');\n\n// Mock function to simulate image analysis\nconst analyzeImage = async (imageBase64, mimeType) => {\n  logger.debug('ML Engine: Analyzing image...');\n  // Simulate API call to ML model for analysis\n  // In a real scenario, this would involve sending imageBase64 to the model\n  // and receiving a structured response.\n  return new Promise((resolve) => {\n    setTimeout(() => {\n      resolve({\n        textual_description: \"A red car parked on a street.\",\n        extracted_keywords: [\"red car\", \"street\", \"vehicle\"],\n        image_embedding_vector: [0.1, 0.2, 0.3, /* ... */] // Mock vector\n      });\n    }, 500);\n  });\n};\n\n// Mock function to simulate query generation\nconst generateQuery = async (analysisResult) => {\n  logger.debug('ML Engine: Generating query...');\n  return new Promise((resolve) => {\n    setTimeout(() => {\n      resolve({\n        keyword_query: `Find images related to: ${analysisResult.extracted_keywords.join(', ')}`,\n        semantic_query_vector: analysisResult.image_embedding_vector // Use embedding for vector search\n      });\n    }, 300);\n  });\n};\n\n// Mock function to simulate similarity assessment\nconst assessSimilarity = async (liveImageAnalysis, candidateImages) => {\n  logger.debug('ML Engine: Assessing similarity...');\n  // candidateImages would be an array of objects like: { image_id, caption, keywords, embedding }\n  return new Promise((resolve) => {\n    setTimeout(() => {\n      const scores = candidateImages.map((candidate, index) => ({\n        image_id: candidate.image_id,\n        caption: candidate.caption,\n        similarity_score: Math.max(0, 1 - index * 0.15) - Math.random() * 0.1, // Simulate varying scores\n        justification: `Visual match for '${candidate.caption}' with keywords: ${candidate.keywords.join(', ')}`\n      }));\n      // Sort by score descending\n      scores.sort((a, b) => b.similarity_score - a.similarity_score);\n      resolve(scores);\n    }, 600);\n  });\n};\n\n// Mock function to simulate final decision making\nconst makeDecision = async (similarityScores) => {\n  logger.debug('ML Engine: Making decision...');\n  const recognition_threshold = 0.8;\n  const delta_threshold = 0.1;\n\n  return new Promise((resolve) => {\n    setTimeout(() => {\n      if (similarityScores.length > 0 && similarityScores[0].similarity_score >= recognition_threshold) {\n        const topScore = similarityScores[0].similarity_score;\n        const secondScore = similarityScores.length > 1 ? similarityScores[1].similarity_score : 0;\n\n        if (topScore - secondScore >= delta_threshold) {\n          // Confident match\n          resolve({\n            recognition_status: 'recognized',\n            recognized_image: {\n              image_id: similarityScores[0].image_id,\n              confidence_score: similarityScores[0].similarity_score,\n              // image_url and caption will be added by the service layer after DB lookup\n            },\n            explanation: `Confident match found with score ${topScore.toFixed(2)}.`\n          });\n        } else {\n          // High score but close to second, no confident match\n          resolve({\n            recognition_status: 'no_confident_match',\n            closest_matches: similarityScores.slice(0, 3),\n            explanation: `Top score ${topScore.toFixed(2)} is too close to the next best score (${secondScore.toFixed(2)}).`\n          });\n        }\n      } else {\n        // No confident match based on threshold\n        resolve({\n          recognition_status: 'no_confident_match',\n          closest_matches: similarityScores.slice(0, 3),\n          explanation: `Top score ${similarityScores.length > 0 ? similarityScores[0].similarity_score.toFixed(2) : 'N/A'} is below the recognition threshold.`\n        });\n      }\n    }, 400);\n  });\n};\n\nmodule.exports = {\n  analyzeImage,\n  generateQuery,\n  assessSimilarity,\n  makeDecision\n};\n",
+    "repositories/imageRepository.js": "const logger = require('../utils/logger');\nconst pool = require('../db'); // Assuming db.js provides a pool\n\n// Mock data for demonstration purposes\nconst mockImages = [\n  { image_id: 'img-001', image_url: '/path/to/img1.jpg', caption: 'A red sports car', keywords: ['car', 'red', 'sports car', 'vehicle'], embedding: [0.1, 0.2, 0.3, /*...*/] },\n  { image_id: 'img-002', image_url: '/path/to/img2.jpg', caption: 'A blue sedan', keywords: ['car', 'blue', 'sedan', 'vehicle'], embedding: [0.4, 0.5, 0.6, /*...*/] },\n  { image_id: 'img-003', image_url: '/path/to/img3.jpg', caption: 'A mountain landscape', keywords: ['mountain', 'landscape', 'nature', 'scenic'], embedding: [0.7, 0.8, 0.9, /*...*/] },\n];\n\n// Function to find candidate images based on query parameters\nconst findCandidates = async (queryParams) => {\n  logger.debug('Image Repository: Finding candidates...');\n  // In a real implementation, this would query PostgreSQL with pgvector\n  // Example using keyword search:\n  // const keywordQuery = queryParams.keyword_query;\n  // Example using vector search:\n  // const vectorQuery = queryParams.semantic_query_vector;\n\n  // For this mock, we'll just return a subset based on keywords if available\n  return new Promise((resolve) => {\n    setTimeout(() => {\n      if (queryParams.keyword_query) {\n        const searchTerms = queryParams.keyword_query.toLowerCase().split(/[, ]+/);\n        const candidates = mockImages.filter(img => \n          searchTerms.some(term => img.caption.toLowerCase().includes(term) || img.keywords.includes(term))\n        );\n        resolve(candidates.slice(0, 5)); // Return top 5 matches\n      } else {\n        resolve(mockImages.slice(0, 5)); // Default to some images if no keywords\n      }\n    }, 300);\n  });\n};\n\n// Function to find an image by its ID\nconst findById = async (imageId) => {\n  logger.debug(`Image Repository: Finding image by ID: ${imageId}`);\n  return new Promise((resolve) => {\n    setTimeout(() => {\n      const image = mockImages.find(img => img.image_id === imageId);\n      resolve(image || null);\n    }, 100);\n  });\n};\n\nmodule.exports = {\n  findCandidates,\n  findById\n};\n",
+    "routes/feedbackRoutes.js": "const express = require('express');\nconst router = express.Router();\nconst feedbackController = require('../controllers/feedbackController');\n\n// POST /api/feedback - Handles user feedback submission\nrouter.post('/', feedbackController.submitFeedback);\n\nmodule.exports = router;\n",
+    "controllers/feedbackController.js": "const feedbackService = require('../services/feedbackService');\nconst logger = require('../utils/logger');\n\nexports.submitFeedback = async (req, res, next) => {\n  const { image_id, is_correct, user_correction } = req.body;\n\n  if (!image_id || typeof is_correct === 'undefined') {\n    return res.status(400).json({ message: 'Missing required feedback fields: image_id and is_correct.' });\n  }\n\n  try {\n    logger.info(`Received feedback for image_id: ${image_id}, Correct: ${is_correct}`);\n    await feedbackService.saveFeedback(image_id, is_correct, user_correction);\n    res.status(200).json({ message: 'Feedback received successfully.' });\n  } catch (error) {\n    logger.error(`Error submitting feedback: ${error.message}`, error);\n    next(error);\n  }\n};\n",
+    "services/feedbackService.js": "const logger = require('../utils/logger');\nconst feedbackRepository = require('../repositories/feedbackRepository');\n\nexports.saveFeedback = async (imageId, isCorrect, userCorrection) => {\n  try {\n    await feedbackRepository.create(imageId, isCorrect, userCorrection);\n    logger.info(`Feedback saved for image ${imageId}`);\n  } catch (error) {\n    logger.error(`Failed to save feedback in service: ${error.message}`, error);\n    throw error;\n  }\n};\n",
+    "repositories/feedbackRepository.js": "const logger = require('../utils/logger');\nconst pool = require('../db');\nconst { v4: uuidv4 } = require('uuid');\n\nconst create = async (imageId, isCorrect, userCorrection) => {\n  logger.debug(`Feedback Repository: Creating feedback for image ${imageId}`);\n  const feedbackId = uuidv4();\n  const query = {\n    text: 'INSERT INTO feedback(feedback_id, image_id, user_submission_timestamp, is_correct, user_correction) VALUES($1, $2, NOW(), $3, $4) RETURNING feedback_id',\n    values: [feedbackId, imageId, isCorrect, userCorrection || null],\n  };\n\n  try {\n    const result = await pool.query(query);\n    logger.info(`Feedback created with ID: ${result.rows[0].feedback_id}`);\n    return result.rows[0];\n  } catch (err) {\n    logger.error(`Error executing feedback insert query: ${err.message}`, err);\n    throw err;\n  }\n};\n\nmodule.exports = {\n  create\n};\n",
+    "db.js": "const { Pool } = require('pg');\nconst logger = require('./utils/logger');\n\n// Configure the PostgreSQL client\nconst pool = new Pool({\n  user: process.env.DB_USER || 'postgres',\n  host: process.env.DB_HOST || 'localhost',\n  database: process.env.DB_NAME || 'imagedb',\n  password: process.env.DB_PASSWORD || 'password',\n  port: parseInt(process.env.DB_PORT || '5432', 10),\n  // Ensure pgvector is enabled if using managed services or custom setup\n});\n\n// Test the connection on startup\npool.connect((err, client, release) => {\n  if (err) {\n    logger.error('Database connection error:', err.stack);\n    // Consider exiting the process if DB is critical\n    // process.exit(1);\n  } else {\n    logger.info('Connected to PostgreSQL database.');\n    client.query('SELECT version()', (err, res) => {\n      release(); // Release the client back to the pool\n      if (err) {\n        logger.error('Error executing version query:', err.stack);\n      } else {\n        logger.info(`Database version: ${res.rows[0].version}`);\n      }\n    });\n  }\n});\n\n// Optional: Add event listeners for pool errors\npool.on('error', (err, client) => {\n  logger.error('Unexpected error on idle client:', err);\n  // Consider reconnect logic or process restart\n});\n\nmodule.exports = pool;\n",
+    "middleware/errorHandler.js": "const logger = require('../utils/logger');\n\nmodule.exports = (err, req, res, next) => {\n  logger.error(`Unhandled error: ${err.message}`, err);\n\n  const statusCode = err.statusCode || 500;\n  const message = err.message || 'Internal Server Error';\n\n  // Respond with a JSON error object\n  res.status(statusCode).json({\n    message: message,\n    // Optionally include stack trace in development environments\n    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined,\n  });\n};\n",
+    "utils/logger.js": "// Basic logger setup using console for simplicity.\n// For production, consider libraries like Winston or Pino.\n\nconst logger = {\n  info: (...params) => {\n    console.log('[INFO]', ...params);\n  },\n  warn: (...params) => {\n    console.warn('[WARN]', ...params);\n  },\n  error: (...params) => {\n    console.error('[ERROR]', ...params);\n  },\n  debug: (...params) => {\n    // Only log debug messages if in development environment\n    if (process.env.NODE_ENV === 'development') {\n      console.log('[DEBUG]', ...params);\n    }\n  },\n};\n\nmodule.exports = logger;\n",
+    "package.json": "{\n  \"name\": \"image-recognition-backend\",\n  \"version\": \"1.0.0\",\n  \"description\": \"Backend for the living example image recognition service.\",\n  \"main\": \"server.js\",\n  \"scripts\": {\n    \"start\": \"node server.js\",\n    \"dev\": \"cross-env NODE_ENV=development nodemon server.js\",\n    \"test\": \"jest\"\n  },\n  \"keywords\": [],\n  \"author\": \"Kodax\",\n  \"license\": \"ISC\",\n  \"dependencies\": {\n    \"axios\": \"^1.6.8\",\n    \"body-parser\": \"^1.20.2\",\n    \"cors\": \"^2.8.5\",\n    \"dotenv\": \"^16.4.5\",\n    \"express\": \"^4.19.2\",\n    \"multer\": \"^1.4.5-lts.1\",\n    \"pg\": \"^8.11.5\",\n    \"pgvector\": \"^0.2.8\",\n    \"uuid\": \"^9.0.1\"\n  },\n  \"devDependencies\": {\n    \"cross-env\": \"^7.0.3\",\n    \"jest\": \"^29.7.0\",\n    \"nodemon\": \"^3.1.0\",\n    \"supertest\": \"^7.0.0\"\n  }\n}\n"
+  }
+}
+
+---
+
+Artifact from 1__step_6_Lyra_result.txt (Prompt Engineer):
+{
+  "collaboration_prompt_for_kodax": {
+    "title": "Enabling Real-World Prompt Testing and Refinement for Image Recognition",
+    "context": "Kodax, your progress on architecting the system and implementing the backend logic, including the `mlEngineClient.js` and `recognitionService.js`, is well noted. These components correctly orchestrate the workflow for image recognition as defined by my prompts. However, the `mlEngineClient` currently uses mock responses for the AI model interactions. For me (Lyra, the Prompt Engineer) to effectively 'test, iterate, and refine the image recognition prompts based on real-world performance and testing data to improve accuracy,' we need to transition from these mocks to actual AI model execution.",
+    "objective": "To enable comprehensive testing and iterative refinement of the image recognition prompts by integrating a live AI model and establishing robust data collection mechanisms for performance analysis and user feedback.",
+    "actions_for_kodax": [
+      {
+        "step_number": 1,
+        "name": "Integrate Live AI Model for Prompt Execution",
+        "description": "Replace the mock functions within `clients/mlEngineClient.js` (and any other relevant service layers) with actual calls to a deployed or locally running AI model. This model must be capable of executing the logic defined by Lyra's prompt workflow steps (Image Feature Extraction, Query Generation, Similarity Assessment, Recognition Decision).",
+        "details": [
+          "**For Step 1 (Live Image Feature Extraction and Description):** Implement the `analyzeImage` function to send the raw image data to a multimodal AI model (e.g., a fine-tuned CLIP or a large vision-language model) and retrieve its textual description, extracted keywords, and a high-dimensional image embedding vector. The output MUST adhere to the JSON schema defined in Lyra's `1_live_image_analysis` step.",
+          "**For Step 2 (Database Query Generation):** Implement the `generateQuery` function to leverage the analysis results (especially keywords and the image embedding) to construct effective database queries. If the AI model can generate semantic query embeddings, utilize them. The output MUST adhere to Lyra's `2_database_query_generation` schema.",
+          "**For Step 3 (Candidate Image Comparison and Similarity Scoring):** Implement the `assessSimilarity` function. This will involve comparing the live image's features (embedding, description, keywords) against the retrieved candidate images' data (embeddings, captions, keywords). This comparison should be performed by the AI model or a dedicated similarity scoring module. The output MUST adhere to Lyra's `3_similarity_assessment` schema, including accurate similarity scores and justifications.",
+          "**For Step 4 (Final Recognition Decision and Confidence):** Implement the `makeDecision` function to apply the recognition and delta thresholds on the ranked similarity scores. This function should accurately determine if a confident match exists or if closest matches should be presented. The output MUST adhere to Lyra's `4_recognition_decision` schema.",
+          "Ensure that the AI model outputs strictly conform to the JSON schemas provided in Lyra's prompt definitions. Any deviation will break the workflow."
+        ],
+        "expected_outcome": "The `mlEngineClient` successfully interacts with a live AI model, and the image recognition workflow produces real, dynamic results based on image inputs."
+      },
+      {
+        "step_number": 2,
+        "name": "Prepare Diverse Testing Data Set",
+        "description": "Curate a representative dataset of images with corresponding ground truth labels/captions. This dataset will be used for quantitative testing of prompt performance.",
+        "details": [
+          "Include a variety of image types (objects, scenes, varying lighting conditions, different angles).",
+          "Ensure each image has a clear, accurate 'ground truth' caption or label that the system should ideally recognize.",
+          "Consider edge cases and challenging images (e.g., blurry images, partially obscured objects, visually similar but semantically different items)."
+        ],
+        "expected_outcome": "A structured dataset (e.g., CSV, JSON file) available for automated testing and manual review, linking test images to their expected recognition outcomes."
+      },
+      {
+        "step_number": 3,
+        "name": "Implement Performance Logging and Monitoring",
+        "description": "Enhance the backend to log key information at each step of Lyra's prompt workflow. This data is critical for analyzing prompt effectiveness and identifying areas for improvement.",
+        "details": [
+          "**Input/Output Logging:** Log the inputs sent to and outputs received from each prompt step of the AI model (e.g., the `textual_description`, `extracted_keywords` from step 1; the generated `keyword_query` and `semantic_query_vector` from step 2; the `similarity_scores` and `justifications` from step 3; the final `recognition_status` and `explanation` from step 4).",
+          "**Performance Metrics:** Implement logging for key performance indicators such as:",
+          "  - Success rate of recognition (when a confident match is correctly identified).",
+          "  - Accuracy of `extracted_keywords` (can be qualitatively assessed initially).",
+          "  - Relevance of retrieved candidates (from database queries).",
+          "  - Distribution of `similarity_scores` for correct vs. incorrect matches.",
+          "  - Confidence calibration (how well confidence scores align with actual correctness).",
+          "Utilize the `logger` utility you've already set up (`utils/logger.js`) and consider integrating a more robust logging solution for production (e.g., Winston, ELK stack)."
+        ],
+        "expected_outcome": "Detailed logs and potentially a basic dashboard or report that allows Lyra to track the performance of the prompt workflow across various inputs."
+      },
+      {
+        "step_number": 4,
+        "name": "Ensure Robust User Feedback Integration",
+        "description": "Confirm the full integration of the user feedback mechanism designed by Aurora and implemented in your frontend and backend. This provides invaluable real-world performance data.",
+        "details": [
+          "Verify that the `feedback` table in the database (`feedbackRepository.js`) correctly captures `image_id`, `is_correct`, and `user_correction`.",
+          "Ensure the frontend (`ResultsPage.jsx`) correctly sends the `image_id` of the recognized/closest matched image along with the feedback (`is_correct`, `user_correction`).",
+          "This user-provided feedback will serve as crucial 'real-world performance data' for prompt refinement."
+        ],
+        "expected_outcome": "A fully functional feedback loop where user input on recognition accuracy is reliably captured and stored for analysis."
+      }
+    ],
+    "collaboration_strategy": "Once these integrations are complete and we have initial real-world data and logs, I will analyze the system's performance. Based on this analysis (e.g., identifying patterns in incorrect recognitions, low confidence scores, or irrelevant query results), I will propose specific refinements to the prompt instructions, thresholds, or even the underlying AI model's interaction logic. We will then iterate by deploying these refined prompts and re-evaluating performance. This iterative process, driven by data and feedback, will be key to improving the overall accuracy of the image recognition system."
+  }
+}
+
+---
+
+Artifact from 1__step_7_Aurora_result.txt (Designer):
+{
+  "design_revisions": [
+    {
+      "screen": "Live Image Capture",
+      "feedback": "The current design is clean and functional. To enhance usability and accessibility, consider adding a subtle visual cue or animation to indicate when the camera is actively capturing and processing, perhaps a slight pulsing effect on the capture button or a brief overlay confirmation. Ensure all icon buttons (flash, camera switch) have clear, accessible labels for screen readers and keyboard navigation.",
+      "revisions": [
+        {
+          "element": "Capture Button",
+          "change": "Add subtle animation (e.g., pulse) when active. Ensure ARIA-label is descriptive."
+        },
+        {
+          "element": "Icon Buttons (Flash, Camera Switch)",
+          "change": "Add explicit ARIA-labels (e.g., 'Toggle Flash', 'Switch Camera') and ensure they are keyboard-focusable and interactive."
+        }
+      ]
+    },
+    {
+      "screen": "Recognition Results",
+      "feedback": "The structure for displaying results is good. For accessibility and clarity, ensure sufficient color contrast between text and background for all elements, especially for confidence scores and justifications. When displaying 'closest matches', consider a format that clearly distinguishes them from the primary result, perhaps using a slightly different card style or a dedicated 'Secondary Matches' heading. If the `image_url` for database matches is available, it should be used for the `ResultCard`'s `ImageThumbnail` for better context. The feedback buttons are clear; ensure they have distinct visual states for focus and selection.",
+      "revisions": [
+        {
+          "element": "General Text Elements",
+          "change": "Verify all text elements meet WCAG AA contrast ratios against their backgrounds."
+        },
+        {
+          "element": "Secondary Matches Section",
+          "change": "Add a clear heading like 'Other Possible Matches'. Consider a slightly less prominent card style or spacing to differentiate from the primary result."
+        },
+        {
+          "element": "ResultCard ImageThumbnail",
+          "change": "Update to use `match.image_url` if available from the backend response, instead of a placeholder."
+        },
+        {
+          "element": "Feedback Buttons ('Yes', 'No')",
+          "change": "Ensure clear focus indicators (e.g., outline) and a distinct visual state when selected or hovered."
+        }
+      ]
+    },
+    {
+      "screen": "Feedback Modal/Screen",
+      "feedback": "The design for feedback is straightforward. Ensure that the optional correction text area is clearly associated with the 'No' or 'Partially Correct' feedback option using ARIA attributes (e.g., `aria-describedby` or conditional rendering logic). This improves usability for screen reader users.",
+      "revisions": [
+        {
+          "element": "Optional Correction Input",
+          "change": "Implement logic so the text area is clearly linked to the negative feedback options (e.g., visible only when 'No' or 'Partially' is selected) and has appropriate ARIA attributes for accessibility."
+        }
+      ]
+    }
+  ],
+  "usability_testing_plan": [
+    {
+      "test_objective": "Evaluate the intuitiveness and ease of use of the live image capture process.",
+      "methodology": "Observe users attempting to capture an image of a common object. Tasks include: opening the app, framing the object, capturing the image, retaking if necessary, and confirming the capture.",
+      "metrics": ["Task completion rate", "Time on task", "Number of errors/hesitations", "Subjective feedback on ease of use"],
+      "scenario": "Ask users to 'Take a picture of the object in front of you'."
+    },
+    {
+      "test_objective": "Assess the clarity and helpfulness of the recognition results display.",
+      "methodology": "After a successful capture and processing, ask users to interpret the results. Tasks include: identifying the primary recognized item, understanding the confidence score, and checking secondary matches if presented.",
+      "metrics": ["User's ability to correctly identify the recognized item", "Understanding of confidence score", "Subjective feedback on clarity and information density"],
+      "scenario": "Present users with the results screen and ask: 'What does the system think this image is?', 'How confident is it?', and 'Are there any other possibilities listed?'"
+    },
+    {
+      "test_objective": "Validate the effectiveness and ease of the user feedback mechanism.",
+      "methodation": "After reviewing the results, ask users to provide feedback on the accuracy. Tasks include: indicating if the recognition was correct or incorrect, and optionally providing a correction.",
+      "metrics": ["Task completion rate for feedback submission", "Accuracy of feedback provided", "Subjective feedback on the feedback process"],
+      "scenario": "Ask users: 'Was the recognition correct? If not, can you provide the correct description?'"
+    },
+    {
+      "test_objective": "Verify overall accessibility compliance.",
+      "methodology": "Conduct testing using screen readers (e.g., VoiceOver, NVDA) and keyboard-only navigation. Check for sufficient color contrast, clear focus indicators, and logical tab order.",
+      "metrics": ["Screen reader compatibility", "Keyboard navigation functionality", "Color contrast ratios"],
+      "scenario": "Perform all core tasks (capture, review results, provide feedback) using only keyboard and screen reader."
+    }
+  ],
+  "next_steps_for_kodax": "Please review the 'design_revisions' and 'usability_testing_plan'. Implement the necessary UI adjustments based on the feedback to enhance accessibility and user experience. The usability testing plan outlines the critical areas to focus on during the next phase of testing. I will await the updated prototype to conduct these tests and provide further feedback."
+}
+
+
+
+Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project.

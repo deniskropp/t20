@@ -1,0 +1,393 @@
+The overall goal is: 'Image recognition based on a living example, given a databse with captioned images to recognize, leveraging tools were appropriate'
+
+Your role's specific goal is: 'Generate aesthetic layouts, color palettes, typography, and UI flows, ensuring accessibility and visual balance.'
+Your specific sub-task is: 'Design the user interface (UI) and user experience (UX) flow, including the live image capture screen, result display, and user feedback mechanisms.'
+
+The team's roles are:
+    {'roles': [{'title': 'Designer', 'description': 'Generate aesthetic layouts, color palettes, typography, and UI flows, ensuring accessibility and visual balance.'}, {'title': 'Engineer', 'description': 'Implement designs into clean, modular, and performant code, focusing on responsive design and accessibility.'}, {'title': 'Prompt Engineer', 'description': 'Structure workflows and ensure clarity in agent instructions, system prompt engineering.'}, {'title': 'Task-Agnostic Step (TAS) extractor', 'description': "Identify and extract each 'Task Agnostic Step' (TAS) towards the high-level goal."}], 'steps': [{'name': 'TASe', 'role': 'Task-Agnostic Step (TAS) extractor', 'task': "Deconstruct the high-level goal ('Image recognition based on a living example') into a detailed, sequential task plan for the team."}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': 'Design the core prompt engineering workflow for the image recognition model, defining how a live image will be analyzed and compared against the captioned image database.'}, {'name': 'Aurora', 'role': 'Designer', 'task': 'Design the user interface (UI) and user experience (UX) flow, including the live image capture screen, result display, and user feedback mechanisms.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Architect the overall system, select appropriate tools and frameworks, and set up the database schema for storing and efficiently querying the captioned images.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': "Develop the front-end application based on Aurora's UI/UX designs, ensuring a responsive and accessible user interface for image submission."}, {'name': 'Kodax', 'role': 'Engineer', 'task': "Implement the back-end logic, including API endpoints, database integration, and the core image recognition service that utilizes Lyra's prompt workflow."}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': 'Collaborate with Kodax to test, iterate, and refine the image recognition prompts based on real-world performance and testing data to improve accuracy.'}, {'name': 'Aurora', 'role': 'Designer', 'task': 'Conduct usability testing on the integrated prototype and provide feedback and design revisions to Kodax to enhance the user experience.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Integrate all refined components (front-end, back-end, prompts), perform final testing, and deploy the complete image recognition application.'}, {'name': 'TASe', 'role': 'Task-Agnostic Step (TAS) extractor', 'task': 'Document the final workflow, cataloging the executed steps, tools used, and outcomes to finalize the project plan.'}]}
+
+Please use the following outputs from the other agents as your input:
+
+Artifact from 1__step_0_TASe_result.txt (Task-Agnostic Step (TAS) extractor):
+[
+  {
+    "id": "f4a2b1c8-3d4e-4f5a-8b9c-0d1e2f3a4b5c",
+    "name": "Define Problem Scope",
+    "description": "Clearly articulate the boundaries and objectives of the problem to be solved. This involves understanding the desired outcome, constraints, and the specific domain or context in which the solution will operate.",
+    "category": "Init",
+    "purpose": "Establish clear project boundaries and objectives.",
+    "keywords": ["scope", "definition", "objectives", "boundaries", "clarification"],
+    "applicability_notes": "This step is crucial at the beginning of any project to ensure alignment and prevent scope creep. It applies to all fields of endeavor.",
+    "examples_of_usage": [
+      "Defining the specific type of images to be recognized (e.g., objects, faces, scenes).",
+      "Setting performance metrics for recognition accuracy and speed.",
+      "Identifying limitations such as environmental conditions or image quality."
+    ],
+    "typical_inputs": ["High-level goal statement", "Stakeholder requirements"],
+    "typical_outputs": ["Defined project scope document", "List of objectives and constraints"]
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+    "name": "Structure Workflow",
+    "description": "Outline the sequence of actions, decisions, and processes required to achieve the defined goal. This involves breaking down the overall objective into manageable, logical steps and determining their order.",
+    "category": "Planning",
+    "purpose": "Create a logical sequence of actions.",
+    "keywords": ["workflow", "process", "planning", "sequencing", "task breakdown"],
+    "applicability_notes": "Applicable to any project or process requiring a structured approach. Helps in understanding dependencies and resource allocation.",
+    "examples_of_usage": [
+      "Mapping out the steps from data input to final recognition output.",
+      "Defining the interaction points between different components or roles.",
+      "Sequencing the development phases from design to deployment."
+    ],
+    "typical_inputs": ["Defined project scope", "List of required functionalities"],
+    "typical_outputs": ["Sequential task plan", "Process flowchart"]
+  },
+  {
+    "id": "b2c3d4e5-f6a7-8901-2345-67890abcdef1",
+    "name": "Identify Tools and Technologies",
+    "description": "Research and select appropriate tools, frameworks, libraries, or platforms that will facilitate the execution of the structured workflow. This includes considering compatibility, performance, and maintainability.",
+    "category": "Planning",
+    "purpose": "Select appropriate tools for execution.",
+    "keywords": ["tools", "technology", "frameworks", "selection", "research", "stack"],
+    "applicability_notes": "Essential for efficiency and effectiveness. The choice of tools can significantly impact project outcomes.",
+    "examples_of_usage": [
+      "Selecting a database for storing captioned images.",
+      "Choosing a machine learning framework for image recognition.",
+      "Identifying front-end and back-end development technologies."
+    ],
+    "typical_inputs": ["Structured workflow", "Project requirements", "Technical constraints"],
+    "typical_outputs": ["Technology stack definition", "List of selected tools and libraries"]
+  },
+  {
+    "id": "c3d4e5f6-a7b8-9012-3456-7890abcdef12",
+    "name": "Design System Architecture",
+    "description": "Define the high-level structure of the system, including how different components will interact, data flow, and the overall architecture. This ensures a scalable and maintainable solution.",
+    "category": "Design",
+    "purpose": "Define the system's structural blueprint.",
+    "keywords": ["architecture", "system design", "component interaction", "data flow", "scalability"],
+    "applicability_notes": "Critical for complex systems to ensure coherence and manageability.",
+    "examples_of_usage": [
+      "Designing the interaction between the image capture module, the recognition engine, and the database.",
+      "Defining API contracts between front-end and back-end services.",
+      "Planning for data storage and retrieval mechanisms."
+    ],
+    "typical_inputs": ["Structured workflow", "Selected tools and technologies", "Functional requirements"],
+    "typical_outputs": ["System architecture diagram", "Data models", "API specifications"]
+  },
+  {
+    "id": "d4e5f6a7-b8c9-0123-4567-890abcdef123",
+    "name": "Develop User Interface",
+    "description": "Create the visual and interactive elements of the application that users will engage with. This includes designing layouts, ensuring responsiveness, and implementing user flows.",
+    "category": "Implementation",
+    "purpose": "Build the user-facing application.",
+    "keywords": ["UI", "user interface", "front-end", "design implementation", "responsiveness"],
+    "applicability_notes": "Focuses on the user's interaction with the system. Requires attention to detail and user experience principles.",
+    "examples_of_usage": [
+      "Building the screen for capturing live images.",
+      "Developing the interface for displaying recognition results.",
+      "Implementing feedback mechanisms for users."
+    ],
+    "typical_inputs": ["UI/UX designs", "System architecture", "Front-end framework"],
+    "typical_outputs": ["Functional front-end application", "User interaction components"]
+  },
+  {
+    "id": "e5f6a7b8-c9d0-1234-5678-90abcdef1234",
+    "name": "Implement Core Logic",
+    "description": "Build the underlying functionality of the system, including data processing, business logic, and integration with external services or models. This often involves back-end development.",
+    "category": "Implementation",
+    "purpose": "Build the system's functional engine.",
+    "keywords": ["back-end", "logic", "processing", "integration", "database", "API"],
+    "applicability_notes": "The 'engine' of the application, handling data manipulation and core operations.",
+    "examples_of_usage": [
+      "Implementing the image recognition service using prompt engineering.",
+      "Developing API endpoints for data access and processing.",
+      "Integrating with the captioned image database."
+    ],
+    "typical_inputs": ["System architecture", "Selected tools and technologies", "Database schema", "Prompt engineering workflow"],
+    "typical_outputs": ["Functional back-end services", "Integrated core logic"]
+  },
+  {
+    "id": "f6a7b8c9-d0e1-2345-6789-0abcdef12345",
+    "name": "Refine Recognition Model",
+    "description": "Iteratively improve the performance of the image recognition model by adjusting its parameters, data inputs, or underlying logic based on testing and feedback.",
+    "category": "Refactoring",
+    "purpose": "Enhance the accuracy and efficiency of recognition.",
+    "keywords": ["refinement", "iteration", "optimization", "model tuning", "prompt engineering", "testing"],
+    "applicability_notes": "A continuous process to improve results. Often involves experimentation and data analysis.",
+    "examples_of_usage": [
+      "Adjusting prompts for better image interpretation.",
+      "Retraining parts of the model with new data examples.",
+      "Fine-tuning parameters for recognition accuracy."
+    ],
+    "typical_inputs": ["Test data", "Performance metrics", "Feedback on recognition results"],
+    "typical_outputs": ["Improved recognition model", "Updated prompts or parameters"]
+  },
+  {
+    "id": "a7b8c9d0-e1f2-3456-7890-abcdef123456",
+    "name": "Conduct Usability Testing",
+    "description": "Evaluate the system's ease of use, efficiency, and user satisfaction through testing with representative users. Gather feedback to identify areas for improvement.",
+    "category": "Testing",
+    "purpose": "Assess and improve user experience.",
+    "keywords": ["usability", "testing", "user feedback", "UX evaluation", "validation"],
+    "applicability_notes": "Ensures the system is intuitive and meets user needs effectively.",
+    "examples_of_usage": [
+      "Observing users as they capture and analyze images.",
+      "Collecting feedback on the clarity of results and ease of interaction.",
+      "Identifying pain points in the user journey."
+    ],
+    "typical_inputs": ["Integrated system prototype", "User profiles", "Testing scenarios"],
+    "typical_outputs": ["Usability test report", "List of UX improvement recommendations"]
+  },
+  {
+    "id": "b8c9d0e1-f2a3-4567-8901-bcdef1234567",
+    "name": "Integrate Components",
+    "description": "Combine all developed parts of the system (front-end, back-end, models, databases) into a cohesive, working whole. Ensure seamless interaction between all elements.",
+    "category": "Integration",
+    "purpose": "Combine system parts into a unified whole.",
+    "keywords": ["integration", "assembly", "system integration", "component connection", "testing"],
+    "applicability_notes": "Brings together individual development efforts into a complete solution.",
+    "examples_of_usage": [
+      "Connecting the front-end UI to the back-end APIs.",
+      "Ensuring the recognition service correctly accesses the database.",
+      "Verifying data flow across all integrated modules."
+    ],
+    "typical_inputs": ["Developed front-end", "Developed back-end", "Tuned recognition model", "Configured database"],
+    "typical_outputs": ["Fully integrated application", "End-to-end test results"]
+  },
+  {
+    "id": "c9d0e1f2-a3b4-5678-9012-cdef12345678",
+    "name": "Deploy Application",
+    "description": "Make the completed and tested application available for use in its target environment, whether that's a server, cloud platform, or user devices.",
+    "category": "Deployment",
+    "purpose": "Make the application accessible to users.",
+    "keywords": ["deployment", "release", "production", "launch", "distribution"],
+    "applicability_notes": "The final step in delivering the application to its intended audience.",
+    "examples_of_usage": [
+      "Deploying the web application to a hosting server.",
+      "Packaging the application for mobile devices.",
+      "Setting up cloud infrastructure for the service."
+    ],
+    "typical_inputs": ["Integrated and tested application", "Deployment environment configuration"],
+    "typical_outputs": ["Live, accessible application", "Deployment documentation"]
+  },
+  {
+    "id": "d0e1f2a3-b4c5-6789-0123-def123456789",
+    "name": "Document Workflow and Outcomes",
+    "description": "Record the entire process, including the steps taken, tools used, decisions made, challenges encountered, and final results. This serves as a knowledge base and a record of the project.",
+    "category": "Documentation",
+    "purpose": "Record project activities and results.",
+    "keywords": ["documentation", "recording", "reporting", "knowledge base", "project finalization"],
+    "applicability_notes": "Essential for future reference, knowledge transfer, and project closure.",
+    "examples_of_usage": [
+      "Cataloging the final prompt engineering strategies.",
+      "Documenting the system architecture and implementation details.",
+      "Summarizing test results and performance metrics."
+    ],
+    "typical_inputs": ["Completed project artifacts", "Team logs", "Test reports"],
+    "typical_outputs": ["Final project documentation", "Lessons learned report"]
+  }
+]
+
+---
+
+Artifact from 1__step_1_Lyra_result.txt (Prompt Engineer):
+{
+  "workflow_name": "Core Image Recognition Prompt Workflow",
+  "description": "Defines the sequential prompts for an AI model to analyze a live image, generate queries for a captioned database, compare candidates, and make a recognition decision.",
+  "steps": [
+    {
+      "step_id": "1_live_image_analysis",
+      "name": "Live Image Feature Extraction and Description",
+      "purpose": "To generate a rich, structured description and extract key visual features from the live input image for subsequent comparison.",
+      "prompt_template": {
+        "role": "system",
+        "instruction": "You are an advanced image analysis AI. Your task is to meticulously examine the provided live image. Identify and describe all prominent objects, their attributes (e.g., color, texture, material), the scene context, any discernible text, and overall visual themes. Prioritize features that would serve as unique identifiers. Generate a concise, yet comprehensive, textual description and extract keywords suitable for database querying. If the underlying model supports it, also generate a high-dimensional embedding of the image.",
+        "input_format": {
+          "type": "image_data",
+          "description": "The raw live image captured by the user, provided as a base64 encoded string or direct image input."
+        },
+        "output_format": {
+          "type": "json",
+          "schema": {
+            "title": "ImageAnalysisOutput",
+            "type": "object",
+            "properties": {
+              "textual_description": {
+                "type": "string",
+                "description": "A detailed natural language description of the image content."
+              },
+              "extracted_keywords": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "A list of key identifying keywords and concepts (e.g., 'red car', 'wooden table', 'mountain landscape')."
+              },
+              "image_embedding_vector": {
+                "type": "array",
+                "items": { "type": "number" },
+                "description": "A high-dimensional vector representation of the image, if generated by the model."
+              }
+            },
+            "required": ["textual_description", "extracted_keywords"]
+          }
+        },
+        "success_criteria": "A detailed and accurate description, relevant keywords, and an optional embedding are extracted, ready for database query formulation."
+      }
+    },
+    {
+      "step_id": "2_database_query_generation",
+      "name": "Database Query Generation",
+      "purpose": "To translate the live image's analysis into an effective query for retrieving similar captioned images from the database.",
+      "prompt_template": {
+        "role": "system",
+        "instruction": "Based on the provided analysis of the live image, generate an optimized query string and/or structured query parameters for a database containing captioned images. The goal is to retrieve the most visually and semantically similar images. Focus on keywords from 'extracted_keywords' and semantic concepts from 'textual_description' that are most likely to match database captions. If an 'image_embedding_vector' is available, incorporate it for vector similarity search.",
+        "input_format": {
+          "type": "json",
+          "description": "Output from '1_live_image_analysis' step.",
+          "schema": { "$ref": "#/steps/0/prompt_template/output_format/schema" }
+        },
+        "output_format": {
+          "type": "json",
+          "schema": {
+            "title": "DatabaseQueryOutput",
+            "type": "object",
+            "properties": {
+              "keyword_query": {
+                "type": "string",
+                "description": "A natural language query string suitable for keyword-based search."
+              },
+              "semantic_query_vector": {
+                "type": "array",
+                "items": { "type": "number" },
+                "description": "A vector embedding representing the semantic content of the query, if applicable."
+              },
+              "structured_parameters": {
+                "type": "object",
+                "description": "Structured parameters for an advanced database query (e.g., {'search_terms': ['car', 'red'], 'embedding': [...]})."
+              }
+            },
+            "required": ["keyword_query"]
+          }
+        },
+        "success_criteria": "A relevant and effective query (or set of parameters) is generated that can retrieve potential matches from the database."
+      }
+    },
+    {
+      "step_id": "3_similarity_assessment",
+      "name": "Candidate Image Comparison and Similarity Scoring",
+      "purpose": "To compare the live image's characteristics against a list of retrieved candidate images from the database and assign a comprehensive similarity score to each candidate.",
+      "prompt_template": {
+        "role": "system",
+        "instruction": "You are a similarity assessment AI. Given the live image's analysis and a list of candidate images retrieved from the database (each with its caption, and potentially its own features/embedding), calculate a comprehensive similarity score for each candidate against the live image. The score should reflect both visual and semantic congruence. Provide a brief justification for the score of each candidate. The scoring range should be 0.0 (no similarity) to 1.0 (perfect match). Rank the candidates from highest to lowest similarity.",
+        "input_format": {
+          "type": "json",
+          "description": "Consolidated data including live image analysis and retrieved database candidates.",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "live_image_analysis": { "$ref": "#/steps/0/prompt_template/output_format/schema" },
+              "candidate_images": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "image_id": { "type": "string" },
+                    "caption": { "type": "string" },
+                    "keywords": { "type": "array", "items": { "type": "string" } },
+                    "embedding": { "type": "array", "items": { "type": "number" } }
+                  },
+                  "required": ["image_id", "caption"]
+                }
+              }
+            },
+            "required": ["live_image_analysis", "candidate_images"]
+          }
+        },
+        "output_format": {
+          "type": "json",
+          "schema": {
+            "title": "SimilarityScoresOutput",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "image_id": { "type": "string" },
+                "caption": { "type": "string" },
+                "similarity_score": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+                "justification": { "type": "string" }
+              },
+              "required": ["image_id", "caption", "similarity_score", "justification"]
+            }
+          }
+        },
+        "success_criteria": "All candidate images are scored accurately, justifications are provided, and the list is ordered by similarity (descending)."
+      }
+    },
+    {
+      "step_id": "4_recognition_decision",
+      "name": "Final Recognition Decision and Confidence",
+      "purpose": "To make a definitive recognition decision based on similarity scores and provide a confidence level, or suggest closest matches if no confident recognition is made.",
+      "prompt_template": {
+        "role": "system",
+        "instruction": "Based on the ranked list of candidate images and their similarity scores, determine if a confident recognition can be made. A recognition is considered confident if the top candidate's 'similarity_score' is above a predefined 'recognition_threshold' (e.g., 0.8) AND is significantly higher than the second-best score (e.g., by a 'delta_threshold' of 0.1). If a confident match is found, identify the recognized image. Otherwise, indicate that no confident match was found and list the top 3 closest matches with their scores for user review. Provide a concise explanation for the decision.",
+        "input_format": {
+          "type": "json",
+          "description": "Ranked list of candidate images with similarity scores, along with configurable thresholds.",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "ranked_candidates": { "$ref": "#/steps/2/prompt_template/output_format/schema" },
+              "recognition_threshold": { "type": "number", "default": 0.8, "description": "Minimum score for a confident recognition." },
+              "delta_threshold": { "type": "number", "default": 0.1, "description": "Minimum difference between top and second score for confident recognition." }
+            },
+            "required": ["ranked_candidates"]
+          }
+        },
+        "output_format": {
+          "type": "json",
+          "schema": {
+            "title": "RecognitionDecisionOutput",
+            "type": "object",
+            "properties": {
+              "recognition_status": {
+                "type": "string",
+                "enum": ["recognized", "no_confident_match"],
+                "description": "Indicates if a confident match was found."
+              },
+              "recognized_image": {
+                "type": "object",
+                "properties": {
+                  "image_id": { "type": "string" },
+                  "caption": { "type": "string" },
+                  "confidence_score": { "type": "number", "minimum": 0.0, "maximum": 1.0 }
+                },
+                "description": "Details of the recognized image, present only if 'recognition_status' is 'recognized'."
+              },
+              "closest_matches": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "image_id": { "type": "string" },
+                    "caption": { "type": "string" },
+                    "similarity_score": { "type": "number" }
+                  }
+                },
+                "description": "Top 3 closest matches, present if 'recognition_status' is 'no_confident_match' or as additional info."
+              },
+              "explanation": {
+                "type": "string",
+                "description": "Brief justification for the recognition decision or lack thereof."
+              }
+            },
+            "required": ["recognition_status", "explanation"]
+          }
+        },
+        "success_criteria": "A clear, justified recognition decision is made, or the closest matches are presented if no confident recognition is possible."
+      }
+    }
+  ]
+}
+
+
+
+Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project.

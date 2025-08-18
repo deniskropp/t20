@@ -1,0 +1,82 @@
+{
+    "roles": [
+        {
+            "title": "Designer",
+            "description": "Generate aesthetic layouts, color palettes, typography, and UI flows, ensuring accessibility and visual balance."
+        },
+        {
+            "title": "Engineer",
+            "description": "Implement designs into clean, modular, and performant code, focusing on responsive design and accessibility."
+        },
+        {
+            "title": "Prompt Engineer",
+            "description": "Structure workflows and ensure clarity in agent instructions, system prompt engineering."
+        },
+        {
+            "title": "Task-Agnostic Step (TAS) extractor (flash)",
+            "description": "Identify and return each 'Task Agnostic Step' (TAS) towards the high-level goal."
+        }
+    ],
+    "steps": [
+        {
+            "name": "uTASe",
+            "role": "Task-Agnostic Step (TAS) extractor (flash)",
+            "task": "Analyze the high-level goal 'Create a website that is a frontend to an AI system' and extract the primary project phases: 1. Planning & Scoping, 2. Design & Prototyping, 3. Development & Integration, 4. Testing & Refinement, 5. Deployment."
+        },
+        {
+            "name": "Lyra",
+            "role": "Prompt Engineer",
+            "task": "Based on the phases from uTASe, create a detailed project brief. Define the core features of the website, the target user, and the key interaction points with the AI. Draft initial system prompts for each team member to align them with this brief."
+        },
+        {
+            "name": "Aurora",
+            "role": "Designer",
+            "task": "Create low-fidelity wireframes and user flow diagrams for the AI frontend. Focus on the primary user journey: inputting a request, viewing the AI's response, and managing the conversation history."
+        },
+        {
+            "name": "Aurora",
+            "role": "Designer",
+            "task": "Develop a high-fidelity visual design and a comprehensive style guide based on the approved wireframes. The guide must include color palette, typography, spacing, and component styles, with a strong emphasis on accessibility (WCAG 2.1 AA)."
+        },
+        {
+            "name": "Kodax",
+            "role": "Engineer",
+            "task": "Set up the frontend development environment. Select a modern JavaScript framework (e.g., React, Svelte), establish a scalable project architecture, and configure version control with Git."
+        },
+        {
+            "name": "Kodax",
+            "role": "Engineer",
+            "task": "Translate the high-fidelity designs from Aurora into clean, modular, and responsive UI components. Ensure all components are accessible and performant."
+        },
+        {
+            "name": "Lyra",
+            "role": "Prompt Engineer",
+            "task": "Design and refine the core system prompts that will govern the AI's behavior and personality on the website. Collaborate with Kodax to define the API contract for sending prompts and receiving structured responses."
+        },
+        {
+            "name": "Kodax",
+            "role": "Engineer",
+            "task": "Integrate the frontend components with the AI system's backend API. Implement robust state management to handle user input, API loading states, error handling, and streaming responses."
+        },
+        {
+            "name": "Aurora",
+            "role": "Designer",
+            "task": "Conduct a thorough design review of the implemented frontend. Create a list of discrepancies between the design and the implementation for Kodax to address, ensuring visual consistency and adherence to the UX flow."
+        },
+        {
+            "name": "Lyra",
+            "role": "Prompt Engineer",
+            "task": "Perform user acceptance testing on the integrated system, focusing on the quality and relevance of the AI's responses. Iterate on the system prompts based on test results to improve the overall conversational experience."
+        },
+        {
+            "name": "Kodax",
+            "role": "Engineer",
+            "task": "Address feedback from the design and prompt engineering reviews. Conduct final cross-browser and performance testing, then deploy the application to a production environment."
+        },
+        {
+            "name": "uTASe",
+            "role": "Task-Agnostic Step (TAS) extractor (flash)",
+            "task": "Perform a final review of the deployed website to verify that it successfully functions as a frontend to the AI system, thus confirming the fulfillment of the high-level goal."
+        }
+    ]
+}

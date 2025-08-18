@@ -1,0 +1,210 @@
+[
+  {
+    "id": "a7b8c9d0-e1f2-3456-7890-abcdef012345",
+    "name": "Define Objective",
+    "description": "Clearly articulate the specific, measurable, achievable, relevant, and time-bound (SMART) objective for the task or project. This involves understanding the desired outcome, scope, and constraints.",
+    "category": "Init",
+    "purpose": "Establish a clear and actionable target.",
+    "keywords": ["objective setting", "goal definition", "scoping", "clarification"],
+    "applicability_notes": "Applicable at the very beginning of any project or task to ensure alignment and focus. The level of detail will vary based on the complexity of the overarching goal.",
+    "examples_of_usage": [
+      "For the current goal: 'Define the overall objective for creating the LLM fine-tuning dataset, ensuring it specifies the target expertise (internalized TAS) and desired output quality.'",
+      "For a software project: 'Define the objective for developing a new feature, including its functionality, target users, and performance criteria.'",
+      "For a research project: 'Define the objective for a study, including the research question, hypothesis, and expected outcomes.'"
+    ],
+    "typical_inputs": ["undefined goal", "broad requirement", "initial request"],
+    "typical_outputs": ["SMART objective", "defined scope", "clear target"]
+  },
+  {
+    "id": "b8c9d0e1-f2a3-4567-8901-bcdef0123456",
+    "name": "Gather Requirements",
+    "description": "Collect and document all necessary information, constraints, and specifications from relevant sources. This step ensures all aspects of the objective are understood before proceeding, focusing on the specifics needed for the dataset creation.",
+    "category": "Analysis",
+    "purpose": "Understand all necessary inputs and constraints for dataset generation.",
+    "keywords": ["requirements gathering", "information collection", "data sourcing", "specification documentation"],
+    "applicability_notes": "Crucial for defining the parameters of the dataset, including the format, quality standards, and types of TAS plans expected. Can involve reviewing existing documentation on TAS or LLM fine-tuning.",
+    "examples_of_usage": [
+      "For the current goal: 'Gather requirements for the dataset schema, TAS characteristics, and LLM fine-tuning process, referencing Lyra's schema and prompt engineer's guidance.'",
+      "For a software project: 'Gather requirements for user authentication, including supported protocols and security standards.'",
+      "For a research project: 'Collect data on experimental variables, control groups, and measurement methods.'"
+    ],
+    "typical_inputs": ["defined objective", "initial stakeholder feedback", "existing documentation"],
+    "typical_outputs": ["detailed requirements document", "data specification", "constraint list"]
+  },
+  {
+    "id": "c9d0e1f2-a3b4-5678-9012-cdef01234567",
+    "name": "Decompose Task",
+    "description": "Break down the overarching objective of creating the dataset into smaller, manageable sub-tasks. This involves defining the workflow for generating and validating TAS plans.",
+    "category": "Planning",
+    "purpose": "Create a structured plan of action for dataset creation.",
+    "keywords": ["task breakdown", "work breakdown structure", "sub-task identification", "process mapping"],
+    "applicability_notes": "Essential for managing the complexity of generating a large dataset. This decomposition defines the sequence of operations for the annotation tool and the LLM.",
+    "examples_of_usage": [
+      "For the current goal: 'Decompose the dataset creation into: schema definition, seed example generation, UI design, tool development, LLM prompt engineering, large-scale annotation, and final QA.'",
+      "For a software project: 'Break down feature development into: design, implementation, testing, and deployment.'",
+      "For a research project: 'Decompose the study into: literature review, methodology design, data collection, analysis, and reporting.'"
+    ],
+    "typical_inputs": ["defined objective", "gathered requirements", "project scope"],
+    "typical_outputs": ["list of sub-tasks", "task hierarchy", "workflow diagram"]
+  },
+  {
+    "id": "d0e1f2a3-b4c5-6789-0123-def012345678",
+    "name": "Allocate Resources",
+    "description": "Assign necessary resources such as personnel (roles), tools (annotation tool, LLM), budget, and time to each sub-task identified in the decomposition. Ensure resources are sufficient and appropriately matched to task requirements.",
+    "category": "Planning",
+    "purpose": "Ensure resources are available for execution.",
+    "keywords": ["resource allocation", "budgeting", "personnel assignment", "scheduling"],
+    "applicability_notes": "Critical for efficient execution. Involves matching skills to tasks (Designer, Engineer, Prompt Engineer, TAS extractor) and securing necessary tools (LLM, annotation tool).",
+    "examples_of_usage": [
+      "For the current goal: 'Allocate roles (Designer, Engineer, Prompt Engineer, TAS extractor) and tools (annotation tool, LLM) to specific stages of dataset generation.'",
+      "For a software project: 'Assign engineers to coding modules, allocate budget for cloud services, and schedule testing phases.'",
+      "For a research project: 'Allocate personnel to data collection, assign equipment for measurements, and set deadlines for analysis.'"
+    ],
+    "typical_inputs": ["decomposed tasks", "resource availability list", "budget constraints"],
+    "typical_outputs": ["resource assignment plan", "personnel allocation chart", "budget breakdown"]
+  },
+  {
+    "id": "e1f2a3b4-c5d6-7890-1234-ef0123456789",
+    "name": "Develop Tool",
+    "description": "Build or configure the necessary tools to facilitate the execution of the TAS plan. This includes setting up the annotation interface and backend logic.",
+    "category": "Execution",
+    "purpose": "Create the infrastructure for generating and validating TAS plans.",
+    "keywords": ["tool development", "system implementation", "backend setup", "frontend coding"],
+    "applicability_notes": "This step involves the practical creation of the annotation tool, as described by Kodax's output, enabling the subsequent generation and validation of TAS plans.",
+    "examples_of_usage": [
+      "For the current goal: 'Develop the data annotation tool with UI for goal input, TAS plan generation/editing, and dataset export, as per Kodax's frontend and backend code.'",
+      "For a software project: 'Implement the user authentication module based on the design specifications.'",
+      "For a research project: 'Set up the data collection platform and ensure data integrity measures are in place.'"
+    ],
+    "typical_inputs": ["allocated resources", "task instructions", "design specifications"],
+    "typical_outputs": ["functional annotation tool", "backend API", "frontend interface"]
+  },
+  {
+    "id": "f2a3b4c5-d6e7-9012-3456-f01234567890",
+    "name": "Engineer Prompts",
+    "description": "Craft and refine the instructions (prompts) that will guide the LLM in generating accurate and task-agnostic TAS plans from high-level goals.",
+    "category": "Execution",
+    "purpose": "Provide clear guidance to the LLM for TAS generation.",
+    "keywords": ["prompt engineering", "llm instruction", "guideline formulation", "parameter tuning"],
+    "applicability_notes": "This step is crucial for ensuring the quality and relevance of the generated TAS plans. It involves iterating on prompts to achieve the desired level of abstraction and clarity.",
+    "examples_of_usage": [
+      "For the current goal: 'Engineer system prompts for the LLM to generate task-agnostic steps from high-level goals, adhering to specific characteristics and output formats, as defined by Lyra.'",
+      "For a chatbot: 'Engineer prompts to guide the chatbot in providing helpful and concise responses.'",
+      "For an image generation model: 'Engineer prompts to specify style, content, and composition for image creation.'"
+    ],
+    "typical_inputs": ["defined objective", "gathered requirements", "llm capabilities"],
+    "typical_outputs": ["effective system prompts", "LLM configuration", "guideline documentation"]
+  },
+  {
+    "id": "a3b4c5d6-e7f8-0123-4567-1234567890ef",
+    "name": "Generate Seed Examples",
+    "description": "Create a small, diverse set of high-quality TAS plan examples based on initial goals. These examples will serve as a foundation and guide for the LLM and human annotators.",
+    "category": "Execution",
+    "purpose": "Provide initial examples for training and guidance.",
+    "keywords": ["example generation", "seed data creation", "demonstration examples", "pattern setting"],
+    "applicability_notes": "This step establishes the baseline quality and style for the TAS plans. The diversity of these examples is key to guiding the LLM effectively.",
+    "examples_of_usage": [
+      "For the current goal: 'Generate 10 diverse TAS plan examples based on various high-level goals to seed the dataset, as performed by TASe.'",
+      "For a classification task: 'Create seed examples of different categories for training a classifier.'",
+      "For a summarization task: 'Generate a few high-quality summaries of different text types.'"
+    ],
+    "typical_inputs": ["defined objective", "llm prompt", "example requirements"],
+    "typical_outputs": ["seed TAS plans", "example dataset subset", "quality benchmarks"]
+  },
+  {
+    "id": "b4c5d6e7-f8a9-1234-5678-234567890ef0",
+    "name": "Generate TAS Plan",
+    "description": "Utilize the LLM, guided by engineered prompts and the annotation tool, to generate a sequence of task-agnostic steps from a given high-level goal.",
+    "category": "Execution",
+    "purpose": "Generate TAS plans from high-level goals using an LLM.",
+    "keywords": ["llm generation", "tas creation", "plan synthesis", "automated processing"],
+    "applicability_notes": "This is the core automated step where the LLM produces TAS plans. The quality depends heavily on prompt engineering and the LLM's capabilities.",
+    "examples_of_usage": [
+      "For the current goal: 'Use the annotation tool to submit the high-level goal 'Create a dataset for LLM fine-tuning towards internalized TAS expertise' to the LLM to generate a TAS plan.'",
+      "For content creation: 'Generate blog post ideas based on a given topic.'",
+      "For code generation: 'Generate code snippets for a specific programming task.'"
+    ],
+    "typical_inputs": ["high-level goal", "system prompts", "annotation tool interface"],
+    "typical_outputs": ["generated TAS plan", "LLM output", "candidate steps"]
+  },
+  {
+    "id": "c5d6e7f8-a9b0-2345-6789-34567890ef01",
+    "name": "Review and Edit TAS Plan",
+    "description": "Human annotators review the LLM-generated TAS plan for accuracy, completeness, task-agnosticism, and logical flow. They edit or refine steps as necessary within the annotation tool.",
+    "category": "Validation",
+    "purpose": "Ensure the quality and adherence of generated TAS plans.",
+    "keywords": ["human review", "editing", "plan refinement", "quality control"],
+    "applicability_notes": "This step involves human oversight to correct any inaccuracies or deviations from the desired TAS characteristics. It's a critical part of the validation loop.",
+    "examples_of_usage": [
+      "For the current goal: 'Review the LLM-generated TAS plan for the dataset creation goal, editing specific steps to ensure they are truly task-agnostic and logically ordered.'",
+      "For document editing: 'Proofread a manuscript for grammatical errors and clarity.'",
+      "For code review: 'Review code for bugs, style violations, and potential improvements.'"
+    ],
+    "typical_inputs": ["generated TAS plan", "high-level goal", "TAS guidelines"],
+    "typical_outputs": ["edited TAS plan", "validated steps", "annotator feedback"]
+  },
+  {
+    "id": "d6e7f8a9-b0c1-3456-7890-4567890ef012",
+    "name": "Approve and Store TAS Plan",
+    "description": "Approve the reviewed and potentially edited TAS plan. Store the validated plan along with its corresponding high-level goal in the dataset.",
+    "category": "Validation",
+    "purpose": "Finalize and store validated TAS plans.",
+    "keywords": ["approval", "data storage", "dataset population", "validation confirmation"],
+    "applicability_notes": "This marks the successful validation of a TAS plan and its inclusion in the dataset. It requires confirmation from the annotator or system.",
+    "examples_of_usage": [
+      "For the current goal: 'Approve the refined TAS plan for the dataset creation goal and store the {high_level_goal, tas_plan} pair in the dataset.'",
+      "For a workflow: 'Approve the submitted report and file it for record-keeping.'",
+      "For a transaction: 'Approve the payment and update the account balance.'"
+    ],
+    "typical_inputs": ["reviewed TAS plan", "high-level goal", "approval status"],
+    "typical_outputs": ["validated dataset entry", "stored TAS plan", "confirmation"]
+  },
+  {
+    "id": "e7f8a9b0-c1d2-4567-8901-567890ef0123",
+    "name": "Iterate and Scale Annotation",
+    "description": "Repeat the generate, review, and approve process for a large number of high-level goals to build a comprehensive dataset of at least 500 entries.",
+    "category": "Execution",
+    "purpose": "Build a comprehensive dataset through iterative annotation.",
+    "keywords": ["iteration", "scaling", "dataset building", "annotation process"],
+    "applicability_notes": "This step emphasizes the need for repetition and scaling to achieve the target dataset size. It involves managing multiple annotation cycles.",
+    "examples_of_usage": [
+      "For the current goal: 'Iteratively use the annotation tool to generate, review, and approve TAS plans for numerous high-level goals until a dataset of over 500 entries is created.'",
+      "For a learning process: 'Iterate through practice problems to improve skills.'",
+      "For a product development cycle: 'Repeat the design-build-test loop to refine the product.'"
+    ],
+    "typical_inputs": ["annotation tool", "high-level goals", "TAS guidelines"],
+    "typical_outputs": ["large annotated dataset", "completed dataset entries", "progress metrics"]
+  },
+  {
+    "id": "f8a9b0c1-d2e3-5678-9012-67890ef01234",
+    "name": "Perform Quality Assurance",
+    "description": "Conduct a final quality assurance check on the entire dataset. This involves verifying schema compliance, consistency, and the overall quality of the TAS plans.",
+    "category": "Validation",
+    "purpose": "Ensure the final dataset meets all quality standards.",
+    "keywords": ["quality assurance", "data validation", "schema compliance", "final review"],
+    "applicability_notes": "This is the final gate before the dataset is used for fine-tuning. It ensures the data is clean, correctly formatted, and meets the project's objectives.",
+    "examples_of_usage": [
+      "For the current goal: 'Perform final QA on the 500+ entry dataset, checking schema compliance, TAS plan quality, and overall consistency, as part of Lyra's final check.'",
+      "For a software release: 'Conduct final testing and code review before deployment.'",
+      "For a publication: 'Review a manuscript for accuracy, formatting, and adherence to journal standards.'"
+    ],
+    "typical_inputs": ["annotated dataset", "schema definition", "quality standards"],
+    "typical_outputs": ["validated dataset", "QA report", "data cleaning actions"]
+  },
+  {
+    "id": "a9b0c1d2-e3f4-6789-0123-7890ef012345",
+    "name": "Export Dataset",
+    "description": "Export the finalized and validated dataset in the required format (e.g., JSON) for use in the LLM fine-tuning process.",
+    "category": "Closure",
+    "purpose": "Prepare the dataset for LLM fine-tuning.",
+    "keywords": ["dataset export", "data formatting", "file preparation", "final output"],
+    "applicability_notes": "The final step in delivering the dataset. Ensures it is in a usable format for the intended downstream process.",
+    "examples_of_usage": [
+      "For the current goal: 'Export the validated dataset of {high_level_goal, tas_plan} pairs in JSON format for LLM fine-tuning.'",
+      "For data transfer: 'Export customer data to a CSV file for import into a CRM.'",
+      "For reporting: 'Export analysis results to a PDF document.'"
+    ],
+    "typical_inputs": ["validated dataset", "export format specification"],
+    "typical_outputs": ["formatted dataset file", "export confirmation", "final deliverables"]
+  }
+]

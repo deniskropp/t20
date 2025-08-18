@@ -1,0 +1,339 @@
+{
+  "color_palette": {
+    "name": "AI Interface Palette",
+    "description": "A calming and clean palette designed for clarity and minimal distraction, with a focus on accessibility and a subtly natural feel.",
+    "shades": [
+      {
+        "name": "Primary White",
+        "hex": "#FFFFFF",
+        "role": "Backgrounds, primary surfaces, text on dark backgrounds"
+      },
+      {
+        "name": "Light Neutral",
+        "hex": "#F8F9FA",
+        "role": "Secondary backgrounds, card elements, subtle dividers"
+      },
+      {
+        "name": "Subtle Gray",
+        "hex": "#E9ECEF",
+        "role": "Borders, disabled states, subtle UI elements"
+      },
+      {
+        "name": "Primary Text",
+        "hex": "#212529",
+        "role": "Main body text, headings, important labels"
+      },
+      {
+        "name": "Secondary Text",
+        "hex": "#6C757D",
+        "role": "Helper text, secondary information, placeholder text"
+      },
+      {
+        "name": "Accent Blue",
+        "hex": "#007BFF",
+        "role": "Primary call-to-action buttons, active states, links, interactive elements"
+      },
+      {
+        "name": "Accent Blue Hover",
+        "hex": "#0056b3",
+        "role": "Hover state for accent elements"
+      },
+      {
+        "name": "Success Green",
+        "hex": "#28A745",
+        "role": "Success messages, positive feedback"
+      },
+      {
+        "name": "Warning Yellow",
+        "hex": "#FFC107",
+        "role": "Warning messages, attention-grabbing elements"
+      },
+      {
+        "name": "Error Red",
+        "hex": "#DC3545",
+        "role": "Error messages, critical alerts"
+      }
+    ]
+  },
+  "typography": {
+    "font_families": [
+      {
+        "name": "Inter",
+        "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap",
+        "weights": ["Regular (400)", "Medium (500)", "Bold (700)"],
+        "usage": "Primary typeface for all text elements, offering excellent readability and a clean, modern aesthetic."
+      }
+    ],
+    "styles": {
+      "display_large": {
+        "font_family": "Inter",
+        "font_weight": "700",
+        "font_size": "48px",
+        "line_height": "60px",
+        "letter_spacing": "-0.5px",
+        "color": "Primary Text"
+      },
+      "heading_1": {
+        "font_family": "Inter",
+        "font_weight": "700",
+        "font_size": "36px",
+        "line_height": "44px",
+        "color": "Primary Text"
+      },
+      "heading_2": {
+        "font_family": "Inter",
+        "font_weight": "700",
+        "font_size": "28px",
+        "line_height": "36px",
+        "color": "Primary Text"
+      },
+      "heading_3": {
+        "font_family": "Inter",
+        "font_weight": "500",
+        "font_size": "24px",
+        "line_height": "32px",
+        "color": "Primary Text"
+      },
+      "body_large": {
+        "font_family": "Inter",
+        "font_weight": "400",
+        "font_size": "18px",
+        "line_height": "28px",
+        "color": "Primary Text"
+      },
+      "body_regular": {
+        "font_family": "Inter",
+        "font_weight": "400",
+        "font_size": "16px",
+        "line_height": "24px",
+        "color": "Primary Text"
+      },
+      "body_small": {
+        "font_family": "Inter",
+        "font_weight": "400",
+        "font_size": "14px",
+        "line_height": "20px",
+        "color": "Secondary Text"
+      },
+      "button_text": {
+        "font_family": "Inter",
+        "font_weight": "500",
+        "font_size": "16px",
+        "line_height": "24px",
+        "color": "Primary White",
+        "text_transform": "none"
+      },
+      "label_input": {
+        "font_family": "Inter",
+        "font_weight": "500",
+        "font_size": "14px",
+        "line_height": "20px",
+        "color": "Primary Text"
+      }
+    }
+  },
+  "logo": {
+    "concept": "A minimalist, abstract representation of AI interaction and natural flow. It suggests intelligence, connection, and seamless communication.",
+    "visual_elements": [
+      "Two abstract, flowing shapes that subtly interlock or overlap, representing the user and the AI. The shapes are smooth and organic, hinting at 'natural design'.",
+      "A clean, sans-serif typeface for the brand name, positioned either below or to the side of the icon.",
+      "The color palette will be used sparingly, perhaps with the accent blue forming one of the flowing shapes."
+    ],
+    "brand_name": "AuraFlow AI",
+    "tagline": "Intelligent Interaction, Naturally.",
+    "color_usage": "Primary White or Light Neutral background, Accent Blue for interactive elements, Primary Text for contrast.",
+    "accessibility_notes": "Ensure sufficient contrast in the logo and clear visual distinction between elements. Provide an alt text description for the logo."
+  },
+  "ui_components": [
+    {
+      "component_name": "Input Field",
+      "description": "A primary text input area for users to submit prompts to the AI.",
+      "design_attributes": {
+        "width": "100%",
+        "height": "auto",
+        "min_height": "150px",
+        "padding": "16px",
+        "border": "1px solid Subtle Gray",
+        "border_radius": "8px",
+        "background_color": "Primary White",
+        "font_style": "body_regular",
+        "color": "Primary Text",
+        "placeholder_color": "Secondary Text",
+        "focus_state": {
+          "border_color": "Accent Blue",
+          "box_shadow": "0 0 0 3px rgba(0, 123, 255, 0.25)"
+        },
+        "resize": "vertical"
+      },
+      "accessibility": {
+        "label": "AI Prompt Input",
+        "required": true,
+        "aria_describedby": "prompt-input-description",
+        "description_id": "prompt-input-description",
+        "description_text": "Enter your prompt for the AI system here. You can refine your prompts for better results."
+      }
+    },
+    {
+      "component_name": "Primary Button",
+      "description": "Call to action button for submitting prompts or performing primary actions.",
+      "design_attributes": {
+        "padding": "12px 24px",
+        "border_radius": "8px",
+        "background_color": "Accent Blue",
+        "color": "Primary White",
+        "font_style": "button_text",
+        "border": "none",
+        "cursor": "pointer",
+        "transition": "background-color 0.2s ease-in-out",
+        "hover_state": {
+          "background_color": "Accent Blue Hover"
+        },
+        "active_state": {
+          "background_color": "#004085"
+        },
+        "disabled_state": {
+          "background_color": "#CCCCCC",
+          "color": "#999999",
+          "cursor": "not-allowed"
+        }
+      },
+      "accessibility": {
+        "role": "button",
+        "aria_label": "Submit Prompt"
+      }
+    },
+    {
+      "component_name": "Response Card",
+      "description": "Container for displaying AI-generated output.",
+      "design_attributes": {
+        "width": "100%",
+        "padding": "24px",
+        "margin_bottom": "20px",
+        "border": "1px solid Subtle Gray",
+        "border_radius": "8px",
+        "background_color": "Primary White",
+        "font_style": "body_regular",
+        "color": "Primary Text",
+        "box_shadow": "0 2px 4px rgba(0,0,0,0.05)"
+      },
+      "accessibility": {
+        "aria_label": "AI Response"
+      }
+    },
+    {
+      "component_name": "Navigation Link",
+      "description": "Links for site navigation (e.g., History, Settings).",
+      "design_attributes": {
+        "color": "Primary Text",
+        "font_family": "Inter",
+        "font_weight": "500",
+        "font_size": "16px",
+        "line_height": "24px",
+        "text_decoration": "none",
+        "padding": "8px 12px",
+        "border_radius": "4px",
+        "transition": "background-color 0.2s ease-in-out, color 0.2s ease-in-out",
+        "hover_state": {
+          "background_color": "Light Neutral",
+          "color": "Accent Blue"
+        },
+        "active_state": {
+          "color": "Accent Blue",
+          "font_weight": "700"
+        }
+      },
+      "accessibility": {
+        "role": "link"
+      }
+    },
+    {
+      "component_name": "Feedback Button",
+      "description": "Buttons for providing feedback on AI responses (e.g., Like/Dislike).",
+      "design_attributes": {
+        "display": "inline-flex",
+        "align_items": "center",
+        "justify_content": "center",
+        "padding": "8px 16px",
+        "margin_right": "10px",
+        "border": "1px solid Subtle Gray",
+        "border_radius": "4px",
+        "background_color": "Primary White",
+        "color": "Secondary Text",
+        "font_style": "body_small",
+        "cursor": "pointer",
+        "transition": "background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out",
+        "icon_size": "16px",
+        "hover_state": {
+          "background_color": "Light Neutral",
+          "border_color": "Subtle Gray",
+          "color": "Primary Text"
+        },
+        "active_state": {
+          "background_color": "Accent Blue",
+          "border_color": "Accent Blue",
+          "color": "Primary White"
+        }
+      },
+      "accessibility": {
+        "role": "button"
+      }
+    },
+    {
+      "component_name": "Loading Indicator",
+      "description": "Visual cue to show that the AI is processing a request.",
+      "design_attributes": {
+        "type": "spinner",
+        "size": "32px",
+        "color": "Accent Blue",
+        "animation": "spin 1s linear infinite"
+      },
+      "accessibility": {
+        "aria_label": "Loading AI response",
+        "role": "status"
+      }
+    }
+  ],
+  "interactive_ui_mockups": {
+    "title": "High-Fidelity Mockups: Key Screens",
+    "description": "Visual representations of the core website pages, demonstrating the application of the design system. These mockups prioritize a clean, intuitive, and accessible user experience.",
+    "screens": [
+      {
+        "screen_name": "AI Interaction Hub",
+        "layout_description": "A clean, spacious layout dominated by the prompt input area. The interface guides the user directly into interaction.",
+        "elements": [
+          {"type": "Header", "content": "Logo (AuraFlow AI), Navigation Links (History, Settings)"},
+          {"type": "Main Content Area", "content": [
+            {"type": "Heading", "text": "Engage with AuraFlow AI", "style": "heading_2"},
+            {"type": "Paragraph", "text": "Enter your prompt below to unlock the power of AI.", "style": "body_large", "color": "Secondary Text"},
+            {"type": "Input Field", "placeholder": "What can I help you create or understand today?", "style": "Input Field"},
+            {"type": "Button", "text": "Generate Response", "style": "Primary Button", "align": "right"},
+            {"type": "Response Display Area", "content": [
+              {"type": "Loading Indicator", "condition": "if AI is processing", "style": "Loading Indicator"},
+              {"type": "Response Card", "content": "AI-generated text will appear here. Includes options to copy, download, and provide feedback (like/dislike buttons).", "condition": "if AI has responded", "style": "Response Card"}
+            ], "empty_state_text": "Your AI-generated response will appear here."}
+          ]},
+          {"type": "Footer", "content": "© 2023 AuraFlow AI. All rights reserved."}
+        ],
+        "visual_notes": "Generous white space. Clear visual hierarchy. Focus on the input and output areas. Subtle hover effects on navigation and buttons."
+      },
+      {
+        "screen_name": "Interaction History",
+        "layout_description": "A clear, organized list of past interactions, allowing users to easily revisit and manage their AI sessions.",
+        "elements": [
+          {"type": "Header", "content": "Logo (AuraFlow AI), Navigation Links (History, Settings)"},
+          {"type": "Main Content Area", "content": [
+            {"type": "Heading", "text": "Interaction History", "style": "heading_1"},
+            {"type": "Search/Filter Bar", "placeholder": "Search history...", "style": "Input Field", "height": "auto"},
+            {"type": "List of Interactions", "items": [
+              {"prompt_snippet": "Explain quantum computing...", "response_snippet": "Quantum computing harnesses...", "date": "2023-10-27", "style": "List Item", "hover_effect": "background_color: Light Neutral"},
+              {"prompt_snippet": "Write a poem about...", "response_snippet": "In realms of thought, where...", "date": "2023-10-26", "style": "List Item", "hover_effect": "background_color: Light Neutral"}
+            ], "style": "List", "item_style": "ListItem"},
+            {"type": "Pagination", "condition": "if many interactions"}
+          ]},
+          {"type": "Footer", "content": "© 2023 AuraFlow AI. All rights reserved."}
+        ],
+        "visual_notes": "Each history item is a distinct row with clear date and prompt/response snippets. Clicking an item would reveal the full interaction (e.g., in a modal or a dedicated detail view)."
+      }
+    ]
+  }
+}

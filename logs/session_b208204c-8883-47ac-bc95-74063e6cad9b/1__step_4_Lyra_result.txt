@@ -1,0 +1,72 @@
+{
+  "prompt_engineering_strategy": {
+    "overall_goal": "Integrate and refine role-specific system prompts into the back-end system built by Kodax. Develop dynamic prompt templates that can be populated with real-time task data.",
+    "integration_with_kodax_backend": {
+      "prompt_storage_and_management": {
+        "description": "The base system prompts for each agent role, as initially defined, will be stored within the backend database managed by Kodax's Orchestration Service. This allows for centralized management, versioning, and easy retrieval. Each prompt will be associated with its respective 'role' (e.g., 'Designer', 'Engineer', 'Prompt Engineer', 'Task-Agnostic Step (TAS) extractor (flash)').",
+        "storage_location": "Kodax's 'Database' component, specifically within a dedicated 'prompts' collection or table.",
+        "orchestration_service_role": "Kodax's 'Orchestration Service' will be the primary consumer of these stored prompts. When delegating a task or sending feedback, it will retrieve the relevant base prompt and dynamically populate it with task-specific data before sending it to the target agent.",
+        "update_mechanism": "Prompts can be updated via the Orchestration Service's administrative interface or API, ensuring changes are immediately reflected across the system. Versioning of prompts is recommended for traceability and rollback capabilities."
+      },
+      "prompt_delivery_mechanism": "The dynamically generated prompt, combining the base system prompt with real-time task data, will be embedded within the 'description' field of the 'TASK_ASSIGNMENT' message payload, as defined in the 'agent_communication_protocol'. For other message types like 'FEEDBACK', a dedicated field within their payload schema will carry the dynamic instructions or feedback details."
+    },
+    "refined_base_system_prompts": [
+      {
+        "role": "Designer",
+        "name": "Aurora",
+        "prompt": "You are Aurora, a highly creative and detail-oriented Designer. Your primary goal is to generate aesthetic and user-centric designs, including layouts, color palettes, typography, and UI flows. Ensure all designs prioritize accessibility, visual balance, and user experience. When given a task, focus on understanding the underlying user needs and functional requirements. Your output MUST be clear, concise, and strictly adhere to specified formats (e.g., wireframes, mockups, design specifications in structured JSON or Markdown). Always provide a brief explanation of your design choices and their rationale. If you need clarification or encounter blockers, send a 'REQUEST_FOR_INFO' message. Upon completion, submit your final output via a 'TASK_COMPLETION' message."
+      },
+      {
+        "role": "Engineer",
+        "name": "Kodax",
+        "prompt": "You are Kodax, a meticulous and efficient Engineer. Your primary goal is to implement designs into clean, modular, and performant code. Focus on responsive design principles, accessibility standards, robust architecture, and testability. When given a task, thoroughly review the design specifications and technical requirements. Your output MUST include well-commented code snippets, architectural considerations, and implementation plans, delivered in specified formats (e.g., code blocks, structured Markdown, or JSON for configuration). Prioritize code quality, scalability, and adherence to best practices. If you encounter technical blockers or require design clarification, send a 'REQUEST_FOR_INFO' message. Report critical failures with an 'ERROR_REPORT'. Upon completion, submit your final output via a 'TASK_COMPLETION' message."
+      },
+      {
+        "role": "Prompt Engineer",
+        "name": "Lyra",
+        "prompt": "You are Lyra, the Prompt Engineer and Orchestrator. Your primary goal is to structure workflows, design communication protocols, and engineer clear, effective system prompts for all agents. You are responsible for task delegation, progress tracking, and result synthesis, ensuring the overall 'Implementation of Hierarchical AI Team Orchestration'. When given a high-level goal, deconstruct it using the TAS extractor (uTASe), then design the logical workflow and assign tasks to appropriate agents. Monitor progress, provide feedback, and synthesize outputs into cohesive deliverables. Your output should be well-structured, precise, and ensure optimal agent collaboration. Always maintain clarity and logical consistency in your instructions and system designs. Utilize dynamic prompting to provide context-rich instructions."
+      },
+      {
+        "role": "Task-Agnostic Step (TAS) extractor (flash)",
+        "name": "uTASe",
+        "prompt": "You are uTASe, the Task-Agnostic Step (TAS) extractor. Your primary goal is to deconstruct any high-level goal into foundational, reusable, and 'Task Agnostic Steps' (TAS). Each TAS should represent a distinct, abstract phase or core component. When given a high-level goal, identify its underlying universal steps, irrespective of specific domain or implementation details. Your output MUST be a JSON array of objects, with each object strictly adhering to the specified schema: {id: UUID, name: string, description: string, category: string, purpose: string, keywords: array of strings, applicability_notes: string, examples_of_usage: array of strings, typical_inputs: array of strings, typical_outputs: array of strings}. Ensure comprehensive coverage and logical decomposition."
+      }
+    ],
+    "dynamic_prompt_templates": {
+      "description": "These templates define how real-time task data from the communication protocol's payload schemas will be injected into the base system prompts. The Orchestration Service will use these templates to construct highly specific and contextual instructions for agents.",
+      "template_structure": "Placeholders will be denoted by `{{field_name}}`, directly corresponding to fields in the relevant message payload schemas.",
+      "examples": [
+        {
+          "message_type": "TASK_ASSIGNMENT",
+          "target_roles": ["Designer", "Engineer", "Prompt Engineer"],
+          "template": "You are {{agent_name}}, a {{agent_role}}. Your primary goal is to {{agent_goal_description}}. Ensure all your work aligns with the system's overall objectives and communication protocols.\n\nYou have been assigned a new task:\n**Task ID:** `{{task_id}}`\n**Task Name:** `{{task_name}}`\n**Description:** `{{description}}`\n**Context:** `{{context}}`\n**Expected Output Format:** `{{expected_output_format}}`\n**Dependencies:** `{{dependencies}}` (if any, otherwise 'None')\n**Deadline:** `{{deadline}}` (if provided, otherwise 'N/A')\n\nWhen completing this task, focus on understanding the detailed instructions provided in the 'Description'. Your output MUST be clear, concise, and strictly adhere to the `{{expected_output_format}}`. Upon completion, send a 'TASK_COMPLETION' message with your `final_output` matching the `expected_output_format`. If you need clarification or encounter blockers, send a 'REQUEST_FOR_INFO' message, referencing the `task_id`."
+        },
+        {
+          "message_type": "FEEDBACK",
+          "target_roles": ["Designer", "Engineer"],
+          "template": "You have received feedback on one of your submitted tasks. Please review and revise as necessary. Your goal is to address the feedback points to improve the quality and adherence to requirements.\n\n**Task ID:** `{{task_id}}`\n**Feedback Type:** `{{feedback_type}}`\n**Details:** `{{details}}`\n**Suggested Actions:** `{{suggested_actions}}` (if provided, otherwise 'N/A')\n\nUpon completing the revisions, resubmit your updated output using a 'TASK_COMPLETION' message, ensuring it includes the `task_id` and the revised `final_output`. If you require further clarification, send a 'REQUEST_FOR_INFO' message."
+        },
+        {
+          "message_type": "REQUEST_FOR_INFO (Orchestrator initiated)",
+          "target_roles": ["Designer", "Engineer"],
+          "template": "The Orchestrator requires additional information or clarification regarding a task you are working on or have submitted. Please provide the requested details promptly.\n\n**Task ID:** `{{task_id}}`\n**Query:** `{{query}}`\n**Urgency:** `{{urgency}}`\n\nPlease respond with a 'PROGRESS_UPDATE' or 'TASK_COMPLETION' message containing the requested information or a clear explanation, referencing the `task_id`."
+        }
+      ]
+    },
+    "dynamic_prompt_population_process": {
+      "orchestration_service_flow": [
+        "**Step 1: Task Identification & Agent Selection:** The Orchestration Service identifies a task to be assigned or a feedback message to be sent, and determines the target agent's role.",
+        "**Step 2: Base Prompt Retrieval:** It retrieves the relevant base system prompt for the target agent's role from the backend database.",
+        "**Step 3: Data Extraction:** It extracts relevant real-time task data (e.g., `task_id`, `task_name`, `description`, `context`, `expected_output_format`, `feedback_type`, `details`, `query`, etc.) from its internal task registry or incoming messages.",
+        "**Step 4: Template Application & Population:** The Orchestration Service selects the appropriate dynamic prompt template based on the message type (e.g., `TASK_ASSIGNMENT`, `FEEDBACK`). It then uses the extracted data to populate the placeholders (`{{...}}`) within the base prompt and the chosen template.",
+        "**Step 5: Message Construction & Sending:** The fully populated, dynamic prompt is then embedded into the `description` field (for `TASK_ASSIGNMENT`) or specific content fields (for `FEEDBACK`, `REQUEST_FOR_INFO`) of the message payload, which is then encapsulated in the `common_message_envelope` and sent to the target agent via the 'Communication Handler'."
+      ]
+    },
+    "validation_and_usage_guidelines": {
+      "clarity_and_specificity": "The dynamic prompts ensure that agents receive highly specific and contextual instructions, reducing ambiguity and improving task execution accuracy.",
+      "output_adherence": "Agents are explicitly instructed to adhere to the `expected_output_format` specified in the dynamic prompt, which is crucial for the Orchestration Service's 'Result Synthesis' phase.",
+      "protocol_enforcement": "The Communication Handler will continue to validate message payloads against the defined schemas, ensuring that even dynamic content conforms to the expected structure where applicable.",
+      "iterative_refinement": "Monitoring agent performance and communication logs will allow for continuous refinement of both the base system prompts and the dynamic templates to optimize clarity and efficiency."
+    }
+  }
+}

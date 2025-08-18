@@ -1,54 +1,51 @@
-## Project: System Overview Generation
+Here is a summary of each session's purpose, idea, and specialty, based on its high-level goal:
 
-This repository details the collaborative process undertaken to generate a comprehensive system overview. This overview includes both a visual representation of the system architecture and a functional interactive prototype. The project was a joint effort between a Prompt Engineer (Lyra), a Designer (Aurora), and an Engineer (Kodax).
+*   [`session_03a0a8cf-abff-41d2-97d7-7e6107e9c8cd/planning_prompt.txt`](session_03a0a8cf-abff-41d2-97d7-7e6107e9c8cd/planning_prompt.txt): **Purpose:** Educational content creation. **Idea:** A comprehensive guide for beginners on prompt engineering. **Specialty:** Technical writing and structuring (Prompt Engineer).
 
-### Project Goals
+*   [`session_08f9ee67-3f85-499b-8d6f-c4c523d24c79/planning_prompt.txt`](session_08f9ee67-3f85-499b-8d6f-c4c523d24c79/planning_prompt.txt): **Purpose:** System documentation. **Idea:** Generate an overview of the multi-agent system itself. **Specialty:** System Analysis/Documentation.
 
-The primary objectives of this project were:
+*   [`session_0b685609-75e1-4b95-8f4b-a59297c851b3/planning_prompt.txt`](session_0b685609-75e1-4b95-8f4b-a59297c851b3/planning_prompt.txt): **Purpose:** Full-stack web development. **Idea:** Create a modern, minimalist landing page for a SaaS product called 'Innovate'. **Specialty:** UI/UX Design and Front-end Engineering.
 
-1.  **Visual System Overview:** To create a clear, accessible, and aesthetically pleasing visual representation of a system's architecture, components, and data flow.
-2.  **Functional Prototype:** To develop an interactive prototype that demonstrates the key functionalities and data interactions of the system.
-3.  **Collaborative Workflow:** To establish and execute an effective collaborative workflow between design and engineering roles, facilitated by precise and iterative prompting.
+*   [`session_2596fc51-ade9-4f1b-8a0e-759bb757776a/planning_prompt.txt`](session_2596fc51-ade9-4f1b-8a0e-759bb757776a/planning_prompt.txt): **Purpose:** Marketing strategy. **Idea:** Develop a content marketing plan for a new tech startup. **Specialty:** Strategic Planning.
 
-### Project Structure and Roles
+*   [`session_2d87dc5e-c6dd-463d-b876-31292f96f40b/planning_prompt.txt`](session_2d87dc5e-c6dd-463d-b876-31292f96f40b/planning_prompt.txt): **Purpose:** Project planning. **Idea:** Generate a creative brief for a new mobile application. **Specialty:** Project Scoping/Creative Direction.
 
-The project followed a structured, step-by-step approach, with distinct roles contributing to the final output:
+*   [`session_3638f976-24e2-441e-b3ab-0b02569e436f/planning_prompt.txt`](session_3638f976-24e2-441e-b3ab-0b02569e436f/planning_prompt.txt): **Purpose:** Social media marketing. **Idea:** Draft a series of engaging posts for a product launch. **Specialty:** Content Creation/Copywriting.
 
-*   **Prompt Engineer (Lyra):** Responsible for defining the overall project workflow, creating detailed prompts for other agents, refining these prompts based on feedback, and ensuring clarity and coherence in instructions.
-*   **Designer (Aurora):** Tasked with creating the visual aspects of the system overview, including layout, color palettes, typography, component design, and UI flows, with a strong emphasis on accessibility and visual balance.
-*   **Engineer (Kodax):** Responsible for translating the system architecture into a functional prototype, implementing responsive design, ensuring accessibility, and providing detailed textual descriptions of the implementation.
+*   [`session_3ea87d07-d569-4a1a-a7da-cfed8b2800eb/planning_prompt.txt`](session_3ea87d07-d569-4a1a-a7da-cfed8b2800eb/planning_prompt.txt): **Purpose:** UI/UX Design. **Idea:** Design a user-friendly settings page for a web application. **Specialty:** UI Design.
 
-### Workflow and Artifacts
+*   [`session_41e37f90-711c-47a7-a14d-de258a35d639/planning_prompt.txt`](session_41e37f90-711c-47a7-a14d-de258a35d639/planning_prompt.txt): **Purpose:** Project management. **Idea:** Outline the steps and structure for a new open-source project. **Specialty:** Project Planning.
 
-The project progressed through several key stages, generating specific artifacts at each step:
+*   [`session_449c0a49-fa4c-43ee-84c2-f18a1834995e/planning_prompt.txt`](session_449c0a49-fa4c-43ee-84c2-f18a1834995e/planning_prompt.txt): **Purpose:** System documentation. **Idea:** Generate an overview of the multi-agent system itself. **Specialty:** System Analysis/Documentation.
 
-1.  **Initial Planning & Task Decomposition (Lyra):**
-    *   `initial_plan.json`: Document outlining the project's high-level steps and assigned roles.
-    *   `step_0_Lyra_result.txt`: A detailed breakdown of the overall project goal into actionable tasks for the Designer and Engineer.
+*   [`session_47d1aa19-2afd-40ce-a826-04a9bbac9de3/planning_prompt.txt`](session_47d1aa19-2afd-40ce-a826-04a9bbac9de3/planning_prompt.txt): **Purpose:** Technical education. **Idea:** Develop a step-by-step tutorial on how to use a new API. **Specialty:** Technical Documentation.
 
-2.  **Designer Prompt Creation (Lyra):**
-    *   `step_1_Lyra_result.txt`: The initial prompt for the Designer, focusing on creating a visually clear and aesthetically pleasing system overview.
+*   [`session_4891412d-256a-419a-9b64-bdc737d87f7f/planning_prompt.txt`](session_4891412d-256a-419a-9b64-bdc737d87f7f/planning_prompt.txt): **Purpose:** Content creation. **Idea:** A thought-leadership blog post on the future of AI in software development. **Specialty:** Writing/Content Marketing.
 
-3.  **System Overview Design (Aurora):**
-    *   `step_2_Aurora_result.txt`: Document containing Aurora's design process, including specifications for the system overview diagram (type, color palette, typography, components, UI flow), a visual description, and a prompt for generating an image of the design.
+*   [`session_4eaf67b7-1fb5-4454-b556-f075c4cf05bc/planning_prompt.txt`](session_4eaf67b7-1fb5-4454-b556-f075c4cf05bc/planning_prompt.txt): **Purpose:** Graphic design. **Idea:** Create logo concepts for a new coffee shop. **Specialty:** Brand Identity/Design.
 
-4.  **Designer Prompt Refinement (Lyra):**
-    *   `step_3_Lyra_result.txt`: A refined prompt for the Designer, incorporating specific requirements for accessibility and justification for design choices.
+*   [`session_64720ce4-2589-4e5c-99ee-1c349b354ee3/planning_prompt.txt`](session_64720ce4-2589-4e5c-99ee-1c349b354ee3/planning_prompt.txt): **Purpose:** UI/UX Design & Implementation. **Idea:** Design and generate code for a user-friendly settings page in a web app. **Specialty:** UI Design and Front-end Engineering.
 
-5.  **Engineer Prompt Creation (Lyra):**
-    *   `step_4_Lyra_result.txt`: The prompt provided to the Engineer, outlining the requirements for creating an interactive prototype with a focus on key functionalities and data interactions.
+*   [`session_75cb66e6-c252-45fc-a2db-1614ba4208cf/planning_prompt.txt`](session_75cb66e6-c252-45fc-a2db-1614ba4208cf/planning_prompt.txt): **Purpose:** System documentation. **Idea:** Generate an overview of the multi-agent system itself. **Specialty:** System Analysis/Documentation.
 
-6.  **System Prototype Implementation (Kodax):**
-    *   `step_5_Kodax_result.txt`: This artifact contains Kodax's implementation plan, the actual code for the prototype (`index.html`, `style.css`), notes on accessibility considerations, a description of the implemented prototype, and suggestions for future development.
+*   [`session_87030952-fe54-4441-907a-c6d26a6928c2/planning_prompt.txt`](session_87030952-fe54-4441-907a-c6d26a6928c2/planning_prompt.txt): **Purpose:** Marketing design. **Idea:** Design a reusable template for an email newsletter. **Specialty:** UI Design for email.
 
-7.  **Engineer Prototype Evaluation & Prompt Refinement (Lyra):**
-    *   `step_6_Lyra_task.txt`: The task assigned to Lyra for evaluating the Engineer's prototype and refining subsequent prompts for further improvements.
+*   [`session_8925e31a-2b12-4f1d-bf0f-c04c0f6bb363/planning_prompt.txt`](session_8925e31a-2b12-4f1d-bf0f-c04c0f6bb363/planning_prompt.txt): **Purpose:** System documentation. **Idea:** Generate an overview of the multi-agent system itself. **Specialty:** System Analysis/Documentation.
 
-### Key Outputs
+*   [`session_8a65c572-bbb7-4b72-a1eb-e268ae55c906/planning_prompt.txt`](session_8a65c572-bbb7-4b72-a1eb-e268ae55c906/planning_prompt.txt): **Purpose:** System documentation. **Idea:** Generate an overview of the multi-agent system itself. **Specialty:** System Analysis/Documentation.
 
-The culmination of this project resulted in:
+*   [`session_8a72efd6-b7d5-4f44-804e-3133fb91e7ef/planning_prompt.txt`](session_8a72efd6-b7d5-4f44-804e-3133fb91e7ef/planning_prompt.txt): **Purpose:** Recruitment/HR. **Idea:** Create a set of technical and behavioral interview questions for a software engineering role. **Specialty:** Technical Recruiting.
 
-*   **A Visual System Architecture:** A well-defined and visually appealing diagram that clearly illustrates the system's structure, components, and data flow.
-*   **An Interactive Prototype:** A functional web-based prototype demonstrating core system features and user interactions, built with a focus on responsiveness and accessibility.
+*   [`session_b208204c-8883-47ac-bc95-74063e6cad9b/planning_prompt.txt`](session_b208204c-8883-47ac-bc95-74063e6cad9b/planning_prompt.txt): **Purpose:** System documentation. **Idea:** Generate an overview of the multi-agent system itself. **Specialty:** System Analysis/Documentation.
 
-This project showcases a structured, iterative, and collaborative approach to developing complex system overviews, balancing design aesthetics with functional implementation.
+*   [`session_be730cb6-c861-435f-8d79-ba0bdb79a1c1/planning_prompt.txt`](session_be730cb6-c861-435f-8d79-ba0bdb79a1c1/planning_prompt.txt): **Purpose:** UI/UX Design & Implementation. **Idea:** Design and generate code for a user-friendly settings page in a web app. **Specialty:** UI Design and Front-end Engineering.
+
+*   [`session_ceb76710-a685-42dd-915a-dfefaa8a2372/planning_prompt.txt`](session_ceb76710-a685-42dd-915a-dfefaa8a2372/planning_prompt.txt): **Purpose:** Web application development. **Idea:** Build a simple, functional calculator web application. **Specialty:** UI Design and Front-end Engineering.
+
+*   [`session_dbaf0bf1-bd16-458d-933b-20ab72161c74/planning_prompt.txt`](session_dbaf0bf1-bd16-458d-933b-20ab72161c74/planning_prompt.txt): **Purpose:** System documentation. **Idea:** Generate an overview of the multi-agent system itself. **Specialty:** System Analysis/Documentation.
+
+*   [`session_dc7b6390-ea62-47eb-ad00-be2f4e12f5d7/planning_prompt.txt`](session_dc7b6390-ea62-47eb-ad00-be2f4e12f5d7/planning_prompt.txt): **Purpose:** System documentation. **Idea:** Generate an overview of the multi-agent system itself. **Specialty:** System Analysis/Documentation.
+
+*   [`session_e994b008-4816-4ecc-bb19-6509bdb8e3f3/planning_prompt.txt`](session_e994b008-4816-4ecc-bb19-6509bdb8e3f3/planning_prompt.txt): **Purpose:** System documentation. **Idea:** Generate an overview of the multi-agent system itself. **Specialty:** System Analysis/Documentation.
+
+*   [`session_f28c8e7e-220a-4309-ac1c-a54b3cd75260/planning_prompt.txt`](session_f28c8e7e-220a-4309-ac1c-a54b3cd75260/planning_prompt.txt): **Purpose:** Web design. **Idea:** A design concept for a modern, minimalist landing page for a SaaS product. **Specialty:** UI Design.

@@ -1,0 +1,332 @@
+{
+  "ui_components": [
+    {
+      "component_name": "Header",
+      "description": "Displays the brand logo and title. Sticky at the top.",
+      "file_path": "src/components/Header/Header.jsx",
+      "module_type": "React Component",
+      "accessibility_considerations": [
+        "Ensure sufficient contrast between text/logo and background (#F8F9FA on #0A2342).",
+        "Provide meaningful alt text for the logo.",
+        "Use semantic HTML (e.g., `<header>`, `<nav>` if applicable)."
+      ],
+      "performance_considerations": [
+        "Optimize logo image size.",
+        "Keep component logic minimal."
+      ],
+      "design_mapping": {
+        "background_color": "#0A2342",
+        "padding": "16px 24px",
+        "logo_size": "auto 40px",
+        "logo_margin_right": "16px",
+        "title_font_size": "1.5rem",
+        "title_font_weight": 700,
+        "title_color": "#F8F9FA"
+      },
+      "responsiveness": {
+        "desktop": "Standard layout.",
+        "mobile": "Header remains consistent, potentially with a smaller logo or adjusted padding."
+      }
+    },
+    {
+      "component_name": "Sidebar",
+      "description": "Collapsible panel displaying conversation history.",
+      "file_path": "src/components/Sidebar/Sidebar.jsx",
+      "module_type": "React Component",
+      "accessibility_considerations": [
+        "Ensure focus states for clickable conversation items.",
+        "Implement ARIA attributes for collapsible functionality.",
+        "Maintain sufficient contrast for list items.",
+        "Provide a clear visual indicator when collapsed/expanded."
+      ],
+      "performance_considerations": [
+        "Virtualization for long conversation lists if performance becomes an issue.",
+        "Debounce or throttle resize handlers if used for collapse/expand."
+      ],
+      "design_mapping": {
+        "background_color": "#F8F9FA",
+        "border_right": "1px solid #E0E0E0",
+        "padding": "16px 0",
+        "list_item_padding": "12px 20px",
+        "list_item_margin_bottom": "8px",
+        "list_item_border_radius": "4px",
+        "hover_background": "#E0E0E0",
+        "active_background": "#2CA58D",
+        "active_color": "#FFFFFF",
+        "text_color": "#333333"
+      },
+      "responsiveness": {
+        "desktop": "Visible sidebar, potentially collapsible via a toggle button.",
+        "mobile": "Sidebar is hidden by default, accessed via a hamburger menu icon in the Header. Collapses into view."
+      }
+    },
+    {
+      "component_name": "ConversationList",
+      "description": "Renders the list of conversation items within the Sidebar.",
+      "file_path": "src/components/Sidebar/ConversationList.jsx",
+      "module_type": "React Component",
+      "accessibility_considerations": [
+        "Each list item should be focusable and keyboard-navigable.",
+        "Use semantic list elements (`<ul>`, `<li>`).",
+        "Ensure clear visual distinction for the currently active conversation."
+      ],
+      "performance_considerations": [
+        "Efficiently render list items. If lists become very long, consider windowing/virtualization."
+      ],
+      "design_mapping": {
+        "item_padding": "12px 20px",
+        "item_margin_bottom": "8px",
+        "item_border_radius": "4px",
+        "hover_background": "#E0E0E0",
+        "active_background": "#2CA58D",
+        "active_color": "#FFFFFF",
+        "text_color": "#333333"
+      },
+      "responsiveness": {
+        "desktop": "Standard list rendering.",
+        "mobile": "List items may have slightly adjusted padding if space is constrained."
+      }
+    },
+    {
+      "component_name": "ConversationListItem",
+      "description": "Represents a single conversation entry in the Sidebar.",
+      "file_path": "src/components/Sidebar/ConversationListItem.jsx",
+      "module_type": "React Component",
+      "accessibility_considerations": [
+        "Must be clickable via mouse and keyboard.",
+        "Use `button` or `a` tag appropriately, with `aria-current` if it's the active item.",
+        "Ensure sufficient touch target size."
+      ],
+      "performance_considerations": [
+        "Memoize component to prevent unnecessary re-renders if conversation titles don't change."
+      ],
+      "design_mapping": {
+        "padding": "12px 20px",
+        "margin_bottom": "8px",
+        "border_radius": "4px",
+        "hover_background": "#E0E0E0",
+        "active_background": "#2CA58D",
+        "active_color": "#FFFFFF",
+        "text_color": "#333333"
+      },
+      "responsiveness": {
+        "desktop": "Standard display.",
+        "mobile": "Slightly adjusted padding if needed."
+      }
+    },
+    {
+      "component_name": "MainContentArea",
+      "description": "The primary area displaying conversation details and the input form.",
+      "file_path": "src/components/MainContentArea/MainContentArea.jsx",
+      "module_type": "React Component",
+      "accessibility_considerations": [
+        "Ensure content within is well-structured (headings, paragraphs).",
+        "The input area at the bottom should be clearly associated with the main content."
+      ],
+      "performance_considerations": [
+        "Manage scrollable content efficiently. Implement lazy loading for images if applicable."
+      ],
+      "design_mapping": {
+        "padding": "32px",
+        "display": "flex",
+        "flex_direction": "column",
+        "justify_content": "space-between",
+        "min_height": "calc(100vh - header_height - footer_height)"
+      },
+      "responsiveness": {
+        "desktop": "Takes up remaining width after sidebar.",
+        "mobile": "Takes up full width when sidebar is collapsed."
+      }
+    },
+    {
+      "component_name": "AIResponseDisplay",
+      "description": "Container for displaying AI-generated content (text, images, etc.).",
+      "file_path": "src/components/AIResponseDisplay/AIResponseDisplay.jsx",
+      "module_type": "React Component",
+      "accessibility_considerations": [
+        "Ensure text content has sufficient contrast.",
+        "Provide alt text for images.",
+        "If displaying data visualizations, provide accessible alternatives or descriptions.",
+        "Use semantic tags like `<article>` or `<blockquote>` where appropriate."
+      ],
+      "performance_considerations": [
+        "Optimize image loading.",
+        "Handle potentially large text responses efficiently (e.g., pagination or scrollable areas)."
+      ],
+      "design_mapping": {
+        "background_color": "#FFFFFF",
+        "border": "1px solid #E0E0E0",
+        "border_radius": "8px",
+        "padding": "24px",
+        "margin_bottom": "24px",
+        "min_height": "200px",
+        "text_color": "#333333",
+        "line_height": "1.7"
+      },
+      "responsiveness": {
+        "desktop": "Standard display.",
+        "mobile": "Padding may adjust slightly."
+      }
+    },
+    {
+      "component_name": "UserInputArea",
+      "description": "Fixed area at the bottom for user input (text field, submit button, file upload).",
+      "file_path": "src/components/UserInputArea/UserInputArea.jsx",
+      "module_type": "React Component",
+      "accessibility_considerations": [
+        "Label the text input field clearly.",
+        "Ensure buttons have clear, descriptive labels.",
+        "Provide keyboard accessibility for all interactive elements.",
+        "Focus management: focus should move to the input field when the component mounts or a new conversation starts."
+      ],
+      "performance_considerations": [
+        "Debounce input if performing real-time validation or suggestions."
+      ],
+      "design_mapping": {
+        "background_color": "#FFFFFF",
+        "border": "1px solid #E0E0E0",
+        "border_radius": "8px",
+        "padding": "16px",
+        "margin_top": "16px",
+        "display": "flex",
+        "align_items": "center",
+        "gap": "16px"
+      },
+      "responsiveness": {
+        "desktop": "Horizontal layout with input and buttons.",
+        "mobile": "Layout may stack vertically if horizontal space is insufficient, or buttons may become smaller."
+      }
+    },
+    {
+      "component_name": "TextInputField",
+      "description": "The primary text input for user prompts.",
+      "file_path": "src/components/common/TextInputField.jsx",
+      "module_type": "React Component",
+      "accessibility_considerations": [
+        "Associates correctly with its label using `htmlFor`.",
+        "Has a clear focus state (`focus_outline`).",
+        "Placeholder text should not be the only visual cue for input type."
+      ],
+      "performance_considerations": [
+        "Use `onChange` handler efficiently. Consider debouncing if used for live suggestions."
+      ],
+      "design_mapping": {
+        "flex_grow": "1",
+        "padding": "12px 16px",
+        "border": "1px solid #CCCCCC",
+        "border_radius": "4px",
+        "font_size": "1rem",
+        "color": "#333333",
+        "placeholder_color": "#999999",
+        "focus_outline": "2px solid #2CA58D"
+      },
+      "responsiveness": {
+        "desktop": "Standard input size.",
+        "mobile": "May adjust padding or font size if necessary."
+      }
+    },
+    {
+      "component_name": "Button",
+      "description": "Generic button component for actions like 'Send' or 'Upload'.",
+      "file_path": "src/components/common/Button.jsx",
+      "module_type": "React Component",
+      "accessibility_considerations": [
+        "Clear visual states for hover, focus, and active.",
+        "Sufficient contrast ratio for text on the button background.",
+        "Appropriate ARIA roles if used for non-standard interactions."
+      ],
+      "performance_considerations": [
+        "Avoid inline event handlers that create new functions on every render; use stable references or bind appropriately."
+      ],
+      "design_mapping": {
+        "color": "#FFFFFF",
+        "padding": "12px 24px",
+        "border_radius": "4px",
+        "font_weight": 600,
+        "hover_background": {
+          "Send": "#258C75",
+          "Upload": "#E0954F"
+        },
+        "focus_outline": "2px solid #0A2342"
+      },
+      "responsiveness": {
+        "desktop": "Standard button size.",
+        "mobile": "Button size might slightly decrease, or text could wrap if very long."
+      }
+    },
+    {
+      "component_name": "Footer",
+      "description": "Displays copyright information at the bottom.",
+      "file_path": "src/components/Footer/Footer.jsx",
+      "module_type": "React Component",
+      "accessibility_considerations": [
+        "Ensure text contrast is sufficient.",
+        "Use semantic HTML (`<footer>`)."
+      ],
+      "performance_considerations": [
+        "Static content, minimal performance impact."
+      ],
+      "design_mapping": {
+        "background_color": "#0A2342",
+        "color": "#F8F9FA",
+        "padding": "16px 24px",
+        "text_align": "center",
+        "font_size": "0.875rem"
+      },
+      "responsiveness": {
+        "desktop": "Standard footer.",
+        "mobile": "Text may center align if not already."
+      }
+    },
+    {
+      "component_name": "LoadingIndicator",
+      "description": "Visual feedback while the AI is processing.",
+      "file_path": "src/components/common/LoadingIndicator.jsx",
+      "module_type": "React Component",
+      "accessibility_considerations": [
+        "Must have an accessible name (e.g., using `aria-label` or visually hidden text).",
+        "Consider using `role='status'` or `aria-live='polite'` to announce loading state to screen readers."
+      ],
+      "performance_considerations": [
+        "Ensure animation is performant (using CSS transforms/opacity)."
+      ],
+      "design_mapping": {
+        "type": "Spinner or pulsating dots",
+        "color": "#2CA58D",
+        "size": "32px",
+        "placement": "Within the AI Response Display area"
+      },
+      "responsiveness": {
+        "desktop": "Standard size.",
+        "mobile": "Standard size."
+      }
+    },
+    {
+      "component_name": "ErrorMessage",
+      "description": "Displays error messages to the user.",
+      "file_path": "src/components/common/ErrorMessage.jsx",
+      "module_type": "React Component",
+      "accessibility_considerations": [
+        "Ensure sufficient contrast for text and background.",
+        "Use `role='alert'` or `aria-live='assertive'` for critical error messages.",
+        "Include an icon for quick visual identification."
+      ],
+      "performance_considerations": [
+        "Minimal impact, primarily rendering static content."
+      ],
+      "design_mapping": {
+        "background_color": "#F44336",
+        "color": "#FFFFFF",
+        "padding": "16px",
+        "border_radius": "4px",
+        "margin_bottom": "16px",
+        "icon": "Exclamation mark"
+      },
+      "responsiveness": {
+        "desktop": "Standard display.",
+        "mobile": "Padding might adjust."
+      }
+    }
+  ],
+  "implementation_notes": "The development will proceed by creating each of these components as reusable React units. Styles will be implemented using CSS Modules or a similar scoped styling solution to adhere to the provided style guide and maintain modularity. Accessibility will be a primary concern during implementation, with focus states, ARIA attributes, and semantic HTML being prioritized. Responsiveness will be handled using media queries and flexible layout techniques, ensuring the UI adapts gracefully across devices. State management will be addressed as needed, potentially starting with React Context for simpler state sharing and scaling to Zustand or Redux Toolkit if complexity increases significantly."
+}

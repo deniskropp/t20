@@ -1,0 +1,284 @@
+{
+  "style_guide": {
+    "brand_identity": {
+      "logo": "Minimalist, abstract mark representing interconnectedness and intelligence. Could be a stylized neural network node or a flowing, continuous line.",
+      "name": "AI Nexus",
+      "tagline": "Intelligent interactions, effortlessly."
+    },
+    "color_palette": {
+      "primary": {
+        "name": "Deep Ocean Blue",
+        "hex": "#0A2342",
+        "rgb": "10, 35, 66",
+        "usage": "Primary UI elements, headers, footers, buttons.",
+        "accessibility_notes": "Sufficient contrast for text when used with lighter backgrounds."
+      },
+      "secondary": {
+        "name": "Calm Teal",
+        "hex": "#2CA58D",
+        "rgb": "44, 165, 141",
+        "usage": "Accent elements, interactive states, highlights.",
+        "accessibility_notes": "Provides visual interest without overwhelming. Good contrast with dark and light backgrounds."
+      },
+      "accent": {
+        "name": "Soft Sunrise Orange",
+        "hex": "#F5A65B",
+        "rgb": "245, 166, 91",
+        "usage": "Call-to-action buttons, notifications, critical alerts.",
+        "accessibility_notes": "Used sparingly for emphasis. Ensure sufficient contrast for text overlays."
+      },
+      "neutral_dark": {
+        "name": "Charcoal Gray",
+        "hex": "#333333",
+        "rgb": "51, 51, 51",
+        "usage": "Body text, secondary text, borders.",
+        "accessibility_notes": "Excellent readability on light backgrounds."
+      },
+      "neutral_light": {
+        "name": "Clean Cloud White",
+        "hex": "#F8F9FA",
+        "rgb": "248, 249, 250",
+        "usage": "Backgrounds, card elements, content areas.",
+        "accessibility_notes": "Provides a clean canvas. Ensure text has adequate contrast."
+      },
+      "feedback_success": {
+        "name": "Verdant Green",
+        "hex": "#4CAF50",
+        "rgb": "76, 175, 80",
+        "usage": "Success messages, positive confirmations."
+      },
+      "feedback_warning": {
+        "name": "Amber Yellow",
+        \u0022hex\u0022: "#FFC107",
+        "rgb": "255, 193, 7",
+        "usage": "Warning messages, pending states."
+      },
+      "feedback_error": {
+        "name": "Fiery Red",
+        "hex": "#F44336",
+        "rgb": "244, 67, 54",
+        "usage": "Error messages, invalid states."
+      }
+    },
+    "typography": {
+      "font_family": {
+        "primary": "'Inter', sans-serif",
+        "secondary": "'DM Sans', sans-serif"
+      },
+      "headings": {
+        "h1": {
+          "font_family": "DM Sans",
+          "font_size": "2.5rem",
+          "font_weight": 700,
+          "line_height": "1.2",
+          "color": "#0A2342"
+        },
+        "h2": {
+          "font_family": "DM Sans",
+          "font_size": "2rem",
+          "font_weight": 700,
+          "line_height": "1.25",
+          "color": "#0A2342"
+        },
+        "h3": {
+          "font_family": "DM Sans",
+          "font_size": "1.75rem",
+          "font_weight": 700,
+          "line_height": "1.3",
+          "color": "#0A2342"
+        },
+        "h4": {
+          "font_family": "Inter",
+          "font_size": "1.5rem",
+          "font_weight": 600,
+          "line_height": "1.35",
+          "color": "#333333"
+        },
+        "h5": {
+          "font_family": "Inter",
+          "font_size": "1.25rem",
+          "font_weight": 600,
+          "line_height": "1.4",
+          "color": "#333333"
+        },
+        "h6": {
+          "font_family": "Inter",
+          "font_size": "1rem",
+          "font_weight": 600,
+          "line_height": "1.5",
+          "color": "#333333"
+        }
+      },
+      "body": {
+        "font_family": "Inter",
+        "font_size": "1rem",
+        "font_weight": 400,
+        "line_height": "1.6",
+        "color": "#333333"
+      },
+      "captions": {
+        "font_family": "Inter",
+        "font_size": "0.875rem",
+        "font_weight": 400,
+        "line_height": "1.5",
+        "color": "#666666"
+      },
+      "accessibility_notes": "Ensure sufficient line height and font sizes for readability. Use font weights strategically for hierarchy. All text must meet WCAG AA contrast ratios against its background."
+    },
+    "spacing": {
+      "base_unit": "8px",
+      "scale": {
+        "xs": "4px",
+        "sm": "8px",
+        "md": "16px",
+        "lg": "24px",
+        "xl": "32px",
+        "xxl": "48px",
+        "xxxl": "64px"
+      },
+      "layout": {
+        "container_padding": "16px (mobile) / 32px (desktop)",
+        "sidebar_width": "250px (collapsed on mobile)",
+        "content_padding": "24px",
+        "input_area_padding": "16px",
+        "response_padding": "20px"
+      },
+      "accessibility_notes": "Consistent spacing aids in predictability and reduces cognitive load. Ensure adequate spacing around interactive elements for touch targets."
+    },
+    "components": {
+      "header": {
+        "background_color": "#0A2342",
+        "padding": "16px 24px",
+        "elements": {
+          "logo": {
+            "size": "auto 40px",
+            "margin_right": "16px"
+          },
+          "title": {
+            "font_size": "1.5rem",
+            "font_weight": 700,
+            "color": "#F8F9FA"
+          }
+        }
+      },
+      "sidebar": {
+        "background_color": "#F8F9FA",
+        "border_right": "1px solid #E0E0E0",
+        "padding": "16px 0",
+        "elements": {
+          "conversation_list_item": {
+            "padding": "12px 20px",
+            "margin_bottom": "8px",
+            "border_radius": "4px",
+            "hover_background": "#E0E0E0",
+            "active_background": "#2CA58D",
+            "active_color": "#FFFFFF",
+            "text_color": "#333333"
+          }
+        }
+      },
+      "main_content": {
+        "padding": "32px"
+      },
+      "ai_response_display": {
+        "background_color": "#FFFFFF",
+        "border": "1px solid #E0E0E0",
+        "border_radius": "8px",
+        "padding": "24px",
+        "margin_bottom": "24px",
+        "min_height": "200px",
+        "elements": {
+          "text_content": {
+            "color": "#333333",
+            "line_height": "1.7"
+          },
+          "image_content": {
+            "max_width": "100%",
+            "height": "auto",
+            "border_radius": "4px"
+          },
+          "data_visualization": {
+            "max_width": "100%",
+            "height": "auto"
+          }
+        }
+      },
+      "user_input_area": {
+        "background_color": "#FFFFFF",
+        "border": "1px solid #E0E0E0",
+        "border_radius": "8px",
+        "padding": "16px",
+        "margin_top": "16px",
+        "display": "flex",
+        "align_items": "center",
+        "gap": "16px",
+        "elements": {
+          "text_input": {
+            "flex_grow": "1",
+            "padding": "12px 16px",
+            "border": "1px solid #CCCCCC",
+            "border_radius": "4px",
+            "font_size": "1rem",
+            "color": "#333333",
+            "placeholder_color": "#999999",
+            "focus_outline": "2px solid #2CA58D"
+          },
+          "submit_button": {
+            "background_color": "#2CA58D",
+            "color": "#FFFFFF",
+            "padding": "12px 24px",
+            "border_radius": "4px",
+            "font_weight": 600,
+            "hover_background": "#258C75",
+            "focus_outline": "2px solid #0A2342"
+          },
+          "upload_button": {
+            "background_color": "#F5A65B",
+            "color": "#FFFFFF",
+            "padding": "12px 24px",
+            "border_radius": "4px",
+            "font_weight": 600,
+            "hover_background": "#E0954F",
+            "focus_outline": "2px solid #0A2342"
+          }
+        }
+      },
+      "footer": {
+        "background_color": "#0A2342",
+        "color": "#F8F9FA",
+        "padding": "16px 24px",
+        "text_align": "center",
+        "font_size": "0.875rem"
+      },
+      "loading_indicator": {
+        "type": "Spinner or pulsating dots",
+        "color": "#2CA58D",
+        "size": "32px",
+        "placement": "Within the AI Response Display area"
+      },
+      "error_message": {
+        "background_color": "#F44336",
+        "color": "#FFFFFF",
+        "padding": "16px",
+        "border_radius": "4px",
+        "margin_bottom": "16px",
+        "icon": "Exclamation mark"
+      },
+      "accessibility_notes": "All interactive elements must have clear focus states. Buttons should have sufficient size and padding. Form fields require clear labels. Color contrast ratios must be met for all text and meaningful graphical elements."
+    },
+    "motion": {
+      "transitions": {
+        "short": "0.2s ease-in-out",
+        "medium": "0.3s ease-in-out",
+        "long": "0.5s ease-in-out"
+      },
+      "effects": [
+        "Subtle fade-in for new AI responses.",
+        "Smooth slide-in for the conversation history panel on desktop.",
+        "Gentle animation for loading indicators."
+      ],
+      "accessibility_notes": "Animations should be subtle and non-disruptive. Provide options to reduce motion if possible."
+    }
+  },
+  "high_fidelity_design_description": "The high-fidelity design for the AI Nexus website embraces a clean, modern, and accessible aesthetic. The interface is built around a primary 'AI Interaction Hub' view, featuring a clear separation of content areas. A collapsible sidebar on the left houses the conversation history, allowing users to easily navigate past interactions. The main content area is dedicated to the current conversation, prominently displaying AI responses in well-defined cards and providing an intuitive input area at the bottom. The color palette, anchored by 'Deep Ocean Blue' and 'Clean Cloud White', creates a professional yet calming environment. 'Calm Teal' is used for interactive elements and highlights, while 'Soft Sunrise Orange' serves as an accent for calls to action. Typography utilizes 'Inter' for body text and UI elements, and 'DM Sans' for headings, ensuring readability and a distinct visual hierarchy. Spacing is managed through an 8px base unit, promoting consistency and breathing room. Interactive elements are designed with generous padding and clear focus states to meet accessibility requirements. The overall feel is one of intelligent simplicity, guiding the user through seamless interaction with the AI."
+}

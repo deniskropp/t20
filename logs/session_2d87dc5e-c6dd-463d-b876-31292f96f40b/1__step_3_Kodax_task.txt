@@ -1,0 +1,253 @@
+The overall goal is: 'Create a dataset for LLM fine-tuning towards internalized TAS expertise'
+
+Your role's specific goal is: 'Implement designs into clean, modular, and performant code, focusing on responsive design and accessibility.'
+Your specific sub-task is: 'Implement the front-end and back-end for the data annotation and review tool based on Aurora's design.'
+
+The team's roles are:
+    {'roles': [{'title': 'Designer', 'description': 'Designs the user interface and experience for the data annotation and review tool, ensuring it is intuitive, efficient, and accessible.'}, {'title': 'Engineer', 'description': 'Builds and maintains the data collection, annotation, and processing pipeline, including the user-facing tool and data packaging scripts.'}, {'title': 'Prompt Engineer', 'description': 'Defines the dataset schema, structures the data generation workflow, engineers prompts for TAS extraction, and oversees the quality control process.'}, {'title': 'Task-Agnostic Step (TAS) extractor', 'description': 'Processes raw input data (e.g., high-level goals, project plans) to identify and extract Task-Agnostic Steps (TAS).'}], 'steps': [{'name': 'Lyra', 'role': 'Prompt Engineer', 'task': 'Define the schema and format for the fine-tuning dataset, specifying the structure of input (e.g., high-level goal) and output (e.g., extracted TAS).'}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': 'Establish criteria for sourcing raw data and create a plan for gathering diverse examples of high-level goals and project descriptions.'}, {'name': 'Aurora', 'role': 'Designer', 'task': 'Design a user-friendly interface for annotating, reviewing, and validating the extracted TAS data to ensure dataset quality.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': "Implement the front-end and back-end for the data annotation and review tool based on Aurora's design."}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': 'Develop and refine the system prompts for uTASe to maximize the accuracy and relevance of the extracted TAS.'}, {'name': 'uTASe', 'role': 'Task-Agnostic Step (TAS) extractor', 'task': 'Execute the primary extraction process by analyzing the sourced raw data to identify and list all Task-Agnostic Steps.'}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': 'Structure the raw output from uTASe into the predefined dataset schema, creating clean prompt-completion pairs for the LLM.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Write and deploy scripts to automate the final packaging of the validated dataset into a machine-readable format (e.g., JSONL) suitable for fine-tuning.'}]}
+
+Please use the following outputs from the other agents as your input:
+
+Artifact from 1__step_0_Lyra_result.txt (Prompt Engineer):
+{
+  "dataset_schema": {
+    "description": "Defines the structure for a single entry (prompt-completion pair) in the LLM fine-tuning dataset, aimed at teaching the model to extract Task-Agnostic Steps (TAS).",
+    "type": "object",
+    "properties": {
+      "prompt": {
+        "type": "string",
+        "description": "The input provided to the LLM. This will be a high-level goal, project description, problem statement, or any text from which Task-Agnostic Steps are to be derived. This serves as the 'input' for the fine-tuning process."
+      },
+      "completion": {
+        "type": "array",
+        "description": "The expected output from the LLM. This is a JSON array of strings, where each string represents a distinct, concise, and actionable Task-Agnostic Step (TAS) extracted from the 'prompt'. This serves as the 'output' for the fine-tuning process.",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "required": [
+      "prompt",
+      "completion"
+    ]
+  },
+  "dataset_format": {
+    "description": "The overall file format for the fine-tuning dataset.",
+    "format_type": "JSONL (JSON Lines)",
+    "details": "The dataset will be a text file where each line is a self-contained JSON object conforming to the 'dataset_schema'. This format is widely compatible with LLM fine-tuning frameworks."
+  },
+  "example_data_point": {
+    "prompt": "Our company aims to launch a new online course platform by the end of Q3 to expand our educational offerings and reach a global audience.",
+    "completion": [
+      "Conduct market research for online course platforms.",
+      "Define target audience and learning objectives.",
+      "Outline core features and technical requirements.",
+      "Develop a content strategy and curriculum framework.",
+      "Establish a project timeline and resource allocation plan.",
+      "Identify potential technology stack and third-party integrations.",
+      "Plan for user experience (UX) and user interface (UI) design.",
+      "Develop a marketing and launch strategy.",
+      "Establish metrics for success and post-launch evaluation."
+    ]
+  }
+}
+
+---
+
+Artifact from 1__step_1_Lyra_result.txt (Prompt Engineer):
+{
+  "raw_data_sourcing_criteria": {
+    "description": "Criteria to ensure the sourced raw data (high-level goals, project descriptions) is suitable for LLM fine-tuning towards internalized TAS expertise.",
+    "criteria_list": [
+      {
+        "name": "Relevance to TAS Extraction",
+        "description": "The input text must be a high-level goal, project description, problem statement, or a similar overarching objective from which discrete, task-agnostic steps can be logically derived. It should not already contain an explicit list of sub-tasks or detailed instructions."
+      },
+      {
+        "name": "Diversity of Domain",
+        "description": "Examples should span a wide range of domains and industries (e.g., technology, business, education, healthcare, creative arts, personal development, non-profit, engineering, research, marketing) to ensure the LLM learns generalized TAS extraction."
+      },
+      {
+        "name": "Diversity of Scope and Complexity",
+        "description": "Prompts should vary in scale, from relatively small, personal projects (e.g., 'Plan a weekend trip') to large-scale organizational initiatives (e.g., 'Launch a new global product line') to reflect different levels of complexity in goal decomposition."
+      },
+      {
+        "name": "Clarity and Actionability",
+        "description": "While high-level, the prompt must be sufficiently clear and imply a pathway towards action or achievement. Avoid overly ambiguous, abstract, or purely factual statements that do not lend themselves to step-by-step breakdown."
+      },
+      {
+        "name": "Natural Language Representation",
+        "description": "Data should be in natural, idiomatic language, reflecting how real-world goals and project descriptions are typically articulated, rather than highly structured or technical jargon unless it's domain-specific and representative."
+      }
+    ]
+  },
+  "data_gathering_plan": {
+    "description": "A phased plan for systematically gathering diverse examples of high-level goals and project descriptions.",
+    "plan_phases": [
+      {
+        "phase_name": "Phase 1: Internal Brainstorming & Generation (Seed Data)",
+        "details": "Team members (Lyra, Aurora, Kodax, uTASe) will individually generate 10-20 unique high-level goals or project descriptions based on their experience or imagination. This initial set will serve as controlled seed data to refine understanding of criteria and prompt characteristics.",
+        "output": "Initial corpus of diverse, internally consistent prompts."
+      },
+      {
+        "phase_name": "Phase 2: Curated Public & Semi-Public Sources (Targeted Collection)",
+        "details": "Systematically collect prompts from various external sources, focusing on diversity and adherence to criteria. Sources include:\n- **Business/Tech:** Company 'About Us' pages (rephrased as goals), product roadmaps, startup pitch decks, project management blogs ('How to start X', 'Strategic planning examples'), open-source project READMEs/vision docs.\n- **Education/Non-Profit:** Course objectives, grant proposals, NGO mission statements, campaign goals.\n- **Creative/Personal:** Book/movie synopses, personal development goals (e.g., 'Learn a new skill', 'Complete a marathon'), DIY project descriptions.\n- **News/Publications:** Articles detailing new initiatives, strategies, or large-scale projects.",
+        "search_keywords": [
+          "project proposal example",
+          "strategic objective",
+          "business plan summary",
+          "product vision statement",
+          "organizational goal",
+          "problem statement",
+          "project brief",
+          "mission statement"
+        ],
+        "output": "Large, diverse corpus of real-world-inspired prompts."
+      },
+      {
+        "phase_name": "Phase 3: Synthetic Data Augmentation (Scalability & Edge Cases - Conditional)",
+        "details": "If the real-world data is insufficient in quantity or lacks diversity in specific areas, LLMs will be used to generate additional prompts. This process will be carefully controlled to ensure generated data aligns with established criteria and avoids 'model collapse' by leveraging existing high-quality examples as few-shot prompts. This phase is conditional upon assessment of data gathered in Phases 1 & 2.",
+        "output": "Augmented dataset, filling gaps in domain/scope diversity."
+      }
+    ],
+    "review_and_selection_process": {
+      "process": "All gathered prompts will undergo a rigorous review by Lyra (Prompt Engineer), and potentially other team members, to ensure strict adherence to the defined 'raw_data_sourcing_criteria'. Prompts that are too specific, too vague, or outside the scope of high-level goals will be discarded or refined. The aim is to create a balanced distribution across domains, scopes, and linguistic styles before proceeding to TAS extraction."
+    }
+  }
+}
+
+---
+
+Artifact from 1__step_2_Aurora_result.txt (Designer):
+{
+  "design_concept": {
+    "name": "TAScribe Studio",
+    "tagline": "Refine, Annotate, Empower: Crafting Clarity in Every Step.",
+    "description": "TAScribe Studio is designed to be an intuitive and aesthetically pleasing platform for annotating, reviewing, and validating extracted Task-Agnostic Steps (TAS). It prioritizes clarity, efficiency, and user comfort, ensuring high-quality data for LLM fine-tuning. The interface employs a clean, minimalist design with subtle natural elements to foster focus and reduce cognitive load.",
+    "aesthetic_principles": [
+      "Minimalist and Clean: Uncluttered layouts, ample whitespace.",
+      "Naturally Inspired: Soft, muted colors reminiscent of natural landscapes.",
+      "Focus-Oriented: Clear visual hierarchy, intuitive controls.",
+      "Accessible: High contrast, readable typography, keyboard navigation support."
+    ]
+  },
+  "color_palette": {
+    "primary": "#4CAF50",
+    "secondary": "#8BC34A",
+    "accent": "#FFC107",
+    "background": "#F5F5F5",
+    "surface": "#FFFFFF",
+    "text_primary": "#212121",
+    "text_secondary": "#757575",
+    "border": "#E0E0E0"
+  },
+  "typography": {
+    "font_family": "'Inter', sans-serif",
+    "headings": {
+      "font_weight": "700",
+      "size": "2.25rem"
+    },
+    "subheadings": {
+      "font_weight": "600",
+      "size": "1.5rem"
+    },
+    "body": {
+      "font_weight": "400",
+      "size": "1rem",
+      "line_height": "1.6"
+    },
+    "code": {
+      "font_family": "'Fira Code', monospace",
+      "font_weight": "400",
+      "size": "0.875rem"
+    }
+  },
+  "logo": {
+    "description": "A stylized 'T' formed by interlocking, smooth, leaf-like shapes, suggesting growth and structured processes. The colors would transition subtly from primary to secondary.",
+    "visual_concept": "Abstract, organic 'T' mark."
+  },
+  "ui_flow": {
+    "screens": [
+      {
+        "name": "Dashboard / Project Selection",
+        "description": "Users land here to view existing annotation projects or create a new one. Displays project status, completion percentage, and quality metrics.",
+        "components": [
+          "Project List (cards or table)",
+          "Create New Project Button",
+          "Search/Filter Options"
+        ]
+      },
+      {
+        "name": "Annotation Interface",
+        "description": "The core workspace for reviewing and annotating TAS data. It presents the 'prompt' and allows users to edit, add, or remove 'completion' TAS items.",
+        "components": [
+          {
+            "type": "Prompt Display Area",
+            "details": "Clearly shows the 'prompt' text with a subtle background, easily distinguishable from editable areas. Includes metadata like source or ID."
+          },
+          {
+            "type": "Completion List Editor",
+            "details": "Displays the extracted TAS as a sortable, editable list. Each item has controls for editing, deleting, and reordering. Supports drag-and-drop for reordering. A clear 'Add TAS' button is present."
+          },
+          {
+            "type": "Validation Controls",
+            "details": "Buttons for 'Approve', 'Reject', 'Flag for Review'. Clear visual feedback for the status of each item and the overall prompt."
+          },
+          {
+            "type": "Navigation",
+            "details": "Buttons for 'Previous Prompt', 'Next Prompt', 'Save Progress'."
+          },
+          {
+            "type": "Feedback/Comments",
+            "details": "An optional area for annotators to leave notes or justifications for their actions."
+          }
+        ]
+      },
+      {
+        "name": "Review Interface",
+        "description": "Similar to the Annotation Interface, but focused on review. Reviewers see the original prompt, the annotated completion, and the annotator's notes.",
+        "components": [
+          "Prompt Display Area (Read-only)",
+          "Annotated Completion List (Read-only, with annotations highlighted)",
+          "Reviewer Controls",
+          "details": "Buttons for 'Approve', 'Request Changes', 'Reject'. Ability to add comments or suggest edits."
+        ]
+      },
+      {
+        "name": "Validation Interface",
+        "description": "Final stage where a senior reviewer or Lyra validates the annotations and reviews. Presents the prompt, annotated completion, and reviewer feedback.",
+        "components": [
+          "Prompt Display Area (Read-only)",
+          "Annotated Completion List (Read-only)",
+          "Reviewer Feedback Display (Read-only)",
+          "Final Validation Controls",
+          "details": "Buttons for 'Finalize', 'Send Back to Review', 'Reject Entire Entry'."
+        ]
+      }
+    ],
+    "interactions": [
+      "Clicking on a TAS item in the completion list opens an inline editor.",
+      "Drag and drop TAS items to reorder.",
+      "Clear visual cues (e.g., color changes, icons) for actions like editing, deleting, approving.",
+      "Real-time progress saving and feedback."
+    ],
+    "accessibility_considerations": [
+      "WCAG 2.1 AA compliance.",
+      "Sufficient color contrast ratios for text and interactive elements.",
+      "Keyboard navigability for all interactive components.",
+      "ARIA attributes for screen reader compatibility.",
+      "Clear focus indicators.",
+      "Scalable text sizes."
+    ]
+  },
+  "brand_kit_summary": {
+    "logo_usage": "Primary logo for branding, secondary mark for favicons or small UI elements.",
+    "color_application": "Primary/Secondary for key actions and branding elements. Accent for highlights or calls to action. Neutrals for backgrounds and text.",
+    "typography_application": "Inter for UI text and general content. Fira Code for code snippets or technical data display.",
+    "tone_of_voice": "Professional, clear, encouraging, precise."
+  }
+}
+
+
+
+Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project.

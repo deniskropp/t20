@@ -1,0 +1,60 @@
+{
+  "strategic_adjustment_system": {
+    "name": "Prompt Refinement Engine (PRE)",
+    "purpose": "To programmatically and intelligently modify the core humor generation AI's system prompt ('Cogito') based on analyzed user feedback insights, ensuring continuous enhancement of humor quality and adherence to 'genuinely fresh' criteria.",
+    "inputs": {
+      "current_core_humor_prompt": {
+        "type": "string",
+        "description": "The complete, current system prompt being used by the humor generation AI (e.g., 'Cogito' persona prompt).",
+        "source": "Persistent storage managed by Kodax, updated after each successful adjustment."
+      },
+      "actionable_feedback_insights": {
+        "type": "array",
+        "description": "A list of structured insights derived from the feedback analysis pipeline, each containing a problem, evidence, relevant prompt rule, and a specific modification suggestion.",
+        "structure_reference": "Artifact from 1__step_4_Lyra_result.txt, 'feedback_loop_architecture.actionable_insights_generation.insight_structure'",
+        "source": "Output from Lyra's 'feedback data analysis' module (Kodax's 'insight_generation_module')."
+      }
+    },
+    "outputs": {
+      "newly_modified_prompt": {
+        "type": "string",
+        "description": "The complete, revised system prompt for the humor generation AI, incorporating all applicable adjustments.",
+        "destination": "Kodax's backend system for updating the AI service and persistent storage."
+      },
+      "adjustment_log": {
+        "type": "object",
+        "description": "A record detailing the changes made, the insights applied, and the prompt version ID, for audit and rollback purposes.",
+        "destination": "Dedicated logging/versioning database table."
+      }
+    },
+    "core_component": {
+      "name": "Prompt Modification Agent (PMA)",
+      "description": "An AI agent (LLM) specifically tasked with interpreting actionable insights and applying precise modifications to the core humor generation prompt.",
+      "operational_logic": [
+        "1.  **Insight Prioritization:** The PMA will first sort the `actionable_feedback_insights` by 'priority' (Critical > High > Medium > Low) to ensure the most urgent and impactful changes are addressed first.",
+        "2.  **Iterative Modification:** For each prioritized insight, the PMA will process the `current_core_humor_prompt`:",
+        "    *   It will identify the `relevant_prompt_rule` or section within the prompt.",
+        "    *   It will then apply the `actionable_prompt_modification_suggestion` to that specific part of the prompt. This may involve: adding new sentences, rephrasing existing ones, inserting new bullet points, or removing outdated instructions.",
+        "    *   The modification should be as targeted and concise as possible, avoiding verbose additions or general statements.",
+        "    *   The PMA will ensure the modified text seamlessly integrates into the existing prompt's tone, formatting, and overall coherence.",
+        "3.  **Prompt Integrity Check:** After all modifications, the PMA will perform a final review to ensure the prompt remains coherent, grammatically correct, and logically sound, with no conflicting instructions introduced.",
+        "4.  **Output Generation:** The PMA will output the final, modified prompt string."
+      ],
+      "system_prompt_for_pma": "You are a highly precise Prompt Refinement AI, specializing in optimizing AI system prompts. Your task is to modify a given 'CURRENT_HUMOR_GENERATION_PROMPT' based on a list of 'ACTIONABLE_INSIGHTS'.\n\n**Instructions:**\n1.  **Understand the Goal:** Your overarching goal is to enhance the humor generation AI's performance and adherence to its 'genuinely fresh' humor criteria, as guided by the provided insights.\n2.  **Input Structure:** You will receive the `CURRENT_HUMOR_GENERATION_PROMPT` as a single text block, followed by a JSON array of `ACTIONABLE_INSIGHTS`.\n3.  **Prioritization:** If multiple insights are provided, process them in descending order of their 'priority' (Critical > High > Medium > Low). If priorities are equal, process them in the order they appear.\n4.  **Targeted Modification:** For each insight:\n    *   Locate the specific section or rule identified by `relevant_prompt_rule` within the `CURRENT_HUMOR_GENERATION_PROMPT`. If 'relevant_prompt_rule' points to a general area (e.g., 'Joke Structure and Content Parameters') or a specific numbered rule (e.g., '1. Originality First'), find that precise location.\n    *   Carefully apply the instruction contained in `actionable_prompt_modification_suggestion`. This instruction will be a directive on *how* to modify the prompt (e.g., 'Refine X to include Y', 'Add Z to rule A', 'Remove B from section C').\n    *   Ensure the modification is syntactically correct, grammatically sound, and seamlessly integrates with the existing prompt text. Do not introduce new formatting unless explicitly instructed by the suggestion.\n    *   If a suggestion requires adding content, append it logically within the specified rule or section. If it requires refinement, directly modify the relevant sentence(s) or phrase(s).\n    *   Do NOT add any introductory or concluding remarks, explanations, or conversational text. Your output must be *only* the complete, revised `CURRENT_HUMOR_GENERATION_PROMPT` text.\n5.  **Maintain Persona and Core Identity:** Ensure that any modifications maintain the 'Cogito' persona (Absurdist Philosopher) and the core principles of 'genuinely fresh' humor (Originality, Subvert Expectations, Juxtapose Disparate Ideas, Observational Depth, Avoid Clichés, No Offensive Content) unless an insight explicitly directs a change to these fundamental aspects.\n\n**Example of how to apply a modification:**\nIf `relevant_prompt_rule` is 'Subvert Expectations' and `actionable_prompt_modification_suggestion` is 'Refine the 'Subvert Expectations' rule to include: 'Explicitly generate 2-3 common, predictable twists for the given setup internally, then ensure your final joke's punchline is fundamentally different and more unexpected than all of them. Consider introducing a surreal or illogical element that defies initial setup expectations.'' then you would find the 'Subvert Expectations' rule in the current prompt and append/integrate the new instruction into its description.\n\n**Your output should be the full, modified system prompt. Nothing else.**"
+    },
+    "integration_points": {
+      "input_from": "Kodax's 'feedback data processing pipeline' (specifically, the 'insight_generation_module' output).",
+      "output_to": "Kodax's 'Integrate the strategic adjustment system into the back-end' task, which will then update the AI service with the `newly_modified_prompt`.",
+      "dependency_on_prompt_versioning": "Requires Kodax to store and retrieve the `current_core_humor_prompt` and persist the `newly_modified_prompt`."
+    },
+    "versioning_and_audit_trail": {
+      "description": "Each prompt modification will result in a new version of the 'Cogito' prompt. This system will facilitate tracking of prompt evolution.",
+      "details": [
+        "**Prompt ID & Timestamp:** Each new prompt generated by the PRE will be assigned a unique ID and a timestamp.",
+        "**Associated Insights:** The `adjustment_log` will link the new prompt version to the specific `actionable_feedback_insights` that triggered its creation.",
+        "**Rollback Capability:** Storing previous prompt versions enables quick rollback if a new prompt version performs worse.",
+        "**Performance Tracking:** Kodax's implementation should link joke generation to the prompt version used, allowing quantitative analysis (from Lyra's previous step) to track performance metrics per prompt version over time."
+      ]
+    }
+  }
+}

@@ -1,0 +1,33 @@
+[
+  {
+    "id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+    "name": "Scope Project and Design Foundation",
+    "description": "Define the project's objectives, target audience, core features, and technical constraints. Establish the foundational architectural decisions and user experience principles that will guide the development process. This includes initial research, defining project scope, and creating a high-level plan.",
+    "category": "Init",
+    "purpose": "Establish the project's direction and fundamental design principles.",
+    "keywords": [
+      "scoping",
+      "foundational design",
+      "project planning",
+      "architecture",
+      "user experience"
+    ],
+    "applicability_notes": "This step is crucial for any new project to ensure a clear understanding of goals and a solid starting point. It applies across all domains and project types.",
+    "examples_of_usage": [
+      "Defining the features and target users for a new mobile application.",
+      "Outlining the technical architecture and key performance indicators for a web service.",
+      "Establishing the core functionality and user journey for a software tool."
+    ],
+    "typical_inputs": [
+      "Project idea or business requirement",
+      "Stakeholder input",
+      "Market research"
+    ],
+    "typical_outputs": [
+      "Project scope document",
+      "High-level architecture plan",
+      "Initial user personas",
+      "Feasibility study"
+    ]
+  }
+]

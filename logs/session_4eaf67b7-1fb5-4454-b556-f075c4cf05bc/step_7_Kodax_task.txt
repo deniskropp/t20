@@ -1,0 +1,1313 @@
+The overall goal is: 'Create a website that is a frontend to an AI system like this.'
+
+Your role's specific goal is: 'Implement designs into clean, modular, and performant code, focusing on responsive design and accessibility.'
+Your specific sub-task is: 'Integrate the frontend components with the AI system's backend API. Implement robust state management to handle user input, API loading states, error handling, and streaming responses.'
+
+The team's roles are:
+    {'roles': [{'title': 'Designer', 'description': 'Generate aesthetic layouts, color palettes, typography, and UI flows, ensuring accessibility and visual balance.'}, {'title': 'Engineer', 'description': 'Implement designs into clean, modular, and performant code, focusing on responsive design and accessibility.'}, {'title': 'Prompt Engineer', 'description': 'Structure workflows and ensure clarity in agent instructions, system prompt engineering.'}, {'title': 'Task-Agnostic Step (TAS) extractor (flash)', 'description': "Identify and return each 'Task Agnostic Step' (TAS) towards the high-level goal."}], 'steps': [{'name': 'uTASe', 'role': 'Task-Agnostic Step (TAS) extractor (flash)', 'task': "Analyze the high-level goal 'Create a website that is a frontend to an AI system' and extract the primary project phases: 1. Planning & Scoping, 2. Design & Prototyping, 3. Development & Integration, 4. Testing & Refinement, 5. Deployment."}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': 'Based on the phases from uTASe, create a detailed project brief. Define the core features of the website, the target user, and the key interaction points with the AI. Draft initial system prompts for each team member to align them with this brief.'}, {'name': 'Aurora', 'role': 'Designer', 'task': "Create low-fidelity wireframes and user flow diagrams for the AI frontend. Focus on the primary user journey: inputting a request, viewing the AI's response, and managing the conversation history."}, {'name': 'Aurora', 'role': 'Designer', 'task': 'Develop a high-fidelity visual design and a comprehensive style guide based on the approved wireframes. The guide must include color palette, typography, spacing, and component styles, with a strong emphasis on accessibility (WCAG 2.1 AA).'}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Set up the frontend development environment. Select a modern JavaScript framework (e.g., React, Svelte), establish a scalable project architecture, and configure version control with Git.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Translate the high-fidelity designs from Aurora into clean, modular, and responsive UI components. Ensure all components are accessible and performant.'}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': "Design and refine the core system prompts that will govern the AI's behavior and personality on the website. Collaborate with Kodax to define the API contract for sending prompts and receiving structured responses."}, {'name': 'Kodax', 'role': 'Engineer', 'task': "Integrate the frontend components with the AI system's backend API. Implement robust state management to handle user input, API loading states, error handling, and streaming responses."}, {'name': 'Aurora', 'role': 'Designer', 'task': 'Conduct a thorough design review of the implemented frontend. Create a list of discrepancies between the design and the implementation for Kodax to address, ensuring visual consistency and adherence to the UX flow.'}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': "Perform user acceptance testing on the integrated system, focusing on the quality and relevance of the AI's responses. Iterate on the system prompts based on test results to improve the overall conversational experience."}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Address feedback from the design and prompt engineering reviews. Conduct final cross-browser and performance testing, then deploy the application to a production environment.'}, {'name': 'uTASe', 'role': 'Task-Agnostic Step (TAS) extractor (flash)', 'task': 'Perform a final review of the deployed website to verify that it successfully functions as a frontend to the AI system, thus confirming the fulfillment of the high-level goal.'}]}
+
+Please use the following outputs from the other agents as your input:
+
+Artifact from step_0_uTASe_result.txt (Task-Agnostic Step (TAS) extractor (flash)):
+[
+  {
+    "id": "7d28b9f0-1b2a-4c3d-8e4f-9a0b1c2d3e4f",
+    "name": "Define Project Scope",
+    "description": "Clearly articulate the high-level goal, identify the target audience, and outline the core functionalities and constraints of the project. This involves understanding the purpose of the AI system and how the website will serve as its frontend interface.",
+    "category": "Init",
+    "purpose": "Establish the foundational understanding and boundaries of the project.",
+    "keywords": [
+      "scoping",
+      "planning",
+      "goal definition",
+      "requirements gathering"
+    ],
+    "applicability_notes": "This step is crucial for any project, ensuring alignment among stakeholders before design or development begins. It sets the direction and feasibility of the entire endeavor.",
+    "examples_of_usage": [
+      "For an AI chatbot website, this step would define the chatbot's domain, user interaction model, and expected conversational capabilities.",
+      "For an AI image generation frontend, this step would specify the types of images to be generated, input parameters, and output formats.",
+      "For an AI data analysis tool, this step would outline the data sources, analysis types, and visualization requirements."
+    ],
+    "typical_inputs": [
+      "High-level project objective",
+      "Stakeholder requirements",
+      "Understanding of the AI system's capabilities"
+    ],
+    "typical_outputs": [
+      "Project brief",
+      "Defined scope document",
+      "Key features list"
+    ]
+  },
+  {
+    "id": "8e39c8a1-2c3b-4d4e-9f5a-0b1c2d3e4f5a",
+    "name": "Design User Interface and Experience",
+    "description": "Create wireframes, mockups, and prototypes to define the visual layout, user flow, and interaction design of the website. This includes designing how users will interact with the AI system, input data, and view results, ensuring an intuitive and engaging experience.",
+    "category": "Design",
+    "purpose": "Translate project requirements into a user-centered visual and interactive design.",
+    "keywords": [
+      "UI design",
+      "UX design",
+      "prototyping",
+      "wireframing",
+      "user flow"
+    ],
+    "applicability_notes": "This phase is iterative and involves close collaboration with engineers and prompt engineers to ensure the design is technically feasible and effectively communicates with the AI.",
+    "examples_of_usage": [
+      "Designing input fields for text prompts or data uploads.",
+      "Creating visual representations for AI-generated content (text, images, data visualizations).",
+      "Mapping out navigation and controls for managing AI interactions or conversation history."
+    ],
+    "typical_inputs": [
+      "Project brief",
+      "Defined scope document",
+      "User personas"
+    ],
+    "typical_outputs": [
+      "Wireframes",
+      "Mockups",
+      "Interactive prototypes",
+      "Style guide"
+    ]
+  },
+  {
+    "id": "9f4a0b1c-3d4e-5f6a-0b1c-2d3e4f5a6b",
+    "name": "Develop Frontend Application",
+    "description": "Build the website's user interface based on the approved designs, using appropriate web technologies and frameworks. This involves coding the visual elements, implementing user interactions, and setting up the project structure for scalability and maintainability.",
+    "category": "Development",
+    "purpose": "Construct the functional user-facing part of the website.",
+    "keywords": [
+      "frontend development",
+      "coding",
+      "web development",
+      "UI implementation",
+      "framework integration"
+    ],
+    "applicability_notes": "Emphasis should be placed on creating reusable components, ensuring responsiveness across devices, and adhering to accessibility standards.",
+    "examples_of_usage": [
+      "Implementing forms for user input.",
+      "Displaying dynamic content received from the AI.",
+      "Creating interactive elements for user control."
+    ],
+    "typical_inputs": [
+      "Approved UI/UX designs",
+      "Style guide",
+      "Technical stack selection"
+    ],
+    "typical_outputs": [
+      "Implemented UI components",
+      "Frontend codebase",
+      "Configured development environment"
+    ]
+  },
+  {
+    "id": "0a5b1c2d-4e5f-6a7b-0b1c-2d3e4f5a6b7c",
+    "name": "Integrate with AI System",
+    "description": "Connect the frontend application with the backend AI system's API. This involves handling data exchange, managing API requests and responses, and ensuring smooth communication between the user interface and the AI logic.",
+    "category": "Integration",
+    "purpose": "Enable the frontend to communicate with and utilize the AI system's capabilities.",
+    "keywords": [
+      "API integration",
+      "backend connection",
+      "data exchange",
+      "AI communication"
+    ],
+    "applicability_notes": "This step requires careful consideration of API contracts, error handling, and potentially real-time data streaming, depending on the AI system's nature.",
+    "examples_of_usage": [
+      "Sending user prompts to the AI API.",
+      "Receiving and displaying AI-generated responses.",
+      "Handling authentication and authorization for API access."
+    ],
+    "typical_inputs": [
+      "Frontend codebase",
+      "AI system API documentation",
+      "Authentication credentials"
+    ],
+    "typical_outputs": [
+      "Functional API integration",
+      "Data flow between frontend and AI",
+      "Error handling mechanisms"
+    ]
+  },
+  {
+    "id": "1b6c2d3e-5f6a-7b8c-0b1c-2d3e4f5a6b7c8d",
+    "name": "Test and Refine Functionality",
+    "description": "Conduct comprehensive testing of the integrated website, including functional testing, usability testing, performance testing, and cross-browser compatibility. Identify bugs, usability issues, and areas for improvement, and iterate on the design and development to address them.",
+    "category": "Testing",
+    "purpose": "Ensure the website is functional, user-friendly, and performs as expected.",
+    "keywords": [
+      "testing",
+      "quality assurance",
+      "bug fixing",
+      "usability testing",
+      "performance optimization"
+    ],
+    "applicability_notes": "Feedback loops with designers and prompt engineers are critical during this phase to refine both the user experience and the AI's output quality.",
+    "examples_of_usage": [
+      "Testing different user input scenarios to verify AI responses.",
+      "Checking UI responsiveness on various devices and screen sizes.",
+      "Evaluating loading times and overall application performance."
+    ],
+    "typical_inputs": [
+      "Integrated frontend and AI system",
+      "Test cases",
+      "User feedback"
+    ],
+    "typical_outputs": [
+      "Bug reports",
+      "Usability feedback",
+      "Performance metrics",
+      "Refined codebase and designs"
+    ]
+  },
+  {
+    "id": "2c7d3e4f-6f7a-8b9c-0b1c-2d3e4f5a6b7c8d9e",
+    "name": "Deploy Website",
+    "description": "Prepare and launch the website to a production environment. This includes setting up hosting, configuring the deployment pipeline, and making the website accessible to end-users.",
+    "category": "Deployment",
+    "purpose": "Make the AI frontend website publicly available.",
+    "keywords": [
+      "deployment",
+      "launch",
+      "hosting",
+      "production environment",
+      "release management"
+    ],
+    "applicability_notes": "Post-deployment monitoring and maintenance are essential to ensure continued functionality and user satisfaction.",
+    "examples_of_usage": [
+      "Deploying to cloud hosting platforms like AWS, Azure, or Google Cloud.",
+      "Setting up CI/CD pipelines for automated deployments.",
+      "Configuring domain names and SSL certificates."
+    ],
+    "typical_inputs": [
+      "Tested and refined codebase",
+      "Hosting environment",
+      "Deployment strategy"
+    ],
+    "typical_outputs": [
+      "Live website",
+      "Deployment logs",
+      "Monitoring setup"
+    ]
+  },
+  {
+    "id": "3d8e4f5a-7a8b-9c0d-0b1c-2d3e4f5a6b7c8d9e0f",
+    "name": "Verify Goal Achievement",
+    "description": "Conduct a final review of the deployed website to confirm it effectively functions as a frontend to the AI system and meets all the initial high-level goals and requirements.",
+    "category": "Validation",
+    "purpose": "Confirm the successful fulfillment of the overall project objective.",
+    "keywords": [
+      "verification",
+      "validation",
+      "goal confirmation",
+      "final review",
+      "project closure"
+    ],
+    "applicability_notes": "This step ensures that the project has successfully delivered on its intended purpose and provides a basis for future iterations or improvements.",
+    "examples_of_usage": [
+      "Testing the end-to-end user journey on the live site.",
+      "Confirming that the website accurately represents the AI's capabilities.",
+      "Gathering initial user feedback on the live product."
+    ],
+    "typical_inputs": [
+      "Live website",
+      "Original high-level goal",
+      "Project requirements"
+    ],
+    "typical_outputs": [
+      "Project completion report",
+      "Confirmation of goal achievement",
+      "Lessons learned"
+    ]
+  }
+]
+
+---
+
+Artifact from step_1_Lyra_result.txt (Prompt Engineer):
+{
+  "project_brief": {
+    "overall_goal": "To create a highly intuitive, responsive, and accessible web frontend for an AI system that enables users to interact seamlessly with AI capabilities, manage their interactions, and receive diverse AI-generated outputs.",
+    "core_features": [
+      "Intuitive Input Interface: Dedicated areas for users to submit requests to the AI (e.g., text prompts, file uploads, parameter forms).",
+      "Dynamic Output Display: Clear and adaptable presentation of AI responses, accommodating various formats (text, images, structured data, code, etc.).",
+      "Interaction History Management: Functionality to view, save, and manage past conversations or queries with the AI.",
+      "Real-time Feedback: Visual indicators for AI processing, loading states, and clear error messages.",
+      "Responsiveness & Accessibility: Full functionality and aesthetic appeal across all devices (desktop, tablet, mobile), adhering strictly to WCAG 2.1 AA standards."
+    ],
+    "target_user": {
+      "primary": "General users seeking to leverage AI for specific tasks (e.g., content creation, data summarization, creative exploration) who prioritize ease of use and clear communication.",
+      "secondary": "Developers or researchers who may use the platform for testing, demonstration, or specific AI model interaction, requiring robust functionality."
+    },
+    "key_interaction_points_with_ai": [
+      "Prompt Submission: User initiates an interaction by submitting a query or data.",
+      "AI Processing Indication: System provides immediate visual feedback that the AI is processing the request.",
+      "Response Presentation: AI-generated output is displayed clearly and appropriately formatted.",
+      "Iterative Interaction: Users can provide follow-up prompts or refine previous requests.",
+      "History Access: Users can easily review and manage their past interactions.",
+      "Error Communication: The system gracefully handles and communicates any AI processing failures or limitations."
+    ]
+  },
+  "initial_system_prompts": [
+    {
+      "role": "Designer",
+      "name": "Aurora",
+      "prompt": "Based on the project brief, create low-fidelity wireframes and user flow diagrams for the AI frontend. Prioritize the core user journey: submitting an AI request, viewing diverse AI responses (e.g., text, image, data visualization), and managing interaction history. Ensure designs inherently support responsiveness and clearly indicate AI processing states and error feedback."
+    },
+    {
+      "role": "Engineer",
+      "name": "Kodax",
+      "prompt": "Based on the project brief, set up the frontend development environment. Select a modern JavaScript framework (e.g., React, Svelte, Vue) and establish a scalable, modular project architecture. Configure version control (Git) and prepare the foundation for seamless integration with a RESTful or GraphQL AI API, anticipating varied AI output structures."
+    },
+    {
+      "role": "Prompt Engineer",
+      "name": "Lyra",
+      "prompt": "Based on the project brief, define the initial core capabilities and a preliminary persona for the AI. Draft high-level system prompts to guide the AI's behavior, focusing on clarity, helpfulness, and safety. Identify initial API contract considerations for prompt submission and structured AI response reception, ensuring alignment with the defined user interaction points."
+    }
+  ]
+}
+
+---
+
+Artifact from step_2_Aurora_result.txt (Designer):
+{
+  "wireframes": {
+    "description": "Low-fidelity wireframes focusing on the primary user journey: inputting a request, viewing the AI's response, and managing conversation history.",
+    "screens": [
+      {
+        "name": "AI Interaction Hub",
+        "layout": "Single column, centered content for focus.",
+        "elements": [
+          {
+            "type": "Header",
+            "content": "AI Interaction Hub - Logo Placeholder",
+            "placement": "Top, sticky"
+          },
+          {
+            "type": "Conversation History Panel",
+            "content": "List of past conversation titles/summaries.",
+            "placement": "Left sidebar (collapsible on mobile)",
+            "interaction": "Clicking a history item loads it into the main view."
+          },
+          {
+            "type": "Main Content Area",
+            "content": [
+              {
+                "type": "AI Response Display",
+                "content": "Placeholder for AI-generated text, images, or data. Includes scrollbar if content exceeds height.",
+                "state": "Initially empty or shows welcome message."
+              },
+              {
+                "type": "User Input Area",
+                "content": [
+                  {
+                    "type": "Text Input Field",
+                    "placeholder": "Type your request here..."
+                  },
+                  {
+                    "type": "Submit Button",
+                    "label": "Send"
+                  },
+                  {
+                    "type": "File Upload Button (Optional)",
+                    "label": "Upload File"
+                  }
+                ],
+                "placement": "Bottom of Main Content Area, sticky"
+              }
+            ],
+            "state": "Dynamically updates with AI responses and user inputs."
+          },
+          {
+            "type": "Footer",
+            "content": "© 2023 AI Assistant. All rights reserved.",
+            "placement": "Bottom"
+          }
+        ]
+      },
+      {
+        "name": "Conversation Detail View (within AI Interaction Hub)",
+        "layout": "Main Content Area displays a threaded conversation.",
+        "elements": [
+          {
+            "type": "Conversation Title",
+            "content": "User-provided or AI-generated title for the conversation."
+          },
+          {
+            "type": "Message Thread",
+            "content": "Alternating user prompts and AI responses, timestamped.",
+            "state": "Scrollable vertically."
+          },
+          {
+            "type": "Input Area",
+            "content": [
+              {
+                "type": "Text Input Field",
+                "placeholder": "Continue the conversation..."
+              },
+              {
+                "type": "Submit Button",
+                "label": "Send"
+              }
+            ],
+            "placement": "Bottom of Main Content Area, sticky"
+          }
+        ]
+      }
+    ]
+  },
+  "user_flow_diagram": {
+    "title": "Primary User Journey: AI Interaction",
+    "steps": [
+      {
+        "id": "start",
+        "label": "User arrives at AI Interaction Hub",
+        "type": "Start"
+      },
+      {
+        "id": "view_history",
+        "label": "User views conversation history (optional)",
+        "type": "Decision",
+        "options": [
+          {"label": "Select existing conversation", "next_step": "load_history"},
+          {"label": "Start new conversation", "next_step": "input_request"}
+        ]
+      },
+      {
+        "id": "load_history",
+        "label": "Load selected conversation into Main Content Area",
+        "type": "Process",
+        "next_step": "input_request_in_history"
+      },
+      {
+        "id": "input_request",
+        "label": "User inputs a request in the Input Area",
+        "type": "Process",
+        "next_step": "submit_request"
+      },
+       {
+        "id": "input_request_in_history",
+        "label": "User inputs a follow-up request in the Input Area",
+        "type": "Process",
+        "next_step": "submit_request"
+      },
+      {
+        "id": "submit_request",
+        "label": "User submits the request",
+        "type": "Process",
+        "next_step": "ai_processing_indicator"
+      },
+      {
+        "id": "ai_processing_indicator",
+        "label": "Display AI processing indicator",
+        "type": "Process",
+        "next_step": "receive_ai_response"
+      },
+      {
+        "id": "receive_ai_response",
+        "label": "AI system processes request and returns response",
+        "type": "Process",
+        "next_step": "display_ai_response"
+      },
+      {
+        "id": "display_ai_response",
+        "label": "Display AI response in Main Content Area",
+        "type": "Process",
+        "next_step": "user_decision_after_response"
+      },
+      {
+        "id": "user_decision_after_response",
+        "label": "User reviews response",
+        "type": "Decision",
+        "options": [
+          {"label": "Continue conversation", "next_step": "input_request_in_history"},
+          {"label": "Start new conversation", "next_step": "input_request"},
+          {"label": "End session", "next_step": "end"}
+        ]
+      },
+      {
+        "id": "end",
+        "label": "User leaves the website",
+        "type": "End"
+      }
+    ]
+  }
+}
+
+---
+
+Artifact from step_3_Aurora_result.txt (Designer):
+{
+  "style_guide": {
+    "brand_identity": {
+      "logo": "Minimalist, abstract mark representing interconnectedness and intelligence. Could be a stylized neural network node or a flowing, continuous line.",
+      "name": "AI Nexus",
+      "tagline": "Intelligent interactions, effortlessly."
+    },
+    "color_palette": {
+      "primary": {
+        "name": "Deep Ocean Blue",
+        "hex": "#0A2342",
+        "rgb": "10, 35, 66",
+        "usage": "Primary UI elements, headers, footers, buttons.",
+        "accessibility_notes": "Sufficient contrast for text when used with lighter backgrounds."
+      },
+      "secondary": {
+        "name": "Calm Teal",
+        "hex": "#2CA58D",
+        "rgb": "44, 165, 141",
+        "usage": "Accent elements, interactive states, highlights.",
+        "accessibility_notes": "Provides visual interest without overwhelming. Good contrast with dark and light backgrounds."
+      },
+      "accent": {
+        "name": "Soft Sunrise Orange",
+        "hex": "#F5A65B",
+        "rgb": "245, 166, 91",
+        "usage": "Call-to-action buttons, notifications, critical alerts.",
+        "accessibility_notes": "Used sparingly for emphasis. Ensure sufficient contrast for text overlays."
+      },
+      "neutral_dark": {
+        "name": "Charcoal Gray",
+        "hex": "#333333",
+        "rgb": "51, 51, 51",
+        "usage": "Body text, secondary text, borders.",
+        "accessibility_notes": "Excellent readability on light backgrounds."
+      },
+      "neutral_light": {
+        "name": "Clean Cloud White",
+        "hex": "#F8F9FA",
+        "rgb": "248, 249, 250",
+        "usage": "Backgrounds, card elements, content areas.",
+        "accessibility_notes": "Provides a clean canvas. Ensure text has adequate contrast."
+      },
+      "feedback_success": {
+        "name": "Verdant Green",
+        "hex": "#4CAF50",
+        "rgb": "76, 175, 80",
+        "usage": "Success messages, positive confirmations."
+      },
+      "feedback_warning": {
+        "name": "Amber Yellow",
+        \u0022hex\u0022: "#FFC107",
+        "rgb": "255, 193, 7",
+        "usage": "Warning messages, pending states."
+      },
+      "feedback_error": {
+        "name": "Fiery Red",
+        "hex": "#F44336",
+        "rgb": "244, 67, 54",
+        "usage": "Error messages, invalid states."
+      }
+    },
+    "typography": {
+      "font_family": {
+        "primary": "'Inter', sans-serif",
+        "secondary": "'DM Sans', sans-serif"
+      },
+      "headings": {
+        "h1": {
+          "font_family": "DM Sans",
+          "font_size": "2.5rem",
+          "font_weight": 700,
+          "line_height": "1.2",
+          "color": "#0A2342"
+        },
+        "h2": {
+          "font_family": "DM Sans",
+          "font_size": "2rem",
+          "font_weight": 700,
+          "line_height": "1.25",
+          "color": "#0A2342"
+        },
+        "h3": {
+          "font_family": "DM Sans",
+          "font_size": "1.75rem",
+          "font_weight": 700,
+          "line_height": "1.3",
+          "color": "#0A2342"
+        },
+        "h4": {
+          "font_family": "Inter",
+          "font_size": "1.5rem",
+          "font_weight": 600,
+          "line_height": "1.35",
+          "color": "#333333"
+        },
+        "h5": {
+          "font_family": "Inter",
+          "font_size": "1.25rem",
+          "font_weight": 600,
+          "line_height": "1.4",
+          "color": "#333333"
+        },
+        "h6": {
+          "font_family": "Inter",
+          "font_size": "1rem",
+          "font_weight": 600,
+          "line_height": "1.5",
+          "color": "#333333"
+        }
+      },
+      "body": {
+        "font_family": "Inter",
+        "font_size": "1rem",
+        "font_weight": 400,
+        "line_height": "1.6",
+        "color": "#333333"
+      },
+      "captions": {
+        "font_family": "Inter",
+        "font_size": "0.875rem",
+        "font_weight": 400,
+        "line_height": "1.5",
+        "color": "#666666"
+      },
+      "accessibility_notes": "Ensure sufficient line height and font sizes for readability. Use font weights strategically for hierarchy. All text must meet WCAG AA contrast ratios against its background."
+    },
+    "spacing": {
+      "base_unit": "8px",
+      "scale": {
+        "xs": "4px",
+        "sm": "8px",
+        "md": "16px",
+        "lg": "24px",
+        "xl": "32px",
+        "xxl": "48px",
+        "xxxl": "64px"
+      },
+      "layout": {
+        "container_padding": "16px (mobile) / 32px (desktop)",
+        "sidebar_width": "250px (collapsed on mobile)",
+        "content_padding": "24px",
+        "input_area_padding": "16px",
+        "response_padding": "20px"
+      },
+      "accessibility_notes": "Consistent spacing aids in predictability and reduces cognitive load. Ensure adequate spacing around interactive elements for touch targets."
+    },
+    "components": {
+      "header": {
+        "background_color": "#0A2342",
+        "padding": "16px 24px",
+        "elements": {
+          "logo": {
+            "size": "auto 40px",
+            "margin_right": "16px"
+          },
+          "title": {
+            "font_size": "1.5rem",
+            "font_weight": 700,
+            "color": "#F8F9FA"
+          }
+        }
+      },
+      "sidebar": {
+        "background_color": "#F8F9FA",
+        "border_right": "1px solid #E0E0E0",
+        "padding": "16px 0",
+        "elements": {
+          "conversation_list_item": {
+            "padding": "12px 20px",
+            "margin_bottom": "8px",
+            "border_radius": "4px",
+            "hover_background": "#E0E0E0",
+            "active_background": "#2CA58D",
+            "active_color": "#FFFFFF",
+            "text_color": "#333333"
+          }
+        }
+      },
+      "main_content": {
+        "padding": "32px"
+      },
+      "ai_response_display": {
+        "background_color": "#FFFFFF",
+        "border": "1px solid #E0E0E0",
+        "border_radius": "8px",
+        "padding": "24px",
+        "margin_bottom": "24px",
+        "min_height": "200px",
+        "elements": {
+          "text_content": {
+            "color": "#333333",
+            "line_height": "1.7"
+          },
+          "image_content": {
+            "max_width": "100%",
+            "height": "auto",
+            "border_radius": "4px"
+          },
+          "data_visualization": {
+            "max_width": "100%",
+            "height": "auto"
+          }
+        }
+      },
+      "user_input_area": {
+        "background_color": "#FFFFFF",
+        "border": "1px solid #E0E0E0",
+        "border_radius": "8px",
+        "padding": "16px",
+        "margin_top": "16px",
+        "display": "flex",
+        "align_items": "center",
+        "gap": "16px",
+        "elements": {
+          "text_input": {
+            "flex_grow": "1",
+            "padding": "12px 16px",
+            "border": "1px solid #CCCCCC",
+            "border_radius": "4px",
+            "font_size": "1rem",
+            "color": "#333333",
+            "placeholder_color": "#999999",
+            "focus_outline": "2px solid #2CA58D"
+          },
+          "submit_button": {
+            "background_color": "#2CA58D",
+            "color": "#FFFFFF",
+            "padding": "12px 24px",
+            "border_radius": "4px",
+            "font_weight": 600,
+            "hover_background": "#258C75",
+            "focus_outline": "2px solid #0A2342"
+          },
+          "upload_button": {
+            "background_color": "#F5A65B",
+            "color": "#FFFFFF",
+            "padding": "12px 24px",
+            "border_radius": "4px",
+            "font_weight": 600,
+            "hover_background": "#E0954F",
+            "focus_outline": "2px solid #0A2342"
+          }
+        }
+      },
+      "footer": {
+        "background_color": "#0A2342",
+        "color": "#F8F9FA",
+        "padding": "16px 24px",
+        "text_align": "center",
+        "font_size": "0.875rem"
+      },
+      "loading_indicator": {
+        "type": "Spinner or pulsating dots",
+        "color": "#2CA58D",
+        "size": "32px",
+        "placement": "Within the AI Response Display area"
+      },
+      "error_message": {
+        "background_color": "#F44336",
+        "color": "#FFFFFF",
+        "padding": "16px",
+        "border_radius": "4px",
+        "margin_bottom": "16px",
+        "icon": "Exclamation mark"
+      },
+      "accessibility_notes": "All interactive elements must have clear focus states. Buttons should have sufficient size and padding. Form fields require clear labels. Color contrast ratios must be met for all text and meaningful graphical elements."
+    },
+    "motion": {
+      "transitions": {
+        "short": "0.2s ease-in-out",
+        "medium": "0.3s ease-in-out",
+        "long": "0.5s ease-in-out"
+      },
+      "effects": [
+        "Subtle fade-in for new AI responses.",
+        "Smooth slide-in for the conversation history panel on desktop.",
+        "Gentle animation for loading indicators."
+      ],
+      "accessibility_notes": "Animations should be subtle and non-disruptive. Provide options to reduce motion if possible."
+    }
+  },
+  "high_fidelity_design_description": "The high-fidelity design for the AI Nexus website embraces a clean, modern, and accessible aesthetic. The interface is built around a primary 'AI Interaction Hub' view, featuring a clear separation of content areas. A collapsible sidebar on the left houses the conversation history, allowing users to easily navigate past interactions. The main content area is dedicated to the current conversation, prominently displaying AI responses in well-defined cards and providing an intuitive input area at the bottom. The color palette, anchored by 'Deep Ocean Blue' and 'Clean Cloud White', creates a professional yet calming environment. 'Calm Teal' is used for interactive elements and highlights, while 'Soft Sunrise Orange' serves as an accent for calls to action. Typography utilizes 'Inter' for body text and UI elements, and 'DM Sans' for headings, ensuring readability and a distinct visual hierarchy. Spacing is managed through an 8px base unit, promoting consistency and breathing room. Interactive elements are designed with generous padding and clear focus states to meet accessibility requirements. The overall feel is one of intelligent simplicity, guiding the user through seamless interaction with the AI."
+}
+
+---
+
+Artifact from step_4_Kodax_result.txt (Engineer):
+{
+  "development_environment_setup": {
+    "framework_selection": {
+      "framework": "React",
+      "reasoning": "React offers a component-based architecture that aligns well with modular design principles. Its large ecosystem, strong community support, and performance optimizations make it a robust choice for building complex, interactive UIs. Its declarative nature also simplifies the process of translating design into code.",
+      "alternatives_considered": ["Svelte", "Vue.js"],
+      "alternative_reasoning": "Svelte provides excellent performance due to its compile-time approach, but React's ecosystem is more mature for this project's potential future needs. Vue.js is also a strong contender, but React's prevalence in job markets and its component model felt like a slightly better fit for this specific project's needs, especially when considering potential future scaling and team growth."
+    },
+    "project_architecture": {
+      "structure": "Feature-based modular architecture.",
+      "description": "Organize the project into feature folders (e.g., `components`, `features/chat`, `features/history`, `hooks`, `services`, `utils`, `styles`). Each feature folder will contain its related components, logic, and styles. This promotes maintainability, scalability, and reusability.",
+      "key_directories": [
+        "src/",
+        "src/components/",
+        "src/features/",
+        "src/features/chat/",
+        "src/features/chat/components/",
+        "src/features/chat/hooks/",
+        "src/features/chat/services/",
+        "src/features/history/",
+        "src/features/history/components/",
+        "src/hooks/",
+        "src/services/",
+        "src/styles/",
+        "src/utils/",
+        "public/"
+      ]
+    },
+    "version_control": {
+      "system": "Git",
+      "repository_url": "TBD (will be created)",
+      "initial_setup": [
+        "Initialize a new Git repository.",
+        "Create a `.gitignore` file to exclude build artifacts, node_modules, and environment files.",
+        "Create a main branch (e.g., `main` or `master`).",
+        "Set up a branching strategy (e.g., Gitflow or a simpler feature-branch workflow).",
+        "Commit initial project structure and configuration files."
+      ],
+      "branching_strategy_notes": "A feature-branch workflow will be adopted: create a new branch for each feature or task, develop, test, and then merge back into the main branch via pull requests."
+    },
+    "tooling_and_dependencies": {
+      "package_manager": "npm (or yarn)",
+      "bundler": "Vite (for fast development server and optimized builds)",
+      "linting_and_formatting": "ESLint and Prettier for code quality and consistency.",
+      "styling": "CSS Modules or Styled Components for component-scoped styles, adhering to Aurora's style guide. Tailwind CSS could be considered for utility classes if needed, but will prioritize custom component styling based on the style guide.",
+      "state_management": "React Context API for global state or Zustand/Redux Toolkit for more complex state needs (decision to be made during development based on complexity)."
+    },
+    "next_steps": [
+      "Create the React project using Vite.",
+      "Install necessary dependencies (e.g., routing library if needed, state management, styling solutions).",
+      "Configure ESLint and Prettier.",
+      "Initialize the Git repository and make the first commit.",
+      "Set up the basic project structure based on the defined architecture.",
+      "Begin implementing the core UI components based on Aurora's designs and style guide."
+    ]
+  }
+}
+
+---
+
+Artifact from step_5_Kodax_result.txt (Engineer):
+{
+  "ui_components": [
+    {
+      "component_name": "Header",
+      "description": "Displays the brand logo and title. Sticky at the top.",
+      "file_path": "src/components/Header/Header.jsx",
+      "module_type": "React Component",
+      "accessibility_considerations": [
+        "Ensure sufficient contrast between text/logo and background (#F8F9FA on #0A2342).",
+        "Provide meaningful alt text for the logo.",
+        "Use semantic HTML (e.g., `<header>`, `<nav>` if applicable)."
+      ],
+      "performance_considerations": [
+        "Optimize logo image size.",
+        "Keep component logic minimal."
+      ],
+      "design_mapping": {
+        "background_color": "#0A2342",
+        "padding": "16px 24px",
+        "logo_size": "auto 40px",
+        "logo_margin_right": "16px",
+        "title_font_size": "1.5rem",
+        "title_font_weight": 700,
+        "title_color": "#F8F9FA"
+      },
+      "responsiveness": {
+        "desktop": "Standard layout.",
+        "mobile": "Header remains consistent, potentially with a smaller logo or adjusted padding."
+      }
+    },
+    {
+      "component_name": "Sidebar",
+      "description": "Collapsible panel displaying conversation history.",
+      "file_path": "src/components/Sidebar/Sidebar.jsx",
+      "module_type": "React Component",
+      "accessibility_considerations": [
+        "Ensure focus states for clickable conversation items.",
+        "Implement ARIA attributes for collapsible functionality.",
+        "Maintain sufficient contrast for list items.",
+        "Provide a clear visual indicator when collapsed/expanded."
+      ],
+      "performance_considerations": [
+        "Virtualization for long conversation lists if performance becomes an issue.",
+        "Debounce or throttle resize handlers if used for collapse/expand."
+      ],
+      "design_mapping": {
+        "background_color": "#F8F9FA",
+        "border_right": "1px solid #E0E0E0",
+        "padding": "16px 0",
+        "list_item_padding": "12px 20px",
+        "list_item_margin_bottom": "8px",
+        "list_item_border_radius": "4px",
+        "hover_background": "#E0E0E0",
+        "active_background": "#2CA58D",
+        "active_color": "#FFFFFF",
+        "text_color": "#333333"
+      },
+      "responsiveness": {
+        "desktop": "Visible sidebar, potentially collapsible via a toggle button.",
+        "mobile": "Sidebar is hidden by default, accessed via a hamburger menu icon in the Header. Collapses into view."
+      }
+    },
+    {
+      "component_name": "ConversationList",
+      "description": "Renders the list of conversation items within the Sidebar.",
+      "file_path": "src/components/Sidebar/ConversationList.jsx",
+      "module_type": "React Component",
+      "accessibility_considerations": [
+        "Each list item should be focusable and keyboard-navigable.",
+        "Use semantic list elements (`<ul>`, `<li>`).",
+        "Ensure clear visual distinction for the currently active conversation."
+      ],
+      "performance_considerations": [
+        "Efficiently render list items. If lists become very long, consider windowing/virtualization."
+      ],
+      "design_mapping": {
+        "item_padding": "12px 20px",
+        "item_margin_bottom": "8px",
+        "item_border_radius": "4px",
+        "hover_background": "#E0E0E0",
+        "active_background": "#2CA58D",
+        "active_color": "#FFFFFF",
+        "text_color": "#333333"
+      },
+      "responsiveness": {
+        "desktop": "Standard list rendering.",
+        "mobile": "List items may have slightly adjusted padding if space is constrained."
+      }
+    },
+    {
+      "component_name": "ConversationListItem",
+      "description": "Represents a single conversation entry in the Sidebar.",
+      "file_path": "src/components/Sidebar/ConversationListItem.jsx",
+      "module_type": "React Component",
+      "accessibility_considerations": [
+        "Must be clickable via mouse and keyboard.",
+        "Use `button` or `a` tag appropriately, with `aria-current` if it's the active item.",
+        "Ensure sufficient touch target size."
+      ],
+      "performance_considerations": [
+        "Memoize component to prevent unnecessary re-renders if conversation titles don't change."
+      ],
+      "design_mapping": {
+        "padding": "12px 20px",
+        "margin_bottom": "8px",
+        "border_radius": "4px",
+        "hover_background": "#E0E0E0",
+        "active_background": "#2CA58D",
+        "active_color": "#FFFFFF",
+        "text_color": "#333333"
+      },
+      "responsiveness": {
+        "desktop": "Standard display.",
+        "mobile": "Slightly adjusted padding if needed."
+      }
+    },
+    {
+      "component_name": "MainContentArea",
+      "description": "The primary area displaying conversation details and the input form.",
+      "file_path": "src/components/MainContentArea/MainContentArea.jsx",
+      "module_type": "React Component",
+      "accessibility_considerations": [
+        "Ensure content within is well-structured (headings, paragraphs).",
+        "The input area at the bottom should be clearly associated with the main content."
+      ],
+      "performance_considerations": [
+        "Manage scrollable content efficiently. Implement lazy loading for images if applicable."
+      ],
+      "design_mapping": {
+        "padding": "32px",
+        "display": "flex",
+        "flex_direction": "column",
+        "justify_content": "space-between",
+        "min_height": "calc(100vh - header_height - footer_height)"
+      },
+      "responsiveness": {
+        "desktop": "Takes up remaining width after sidebar.",
+        "mobile": "Takes up full width when sidebar is collapsed."
+      }
+    },
+    {
+      "component_name": "AIResponseDisplay",
+      "description": "Container for displaying AI-generated content (text, images, etc.).",
+      "file_path": "src/components/AIResponseDisplay/AIResponseDisplay.jsx",
+      "module_type": "React Component",
+      "accessibility_considerations": [
+        "Ensure text content has sufficient contrast.",
+        "Provide alt text for images.",
+        "If displaying data visualizations, provide accessible alternatives or descriptions.",
+        "Use semantic tags like `<article>` or `<blockquote>` where appropriate."
+      ],
+      "performance_considerations": [
+        "Optimize image loading.",
+        "Handle potentially large text responses efficiently (e.g., pagination or scrollable areas)."
+      ],
+      "design_mapping": {
+        "background_color": "#FFFFFF",
+        "border": "1px solid #E0E0E0",
+        "border_radius": "8px",
+        "padding": "24px",
+        "margin_bottom": "24px",
+        "min_height": "200px",
+        "text_color": "#333333",
+        "line_height": "1.7"
+      },
+      "responsiveness": {
+        "desktop": "Standard display.",
+        "mobile": "Padding may adjust slightly."
+      }
+    },
+    {
+      "component_name": "UserInputArea",
+      "description": "Fixed area at the bottom for user input (text field, submit button, file upload).",
+      "file_path": "src/components/UserInputArea/UserInputArea.jsx",
+      "module_type": "React Component",
+      "accessibility_considerations": [
+        "Label the text input field clearly.",
+        "Ensure buttons have clear, descriptive labels.",
+        "Provide keyboard accessibility for all interactive elements.",
+        "Focus management: focus should move to the input field when the component mounts or a new conversation starts."
+      ],
+      "performance_considerations": [
+        "Debounce input if performing real-time validation or suggestions."
+      ],
+      "design_mapping": {
+        "background_color": "#FFFFFF",
+        "border": "1px solid #E0E0E0",
+        "border_radius": "8px",
+        "padding": "16px",
+        "margin_top": "16px",
+        "display": "flex",
+        "align_items": "center",
+        "gap": "16px"
+      },
+      "responsiveness": {
+        "desktop": "Horizontal layout with input and buttons.",
+        "mobile": "Layout may stack vertically if horizontal space is insufficient, or buttons may become smaller."
+      }
+    },
+    {
+      "component_name": "TextInputField",
+      "description": "The primary text input for user prompts.",
+      "file_path": "src/components/common/TextInputField.jsx",
+      "module_type": "React Component",
+      "accessibility_considerations": [
+        "Associates correctly with its label using `htmlFor`.",
+        "Has a clear focus state (`focus_outline`).",
+        "Placeholder text should not be the only visual cue for input type."
+      ],
+      "performance_considerations": [
+        "Use `onChange` handler efficiently. Consider debouncing if used for live suggestions."
+      ],
+      "design_mapping": {
+        "flex_grow": "1",
+        "padding": "12px 16px",
+        "border": "1px solid #CCCCCC",
+        "border_radius": "4px",
+        "font_size": "1rem",
+        "color": "#333333",
+        "placeholder_color": "#999999",
+        "focus_outline": "2px solid #2CA58D"
+      },
+      "responsiveness": {
+        "desktop": "Standard input size.",
+        "mobile": "May adjust padding or font size if necessary."
+      }
+    },
+    {
+      "component_name": "Button",
+      "description": "Generic button component for actions like 'Send' or 'Upload'.",
+      "file_path": "src/components/common/Button.jsx",
+      "module_type": "React Component",
+      "accessibility_considerations": [
+        "Clear visual states for hover, focus, and active.",
+        "Sufficient contrast ratio for text on the button background.",
+        "Appropriate ARIA roles if used for non-standard interactions."
+      ],
+      "performance_considerations": [
+        "Avoid inline event handlers that create new functions on every render; use stable references or bind appropriately."
+      ],
+      "design_mapping": {
+        "color": "#FFFFFF",
+        "padding": "12px 24px",
+        "border_radius": "4px",
+        "font_weight": 600,
+        "hover_background": {
+          "Send": "#258C75",
+          "Upload": "#E0954F"
+        },
+        "focus_outline": "2px solid #0A2342"
+      },
+      "responsiveness": {
+        "desktop": "Standard button size.",
+        "mobile": "Button size might slightly decrease, or text could wrap if very long."
+      }
+    },
+    {
+      "component_name": "Footer",
+      "description": "Displays copyright information at the bottom.",
+      "file_path": "src/components/Footer/Footer.jsx",
+      "module_type": "React Component",
+      "accessibility_considerations": [
+        "Ensure text contrast is sufficient.",
+        "Use semantic HTML (`<footer>`)."
+      ],
+      "performance_considerations": [
+        "Static content, minimal performance impact."
+      ],
+      "design_mapping": {
+        "background_color": "#0A2342",
+        "color": "#F8F9FA",
+        "padding": "16px 24px",
+        "text_align": "center",
+        "font_size": "0.875rem"
+      },
+      "responsiveness": {
+        "desktop": "Standard footer.",
+        "mobile": "Text may center align if not already."
+      }
+    },
+    {
+      "component_name": "LoadingIndicator",
+      "description": "Visual feedback while the AI is processing.",
+      "file_path": "src/components/common/LoadingIndicator.jsx",
+      "module_type": "React Component",
+      "accessibility_considerations": [
+        "Must have an accessible name (e.g., using `aria-label` or visually hidden text).",
+        "Consider using `role='status'` or `aria-live='polite'` to announce loading state to screen readers."
+      ],
+      "performance_considerations": [
+        "Ensure animation is performant (using CSS transforms/opacity)."
+      ],
+      "design_mapping": {
+        "type": "Spinner or pulsating dots",
+        "color": "#2CA58D",
+        "size": "32px",
+        "placement": "Within the AI Response Display area"
+      },
+      "responsiveness": {
+        "desktop": "Standard size.",
+        "mobile": "Standard size."
+      }
+    },
+    {
+      "component_name": "ErrorMessage",
+      "description": "Displays error messages to the user.",
+      "file_path": "src/components/common/ErrorMessage.jsx",
+      "module_type": "React Component",
+      "accessibility_considerations": [
+        "Ensure sufficient contrast for text and background.",
+        "Use `role='alert'` or `aria-live='assertive'` for critical error messages.",
+        "Include an icon for quick visual identification."
+      ],
+      "performance_considerations": [
+        "Minimal impact, primarily rendering static content."
+      ],
+      "design_mapping": {
+        "background_color": "#F44336",
+        "color": "#FFFFFF",
+        "padding": "16px",
+        "border_radius": "4px",
+        "margin_bottom": "16px",
+        "icon": "Exclamation mark"
+      },
+      "responsiveness": {
+        "desktop": "Standard display.",
+        "mobile": "Padding might adjust."
+      }
+    }
+  ],
+  "implementation_notes": "The development will proceed by creating each of these components as reusable React units. Styles will be implemented using CSS Modules or a similar scoped styling solution to adhere to the provided style guide and maintain modularity. Accessibility will be a primary concern during implementation, with focus states, ARIA attributes, and semantic HTML being prioritized. Responsiveness will be handled using media queries and flexible layout techniques, ensuring the UI adapts gracefully across devices. State management will be addressed as needed, potentially starting with React Context for simpler state sharing and scaling to Zustand or Redux Toolkit if complexity increases significantly."
+}
+
+---
+
+Artifact from step_6_Lyra_result.txt (Prompt Engineer):
+{
+  "refined_ai_system_prompt": "You are 'AI Nexus', an intelligent assistant designed to provide helpful, accurate, and safe responses across a wide range of topics and tasks. Your primary goal is to seamlessly assist users by understanding their queries, generating relevant outputs, and facilitating an intuitive conversational experience.\n\n**Key Behavioral Guidelines:**\n\n1.  **Understand and Clarify:**\n    *   Analyze user input to infer intent and context.\n    *   If a request is ambiguous or lacks necessary information, politely ask for clarification or provide reasonable assumptions.\n    *   Acknowledge complex requests and indicate processing if necessary (though frontend will typically handle visual loading indicators).\n\n2.  **Provide Clear and Relevant Responses:**\n    *   Generate concise, direct, and accurate answers.\n    *   Tailor the response format to the nature of the query (e.g., plain text for general questions, structured data for specific queries, code blocks for programming tasks, image descriptions or parameters for image generation requests).\n    *   Prioritize user-friendliness and readability.\n\n3.  **Maintain Context:**\n    *   Recall previous turns in the conversation to maintain coherence and allow for iterative refinement of requests.\n    *   Do not repeat information unnecessarily.\n\n4.  **Handle Diverse Output Types:**\n    *   Be prepared to generate and structure responses that can be displayed as:\n        *   **Text:** General answers, summaries, creative writing.\n        *   **Images (Conceptual/Parameters):** Provide descriptions or parameters for image generation; the frontend will handle displaying the actual image based on these.\n        *   **Structured Data:** JSON, CSV, or tables for analysis or specific data retrieval.\n        *   **Code:** Programming snippets, explanations, with language specification.\n        *   **Multimodal:** A combination of the above, delivered as distinct parts.\n\n5.  **Safety and Ethics:**\n    *   Always adhere to ethical guidelines and safety protocols.\n    *   Avoid generating harmful, biased, or inappropriate content.\n    *   If a request is inappropriate or unsafe, politely decline and explain why.\n\n6.  **Error Handling & Limitations:**\n    *   If unable to fulfill a request due to internal limitations, processing errors, or policy violations, clearly and politely communicate the issue to the user.\n    *   Suggest alternative approaches or capabilities where possible.\n\n**Constraint:** Your output must be structured precisely according to the API contract defined with Kodax, ensuring the frontend can correctly parse and display your responses.",
+  "api_contract": {
+    "endpoint": "POST /api/chat/complete",
+    "request_body": {
+      "description": "JSON payload sent from the frontend to the AI system to initiate or continue a conversation.",
+      "schema": {
+        "conversation_id": "string | null",
+        "notes": "Optional. Null for a new conversation; existing ID to continue a thread.",
+        "user_id": "string",
+        "prompt": {
+          "text": "string",
+          "notes": "The user's primary text input.",
+          "attachments": [
+            {
+              "type": "string",
+              "notes": "e.g., 'image', 'document', 'audio'",
+              "url": "string",
+              "notes": "URL to the pre-uploaded file (e.g., S3 URL or internal file service).",
+              "filename": "string",
+              "metadata": {}
+            }
+          ],
+          "parameters": {},
+          "notes": "Optional. Key-value pairs for specific AI model parameters (e.g., 'temperature', 'max_tokens', 'model_variant')."
+        },
+        "context": {
+          "notes": "Optional. Additional contextual information from the client environment.",
+          "client_timestamp": "string",
+          "notes": "ISO 8601 timestamp of when the request was sent from the client.",
+          "device_info": "string",
+          "notes": "e.g., 'web browser', 'mobile app (iOS)', 'mobile app (Android)'",
+          "ui_language": "string",
+          "notes": "e.g., 'en-US', 'es-ES'"
+        }
+      },
+      "example": {
+        "conversation_id": null,
+        "user_id": "user-123",
+        "prompt": {
+          "text": "Generate a short story about a space explorer finding a new planet.",
+          "attachments": [],
+          "parameters": {
+            "genre": "sci-fi",
+            "length": "short"
+          }
+        },
+        "context": {
+          "client_timestamp": "2023-10-27T10:30:00Z",
+          "device_info": "web browser",
+          "ui_language": "en-US"
+        }
+      }
+    },
+    "response_body": {
+      "description": "JSON payload returned from the AI system to the frontend.",
+      "schema": {
+        "conversation_id": "string",
+        "notes": "Unique ID for the conversation (newly generated if request had null).",
+        "message_id": "string",
+        "notes": "Unique ID for this specific AI response within the conversation.",
+        "timestamp": "string",
+        "notes": "ISO 8601 timestamp of the AI response generation.",
+        "status": "string",
+        "notes": "Current state of the response: 'success', 'error', 'processing'. 'processing' can be used for initial acknowledgments or streaming starts.",
+        "response_type": "string",
+        "notes": "Indicates the primary type of content: 'text', 'image', 'structured_data', 'code', 'multimodal', 'system_message'.",
+        "content": {
+          "notes": "The actual AI-generated output, structured based on 'response_type'.",
+          "text": "string | null",
+          "notes": "Main textual content, if response_type is 'text' or part of 'multimodal'.",
+          "image_url": "string | null",
+          "notes": "URL to a generated image, if response_type is 'image' or part of 'multimodal'.",
+          "data": "object | array | null",
+          "notes": "Structured data (e.g., JSON object/array), if response_type is 'structured_data'.",
+          "code": {
+            "notes": "Code block details, if response_type is 'code'.",
+            "language": "string",
+            "notes": "e.g., 'python', 'javascript', 'json', 'markdown'",
+            "code_snippet": "string"
+          },
+          "multimodal_parts": [
+            {
+              "type": "string",
+              "notes": "Type of this specific part: 'text', 'image', 'code'.",
+              "value": "string"
+            }
+          ],
+          "notes": "Array for complex, mixed content responses, if response_type is 'multimodal'. Each part defines its type and value (text, image URL, code snippet)."
+        },
+        "metadata": {
+          "notes": "Optional. Additional AI model metadata.",
+          "model_name": "string",
+          "token_usage": {
+            "prompt_tokens": "integer",
+            "completion_tokens": "integer",
+            "total_tokens": "integer"
+          },
+          "safety_flags": "array",
+          "notes": "e.g., ['safe', 'low_risk_content_detected']",
+          "processing_time_ms": "integer",
+          "notes": "Time taken by the AI system to generate the response."
+        },
+        "error": {
+          "notes": "Present only if status is 'error'.",
+          "code": "string",
+          "notes": "e.g., 'API_ERROR', 'INVALID_INPUT', 'RATE_LIMIT_EXCEEDED', 'CONTENT_FILTERED'.",
+          "message": "string",
+          "notes": "Detailed error message for debugging (internal).",
+          "user_message": "string",
+          "notes": "User-friendly error message for display (e.g., 'Sorry, I couldn't process that request. Please try again.')."
+        }
+      },
+      "example_success_text": {
+        "conversation_id": "conv-456",
+        "message_id": "msg-789",
+        "timestamp": "2023-10-27T10:30:15Z",
+        "status": "success",
+        "response_type": "text",
+        "content": {
+          "text": "Once upon a time, in the distant future, a lone space explorer named Elara stumbled upon a shimmering, crystalline planet. Its skies pulsed with ethereal light, and strange, melodic hums resonated from its surface..."
+        },
+        "metadata": {
+          "model_name": "AI-Nexus-V1",
+          "token_usage": {
+            "prompt_tokens": 20,
+            "completion_tokens": 50,
+            "total_tokens": 70
+          },
+          "safety_flags": ["safe"]
+        }
+      },
+      "example_success_multimodal": {
+        "conversation_id": "conv-457",
+        "message_id": "msg-790",
+        "timestamp": "2023-10-27T10:35:00Z",
+        "status": "success",
+        "response_type": "multimodal",
+        "content": {
+          "multimodal_parts": [
+            {
+              "type": "text",
+              "value": "Here is the image you requested, depicting a serene forest scene at dawn, along with the Python code used to generate it:"
+            },
+            {
+              "type": "image",
+              "value": "https://example.com/generated_image_123.png"
+            },
+            {
+              "type": "code",
+              "value": {
+                "language": "python",
+                "code_snippet": "import numpy as np\nimport matplotlib.pyplot as plt\n\n# Code to generate forest image (simplified)\ndef generate_forest_scene():\n    # ... complex image generation logic ...\n    return 'image_data'\n\nimage_data = generate_forest_scene()"
+              }
+            }
+          ]
+        },
+        "metadata": {
+          "model_name": "AI-Nexus-ImageGen-V2",
+          "token_usage": {
+            "prompt_tokens": 30,
+            "completion_tokens": 120,
+            "total_tokens": 150
+          },
+          "safety_flags": ["safe"]
+        }
+      },
+      "example_error": {
+        "conversation_id": "conv-458",
+        "message_id": "msg-791",
+        "timestamp": "2023-10-27T10:40:00Z",
+        "status": "error",
+        "response_type": "system_message",
+        "content": {
+          "text": null
+        },
+        "error": {
+          "code": "RATE_LIMIT_EXCEEDED",
+          "message": "User has exceeded the maximum number of requests per minute.",
+          "user_message": "It looks like you've sent too many requests recently. Please wait a moment and try again."
+        }
+      }
+    }
+  }
+}
+
+
+
+Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project.

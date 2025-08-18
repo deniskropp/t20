@@ -1,0 +1,193 @@
+The overall goal is: 'Image recognition based on a living example, given a databse with captioned images to recognize, leveraging tools were appropriate'
+
+Your role's specific goal is: 'Structure workflows and ensure clarity in agent instructions, system prompt engineering'
+Your specific sub-task is: 'Design the core prompt engineering workflow for the image recognition model, defining how a live image will be analyzed and compared against the captioned image database.'
+
+The team's roles are:
+    {'roles': [{'title': 'Designer', 'description': 'Generate aesthetic layouts, color palettes, typography, and UI flows, ensuring accessibility and visual balance.'}, {'title': 'Engineer', 'description': 'Implement designs into clean, modular, and performant code, focusing on responsive design and accessibility.'}, {'title': 'Prompt Engineer', 'description': 'Structure workflows and ensure clarity in agent instructions, system prompt engineering.'}, {'title': 'Task-Agnostic Step (TAS) extractor', 'description': "Identify and extract each 'Task Agnostic Step' (TAS) towards the high-level goal."}], 'steps': [{'name': 'TASe', 'role': 'Task-Agnostic Step (TAS) extractor', 'task': "Deconstruct the high-level goal ('Image recognition based on a living example') into a detailed, sequential task plan for the team."}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': 'Design the core prompt engineering workflow for the image recognition model, defining how a live image will be analyzed and compared against the captioned image database.'}, {'name': 'Aurora', 'role': 'Designer', 'task': 'Design the user interface (UI) and user experience (UX) flow, including the live image capture screen, result display, and user feedback mechanisms.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Architect the overall system, select appropriate tools and frameworks, and set up the database schema for storing and efficiently querying the captioned images.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': "Develop the front-end application based on Aurora's UI/UX designs, ensuring a responsive and accessible user interface for image submission."}, {'name': 'Kodax', 'role': 'Engineer', 'task': "Implement the back-end logic, including API endpoints, database integration, and the core image recognition service that utilizes Lyra's prompt workflow."}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': 'Collaborate with Kodax to test, iterate, and refine the image recognition prompts based on real-world performance and testing data to improve accuracy.'}, {'name': 'Aurora', 'role': 'Designer', 'task': 'Conduct usability testing on the integrated prototype and provide feedback and design revisions to Kodax to enhance the user experience.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Integrate all refined components (front-end, back-end, prompts), perform final testing, and deploy the complete image recognition application.'}, {'name': 'TASe', 'role': 'Task-Agnostic Step (TAS) extractor', 'task': 'Document the final workflow, cataloging the executed steps, tools used, and outcomes to finalize the project plan.'}]}
+
+Please use the following outputs from the other agents as your input:
+
+Artifact from 1__step_0_TASe_result.txt (Task-Agnostic Step (TAS) extractor):
+[
+  {
+    "id": "f4a2b1c8-3d4e-4f5a-8b9c-0d1e2f3a4b5c",
+    "name": "Define Problem Scope",
+    "description": "Clearly articulate the boundaries and objectives of the problem to be solved. This involves understanding the desired outcome, constraints, and the specific domain or context in which the solution will operate.",
+    "category": "Init",
+    "purpose": "Establish clear project boundaries and objectives.",
+    "keywords": ["scope", "definition", "objectives", "boundaries", "clarification"],
+    "applicability_notes": "This step is crucial at the beginning of any project to ensure alignment and prevent scope creep. It applies to all fields of endeavor.",
+    "examples_of_usage": [
+      "Defining the specific type of images to be recognized (e.g., objects, faces, scenes).",
+      "Setting performance metrics for recognition accuracy and speed.",
+      "Identifying limitations such as environmental conditions or image quality."
+    ],
+    "typical_inputs": ["High-level goal statement", "Stakeholder requirements"],
+    "typical_outputs": ["Defined project scope document", "List of objectives and constraints"]
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+    "name": "Structure Workflow",
+    "description": "Outline the sequence of actions, decisions, and processes required to achieve the defined goal. This involves breaking down the overall objective into manageable, logical steps and determining their order.",
+    "category": "Planning",
+    "purpose": "Create a logical sequence of actions.",
+    "keywords": ["workflow", "process", "planning", "sequencing", "task breakdown"],
+    "applicability_notes": "Applicable to any project or process requiring a structured approach. Helps in understanding dependencies and resource allocation.",
+    "examples_of_usage": [
+      "Mapping out the steps from data input to final recognition output.",
+      "Defining the interaction points between different components or roles.",
+      "Sequencing the development phases from design to deployment."
+    ],
+    "typical_inputs": ["Defined project scope", "List of required functionalities"],
+    "typical_outputs": ["Sequential task plan", "Process flowchart"]
+  },
+  {
+    "id": "b2c3d4e5-f6a7-8901-2345-67890abcdef1",
+    "name": "Identify Tools and Technologies",
+    "description": "Research and select appropriate tools, frameworks, libraries, or platforms that will facilitate the execution of the structured workflow. This includes considering compatibility, performance, and maintainability.",
+    "category": "Planning",
+    "purpose": "Select appropriate tools for execution.",
+    "keywords": ["tools", "technology", "frameworks", "selection", "research", "stack"],
+    "applicability_notes": "Essential for efficiency and effectiveness. The choice of tools can significantly impact project outcomes.",
+    "examples_of_usage": [
+      "Selecting a database for storing captioned images.",
+      "Choosing a machine learning framework for image recognition.",
+      "Identifying front-end and back-end development technologies."
+    ],
+    "typical_inputs": ["Structured workflow", "Project requirements", "Technical constraints"],
+    "typical_outputs": ["Technology stack definition", "List of selected tools and libraries"]
+  },
+  {
+    "id": "c3d4e5f6-a7b8-9012-3456-7890abcdef12",
+    "name": "Design System Architecture",
+    "description": "Define the high-level structure of the system, including how different components will interact, data flow, and the overall architecture. This ensures a scalable and maintainable solution.",
+    "category": "Design",
+    "purpose": "Define the system's structural blueprint.",
+    "keywords": ["architecture", "system design", "component interaction", "data flow", "scalability"],
+    "applicability_notes": "Critical for complex systems to ensure coherence and manageability.",
+    "examples_of_usage": [
+      "Designing the interaction between the image capture module, the recognition engine, and the database.",
+      "Defining API contracts between front-end and back-end services.",
+      "Planning for data storage and retrieval mechanisms."
+    ],
+    "typical_inputs": ["Structured workflow", "Selected tools and technologies", "Functional requirements"],
+    "typical_outputs": ["System architecture diagram", "Data models", "API specifications"]
+  },
+  {
+    "id": "d4e5f6a7-b8c9-0123-4567-890abcdef123",
+    "name": "Develop User Interface",
+    "description": "Create the visual and interactive elements of the application that users will engage with. This includes designing layouts, ensuring responsiveness, and implementing user flows.",
+    "category": "Implementation",
+    "purpose": "Build the user-facing application.",
+    "keywords": ["UI", "user interface", "front-end", "design implementation", "responsiveness"],
+    "applicability_notes": "Focuses on the user's interaction with the system. Requires attention to detail and user experience principles.",
+    "examples_of_usage": [
+      "Building the screen for capturing live images.",
+      "Developing the interface for displaying recognition results.",
+      "Implementing feedback mechanisms for users."
+    ],
+    "typical_inputs": ["UI/UX designs", "System architecture", "Front-end framework"],
+    "typical_outputs": ["Functional front-end application", "User interaction components"]
+  },
+  {
+    "id": "e5f6a7b8-c9d0-1234-5678-90abcdef1234",
+    "name": "Implement Core Logic",
+    "description": "Build the underlying functionality of the system, including data processing, business logic, and integration with external services or models. This often involves back-end development.",
+    "category": "Implementation",
+    "purpose": "Build the system's functional engine.",
+    "keywords": ["back-end", "logic", "processing", "integration", "database", "API"],
+    "applicability_notes": "The 'engine' of the application, handling data manipulation and core operations.",
+    "examples_of_usage": [
+      "Implementing the image recognition service using prompt engineering.",
+      "Developing API endpoints for data access and processing.",
+      "Integrating with the captioned image database."
+    ],
+    "typical_inputs": ["System architecture", "Selected tools and technologies", "Database schema", "Prompt engineering workflow"],
+    "typical_outputs": ["Functional back-end services", "Integrated core logic"]
+  },
+  {
+    "id": "f6a7b8c9-d0e1-2345-6789-0abcdef12345",
+    "name": "Refine Recognition Model",
+    "description": "Iteratively improve the performance of the image recognition model by adjusting its parameters, data inputs, or underlying logic based on testing and feedback.",
+    "category": "Refactoring",
+    "purpose": "Enhance the accuracy and efficiency of recognition.",
+    "keywords": ["refinement", "iteration", "optimization", "model tuning", "prompt engineering", "testing"],
+    "applicability_notes": "A continuous process to improve results. Often involves experimentation and data analysis.",
+    "examples_of_usage": [
+      "Adjusting prompts for better image interpretation.",
+      "Retraining parts of the model with new data examples.",
+      "Fine-tuning parameters for recognition accuracy."
+    ],
+    "typical_inputs": ["Test data", "Performance metrics", "Feedback on recognition results"],
+    "typical_outputs": ["Improved recognition model", "Updated prompts or parameters"]
+  },
+  {
+    "id": "a7b8c9d0-e1f2-3456-7890-abcdef123456",
+    "name": "Conduct Usability Testing",
+    "description": "Evaluate the system's ease of use, efficiency, and user satisfaction through testing with representative users. Gather feedback to identify areas for improvement.",
+    "category": "Testing",
+    "purpose": "Assess and improve user experience.",
+    "keywords": ["usability", "testing", "user feedback", "UX evaluation", "validation"],
+    "applicability_notes": "Ensures the system is intuitive and meets user needs effectively.",
+    "examples_of_usage": [
+      "Observing users as they capture and analyze images.",
+      "Collecting feedback on the clarity of results and ease of interaction.",
+      "Identifying pain points in the user journey."
+    ],
+    "typical_inputs": ["Integrated system prototype", "User profiles", "Testing scenarios"],
+    "typical_outputs": ["Usability test report", "List of UX improvement recommendations"]
+  },
+  {
+    "id": "b8c9d0e1-f2a3-4567-8901-bcdef1234567",
+    "name": "Integrate Components",
+    "description": "Combine all developed parts of the system (front-end, back-end, models, databases) into a cohesive, working whole. Ensure seamless interaction between all elements.",
+    "category": "Integration",
+    "purpose": "Combine system parts into a unified whole.",
+    "keywords": ["integration", "assembly", "system integration", "component connection", "testing"],
+    "applicability_notes": "Brings together individual development efforts into a complete solution.",
+    "examples_of_usage": [
+      "Connecting the front-end UI to the back-end APIs.",
+      "Ensuring the recognition service correctly accesses the database.",
+      "Verifying data flow across all integrated modules."
+    ],
+    "typical_inputs": ["Developed front-end", "Developed back-end", "Tuned recognition model", "Configured database"],
+    "typical_outputs": ["Fully integrated application", "End-to-end test results"]
+  },
+  {
+    "id": "c9d0e1f2-a3b4-5678-9012-cdef12345678",
+    "name": "Deploy Application",
+    "description": "Make the completed and tested application available for use in its target environment, whether that's a server, cloud platform, or user devices.",
+    "category": "Deployment",
+    "purpose": "Make the application accessible to users.",
+    "keywords": ["deployment", "release", "production", "launch", "distribution"],
+    "applicability_notes": "The final step in delivering the application to its intended audience.",
+    "examples_of_usage": [
+      "Deploying the web application to a hosting server.",
+      "Packaging the application for mobile devices.",
+      "Setting up cloud infrastructure for the service."
+    ],
+    "typical_inputs": ["Integrated and tested application", "Deployment environment configuration"],
+    "typical_outputs": ["Live, accessible application", "Deployment documentation"]
+  },
+  {
+    "id": "d0e1f2a3-b4c5-6789-0123-def123456789",
+    "name": "Document Workflow and Outcomes",
+    "description": "Record the entire process, including the steps taken, tools used, decisions made, challenges encountered, and final results. This serves as a knowledge base and a record of the project.",
+    "category": "Documentation",
+    "purpose": "Record project activities and results.",
+    "keywords": ["documentation", "recording", "reporting", "knowledge base", "project finalization"],
+    "applicability_notes": "Essential for future reference, knowledge transfer, and project closure.",
+    "examples_of_usage": [
+      "Cataloging the final prompt engineering strategies.",
+      "Documenting the system architecture and implementation details.",
+      "Summarizing test results and performance metrics."
+    ],
+    "typical_inputs": ["Completed project artifacts", "Team logs", "Test reports"],
+    "typical_outputs": ["Final project documentation", "Lessons learned report"]
+  }
+]
+
+
+
+Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project.

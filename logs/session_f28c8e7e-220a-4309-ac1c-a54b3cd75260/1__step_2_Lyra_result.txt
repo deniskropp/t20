@@ -1,0 +1,57 @@
+{
+  "initial_prompt_structures": {
+    "joke_generation": {
+      "description": "Initial draft for generating a concise, original, and family-friendly joke.",
+      "api_payload_example": {
+        "model": "text-davinci-003",
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are a professional comedian and humorist. Your goal is to generate short, original, and family-friendly jokes."
+          },
+          {
+            "role": "user",
+            "content": "Generate a joke. The joke should be concise and appropriate for a general audience. Provide the joke as a JSON object with a single key 'joke'."
+          }
+        ],
+        "response_format": {
+          "type": "json_object"
+        },
+        "temperature": 0.7,
+        "max_tokens": 100
+      },
+      "considerations": [
+        "The 'model' field is a placeholder and should be updated based on available models from `https://ai.violass.club/v1`.",
+        "The 'response_format' field assumes the API supports structured JSON output directives.",
+        "A 'topic' or 'theme' parameter could be added to the user prompt for more specific joke requests."
+      ]
+    },
+    "feedback_analysis": {
+      "description": "Initial draft for analyzing user feedback on a joke, extracting sentiment, key points, and recommendations.",
+      "api_payload_example": {
+        "model": "text-davinci-003",
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are an expert humor analyst. Your task is to evaluate user feedback on jokes. Identify the overall sentiment, extract specific positive and negative points, and provide actionable recommendations for improvement if the feedback suggests areas for refinement. Output in JSON format."
+          },
+          {
+            "role": "user",
+            "content": "Analyze the following joke and user feedback:\n\nJoke: \"Why did the scarecrow win an award? Because he was outstanding in his field!\"\nUser Feedback: \"It's a bit cheesy, but I chuckled. The pun is clever, but I've heard it before. Maybe try a less common setup?\"\n\nProvide your analysis as a JSON object with the following keys: 'sentiment' (e.g., 'positive', 'neutral', 'negative'), 'key_points' (list of strings describing specific feedback aspects), and 'recommendations' (list of strings suggesting improvements, or an empty list if none)."
+          }
+        ],
+        "response_format": {
+          "type": "json_object"
+        },
+        "temperature": 0.5,
+        "max_tokens": 200
+      },
+      "considerations": [
+        "The 'model' field is a placeholder and should be updated based on available models from `https://ai.violass.club/v1`.",
+        "The 'response_format' field assumes the API supports structured JSON output directives.",
+        "The example input in the user prompt should be dynamically replaced with actual joke and feedback data from the application.",
+        "Further refinement of 'key_points' and 'recommendations' categories might be needed based on desired granularity."
+      ]
+    }
+  }
+}

@@ -1,0 +1,132 @@
+{
+  "task": "Conduct comprehensive testing for functionality, responsiveness, cross-browser compatibility, and performance. Fix any identified bugs.",
+  "engineer_plan": [
+    {
+      "step": 1,
+      "description": "Review and incorporate Aurora's design feedback.",
+      "details": "Address the feedback from Aurora's review (step_8_Aurora_result.txt). Specifically, adjust button `border-radius` to '8px', ensure correct usage of accent and neutral colors for buttons and cards, and verify input component styling. Implement the 'Save' functionality and ensure the iterative flow for prompt refinement is seamless.",
+      "files_to_modify": [
+        "src/components/common/Button.tsx",
+        "src/components/layout/Card.tsx",
+        "src/components/common/Input.tsx",
+        "src/pages/MainAIWorkspacePage.tsx",
+        "src/components/ui/HistoryItem.tsx"
+      ],
+      "focus_areas": [
+        "Visual fidelity to design system",
+        "Iterative workflow UX",
+        "Save functionality implementation"
+      ]
+    },
+    {
+      "step": 2,
+      "description": "Implement robust error handling and user feedback.",
+      "details": "Enhance error handling within `apiService.ts` and `MainAIWorkspacePage.tsx`. Map specific API error codes from Lyra's contract to user-friendly messages. Ensure error messages are displayed clearly using the `notification_error` color and are accessible via screen readers.",
+      "files_to_modify": [
+        "src/services/apiService.ts",
+        "src/pages/MainAIWorkspacePage.tsx",
+        "src/components/common/LoadingSpinner.tsx"
+      ],
+      "focus_areas": [
+        "API error code mapping",
+        "User-friendly error messages",
+        "Accessibility of error announcements"
+      ]
+    },
+    {
+      "step": 3,
+      "description": "Conduct accessibility audit and implement fixes.",
+      "details": "Perform a thorough audit focusing on keyboard navigation, visible focus indicators, and screen reader announcements for dynamic content, as per Aurora's high-severity feedback. Ensure all interactive elements are keyboard-operable and focus states are distinct and meet contrast requirements. Add `aria-live` regions where necessary.",
+      "files_to_modify": [
+        "src/components/common/Button.tsx",
+        "src/components/common/Input.tsx",
+        "src/components/common/TextArea.tsx",
+        "src/components/common/Icon.tsx",
+        "src/pages/MainAIWorkspacePage.tsx",
+        "src/pages/HistoryPage.tsx",
+        "src/components/ui/HistoryItem.tsx"
+      ],
+      "focus_areas": [
+        "Keyboard navigation",
+        "Focus indicators",
+        "Screen reader announcements (`aria-live`)",
+        "ARIA attributes for icon buttons"
+      ]
+    },
+    {
+      "step": 4,
+      "description": "Test cross-browser compatibility.",
+      "details": "Test the application across major browsers (Chrome, Firefox, Safari, Edge) to ensure consistent rendering and functionality. Pay attention to CSS rendering, JavaScript execution, and responsiveness on different browser engines.",
+      "browsers_to_test": [
+        "Chrome (latest)",
+        "Firefox (latest)",
+        "Safari (latest)",
+        "Edge (latest)"
+      ],
+      "focus_areas": [
+        "CSS rendering consistency",
+        "JavaScript execution compatibility",
+        "Responsive layout behavior"
+      ]
+    },
+    {
+      "step": 5,
+      "description": "Test responsiveness across devices and screen sizes.",
+      "details": "Verify that the UI adapts correctly to various screen sizes, from small mobile devices to larger desktop monitors, using the defined breakpoints. Test both portrait and landscape orientations.",
+      "methods": [
+        "Browser developer tools (device emulation)",
+        "Actual physical devices (if available)"
+      ],
+      "focus_areas": [
+        "Layout adaptation",
+        "Readability of text",
+        "Usability of interactive elements"
+      ]
+    },
+    {
+      "step": 6,
+      "description": "Conduct performance testing.",
+      "details": "Analyze the application's performance using browser developer tools (Lighthouse, Performance tab). Identify and optimize potential bottlenecks, such as large asset sizes, inefficient rendering, or slow API response handling.",
+      "tools": [
+        "Browser DevTools (Lighthouse, Performance tab)",
+        "React DevTools Profiler"
+      ],
+      "focus_areas": [
+        "Initial page load time",
+        "Rendering performance",
+        "API response handling efficiency",
+        "Bundle size optimization"
+      ]
+    },
+    {
+      "step": 7,
+      "description": "Verify end-to-end AI interaction flows.",
+      "details": "Execute the test cases outlined in Lyra's E2E AI Interaction Verification Plan (step_9_Lyra_result.txt). This includes successful generations, error handling, history management, and iterative refinement.",
+      "test_plan_reference": "step_9_Lyra_result.txt",
+      "focus_areas": [
+        "Prompt construction and sending",
+        "Response parsing and display",
+        "History management",
+        "Error handling scenarios",
+        "Accessibility of AI interactions"
+      ]
+    },
+    {
+      "step": 8,
+      "description": "Fix identified bugs and regressions.",
+      "details": "Address any bugs found during testing, prioritizing those related to functionality, accessibility, and responsiveness. Ensure fixes do not introduce regressions in previously working areas.",
+      "process": [
+        "Log bugs with clear descriptions and reproduction steps.",
+        "Implement fixes.",
+        "Re-test the specific fix and related functionalities.",
+        "Run regression tests."
+      ]
+    },
+    {
+      "step": 9,
+      "description": "Final code review and commit.",
+      "details": "Conduct a final review of the code to ensure adherence to coding standards, modularity, and maintainability. Commit all changes with a clear message.",
+      "command": "git add . && git commit -m 'test: Comprehensive testing and bug fixing, incorporating design feedback and accessibility improvements'"
+    }
+  ]
+}

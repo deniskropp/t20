@@ -1,0 +1,31 @@
+{
+  "refactoring_plan": [
+    {
+      "step_id": "c5d6e7f8-a9b0-1234-5678-90abcdef1234",
+      "task_name": "Refactor Application Logic for API Integration",
+      "description": "Update the existing Humor Evaluator application to utilize the new `humorEvaluatorApiClient` module for all LLM interactions. This involves replacing direct LLM calls or previous API integrations with calls to the methods provided by the new client.",
+      "sub_tasks": [
+        {
+          "id": "refactor-joke-generation",
+          "description": "Locate all instances where jokes are generated and replace the current implementation with a call to `humorEvaluatorApiClient.generateJoke(topic)`. Ensure the `topic` parameter is correctly passed from the application's UI or logic.",
+          "code_change_example": "// Before:\n// const joke = await oldLLMProvider.generate('about cats');\n\n// After:\nimport { humorEvaluatorApiClient } from './apiClient'; // Assuming apiClient is in './apiClient'\n\nasync function fetchNewJoke(topic) {\n  try {\n    const joke = await humorEvaluatorApiClient.generateJoke(topic);\n    // Update UI with the generated joke\n    console.log('Generated Joke:', joke);\n  } catch (error) {\n    console.error('Error generating joke:', error);\n    // Handle error appropriately (e.g., show user message)\n  }\n}"
+        },
+        {
+          "id": "refactor-feedback-analysis",
+          "description": "Identify sections of the application that analyze user feedback. Refactor these to use `humorEvaluatorApiClient.analyzeFeedback(jokeText, feedbackText)`. The joke text and the user's feedback text should be passed as arguments.",
+          "code_change_example": "// Before:\n// const analysis = await oldLLMProvider.analyzeFeedback(joke, userFeedback);\n\n// After:\nimport { humorEvaluatorApiClient } from './apiClient';\n\nasync function processFeedback(joke, userFeedback) {\n  try {\n    const analysis = await humorEvaluatorApiClient.analyzeFeedback(joke, userFeedback);\n    // Process the analysis result (e.g., display insights)\n    console.log('Feedback Analysis:', analysis);\n  } catch (error) {\n    console.error('Error analyzing feedback:', error);\n    // Handle error appropriately\n  }\n}"
+        },
+        {
+          "id": "refactor-recommendations",
+          "description": "Update the recommendation feature to use `humorEvaluatorApiClient.getRecommendations(analysisJson)`. The output from the feedback analysis (expected to be a JSON string) should be passed as the argument.",
+          "code_change_example": "// Before:\n// const recommendations = await oldLLMProvider.getRecommendations(feedbackAnalysisResult);\n\n// After:\nimport { humorEvaluatorApiClient } from './apiClient';\n\nasync function fetchRecommendations(analysisResult) {\n  try {\n    // Assuming analysisResult is already a JSON string from analyzeFeedback\n    const recommendations = await humorEvaluatorApiClient.getRecommendations(analysisResult);\n    // Display recommendations to the user\n    console.log('Recommendations:', recommendations);\n  } catch (error) {\n    console.error('Error getting recommendations:', error);\n    // Handle error appropriately\n  }\n}"
+        },
+        {
+          "id": "api-client-integration",
+          "description": "Ensure the `humorEvaluatorApiClient` module is correctly imported and configured within the application. This includes setting up the base URL and handling the API key securely (e.g., via environment variables).",
+          "code_change_example": "// In your main application setup or a central configuration file:\n\n// Assuming humorEvaluatorApiClient is exported from './apiClient'\n// and configured with an API key (e.g., from process.env.API_KEY)\n\n// Example configuration snippet (actual implementation might vary):\n// humorEvaluatorApiClient.configure({\n//   baseUrl: 'https://ai.violass.club/v1',\n//   apiKey: process.env.HUMOR_EVALUATOR_API_KEY || 'YOUR_DEFAULT_KEY_FOR_DEV'\n// });\n\n// The module itself (humorEvaluatorApiClient.js):\n/*\nimport axios from 'axios';\n\nconst apiClient = axios.create({\n  baseURL: 'https://ai.violass.club/v1',\n});\n\napiClient.interceptors.request.use(config => {\n  const apiKey = process.env.HUMOR_EVALUATOR_API_KEY || 'YOUR_API_KEY'; // Fallback for dev\n  config.headers.Authorization = `Bearer ${apiKey}`;\n  config.headers['Content-Type'] = 'application/json';\n  return config;\n});\n\nconst humorEvaluatorApiClient = {\n  async generateJoke(topic) {\n    const response = await apiClient.post('/chat/completions', {\n      model: 'your-preferred-llm-model-id',\n      messages: [\n        { role: 'system', content: 'You are a creative comedian...' },\n        { role: 'user', content: `Generate a short, witty joke about ${topic}...` }\n      ],\n      temperature: 0.8,\n      max_tokens: 100\n    });\n    return response.data.choices[0].message.content;\n  },\n  async analyzeFeedback(jokeText, feedbackText) {\n    // ... implementation for analyzeFeedback ...\n    const response = await apiClient.post('/chat/completions', {\n        model: 'your-preferred-llm-model-id',\n        messages: [\n          { role: 'system', content: 'You are a humor analyst...' },\n          { role: 'user', content: `Analyze the following user feedback for the joke: \\\"${jokeText}\\\". User feedback: \\\"${feedbackText}\\\".\\n\\nProvide your analysis as a JSON object...` }\n        ],\n        temperature: 0.2,\n        max_tokens: 300\n      });\n      return response.data.choices[0].message.content;\n  },\n  async getRecommendations(analysisJson) {\n    // ... implementation for getRecommendations ...\n     const response = await apiClient.post('/chat/completions', {\n        model: 'your-preferred-llm-model-id',\n        messages: [\n          { role: 'system', content: 'You are a joke improvement specialist...' },\n          { role: 'user', content: `Based on the following joke feedback analysis:\\n\`\`\`json\\n${analysisJson}\\n\`\`\`\\nProvide specific, actionable recommendations...` }\n        ],\n        temperature: 0.5,\n        max_tokens: 200\n      });\n      return response.data.choices[0].message.content;\n  }\n};\n\nexport { humorEvaluatorApiClient };\n*/"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,230 @@
+The overall goal is: 'Create a website that is a frontend to an AI system like this.'
+
+Your role's specific goal is: 'Structure workflows and ensure clarity in agent instructions, system prompt engineering'
+Your specific sub-task is: 'Synthesize the TAS from uTASe into a coherent project plan and define the initial system prompt for the AI this website will interface with.'
+
+The team's roles are:
+    {'roles': [{'title': 'Designer', 'description': 'Generate aesthetic layouts, color palettes, typography, and UI flows, ensuring accessibility and visual balance.'}, {'title': 'Engineer', 'description': 'Implement designs into clean, modular, and performant code, focusing on responsive design and accessibility.'}, {'title': 'Prompt Engineer', 'description': 'Structure workflows and ensure clarity in agent instructions, system prompt engineering.'}, {'title': 'Task-Agnostic Step (TAS) extractor (flash)', 'description': "Identify and return each 'Task Agnostic Step' (TAS) towards the high-level goal."}], 'steps': [{'name': 'uTASe', 'role': 'Task-Agnostic Step (TAS) extractor (flash)', 'task': 'Extract the primary Task-Agnostic Steps (TAS) for creating the AI frontend website, establishing a high-level project roadmap.'}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': 'Synthesize the TAS from uTASe into a coherent project plan and define the initial system prompt for the AI this website will interface with.'}, {'name': 'Aurora', 'role': 'Designer', 'task': 'Based on the project plan, create low-fidelity wireframes and define the core user interaction flow for the AI frontend.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Review the wireframes for technical feasibility and set up the initial project structure, including framework selection and repository creation.'}, {'name': 'Aurora', 'role': 'Designer', 'task': 'Develop a high-fidelity visual design system, including a color palette, typography, and component mockups based on the approved wireframes.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Translate the high-fidelity designs into responsive and accessible frontend components using modular code.'}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': "Refine the AI's system prompt and create user-facing microcopy (button text, instructions, placeholders) that aligns with the UI and guides the user effectively."}, {'name': 'Kodax', 'role': 'Engineer', 'task': "Integrate the frontend components into a cohesive application and connect to the AI system's API endpoints."}, {'name': 'Aurora', 'role': 'Designer', 'task': 'Conduct a design review of the implemented website to ensure it aligns with the high-fidelity mockups and accessibility standards.'}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': 'Perform end-to-end testing of the user flow, focusing on the clarity of instructions and the quality of the AI interaction.'}, {'name': 'uTASe', 'role': 'Task-Agnostic Step (TAS) extractor (flash)', 'task': 'Identify the next steps for iteration, such as user feedback collection, feature enhancement, or performance optimization.'}]}
+
+Please use the following outputs from the other agents as your input:
+
+Artifact from 1__step_0_uTASe_result.txt (Task-Agnostic Step (TAS) extractor (flash)):
+[
+  {
+    "id": "f1b2c3d4-e5f6-7890-1234-567890abcdef",
+    "name": "Define Project Scope and Requirements",
+    "description": "Clearly articulate the objectives, target audience, key features, and technical constraints for the AI frontend website. This involves understanding the AI system's capabilities and how the frontend will serve as its interface.",
+    "category": "Init",
+    "purpose": "Establish a clear understanding of what the website needs to achieve.",
+    "keywords": [
+      "scope",
+      "requirements",
+      "definition",
+      "planning"
+    ],
+    "applicability_notes": "This is a foundational step for any project, ensuring alignment before development begins. It's crucial for projects involving complex systems like AI.",
+    "examples_of_usage": [
+      "For an AI art generator, define if users can upload images, choose styles, and set parameters.",
+      "For an AI chatbot, specify the conversational flow, data privacy needs, and integration points.",
+      "For an AI data analysis tool, outline the types of data to be uploaded and the desired visualization outputs."
+    ],
+    "typical_inputs": [
+      "High-level project vision",
+      "Information about the AI system's capabilities",
+      "Target user profiles"
+    ],
+    "typical_outputs": [
+      "Project scope document",
+      "Detailed functional and non-functional requirements",
+      "User stories"
+    ]
+  },
+  {
+    "id": "a2b3c4d5-e6f7-8901-2345-67890abcdef0",
+    "name": "Design User Interface and User Experience",
+    "description": "Create the visual design and interactive flow of the website. This includes wireframing, prototyping, defining the user journey, and establishing the aesthetic (color, typography, layout) to ensure an intuitive and engaging user experience for interacting with the AI.",
+    "category": "Design",
+    "purpose": "Craft an intuitive and visually appealing interface for the AI system.",
+    "keywords": [
+      "UI",
+      "UX",
+      "design",
+      "wireframing",
+      "prototyping",
+      "visuals"
+    ],
+    "applicability_notes": "Essential for any user-facing application. The complexity of the AI interaction will dictate the UI/UX approach.",
+    "examples_of_usage": [
+      "Designing a dashboard for an AI analytics tool with clear data visualizations and input controls.",
+      "Creating a conversational interface for an AI chatbot with distinct message bubbles and typing indicators.",
+      "Developing a creative interface for an AI image generator with accessible parameter sliders and output previews."
+    ],
+    "typical_inputs": [
+      "Project scope and requirements",
+      "Understanding of AI system interactions",
+      "User personas"
+    ],
+    "typical_outputs": [
+      "Wireframes",
+      "Interactive prototypes",
+      "High-fidelity mockups",
+      "Style guide"
+    ]
+  },
+  {
+    "id": "b3c4d5e6-f7a8-9012-3456-7890abcdef01",
+    "name": "Develop Frontend Architecture and Structure",
+    "description": "Set up the foundational structure of the website, including choosing the appropriate frontend framework, defining the project directory structure, and establishing coding standards and best practices for maintainability and scalability.",
+    "category": "Engineering",
+    "purpose": "Establish a robust and scalable technical foundation for the frontend.",
+    "keywords": [
+      "architecture",
+      "frontend",
+      "framework",
+      "structure",
+      "setup"
+    ],
+    "applicability_notes": "Crucial for efficient development and long-term project health. Framework choice impacts development speed and performance.",
+    "examples_of_usage": [
+      "Selecting React, Vue, or Angular for building a dynamic user interface.",
+      "Configuring a build system (e.g., Webpack, Vite) for efficient asset management.",
+      "Establishing a component-based architecture for reusable UI elements."
+    ],
+    "typical_inputs": [
+      "Project requirements",
+      "Team's technical expertise",
+      "Scalability needs"
+    ],
+    "typical_outputs": [
+      "Project boilerplate",
+      "Chosen frontend framework",
+      "Directory structure",
+      "Coding standards document"
+    ]
+  },
+  {
+    "id": "c4d5e6f7-a8b9-0123-4567-890abcdef012",
+    "name": "Implement Frontend Components",
+    "description": "Translate the approved UI/UX designs into functional, responsive, and accessible frontend code. This involves building individual UI components, ensuring they work correctly across different devices and browsers, and adhering to accessibility standards.",
+    "category": "Engineering",
+    "purpose": "Build the reusable UI elements that form the website.",
+    "keywords": [
+      "component development",
+      "frontend implementation",
+      "responsive design",
+      "accessibility",
+      "coding"
+    ],
+    "applicability_notes": "Directly translates design into a working product. Focus on modularity and reusability is key.",
+    "examples_of_usage": [
+      "Creating a reusable button component with various states (hover, active, disabled).",
+      "Developing a data table component that supports sorting and filtering.",
+      "Implementing a modal dialog component that can be easily integrated into different parts of the application."
+    ],
+    "typical_inputs": [
+      "High-fidelity mockups",
+      "Style guide",
+      "Component specifications"
+    ],
+    "typical_outputs": [
+      "Reusable UI components",
+      "Component library",
+      "Implemented UI sections"
+    ]
+  },
+  {
+    "id": "d5e6f7a8-b9c0-1234-5678-90abcdef0123",
+    "name": "Integrate with AI System API",
+    "description": "Connect the frontend application to the backend AI system's API. This involves handling data fetching, sending requests, managing responses, and implementing error handling to ensure seamless interaction between the user interface and the AI.",
+    "category": "Engineering",
+    "purpose": "Enable communication between the frontend and the AI backend.",
+    "keywords": [
+      "API integration",
+      "data fetching",
+      "backend communication",
+      "request handling"
+    ],
+    "applicability_notes": "Critical for applications driven by AI. Requires understanding of API contracts and data formats.",
+    "examples_of_usage": [
+      "Making a POST request to an AI endpoint with user input to receive a generated response.",
+      "Fetching data from an AI model's output API to display results.",
+      "Implementing real-time updates via WebSockets for AI-driven interactions."
+    ],
+    "typical_inputs": [
+      "AI system API documentation",
+      "Authentication credentials",
+      "Frontend data structures"
+    ],
+    "typical_outputs": [
+      "Connected frontend and backend",
+      "Data flow between systems",
+      "Error handling mechanisms"
+    ]
+  },
+  {
+    "id": "e6f7a8b9-c0d1-2345-6789-0abcdef01234",
+    "name": "Refine AI Interaction and Prompts",
+    "description": "Optimize the way the user interacts with the AI by refining system prompts, user-facing instructions, and error messages. This ensures the AI understands user intent accurately and provides relevant, helpful outputs, enhancing the overall user experience.",
+    "category": "Prompt Engineering",
+    "purpose": "Improve the quality and clarity of AI interactions.",
+    "keywords": [
+      "prompt engineering",
+      "AI interaction",
+      "user prompts",
+      "system prompts",
+      "microcopy"
+    ],
+    "applicability_notes": "Directly impacts the effectiveness of the AI system's output. Iterative refinement based on testing is common.",
+    "examples_of_usage": [
+      "Adjusting a system prompt to guide an AI writing assistant towards a specific tone.",
+      "Creating clear placeholder text for an AI-powered search bar.",
+      "Developing user-friendly error messages when the AI cannot fulfill a request."
+    ],
+    "typical_inputs": [
+      "Initial AI system prompt",
+      "User feedback on AI responses",
+      "Frontend UI text requirements"
+    ],
+    "typical_outputs": [
+      "Optimized system prompts",
+      "Clear user instructions",
+      "Effective microcopy"
+    ]
+  },
+  {
+    "id": "f7a8b9c0-d1e2-3456-7890-abcdef012345",
+    "name": "Test and Iterate",
+    "description": "Conduct comprehensive testing, including unit tests, integration tests, and user acceptance testing. Gather feedback from users and stakeholders, and use this information to iterate on the design, functionality, and performance of the website.",
+    "category": "Testing",
+    "purpose": "Ensure the website functions correctly and meets user needs.",
+    "keywords": [
+      "testing",
+      "iteration",
+      "feedback",
+      "quality assurance",
+      "debugging"
+    ],
+    "applicability_notes": "An ongoing process throughout development. Crucial for identifying and fixing bugs and improving user satisfaction.",
+    "examples_of_usage": [
+      "Performing cross-browser compatibility testing.",
+      "Conducting usability testing with target users to identify pain points.",
+      "Reviewing AI output quality based on various user inputs."
+    ],
+    "typical_inputs": [
+      "Developed frontend components",
+      "Integrated AI system",
+      "Test plans",
+      "User feedback"
+    ],
+    "typical_outputs": [
+      "Bug reports",
+      "Test results",
+      "User feedback summaries",
+      "Updated project backlog"
+    ]
+  }
+]
+
+
+
+Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project.

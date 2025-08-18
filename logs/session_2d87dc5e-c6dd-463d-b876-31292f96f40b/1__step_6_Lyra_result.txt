@@ -1,0 +1,58 @@
+[
+  {
+    "prompt": "Our company aims to launch a new online course platform by the end of Q3 to expand our educational offerings and reach a global audience.",
+    "completion": [
+      "Conduct market research for online course platforms.",
+      "Define target audience and learning objectives.",
+      "Outline core features and technical requirements.",
+      "Develop a content strategy and curriculum framework.",
+      "Establish a project timeline and resource allocation plan.",
+      "Identify potential technology stack and third-party integrations.",
+      "Plan for user experience (UX) and user interface (UI) design.",
+      "Develop a marketing and launch strategy.",
+      "Establish metrics for success and post-launch evaluation."
+    ]
+  },
+  {
+    "prompt": "I want to learn to play the guitar proficiently within six months to be able to perform a few songs.",
+    "completion": [
+      "Define 'proficient' and specific performance goals.",
+      "Acquire a suitable guitar and necessary accessories.",
+      "Identify reputable learning resources (teachers, online courses, books).",
+      "Establish a consistent practice schedule.",
+      "Learn basic chords, scales, and music theory.",
+      "Practice chosen songs regularly.",
+      "Seek feedback on playing technique and progress.",
+      "Refine performance skills for selected songs."
+    ]
+  },
+  {
+    "prompt": "Develop a community garden project for our neighborhood.",
+    "completion": [
+      "Assess neighborhood interest and potential locations.",
+      "Form a core planning committee.",
+      "Research local regulations and obtain necessary permits.",
+      "Secure funding and resources.",
+      "Design the garden layout and infrastructure.",
+      "Prepare the garden site.",
+      "Recruit volunteers for planting and maintenance.",
+      "Establish garden rules and management protocols.",
+      "Organize a community garden opening event."
+    ]
+  },
+  {
+    "prompt": "Write a compelling short story for a local writing competition.",
+    "completion": [
+      "Understand competition rules and theme.",
+      "Brainstorm story ideas and plot concepts.",
+      "Develop characters and setting.",
+      "Outline the story structure.",
+      "Write the first draft of the story.",
+      "Self-edit for clarity, coherence, and impact.",
+      "Seek feedback from beta readers or writing group.",
+      "Revise the story based on feedback.",
+      "Proofread for grammar, spelling, and punctuation.",
+      "Format the story according to submission guidelines."
+    ]
+  }
+]

@@ -1,0 +1,94 @@
+{
+  "task": "Incorporate feedback from Aurora to polish the UI. Perform integration testing to ensure the front-end and back-end systems are communicating flawlessly.",
+  "plan": [
+    {
+      "step": 1,
+      "action": "Review Aurora's feedback for UI polish.",
+      "details": "Analyze the 'review_feedback' artifact from Aurora. Identify specific recommendations related to visual consistency, usability, and adherence to design specifications. Prioritize actionable items for UI refinement.",
+      "status": "completed"
+    },
+    {
+      "step": 2,
+      "action": "Implement UI polish based on feedback.",
+      "details": "Address the recommendations from Aurora's feedback. This includes: \n- Replacing the hierarchy visualization placeholder with a component using lineal icons.\n- Ensuring consistent interactive element states (hover, active).\n- Enhancing modal accessibility (focus trapping, return focus).\n- Implementing the sorting functionality for task table headers.\n- Refining the 'Add New Task' UI.\n- Adding visual feedback for the 'Recent Activity' feed.\n- Ensuring consistent naming and terminology.",
+      "status": "in_progress"
+    },
+    {
+      "step": 3,
+      "action": "Plan Integration Testing.",
+      "details": "Define test cases to verify the communication between the front-end (Kodax's implementation) and the back-end (Orchestration Service, Agent Manager, etc.). This will involve simulating agent actions and verifying system responses.",
+      "test_cases": [
+        {
+          "test_id": "IT001",
+          "description": "Verify task assignment: Simulate Orchestrator sending TASK_ASSIGNMENT to an Engineer agent. Check if the Engineer agent receives the correct payload and can process it.",
+          "steps": [
+            "Orchestrator initiates task assignment to Engineer.",
+            "Engineer agent receives TASK_ASSIGNMENT message via WebSocket/Broker.",
+            "Validate message content (task details, description, output format) against protocol.",
+            "Engineer agent acknowledges receipt or begins processing."
+          ],
+          "expected_outcome": "Engineer agent successfully receives and acknowledges the task assignment.",
+          "priority": "high"
+        },
+        {
+          "test_id": "IT002",
+          "description": "Verify progress updates: Simulate Engineer agent sending PROGRESS_UPDATE. Check if Orchestrator receives and logs the update correctly, and if the front-end dashboard reflects the status change.",
+          "steps": [
+            "Engineer agent sends PROGRESS_UPDATE for an assigned task.",
+            "Orchestrator receives and processes the update.",
+            "Front-end dashboard updates task status and progress visualization."
+          ],
+          "expected_outcome": "Task status and progress are accurately reflected on the dashboard.",
+          "priority": "high"
+        },
+        {
+          "test_id": "IT003",
+          "description": "Verify task completion: Simulate Engineer agent sending TASK_COMPLETION. Check if Orchestrator receives the output, validates it, and updates the task status to 'completed'.",
+          "steps": [
+            "Engineer agent sends TASK_COMPLETION with final output.",
+            "Orchestrator receives, validates output format.",
+            "Orchestrator updates task status to 'completed'.",
+            "Front-end dashboard reflects the completed status."
+          ],
+          "expected_outcome": "Task is marked as completed, and output is accessible (if applicable).",
+          "priority": "high"
+        },
+        {
+          "test_id": "IT004",
+          "description": "Verify error reporting: Simulate Engineer agent encountering an error and sending ERROR_REPORT. Check if Orchestrator receives the report and triggers appropriate error handling (e.g., logging, notifying).",
+          "steps": [
+            "Engineer agent encounters an unrecoverable error.",
+            "Engineer agent sends ERROR_REPORT.",
+            "Orchestrator receives and logs the error.",
+            "System potentially triggers a notification or attempts re-assignment."
+          ],
+          "expected_outcome": "Error is logged, and the system responds appropriately to the error report.",
+          "priority": "medium"
+        },
+        {
+          "test_id": "IT005",
+          "description": "Verify feedback loop: Simulate Orchestrator sending FEEDBACK to Engineer agent. Check if Engineer agent receives the feedback and can respond.",
+          "steps": [
+            "Orchestrator sends FEEDBACK message to Engineer.",
+            "Engineer agent receives the feedback.",
+            "Engineer agent can potentially send a revised TASK_COMPLETION."
+          ],
+          "expected_outcome": "Feedback is correctly delivered, and the agent can act upon it.",
+          "priority": "medium"
+        },
+        {
+          "test_id": "IT006",
+          "description": "Verify dynamic prompt integration: Ensure prompts sent to agents are correctly populated with task-specific data.",
+          "steps": [
+            "Initiate a TASK_ASSIGNMENT.",
+            "Inspect the 'description' field of the TASK_ASSIGNMENT message payload received by the agent.",
+            "Verify that placeholders like `{{task_name}}`, `{{description}}`, etc., are replaced with actual task data."
+          ],
+          "expected_outcome": "System prompts received by agents are dynamically populated with correct task details.",
+          "priority": "high"
+        }
+      ]
+    },
+    "status": "in_progress"
+  }
+}

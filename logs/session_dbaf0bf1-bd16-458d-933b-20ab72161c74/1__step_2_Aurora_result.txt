@@ -1,0 +1,156 @@
+{
+  "design_system": {
+    "color_palette": {
+      "primary": "#4A90E2",
+      "secondary": "#50E3C2",
+      "accent": "#F5A623",
+      "background": "#F8F9FA",
+      "surface": "#FFFFFF",
+      "text_primary": "#333333",
+      "text_secondary": "#666666",
+      "border": "#DDDDDD"
+    },
+    "typography": {
+      "font_family": "'Inter', sans-serif",
+      "heading_1": {
+        "font_size": "32px",
+        "font_weight": 700,
+        "line_height": "40px"
+      },
+      "heading_2": {
+        "font_size": "24px",
+        "font_weight": 600,
+        "line_height": "32px"
+      },
+      "body_large": {
+        "font_size": "16px",
+        "font_weight": 400,
+        "line_height": "24px"
+      },
+      "body_small": {
+        "font_size": "14px",
+        "font_weight": 400,
+        "line_height": "20px"
+      },
+      "label": {
+        "font_size": "12px",
+        "font_weight": 500,
+        "line_height": "16px"
+      }
+    },
+    "logo": {
+      "description": "A minimalist, abstract representation of a branching path or a structured flow. It uses clean lines and the primary and secondary colors to symbolize clarity and progress in task decomposition.",
+      "visual_elements": [
+        {"type": "line", "color": "#4A90E2", "stroke_width": 2, "start": {"x": 10, "y": 30}, "end": {"x": 30, "y": 10}},
+        {"type": "line", "color": "#4A90E2", "stroke_width": 2, "start": {"x": 30, "y": 10}, "end": {"x": 50, "y": 30}},
+        {"type": "line", "color": "#50E3C2", "stroke_width": 2, "start": {"x": 30, "y": 10}, "end": {"x": 30, "y": 50}}
+      ]
+    }
+  },
+  "ui_flow": {
+    "screens": [
+      {
+        "name": "Goal Input",
+        "description": "The initial screen where the user provides the high-level goal. Features a clear input field and a prominent 'Generate Plan' button.",
+        "layout": {
+          "type": "centered_column",
+          "elements": [
+            {"type": "logo", "size": "medium"},
+            {"type": "text", "content": "Define Your Objective", "style": "heading_1"},
+            {"type": "text", "content": "Enter your high-level goal for the LLM fine-tuning dataset.", "style": "body_large", "color": "text_secondary"},
+            {"type": "input_field", "label": "High-level Goal", "placeholder": "e.g., Create a dataset for LLM fine-tuning towards internalized TAS expertise", "style": "input_large"},
+            {"type": "button", "text": "Generate TAS Plan", "variant": "primary", "action": "submit_goal"}
+          ]
+        }
+      },
+      {
+        "name": "TAS Plan Review",
+        "description": "Displays the generated TAS plan. Users can review, edit, approve, or reject the plan.",
+        "layout": {
+          "type": "two_column_split",
+          "left_panel": {
+            "title": "Generated TAS Plan",
+            "elements": [
+              {"type": "list", "items_source": "generated_tas_plan", "item_style": "numbered_steps", "editable": true},
+              {"type": "button", "text": "Approve Plan", "variant": "primary", "action": "approve_plan"},
+              {"type": "button", "text": "Reject Plan", "variant": "secondary", "action": "reject_plan"}
+            ]
+          },
+          "right_panel": {
+            "title": "High-level Goal",
+            "elements": [
+              {"type": "text", "content": "user_provided_goal", "style": "body_large"}
+            ],
+            "actions": [
+              {"type": "button", "text": "Edit Goal", "variant": "tertiary", "action": "edit_goal"}
+            ]
+          }
+        }
+      }
+    ],
+    "components": {
+      "input_field": {
+        "background_color": "surface",
+        "border_color": "border",
+        "border_radius": "8px",
+        "padding": "12px 16px",
+        "font_size": "body_large",
+        "focus_border_color": "primary"
+      },
+      "button": {
+        "primary": {
+          "background_color": "primary",
+          "text_color": "white",
+          "border_radius": "8px",
+          "padding": "12px 24px",
+          "font_weight": 600
+        },
+        "secondary": {
+          "background_color": "transparent",
+          "text_color": "primary",
+          "border_color": "primary",
+          "border_width": "1px",
+          "border_radius": "8px",
+          "padding": "12px 24px",
+          "font_weight": 600
+        },
+        "tertiary": {
+          "background_color": "transparent",
+          "text_color": "text_secondary",
+          "border_radius": "8px",
+          "padding": "8px 16px",
+          "font_weight": 500
+        }
+      },
+      "list": {
+        "item_style": {
+          "padding": "10px 0",
+          "border_bottom": "1px solid border",
+          "display": "flex",
+          "align_items": "center",
+          "gap": "10px"
+        },
+        "editable_item": {
+          "input_style": {
+            "flex_grow": 1,
+            "font_size": "body_large",
+            "font_weight": 400,
+            "line_height": "24px",
+            "border": "none",
+            "background": "transparent",
+            "focus_outline": "none",
+            "color": "text_primary"
+          },
+          "drag_handle_style": {
+            "cursor": "grab",
+            "color": "text_secondary"
+          }
+        }
+      }
+    }
+  },
+  "design_philosophy": {
+    "title": "Clarity in Complexity",
+    "description": "Our design for the data annotation tool is rooted in a minimalist aesthetic to ensure focus and intuitive interaction. We employ a clean, natural design language, utilizing a serene color palette dominated by soft blues and greens, punctuated by a warm accent for key actions. Typography is crisp and legible, prioritizing readability for extended annotation sessions. The user flow guides the annotator seamlessly from goal definition to plan validation, with clear affordances for editing and approval. The visual balance is achieved through ample whitespace and a structured layout, minimizing cognitive load and maximizing efficiency. Every element is crafted to support the core task of refining AI understanding, making the complex process of data annotation feel straightforward and accessible."
+  }
+}

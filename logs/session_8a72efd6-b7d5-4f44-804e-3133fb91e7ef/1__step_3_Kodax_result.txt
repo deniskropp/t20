@@ -1,0 +1,112 @@
+{
+  "database_schema": {
+    "tables": [
+      {
+        "name": "jokes",
+        "columns": [
+          {"name": "id", "type": "INTEGER", "primary_key": true, "auto_increment": true},
+          {"name": "content", "type": "TEXT", "not_null": true},
+          {"name": "created_at", "type": "TIMESTAMP", "default": "CURRENT_TIMESTAMP"}
+        ],
+        "description": "Stores the generated jokes."
+      },
+      {
+        "name": "feedback",
+        "columns": [
+          {"name": "id", "type": "INTEGER", "primary_key": true, "auto_increment": true},
+          {"name": "joke_id", "type": "INTEGER", "foreign_key": {"table": "jokes", "column": "id"}, "not_null": true},
+          {"name": "originality_rating", "type": "INTEGER", "not_null": true},
+          {"name": "cleverness_rating", "type": "INTEGER", "not_null": true},
+          {"name": "surprise_rating", "type": "INTEGER", "not_null": true},
+          {"name": "relatability_rating", "type": "INTEGER", "not_null": true},
+          {"name": "text_feedback", "type": "TEXT"},
+          {"name": "submitted_at", "type": "TIMESTAMP", "default": "CURRENT_TIMESTAMP"}
+        ],
+        "description": "Stores user feedback for each joke."
+      }
+    ]
+  },
+  "api_endpoints": [
+    {
+      "method": "POST",
+      "path": "/api/jokes",
+      "description": "Generates and stores a new joke, returning the joke content.",
+      "request_body": null,
+      "response_body": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "integer"},
+          "content": {"type": "string"},
+          "created_at": {"type": "string", "format": "date-time"}
+        }
+      },
+      "implementation_notes": "This endpoint will interact with the AI humor generation service (Lyra's component). It will first request a joke, then store it in the 'jokes' table, and finally return the stored joke object."
+    },
+    {
+      "method": "GET",
+      "path": "/api/jokes/{id}",
+      "description": "Retrieves a specific joke by its ID.",
+      "request_params": [
+        {"name": "id", "type": "integer", "required": true, "location": "path"}
+      ],
+      "response_body": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "integer"},
+          "content": {"type": "string"},
+          "created_at": {"type": "string", "format": "date-time"}
+        }
+      },
+      "implementation_notes": "Fetches a joke from the 'jokes' table based on the provided ID."
+    },
+    {
+      "method": "POST",
+      "path": "/api/feedback",
+      "description": "Receives and stores user feedback for a given joke.",
+      "request_body": {
+        "type": "object",
+        "properties": {
+          "joke_id": {"type": "integer", "required": true},
+          "originality_rating": {"type": "integer", "required": true, "minimum": 1, "maximum": 5},
+          "cleverness_rating": {"type": "integer", "required": true, "minimum": 1, "maximum": 5},
+          "surprise_rating": {"type": "integer", "required": true, "minimum": 1, "maximum": 5},
+          "relatability_rating": {"type": "integer", "required": true, "minimum": 1, "maximum": 5},
+          "text_feedback": {"type": "string", "nullable": true}
+        }
+      },
+      "response_body": {
+        "type": "object",
+        "properties": {
+          "message": {"type": "string"},
+          "feedback_id": {"type": "integer"}
+        }
+      },
+      "implementation_notes": "Validates incoming feedback data and inserts it into the 'feedback' table. Ensures `joke_id` exists in the 'jokes' table."
+    },
+    {
+      "method": "GET",
+      "path": "/api/feedback",
+      "description": "Retrieves all feedback entries (for analysis purposes).",
+      "request_params": [],
+      "response_body": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {"type": "integer"},
+            "joke_id": {"type": "integer"},
+            "originality_rating": {"type": "integer"},
+            "cleverness_rating": {"type": "integer"},
+            "surprise_rating": {"type": "integer"},
+            "relatability_rating": {"type": "integer"},
+            "text_feedback": {"type": "string", "nullable": true},
+            "submitted_at": {"type": "string", "format": "date-time"}
+          }
+        }
+      },
+      "implementation_notes": "Fetches all records from the 'feedback' table. This endpoint would typically be secured and only accessible for internal processing or administrative use."
+    }
+  ],
+  "frontend_scaffolding_notes": "The front-end will be built using a modern JavaScript framework (e.g., React, Vue, or Svelte) to ensure modularity and performance. Adherence to Aurora's design specifications will be paramount, focusing on accessibility (WCAG 2.1 AA compliance) and responsiveness across devices. Key components will include:\n\n1.  **JokeDisplay:** Renders the joke content, fetched from `/api/jokes`. Includes a button/mechanism to request the next joke.\n2.  **FeedbackForm:** A modal or separate section triggered after a joke is displayed, containing the multi-axis rating system and an optional text input. This form will submit data to `/api/feedback`.\n3.  **Navigation/Layout:** A clean, minimalist structure aligning with Aurora's design, ensuring easy navigation and a focus on the joke content. The color palette and typography from the brand kit will be applied consistently.\n\nAccessibility considerations will include:\n*   Semantic HTML5 elements for structure.\n*   ARIA attributes for dynamic content and interactive elements (e.g., rating system).\n*   Keyboard navigation for all interactive components.\n*   Sufficient color contrast ratios.\n*   Responsive design that adapts gracefully to different screen sizes.",
+  "backend_scaffolding_notes": "A Node.js (Express.js) or Python (FastAPI/Flask) backend will be used for its flexibility and ease of integration with AI services. The backend will manage:\n\n1.  **Database Interaction:** Utilizing an ORM (e.g., Prisma for Node.js, SQLAlchemy for Python) to interact with the defined database schema.\n2.  **API Endpoints:** Implementing the CRUD operations for jokes and feedback as outlined above.\n3.  **AI Service Integration:** A placeholder or initial integration point for Lyra's AI humor generation service will be established. This will likely involve an internal service class that handles requests to the AI.\n4.  **Security:** Basic security measures will be implemented, such as input validation and rate limiting where appropriate. API endpoint security (e.g., for the feedback retrieval) will be considered in later stages.\n\nDatabase choice will be a relational database like PostgreSQL or SQLite for development, suitable for structured data like jokes and feedback. The scaffolding will ensure a clear separation of concerns between API routes, service logic, and data access."
+}

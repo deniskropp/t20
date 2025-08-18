@@ -1,0 +1,146 @@
+```python
+import json
+import os
+
+def create_jsonl_dataset(data, output_filename="finetuning_dataset.jsonl"):
+    """
+    Creates a JSONL (JSON Lines) file from a list of dictionaries.
+
+    Each dictionary is expected to have 'prompt' and 'completion' keys,
+    conforming to the defined dataset schema.
+
+    Args:
+        data (list): A list of dictionaries, where each dictionary represents
+                     a data point with 'prompt' and 'completion' keys.
+        output_filename (str): The name of the output JSONL file.
+    """
+    print(f"Starting to create dataset: {output_filename}")
+    try:
+        with open(output_filename, 'w', encoding='utf-8') as f:
+            for entry in data:
+                # Ensure the entry conforms to the schema (basic check)
+                if 'prompt' in entry and 'completion' in entry:
+                    json_record = json.dumps(entry)
+                    f.write(json_record + '\n')
+                else:
+                    print(f"Skipping invalid entry (missing 'prompt' or 'completion'): {entry}")
+        print(f"Successfully created dataset: {output_filename}")
+        print(f"Dataset size: {len(data)} entries")
+    except Exception as e:
+        print(f"Error creating dataset {output_filename}: {e}")
+
+def deploy_script():
+    """
+    Simulates the deployment of the dataset packaging script.
+    In a real-world scenario, this would involve placing the script
+    in a CI/CD pipeline, a scheduled task, or a repository.
+    For this simulation, we'll just print a confirmation message.
+    """
+    print("Script for automating final dataset packaging deployed.")
+    print("This script is now ready to be executed when a validated dataset is available.")
+    print("It will generate the 'finetuning_dataset.jsonl' file.")
+
+if __name__ == "__main__":
+    # --- Input Data Simulation ---
+    # In a real scenario, this data would come from the previous Lyra step
+    # after uTASe has processed and Lyra has structured it.
+    # For this task, we'll use the output from 1__step_6_Lyra_result.txt directly.
+    validated_data_from_lyra = [
+        {
+            "prompt": "Our company aims to launch a new online course platform by the end of Q3 to expand our educational offerings and reach a global audience.",
+            "completion": [
+                "Conduct market research for online course platforms.",
+                "Define target audience and learning objectives.",
+                "Outline core features and technical requirements.",
+                "Develop a content strategy and curriculum framework.",
+                "Establish a project timeline and resource allocation plan.",
+                "Identify potential technology stack and third-party integrations.",
+                "Plan for user experience (UX) and user interface (UI) design.",
+                "Develop a marketing and launch strategy.",
+                "Establish metrics for success and post-launch evaluation."
+            ]
+        },
+        {
+            "prompt": "I want to learn to play the guitar proficiently within six months to be able to perform a few songs.",
+            "completion": [
+                "Define 'proficient' and specific performance goals.",
+                "Acquire a suitable guitar and necessary accessories.",
+                "Identify reputable learning resources (teachers, online courses, books).",
+                "Establish a consistent practice schedule.",
+                "Learn basic chords, scales, and music theory.",
+                "Practice chosen songs regularly.",
+                "Seek feedback on playing technique and progress.",
+                "Refine performance skills for selected songs."
+            ]
+        },
+        {
+            "prompt": "Develop a community garden project for our neighborhood.",
+            "completion": [
+                "Assess neighborhood interest and potential locations.",
+                "Form a core planning committee.",
+                "Research local regulations and obtain necessary permits.",
+                "Secure funding and resources.",
+                "Design the garden layout and infrastructure.",
+                "Prepare the garden site.",
+                "Recruit volunteers for planting and maintenance.",
+                "Establish garden rules and management protocols.",
+                "Organize a community garden opening event."
+            ]
+        },
+        {
+            "prompt": "Write a compelling short story for a local writing competition.",
+            "completion": [
+                "Understand competition rules and theme.",
+                "Brainstorm story ideas and plot concepts.",
+                "Develop characters and setting.",
+                "Outline the story structure.",
+                "Write the first draft of the story.",
+                "Self-edit for clarity, coherence, and impact.",
+                "Seek feedback from beta readers or writing group.",
+                "Revise the story based on feedback.",
+                "Proofread for grammar, spelling, and punctuation.",
+                "Format the story according to submission guidelines."
+            ]
+        }
+    ]
+
+    # --- Execution of the sub-task ---
+    # This function will create the JSONL file from the simulated validated data.
+    create_jsonl_dataset(validated_data_from_lyra)
+
+    # --- Deployment Simulation ---
+    # This function simulates the deployment of the packaging script.
+    deploy_script()
+
+    print("\n--- Task Complete ---")
+    print("The 'finetuning_dataset.jsonl' file has been generated in the current directory.")
+    print("This file is now ready for LLM fine-tuning.")
+```
+
+**Explanation:**
+
+1.  **`create_jsonl_dataset(data, output_filename="finetuning_dataset.jsonl")` Function:**
+    *   This function takes the `data` (a list of dictionaries, where each dictionary is a prompt-completion pair) and an `output_filename` as input.
+    *   It opens the specified file in write mode (`'w'`) with UTF-8 encoding to ensure broad compatibility.
+    *   It iterates through each `entry` (data point) in the provided `data`.
+    *   For each entry, it performs a basic check to ensure it has both a `prompt` and a `completion` key, as defined by Lyra's schema.
+    *   It converts the dictionary into a JSON string using `json.dumps()`.
+    *   It writes the JSON string to the file, followed by a newline character (`'\n'`). This adheres to the JSON Lines (JSONL) format.
+    *   Includes print statements for user feedback on the process and any potential errors.
+
+2.  **`deploy_script()` Function:**
+    *   This function simulates the deployment aspect of the task. In a real-world scenario, this would involve making the script available for execution, perhaps by:
+        *   Committing it to a version control system (like Git).
+        *   Integrating it into a CI/CD pipeline (e.g., Jenkins, GitHub Actions, GitLab CI) to run automatically after data validation.
+        *   Scheduling it as a cron job if the process is to be run periodically.
+        *   Making it an executable script in a deployment environment.
+    *   For this simulation, it simply prints confirmation messages indicating that the script is "deployed" and ready to be used.
+
+3.  **`if __name__ == "__main__":` Block:**
+    *   This block ensures that the code inside it only runs when the script is executed directly (not when imported as a module).
+    *   **Input Data Simulation:** It directly uses the `validated_data_from_lyra` variable, which is populated with the example data provided in `1__step_6_Lyra_result.txt`. This simulates having the final, structured, and validated data ready for packaging.
+    *   **Execution of the Sub-task:** It calls `create_jsonl_dataset()` with the simulated data to generate the `finetuning_dataset.jsonl` file.
+    *   **Deployment Simulation:** It calls `deploy_script()` to confirm the script's readiness for deployment.
+    *   Finally, it prints a summary message indicating the completion of the task.
+
+This script directly addresses the sub-task of writing and deploying scripts to automate the final packaging of validated datasets into a machine-readable format (JSONL) suitable for fine-tuning, using the outputs from previous steps. It focuses on modularity (separate functions for packaging and deployment) and clarity by providing print statements for user feedback.

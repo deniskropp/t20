@@ -1,0 +1,93 @@
+{
+  "task_id": "e5f6a7b8-c9d0-1234-5678-90abcdef1234",
+  "task_name": "Develop the front-end application based on Aurora's UI/UX designs, ensuring a responsive and accessible user interface for image submission.",
+  "role": "Engineer (Kodax)",
+  "dependencies": [
+    "Artifact from 1__step_2_Aurora_result.txt (Designer)"
+  ],
+  "output_description": "Front-end application code structure and key component implementations adhering to Aurora's design specifications, focusing on responsiveness and accessibility.",
+  "implementation_plan": [
+    {
+      "step": 1,
+      "action": "Set up Project Structure",
+      "details": "Initialize a new React project using Create React App or Vite. Organize the project into logical folders (e.g., `src/components`, `src/pages`, `src/styles`, `src/utils`, `src/hooks`).",
+      "tools": ["React", "Vite/CRA", "npm/yarn"]
+    },
+    {
+      "step": 2,
+      "action": "Implement Global Styles and Theme",
+      "details": "Create global CSS files to import typography, reset styles, and define the brand's color palette. Utilize CSS-in-JS (styled-components) or CSS Modules to scope styles and implement the theme based on Aurora's brand kit.",
+      "deliverables": ["Global styles", "Theme provider setup", "Component styling utilities"],
+      "tools": ["styled-components", "CSS Modules", "React Context API"]
+    },
+    {
+      "step": 3,
+      "action": "Develop Live Image Capture Screen Components",
+      "details": "Create React components for the capture screen: `CameraView` (to display the video feed), `FramingGuides` (overlay), `CaptureButton`, `ControlButtonGroup` (for retake/confirm/flash/switch). Ensure components are visually aligned with Aurora's mockups and handle camera access and user interactions.",
+      "deliverables": ["CameraView.jsx", "FramingGuides.jsx", "CaptureButton.jsx", "ControlButtonGroup.jsx", "LiveCapturePage.jsx"],
+      "tools": ["React", "WebRTC API (navigator.mediaDevices.getUserMedia)", "styled-components"]
+    },
+    {
+      "step": 4,
+      "action": "Implement Image Confirmation and Preview",
+      "details": "Create a component to display a static thumbnail of the captured image and present the 'Retake' and 'Confirm' buttons. Manage the state transition from live capture to image confirmation.",
+      "deliverables": ["ImagePreview.jsx"],
+      "tools": ["React", "State management"]
+    },
+    {
+      "step": 5,
+      "action": "Develop Result Display Screen Components",
+      "details": "Create components for the results screen: `ResultCard` (for primary match), `SecondaryMatchList` (for other matches), `FeedbackButtons`. Structure the layout according to Aurora's design, ensuring clear hierarchy and visual balance.",
+      "deliverables": ["ResultCard.jsx", "SecondaryMatchList.jsx", "FeedbackButtons.jsx", "ResultsPage.jsx"],
+      "tools": ["React", "styled-components"]
+    },
+    {
+      "step": 6,
+      "action": "Implement Feedback Mechanism",
+      "details": "Develop the UI elements for user feedback (e.g., 'Was this correct?' buttons, optional text area). Design a modal or a dedicated screen for detailed feedback, ensuring accessibility.",
+      "deliverables": ["FeedbackModal.jsx", "FeedbackForm.jsx"],
+      "tools": ["React", "styled-components", "Accessibility best practices"]
+    },
+    {
+      "step": 7,
+      "action": "Integrate Routing and State Management",
+      "details": "Set up React Router for navigation between the capture and results screens. Implement a state management solution (e.g., React Context API, Zustand, or Redux) to manage application state, including the captured image, recognition results, and feedback data.",
+      "deliverables": ["App.js (with routing)", "Context providers for state management"],
+      "tools": ["React Router", "Context API/Zustand"]
+    },
+    {
+      "step": 8,
+      "action": "Implement API Communication",
+      "details": "Use Axios or Fetch API to send the captured image to the backend API for recognition and to submit user feedback. Handle loading states and errors gracefully.",
+      "deliverables": ["apiService.js"],
+      "tools": ["Axios", "Fetch API"]
+    },
+    {
+      "step": 9,
+      "action": "Ensure Responsiveness",
+      "details": "Apply responsive design principles using CSS media queries, flexbox, and grid layouts to ensure the UI adapts seamlessly across different screen sizes (mobile, tablet, desktop).",
+      "deliverables": ["Responsive CSS styles"],
+      "tools": ["CSS Media Queries", "Flexbox", "Grid Layout"]
+    },
+    {
+      "step": 10,
+      "action": "Ensure Accessibility",
+      "details": "Adhere to WCAG guidelines. Use semantic HTML, ARIA attributes where necessary, ensure sufficient color contrast, provide keyboard navigation support, and test with screen readers.",
+      "deliverables": ["Accessible component implementations", "ARIA attribute usage"],
+      "tools": ["Lighthouse", "axe-core", "Screen readers (NVDA, VoiceOver)"]
+    },
+    {
+      "step": 11,
+      "action": "Component Testing",
+      "details": "Write unit and integration tests for key UI components to ensure they function correctly and maintain consistency.",
+      "deliverables": ["Unit and integration tests"],
+      "tools": ["Jest", "React Testing Library"]
+    }
+  ],
+  "code_snippets": {
+    "LiveCapturePage.jsx": "import React, { useState, useRef, useEffect } from 'react';\nimport styled from 'styled-components';\nimport { useNavigate } from 'react-router-dom';\nimport { useCamera } from '../hooks/useCamera'; // Assuming a custom hook for camera logic\nimport { sendImageForRecognition } from '../services/apiService';\n\nconst CaptureContainer = styled.div`\n  position: relative;\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: flex-end;\n  overflow: hidden;\n  background-color: ${({ theme }) => theme.colors.neutral_dark};\n`;\n\nconst VideoFeed = styled.video`\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n`;\n\nconst FramingOverlay = styled.div`\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n  width: 70%;\n  height: 50%;\n  border: 2px dashed ${({ theme }) => theme.colors.neutral_medium};\n  border-radius: 8px;\n  z-index: 10;\n`;\n\nconst ControlsContainer = styled.div`\n  display: flex;\n  justify-content: space-around;\n  align-items: center;\n  width: 100%;\n  padding: 20px;\n  background: rgba(0, 0, 0, 0.5);\n  z-index: 20;\n`;\n\nconst IconButton = styled.button`\n  background: none;\n  border: none;\n  color: white;\n  font-size: 24px;\n  cursor: pointer;\n  padding: 10px;\n`;\n\nconst CaptureButton = styled.button`\n  width: 70px;\n  height: 70px;\n  border-radius: 50%;\n  background-color: ${({ theme }) => theme.colors.primary};\n  border: 4px solid white;\n  cursor: pointer;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  position: relative;\n  &:after {\n    content: '';\n    position: absolute;\n    width: 80%;\n    height: 80%;\n    border-radius: 50%;\n    background-color: white;\n  }\n`;\n\nconst ImagePreviewContainer = styled.div`\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background: black;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  z-index: 30;\n`;\n\nconst PreviewImage = styled.img`\n  max-width: 90%;\n  max-height: 70vh;\n  object-fit: contain;\n  margin-bottom: 20px;\n`;\n\nconst ActionButtons = styled.div`\n  display: flex;\n  gap: 20px;\n`;\n\nconst LiveCapturePage = () => {\n  const videoRef = useRef(null);\n  const [capturedImage, setCapturedImage] = useState(null);\n  const [isLoading, setIsLoading] = useState(false);\n  const navigate = useNavigate();\n\n  const { stream, error, startCamera, stopCamera } = useCamera();\n\n  useEffect(() => {\n    if (videoRef.current && stream) {\n      videoRef.current.srcObject = stream;\n    }\n    return () => {\n      stopCamera();\n    };\n  }, [stream, stopCamera]);\n\n  useEffect(() => {\n    startCamera();\n  }, [startCamera]);\n\n  const handleCapture = () => {\n    if (videoRef.current && videoRef.current.srcObject) {\n      const canvas = document.createElement('canvas');\n      canvas.width = videoRef.current.videoWidth;\n      canvas.height = videoRef.current.videoHeight;\n      canvas.getContext('2d').drawImage(videoRef.current, 0, 0);\n      const imageDataUrl = canvas.toDataURL('image/jpeg');\n      setCapturedImage(imageDataUrl);\n      stopCamera();\n    }\n  };\n\n  const handleRetake = () => {\n    setCapturedImage(null);\n    startCamera();\n  };\n\n  const handleConfirm = async () => {\n    if (capturedImage) {\n      setIsLoading(true);\n      try {\n        // Assuming sendImageForRecognition returns the recognition results\n        const results = await sendImageForRecognition(capturedImage);\n        navigate('/results', { state: { image: capturedImage, results } });\n      } catch (err) {\n        console.error('Error sending image:', err);\n        // Handle error display to user\n        navigate('/error', { state: { message: 'Failed to process image.' } });\n      } finally {\n        setIsLoading(false);\n      }\n    }\n  };\n\n  if (error) {\n    return <div>Error accessing camera: {error}</div>;\n  }\n\n  return (\n    <CaptureContainer>\n      {!capturedImage ? (\n        <>\n          <VideoFeed ref={videoRef} autoPlay playsInline />\n          <FramingOverlay />\n          <ControlsContainer>\n            <IconButton aria-label=\"Switch camera\">📷</IconButton>\n            <CaptureButton onClick={handleCapture} aria-label=\"Capture Image\" />\n            <IconButton aria-label=\"Flash\">⚡</IconButton>\n          </ControlsContainer>\n        </>\n      ) : (\n        <ImagePreviewContainer>\n          <PreviewImage src={capturedImage} alt=\"Captured preview\" />\n          <ActionButtons>\n            <button onClick={handleRetake}>Retake</button>\n            <button onClick={handleConfirm} disabled={isLoading}>\n              {isLoading ? 'Processing...' : 'Confirm'}\n            </button>\n          </ActionButtons>\n        </ImagePreviewContainer>\n      )}\n    </CaptureContainer>\n  );\n};\n\nexport default LiveCapturePage;",
+    "ResultCard.jsx": "import React from 'react';\nimport styled from 'styled-components';\n\nconst Card = styled.div`\n  background-color: ${({ theme }) => theme.colors.neutral_light};\n  border-radius: 8px;\n  padding: 16px;\n  margin: 16px;\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  text-align: center;\n`;\n\nconst ImageThumbnail = styled.img`\n  width: 100%;\n  max-width: 150px;\n  height: auto;\n  border-radius: 4px;\n  margin-bottom: 12px;\n`;\n\nconst CaptionText = styled.p`\n  font-size: ${({ theme }) => theme.typography.body_text.size};\n  line-height: ${({ theme }) => theme.typography.body_text.line_height};\n  color: ${({ theme }) => theme.colors.neutral_dark};\n  margin-bottom: 8px;\n`;\n\nconst ConfidenceScore = styled.p`\n  font-size: ${({ theme }) => theme.typography.captions_and_labels.size};\n  font-weight: ${({ theme }) => theme.typography.captions_and_labels.font_weight};\n  color: ${({ theme }) => theme.colors.accent};\n  margin-bottom: 12px;\n`;\n\nconst ResultCard = ({ imageSrc, caption, score, justification }) => {\n  return (\n    <Card>\n      <ImageThumbnail src={imageSrc} alt=\"Matched image\" />\n      <CaptionText>{caption}</CaptionText>\n      <ConfidenceScore>{score}% Confidence</ConfidenceScore>\n      {justification && <p style={{ fontSize: '0.8em', color: '#666' }}>{justification}</p>}\n    </Card>\n  );\n};\n\nexport default ResultCard;",
+    "ResultsPage.jsx": "import React from 'react';\nimport { useLocation, useNavigate } from 'react-router-dom';\nimport styled from 'styled-components';\nimport ResultCard from '../components/ResultCard';\nimport { submitFeedback } from '../services/apiService'; // Assuming a feedback submission service\n\nconst ResultsContainer = styled.div`\n  padding: 20px;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  min-height: 100vh;\n  background-color: ${({ theme }) => theme.colors.background};\n`;\n\nconst PageTitle = styled.h1`\n  font-size: ${({ theme }) => theme.typography.headings.size};\n  font-weight: ${({ theme }) => theme.typography.headings.font_weight};\n  color: ${({ theme }) => theme.colors.neutral_dark};\n  margin-bottom: 24px;\n`;\n\nconst UserImageThumbnail = styled.img`\n  width: 150px;\n  height: 150px;\n  object-fit: cover;\n  border-radius: 8px;\n  margin-bottom: 20px;\n  border: 1px solid ${({ theme }) => theme.colors.neutral_medium};\n`;\n\nconst FeedbackSection = styled.div`\n  margin-top: 30px;\n  text-align: center;\n`;\n\nconst FeedbackPrompt = styled.p`\n  font-size: ${({ theme }) => theme.typography.subheadings.size};\n  margin-bottom: 15px;\n`;\n\nconst FeedbackButtons = styled.div`\n  display: flex;\n  gap: 15px;\n  justify-content: center;\n`;\n\nconst ActionButton = styled.button`\n  padding: 10px 20px;\n  border-radius: 5px;\n  cursor: pointer;\n  font-weight: 600;\n  transition: background-color 0.2s ease;\n`;\n\nconst PrimaryButton = styled(ActionButton)`\n  background-color: ${({ theme }) => theme.colors.primary};\n  color: white;\n  border: none;\n  &:hover {\n    background-color: #3a7bc2;\n  }\n`;\n\nconst SecondaryButton = styled(ActionButton)`\n  background-color: transparent;\n  color: ${({ theme }) => theme.colors.neutral_dark};\n  border: 1px solid ${({ theme }) => theme.colors.neutral_medium};\n  &:hover {\n    background-color: #f0f0f0;\n  }\n`;\n\nconst ResultsPage = () => {\n  const location = useLocation();\n  const navigate = useNavigate();\n  const { image, results } = location.state || {}; // Destructure state passed from navigate\n\n  if (!image || !results) {\n    // Handle case where state is not available, maybe redirect or show error\n    return <div>No results found. Please try again.</div>;\n  }\n\n  const handleFeedback = async (isCorrect) => {\n    try {\n      // Assuming 'results.recognized_image' or 'results.closest_matches[0]' contains the ID of the matched item\n      const matchedImageId = results.recognized_image?.image_id || results.closest_matches?.[0]?.image_id;\n      await submitFeedback(matchedImageId, isCorrect, ''); // Pass empty string for correction initially\n      alert('Thank you for your feedback!');\n    } catch (error) {\n      console.error('Error submitting feedback:', error);\n      alert('Failed to submit feedback. Please try again.');\n    }\n  };\n\n  const handleNewSearch = () => {\n    navigate('/');\n  };\n\n  return (\n    <ResultsContainer>\n      <PageTitle>Recognition Results</PageTitle>\n      <UserImageThumbnail src={image} alt=\"Your captured image\" />\n\n      {results.recognition_status === 'recognized' && (\n        <ResultCard\n          imageSrc={results.recognized_image.image_url || 'placeholder_for_db_image.jpg'} // Assuming DB image URL is available\n          caption={results.recognized_image.caption}\n          score={Math.round(results.recognized_image.confidence_score * 100)}\n          justification={results.recognized_image.justification}\n        />\n      )} \n      {results.recognition_status === 'no_confident_match' && (\n        <div>\n          <p style={{ fontSize: '1.2rem', color: '#D32F2F' }}>No confident match found.</p>\n          {results.closest_matches && results.closest_matches.length > 0 && (\n            <div>\n              <h3>Top Matches:</h3>\n              {results.closest_matches.map((match, index) => (\n                <ResultCard\n                  key={index}\n                  imageSrc={match.image_url || 'placeholder_for_db_image.jpg'}\n                  caption={match.caption}\n                  score={Math.round(match.similarity_score * 100)}\n                />\n              ))}\n            </div>\n          )}\n        </div>\n      )}\n\n      <FeedbackSection>\n        <FeedbackPrompt>Was this recognition accurate?</FeedbackPrompt>\n        <FeedbackButtons>\n          <PrimaryButton onClick={() => handleFeedback(true)}>Yes</PrimaryButton>\n          <SecondaryButton onClick={() => handleFeedback(false)}>No</SecondaryButton>\n        </FeedbackButtons>\n      </FeedbackSection>\n\n      <button onClick={handleNewSearch} style={{ marginTop: '30px', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer' }}>\n        Start New Search\n      </button>\n    </ResultsContainer>\n  );\n};\n\nexport default ResultsPage;",
+    "useCamera.js": "// src/hooks/useCamera.js\nimport { useState, useEffect, useCallback } from 'react';\n\nexport const useCamera = () => {\n  const [stream, setStream] = useState(null);\n  const [error, setError] = useState(null);\n\n  const startCamera = useCallback(async () => {\n    setError(null);\n    try {\n      const mediaStream = await navigator.mediaDevices.getUserMedia({\n        video: {\n          facingMode: 'environment', // Use rear camera if available\n          // Add other constraints like width, height if needed\n        },\n      });\n      setStream(mediaStream);\n    } catch (err) {\n      console.error('Error accessing camera:', err);\n      setError(err.message || 'Camera access denied or not available.');\n    }\n  }, []);\n\n  const stopCamera = useCallback(() => {\n    if (stream) {\n      stream.getTracks().forEach(track => track.stop());\n      setStream(null);\n    }\n  }, [stream]);\n\n  // Cleanup on unmount\n  useEffect(() => {\n    return () => {\n      stopCamera();\n    };\n  }, [stopCamera]);\n\n  return { stream, error, startCamera, stopCamera };\n};\n"
+  }
+}

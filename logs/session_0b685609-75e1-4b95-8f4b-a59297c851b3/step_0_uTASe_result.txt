@@ -1,0 +1,134 @@
+[
+  {
+    "id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+    "name": "Define Scope and Design",
+    "description": "Establish the foundational requirements, user experience (UX) flow, and visual identity for the AI system's frontend website. This involves understanding the core functionalities, target audience, and desired aesthetic, leading to wireframes, mockups, and a style guide.",
+    "category": "Init",
+    "purpose": "Lay the groundwork for the website by defining its purpose, features, and visual direction.",
+    "keywords": [
+      "scope definition",
+      "user experience",
+      "UI design",
+      "wireframing",
+      "style guide"
+    ],
+    "applicability_notes": "This phase is crucial for any project involving user-facing interfaces, ensuring alignment on goals and design before development begins. It sets the blueprint for subsequent implementation.",
+    "examples_of_usage": [
+      "Defining the features and target audience for a new e-commerce platform.",
+      "Creating wireframes and a style guide for a mobile banking application.",
+      "Outlining the user flow and visual theme for a content management system."
+    ],
+    "typical_inputs": [
+      "High-level project goals",
+      "Target audience definition",
+      "Competitor analysis (optional)",
+      "Brand guidelines (if applicable)"
+    ],
+    "typical_outputs": [
+      "Project scope document",
+      "User personas",
+      "User flow diagrams",
+      "Wireframes",
+      "High-fidelity mockups",
+      "Style guide (colors, typography, components)"
+    ]
+  },
+  {
+    "id": "b2c3d4e5-f6a7-8901-2345-67890abcdef1",
+    "name": "Develop Frontend",
+    "description": "Translate the approved designs and style guide into a functional, responsive, and accessible user interface. This includes setting up the project structure, implementing UI components, and ensuring a seamless user experience across different devices and browsers.",
+    "category": "Development",
+    "purpose": "Build the user-facing part of the website according to the defined design specifications.",
+    "keywords": [
+      "frontend development",
+      "UI implementation",
+      "responsive design",
+      "component development",
+      "accessibility"
+    ],
+    "applicability_notes": "Applicable to any project requiring a web-based user interface. Emphasizes clean code, maintainability, and adherence to design standards.",
+    "examples_of_usage": [
+      "Building the user interface for a data visualization dashboard.",
+      "Developing the interactive elements of an online learning platform.",
+      "Creating a responsive layout for a news aggregation website."
+    ],
+    "typical_inputs": [
+      "Approved high-fidelity mockups",
+      "Style guide",
+      "User flow documentation",
+      "List of required features"
+    ],
+    "typical_outputs": [
+      "Functional UI components",
+      "Responsive website layout",
+      "Clean, maintainable codebase",
+      "Accessibility features implemented"
+    ]
+  },
+  {
+    "id": "c3d4e5f6-a7b8-9012-3456-7890abcdef12",
+    "name": "Integrate AI",
+    "description": "Connect the frontend interface with the AI system's backend. This involves defining and implementing the communication protocols (e.g., APIs), handling data exchange, and ensuring that user interactions on the frontend correctly trigger AI processes and display AI responses.",
+    "category": "Integration",
+    "purpose": "Enable communication and data flow between the website frontend and the AI backend.",
+    "keywords": [
+      "API integration",
+      "backend communication",
+      "data exchange",
+      "AI interaction",
+      "system prompt engineering"
+    ],
+    "applicability_notes": "Essential for any application that relies on external services or complex processing units, like AI models. Focuses on establishing robust and efficient communication channels.",
+    "examples_of_usage": [
+      "Connecting a chatbot frontend to a natural language processing (NLP) API.",
+      "Integrating a recommendation engine's output into an e-commerce website.",
+      "Linking a user input form to a machine learning model for prediction."
+    ],
+    "typical_inputs": [
+      "Defined API contract",
+      "Backend AI system endpoints",
+      "Data schemas for requests and responses",
+      "System prompt for AI behavior"
+    ],
+    "typical_outputs": [
+      "Connected frontend and backend",
+      "Dynamic data display based on AI responses",
+      "User requests processed by AI",
+      "Error handling for API communication"
+    ]
+  },
+  {
+    "id": "d4e5f6a7-b8c9-0123-4567-890abcdef123",
+    "name": "Deploy and Iterate",
+    "description": "Make the website accessible to users by deploying it to a hosting environment. Following deployment, continuously monitor performance, gather user feedback, and implement updates or new features to improve the website and its AI integration.",
+    "category": "Deployment",
+    "purpose": "Launch the website and establish a cycle of continuous improvement.",
+    "keywords": [
+      "deployment",
+      "testing",
+      "monitoring",
+      "user feedback",
+      "iteration",
+      "maintenance"
+    ],
+    "applicability_notes": "A universal phase for software development, ensuring the product reaches its intended audience and evolves based on real-world usage and feedback.",
+    "examples_of_usage": [
+      "Deploying a web application to a cloud server and setting up performance monitoring.",
+      "Collecting user feedback on a new feature and planning subsequent improvements.",
+      "Conducting A/B testing on different website designs to optimize user engagement."
+    ],
+    "typical_inputs": [
+      "Completed and tested website code",
+      "Deployment environment configuration",
+      "Monitoring tools setup",
+      "User feedback mechanisms"
+    ],
+    "typical_outputs": [
+      "Live, accessible website",
+      "Performance metrics and logs",
+      "Bug reports and fixes",
+      "User feedback analysis",
+      "Roadmap for future enhancements"
+    ]
+  }
+]

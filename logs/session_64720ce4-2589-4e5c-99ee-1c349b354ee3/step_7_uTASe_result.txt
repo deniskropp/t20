@@ -1,0 +1,64 @@
+[
+  {
+    "id": "f0d3e2a1-0b9c-4d5e-8f7a-1b2c3d4e5f6a",
+    "name": "Define AI Integration API Contract",
+    "description": "Establish the communication protocol between the frontend and the AI system. This involves defining the request and response data structures (schemas) for API endpoints, ensuring that the AI's output can be seamlessly consumed and displayed by the frontend, and that the frontend can send requests in the expected format.",
+    "category": "Integration",
+    "purpose": "Standardize communication between frontend and AI.",
+    "keywords": [
+      "API",
+      "integration",
+      "schema definition",
+      "data contract",
+      "communication protocol"
+    ],
+    "applicability_notes": "This step is critical for any system that involves integrating different software components or services. Defining a clear API contract upfront prevents integration issues and ensures that both the client (frontend) and server (AI system) can interact predictably.",
+    "examples_of_usage": [
+      "Defining a RESTful API endpoint for user authentication with specified request parameters (username, password) and response fields (token, user details).",
+      "Specifying the JSON schema for sending a query to a search engine and receiving search results.",
+      "Outlining the WebSocket message formats for real-time data updates between a server and a client application."
+    ],
+    "typical_inputs": [
+      "Frontend UI requirements",
+      "AI system capabilities",
+      "Desired AI response structure",
+      "API design best practices"
+    ],
+    "typical_outputs": [
+      "API specification document (e.g., OpenAPI/Swagger)",
+      "Request and response schemas (e.g., JSON Schema)",
+      "Documentation for API endpoints"
+    ]
+  },
+  {
+    "id": "a9b8c7d6-e5f4-3210-fedc-ba9876543210",
+    "name": "Refine AI System Prompt for Structured Output",
+    "description": "Iteratively adjust the AI system's prompts and instructions to ensure its generated outputs conform to the defined API contract and are suitable for frontend display. This may involve specifying output formats, structuring data within responses, or guiding the AI to include metadata relevant to the frontend's visualization.",
+    "category": "Configuration",
+    "purpose": "Ensure AI output matches frontend integration requirements.",
+    "keywords": [
+      "prompt engineering",
+      "AI configuration",
+      "structured output",
+      "API compliance",
+      "response formatting"
+    ],
+    "applicability_notes": "This step is essential when working with generative AI models or any AI that produces unstructured or variably structured output. By carefully engineering prompts, developers can guide the AI to produce outputs that are predictable, parseable, and directly usable by downstream systems or user interfaces.",
+    "examples_of_usage": [
+      "Instructing a language model to always respond in JSON format with specific keys for 'summary', 'details', and 'confidence_score'.",
+      "Guiding an image generation AI to include metadata about the prompt used and image dimensions in its response.",
+      "Configuring a data analysis AI to output results as tables or charts described in a structured format that a frontend can render."
+    ],
+    "typical_inputs": [
+      "API contract and schemas",
+      "Initial AI responses",
+      "Frontend display requirements",
+      "AI model capabilities and limitations"
+    ],
+    "typical_outputs": [
+      "Revised AI system prompts",
+      "Examples of desired AI outputs",
+      "Guidelines for AI response formatting"
+    ]
+  }
+]

@@ -1,0 +1,715 @@
+The overall goal is: 'Create a website that is a frontend to an AI system like this.'
+
+Your role's specific goal is: 'Identify and return each 'Task Agnostic Step' (TAS) towards the high-level goal.'
+Your specific sub-task is: 'Extract the next high-level task: 'Frontend Development and Component Implementation'.'
+
+The team's roles are:
+    {'roles': [{'title': 'Task-Agnostic Step (TAS) extractor (flash)', 'description': "Identify and return each 'Task Agnostic Step' (TAS) towards the high-level goal."}, {'title': 'Prompt Engineer', 'description': 'Structure workflows and ensure clarity in agent instructions, system prompt engineering.'}, {'title': 'Designer', 'description': 'Generate aesthetic layouts, color palettes, typography, and UI flows, ensuring accessibility and visual balance.'}, {'title': 'Engineer', 'description': 'Implement designs into clean, modular, and performant code, focusing on responsive design and accessibility.'}], 'steps': [{'name': 'uTASe', 'role': 'Task-Agnostic Step (TAS) extractor (flash)', 'task': "Extract the initial high-level task: 'Project Scoping and Foundational Design'."}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': "Create a detailed workflow for the 'Project Scoping and Foundational Design' phase. Draft an initial system prompt for Aurora to begin the design process, focusing on user flows for an AI interaction interface."}, {'name': 'Aurora', 'role': 'Designer', 'task': "Develop low-fidelity wireframes and user flow diagrams for the AI frontend. Focus on the core interaction loop: user input, AI 'thinking' visualization, and final output display."}, {'name': 'Aurora', 'role': 'Designer', 'task': 'Create high-fidelity mockups and a complete UI kit, including color palette, typography, and component styles based on the approved wireframes. Ensure all designs adhere to accessibility standards (WCAG).'}, {'name': 'uTASe', 'role': 'Task-Agnostic Step (TAS) extractor (flash)', 'task': "Extract the next high-level task: 'Frontend Development and Component Implementation'."}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': "Translate Aurora's high-fidelity designs and UI kit into a detailed set of technical specifications and user stories. Create a system prompt for Kodax to begin development."}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Set up the frontend project architecture and develop the static UI components based on the mockups and specifications. Ensure the application is fully responsive.'}, {'name': 'uTASe', 'role': 'Task-Agnostic Step (TAS) extractor (flash)', 'task': "Extract the next high-level task: 'AI System Integration'."}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': "Define the API contract (request/response schema) for communication between the frontend and the AI system. Refine the AI's system prompt to ensure its output matches the required JSON structure for displaying the 'thinking' process."}, {'name': 'Kodax', 'role': 'Engineer', 'task': "Integrate the frontend with the AI system's API. Implement logic to handle data fetching, loading states, error handling, and rendering the structured AI response."}, {'name': 'uTASe', 'role': 'Task-Agnostic Step (TAS) extractor (flash)', 'task': "Extract the final high-level task: 'End-to-End Testing, Refinement, and Deployment'."}, {'name': 'Aurora', 'role': 'Designer', 'task': 'Conduct a full UI/UX and accessibility review of the integrated application. Document any discrepancies between the design and the final product.'}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': "Perform end-to-end testing of the AI interaction flow. Iteratively refine the AI's system prompts based on test results to improve response quality and reliability."}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Implement feedback from the design and prompt engineering reviews. Finalize the codebase, set up a CI/CD pipeline, and deploy the application to a live environment.'}]}
+
+Please use the following outputs from the other agents as your input:
+
+Artifact from step_0_uTASe_result.txt (Task-Agnostic Step (TAS) extractor (flash)):
+[
+  {
+    "id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+    "name": "Scope Project and Design Foundation",
+    "description": "Define the project's objectives, target audience, core features, and technical constraints. Establish the foundational architectural decisions and user experience principles that will guide the development process. This includes initial research, defining project scope, and creating a high-level plan.",
+    "category": "Init",
+    "purpose": "Establish the project's direction and fundamental design principles.",
+    "keywords": [
+      "scoping",
+      "foundational design",
+      "project planning",
+      "architecture",
+      "user experience"
+    ],
+    "applicability_notes": "This step is crucial for any new project to ensure a clear understanding of goals and a solid starting point. It applies across all domains and project types.",
+    "examples_of_usage": [
+      "Defining the features and target users for a new mobile application.",
+      "Outlining the technical architecture and key performance indicators for a web service.",
+      "Establishing the core functionality and user journey for a software tool."
+    ],
+    "typical_inputs": [
+      "Project idea or business requirement",
+      "Stakeholder input",
+      "Market research"
+    ],
+    "typical_outputs": [
+      "Project scope document",
+      "High-level architecture plan",
+      "Initial user personas",
+      "Feasibility study"
+    ]
+  }
+]
+
+---
+
+Artifact from step_1_Lyra_result.txt (Prompt Engineer):
+{
+  "workflow": [
+    {
+      "step_name": "Project Brief & AI Core Functionality Definition",
+      "description": "Synthesize the overall project goal ('Create a website that is a frontend to an AI system') and define the specific type of AI (e.g., conversational, generative, analytical) and its primary interaction paradigm. This step establishes the foundational understanding for subsequent design and engineering efforts.",
+      "responsible": ["Lyra"],
+      "output": "Internal brief detailing the AI's purpose, core capabilities, and primary interaction model."
+    },
+    {
+      "step_name": "User Persona & Key Use Case Identification",
+      "description": "Identify the target user personas for the AI frontend and define their primary goals, motivations, and pain points when interacting with such a system. Outline critical use case scenarios that the frontend must support to address these user needs.",
+      "responsible": ["Lyra", "Aurora"],
+      "output": "Defined user personas and a prioritized list of core use cases/scenarios."
+    },
+    {
+      "step_name": "Core AI Interaction User Flow & Low-Fidelity Wireframing",
+      "description": "Based on the defined user personas and use cases, develop detailed user flow diagrams and accompanying low-fidelity wireframes. This step specifically focuses on the fundamental AI interaction loop: user input, visual representation of AI processing ('thinking'), and the display of AI output.",
+      "responsible": ["Aurora"],
+      "output": "Comprehensive user flow diagrams and low-fidelity wireframes for the core AI interaction screens."
+    },
+    {
+      "step_name": "Foundational Design Review & Refinement",
+      "description": "Conduct a review session with relevant stakeholders (Lyra, Kodax) to gather feedback on the initial user flows and wireframes. Assess usability, clarity, and technical feasibility. Iterate on the designs based on the feedback received to ensure alignment with project goals and user needs.",
+      "responsible": ["Lyra", "Aurora", "Kodax"],
+      "output": "Approved and refined user flow diagrams and low-fidelity wireframes, ready for high-fidelity design."
+    }
+  ],
+  "aurora_system_prompt": {
+    "role": "You are Aurora, a highly skilled UI/UX Designer specializing in creating intuitive and engaging user interfaces for AI-powered applications. Your expertise lies in translating complex AI interactions into clear, user-friendly experiences.",
+    "context": "We are initiating the design phase for an AI system frontend. Your current objective is to establish the foundational user experience by mapping out the core interaction flows. The overarching goal is to ensure a transparent, responsive, and easy-to-understand interaction between the user and the AI.",
+    "objective": "Design detailed user flow diagrams and corresponding low-fidelity wireframes for the primary AI interaction sequence. Focus on clarity, user feedback, and managing user expectations throughout the AI's processing cycle.",
+    "design_focus_areas": [
+      {
+        "area": "User Input Mechanism",
+        "description": "How does the user initiate interaction and provide input to the AI? Consider various input types (e.g., text, voice, file upload, structured forms, selections) and design clear, accessible input fields or controls. How is the user's input confirmed or prepared for submission?"
+      },
+      {
+        "area": "AI 'Thinking' Visualization",
+        "description": "Crucially, how do we visually communicate that the AI is actively processing the user's request? Design clear and reassuring visual cues for the 'thinking' state. This includes progressive loading indicators, animated elements (e.g., animated dots, pulsing icons), and informative status messages (e.g., 'AI is analyzing...', 'Generating response...', 'Please wait...'). The goal is to manage user expectations and reduce perceived latency during AI processing."
+      },
+      {
+        "area": "AI Output Display",
+        "description": "How is the AI's response presented clearly, concisely, and effectively to the user? Consider different output formats (e.g., plain text, markdown, structured data, images, charts, code snippets) and design layouts that enhance readability and comprehension. If the output is complex, how can it be broken down, summarized, or presented incrementally?"
+      },
+      {
+        "area": "Interaction Feedback & Error Handling",
+        "description": "How does the system provide immediate and clear feedback on successful operations, warnings, or errors? Design intuitive messages and visual indicators for scenarios such as invalid input, AI processing failures, or other system issues. How can users easily understand what went wrong and recover from errors or refine their input?"
+      },
+      {
+        "area": "Follow-up & Iteration",
+        "description": "Once an AI response is received, how can the user easily initiate a follow-up query, refine their previous input, or explore related options? Design mechanisms that facilitate continued conversation or iterative refinement of requests, enabling a fluid user journey."
+      }
+    ],
+    "deliverables": [
+      "Comprehensive user flow diagrams illustrating the complete end-to-end AI interaction, including all key states (user input, AI processing/thinking, AI output display, error states, and follow-up actions).",
+      "Low-fidelity wireframes for each significant screen or state identified in the user flows. These wireframes should focus on layout, content hierarchy, primary interaction elements, and the placement of visual feedback mechanisms."
+    ],
+    "constraints_and_assumptions": [
+      "Focus primarily on functional layout, user experience, and interaction patterns rather than detailed visual aesthetics (color, typography, final styling) at this initial stage.",
+      "Assume a standard web-based interface for the frontend application.",
+      "Prioritize clarity, usability, and effective communication of AI status over implementing complex or niche features."
+    ]
+  }
+}
+
+---
+
+Artifact from step_2_Aurora_result.txt (Designer):
+{
+  "user_flow_diagrams": [
+    {
+      "id": "uf_ai_interaction_001",
+      "name": "Core AI Interaction Flow",
+      "description": "This flow details the primary interaction loop of the AI system, from user input to AI output.",
+      "stages": [
+        {
+          "stage_id": "uf_stage_01",
+          "name": "User Input",
+          "description": "User provides input to the AI system.",
+          "next_stage_ids": ["uf_stage_02"]
+        },
+        {
+          "stage_id": "uf_stage_02",
+          "name": "AI Processing (Thinking)",
+          "description": "System visually indicates the AI is processing the request.",
+          "next_stage_ids": ["uf_stage_03", "uf_stage_05"]
+        },
+        {
+          "stage_id": "uf_stage_03",
+          "name": "AI Output Display",
+          "description": "AI's response is presented to the user.",
+          "next_stage_ids": ["uf_stage_04"]
+        },
+        {
+          "stage_id": "uf_stage_04",
+          "name": "Follow-up/Iteration",
+          "description": "User can provide further input or refine the previous request.",
+          "next_stage_ids": ["uf_stage_02"]
+        },
+        {
+          "stage_id": "uf_stage_05",
+          "name": "Error State",
+          "description": "If processing fails, an error is displayed to the user.",
+          "next_stage_ids": ["uf_stage_01", "uf_stage_04"]
+        }
+      ]
+    }
+  ],
+  "low_fidelity_wireframes": [
+    {
+      "id": "wf_input_001",
+      "name": "Input Screen",
+      "description": "Represents the primary screen where users input their queries.",
+      "layout": {
+        "header": "AI Assistant",
+        "main_content": [
+          {"type": "text_area", "label": "Your Request", "placeholder": "Type your question or command here...", "id": "user_input_textarea"},
+          {"type": "button", "label": "Send", "id": "send_button", "state": "enabled"}
+        ],
+        "footer": null
+      },
+      "interaction_elements": [
+        {"element_id": "user_input_textarea", "interaction": "user can type text"},
+        {"element_id": "send_button", "interaction": "user clicks to submit input"}
+      ]
+    },
+    {
+      "id": "wf_processing_001",
+      "name": "Processing Screen",
+      "description": "Visual representation of the AI processing the user's input.",
+      "layout": {
+        "header": "AI Assistant",
+        "main_content": [
+          {"type": "text_area", "label": "Your Request", "value": "User's submitted query", "state": "disabled"},
+          {"type": "visual_indicator", "indicator_type": "animated_dots", "label": "AI is thinking...", "id": "processing_indicator"},
+          {"type": "status_message", "message": "Analyzing your request...", "id": "processing_message"}
+        ],
+        "footer": null
+      },
+      "interaction_elements": [
+        {"element_id": "processing_indicator", "interaction": "provides visual feedback of AI activity"},
+        {"element_id": "processing_message", "interaction": "informs user about the current processing stage"}
+      ]
+    },
+    {
+      "id": "wf_output_001",
+      "name": "Output Screen",
+      "description": "Displays the AI's response.",
+      "layout": {
+        "header": "AI Assistant",
+        "main_content": [
+          {"type": "text_area", "label": "Your Request", "value": "User's submitted query", "state": "disabled"},
+          {"type": "output_display", "label": "AI Response", "content_type": "text", "placeholder": "AI's generated response will appear here...", "id": "ai_output_display"},
+          {"type": "button", "label": "Refine Request", "id": "refine_button", "state": "enabled"},
+          {"type": "button", "label": "New Request", "id": "new_request_button", "state": "enabled"}
+        ],
+        "footer": null
+      },
+      "interaction_elements": [
+        {"element_id": "ai_output_display", "interaction": "displays AI-generated content"},
+        {"element_id": "refine_button", "interaction": "user clicks to modify previous query"},
+        {"element_id": "new_request_button", "interaction": "user clicks to start a fresh interaction"}
+      ]
+    },
+    {
+      "id": "wf_error_001",
+      "name": "Error Screen",
+      "description": "Displays an error message when the AI processing fails.",
+      "layout": {
+        "header": "AI Assistant",
+        "main_content": [
+          {"type": "text_area", "label": "Your Request", "value": "User's submitted query", "state": "disabled"},
+          {"type": "alert_message", "message_type": "error", "message": "An error occurred. Please try again or refine your request.", "id": "error_message"},
+          {"type": "button", "label": "Try Again", "id": "try_again_button", "state": "enabled"},
+          {"type": "button", "label": "Refine Request", "id": "refine_error_button", "state": "enabled"}
+        ],
+        "footer": null
+      },
+      "interaction_elements": [
+        {"element_id": "error_message", "interaction": "notifies user of a processing failure"},
+        {"element_id": "try_again_button", "interaction": "user clicks to re-attempt the same request"},
+        {"element_id": "refine_error_button", "interaction": "user clicks to modify the original query"}
+      ]
+    }
+  ]
+}
+
+---
+
+Artifact from step_3_Aurora_result.txt (Designer):
+{
+  "high_fidelity_mockups": [
+    {
+      "id": "hf_input_001",
+      "name": "AI Interaction - Input",
+      "description": "High-fidelity mockup for the user input screen, emphasizing a clean, modern aesthetic with clear calls to action and accessible input fields.",
+      "layout": {
+        "header": {
+          "title": "AI Assistant",
+          "logo": "logo_placeholder.svg",
+          "navigation": []
+        },
+        "main_content": [
+          {
+            "type": "text_area",
+            "label": "Your Prompt",
+            "placeholder": "Ask me anything...",
+            "id": "user_input_textarea",
+            "styles": {
+              "backgroundColor": "#FFFFFF",
+              "borderColor": "#D1D5DB",
+              "textColor": "#1F2937",
+              "fontSize": "16px",
+              "borderRadius": "8px",
+              "padding": "12px 16px",
+              "height": "150px",
+              "focusOutline": "2px solid #3B82F6"
+            },
+            "aria_label": "User input field for AI prompts"
+          },
+          {
+            "type": "button",
+            "label": "Generate",
+            "id": "send_button",
+            "state": "enabled",
+            "styles": {
+              "backgroundColor": "#3B82F6",
+              "textColor": "#FFFFFF",
+              "fontSize": "16px",
+              "fontWeight": "600",
+              "borderRadius": "8px",
+              "padding": "12px 24px",
+              "hoverBackgroundColor": "#2563EB",
+              "focusOutline": "2px solid #3B82F6"
+            },
+            "aria_label": "Submit prompt to the AI assistant"
+          }
+        ],
+        "footer": null
+      },
+      "visual_elements": {
+        "background": {
+          "color": "#F3F4F6"
+        }
+      }
+    },
+    {
+      "id": "hf_processing_001",
+      "name": "AI Interaction - Processing",
+      "description": "High-fidelity mockup for the AI processing state, featuring subtle animations and clear status messaging to reassure the user.",
+      "layout": {
+        "header": {
+          "title": "AI Assistant",
+          "logo": "logo_placeholder.svg",
+          "navigation": []
+        },
+        "main_content": [
+          {
+            "type": "text_area",
+            "label": "Your Prompt",
+            "value": "User's submitted prompt...",
+            "state": "disabled",
+            "styles": {
+              "backgroundColor": "#E5E7EB",
+              "borderColor": "#D1D5DB",
+              "textColor": "#1F2937",
+              "fontSize": "16px",
+              "borderRadius": "8px",
+              "padding": "12px 16px",
+              "height": "150px",
+              "opacity": "0.7"
+            },
+            "aria_label": "User input field, disabled during AI processing"
+          },
+          {
+            "type": "visual_indicator",
+            "indicator_type": "animated_dots",
+            "label": "AI is thinking...",
+            "id": "processing_indicator",
+            "styles": {
+              "color": "#3B82F6",
+              "fontSize": "18px",
+              "fontWeight": "500",
+              "marginTop": "20px",
+              "marginBottom": "8px"
+            },
+            "aria_label": "Visual indicator showing AI is processing the request"
+          },
+          {
+            "type": "status_message",
+            "message": "Analyzing your request...",
+            "id": "processing_message",
+            "styles": {
+              "color": "#6B7280",
+              "fontSize": "14px",
+              "textAlign": "center"
+            },
+            "aria_label": "Status message indicating AI processing progress"
+          }
+        ],
+        "footer": null
+      },
+      "visual_elements": {
+        "background": {
+          "color": "#F3F4F6"
+        }
+      }
+    },
+    {
+      "id": "hf_output_001",
+      "name": "AI Interaction - Output",
+      "description": "High-fidelity mockup for displaying AI responses, designed for readability and offering clear options for further interaction.",
+      "layout": {
+        "header": {
+          "title": "AI Assistant",
+          "logo": "logo_placeholder.svg",
+          "navigation": []
+        },
+        "main_content": [
+          {
+            "type": "text_area",
+            "label": "Your Prompt",
+            "value": "User's submitted prompt...",
+            "state": "disabled",
+            "styles": {
+              "backgroundColor": "#E5E7EB",
+              "borderColor": "#D1D5DB",
+              "textColor": "#1F2937",
+              "fontSize": "16px",
+              "borderRadius": "8px",
+              "padding": "12px 16px",
+              "height": "150px",
+              "opacity": "0.7"
+            },
+            "aria_label": "User input field, displayed for context"
+          },
+          {
+            "type": "output_display",
+            "label": "AI Response",
+            "content_type": "text",
+            "placeholder": "AI's generated response will appear here...",
+            "id": "ai_output_display",
+            "styles": {
+              "backgroundColor": "#FFFFFF",
+              "borderColor": "#D1D5DB",
+              "textColor": "#111827",
+              "fontSize": "16px",
+              "borderRadius": "8px",
+              "padding": "16px",
+              "minHeight": "200px",
+              "lineHeight": "1.6"
+            },
+            "aria_label": "Display area for the AI's generated response"
+          },
+          {
+            "type": "button",
+            "label": "Refine Prompt",
+            "id": "refine_button",
+            "state": "enabled",
+            "styles": {
+              "backgroundColor": "#10B981",
+              "textColor": "#FFFFFF",
+              "fontSize": "14px",
+              "fontWeight": "500",
+              "borderRadius": "6px",
+              "padding": "10px 20px",
+              "marginTop": "16px",
+              "marginRight": "8px",
+              "hoverBackgroundColor": "#059669",
+              "focusOutline": "2px solid #10B981"
+            },
+            "aria_label": "Button to refine the previous prompt"
+          },
+          {
+            "type": "button",
+            "label": "New Request",
+            "id": "new_request_button",
+            "state": "enabled",
+            "styles": {
+              "backgroundColor": "#F3F4F6",
+              "textColor": "#1F2937",
+              "fontSize": "14px",
+              "fontWeight": "500",
+              "borderRadius": "6px",
+              "padding": "10px 20px",
+              "marginTop": "16px",
+              "hoverBackgroundColor": "#E5E7EB",
+              "focusOutline": "2px solid #D1D5DB"
+            },
+            "aria_label": "Button to start a new request"
+          }
+        ],
+        "footer": null
+      },
+      "visual_elements": {
+        "background": {
+          "color": "#F3F4F6"
+        }
+      }
+    },
+    {
+      "id": "hf_error_001",
+      "name": "AI Interaction - Error",
+      "description": "High-fidelity mockup for error states, providing clear guidance and actionable options for the user.",
+      "layout": {
+        "header": {
+          "title": "AI Assistant",
+          "logo": "logo_placeholder.svg",
+          "navigation": []
+        },
+        "main_content": [
+          {
+            "type": "text_area",
+            "label": "Your Prompt",
+            "value": "User's submitted prompt...",
+            "state": "disabled",
+            "styles": {
+              "backgroundColor": "#E5E7EB",
+              "borderColor": "#D1D5DB",
+              "textColor": "#1F2937",
+              "fontSize": "16px",
+              "borderRadius": "8px",
+              "padding": "12px 16px",
+              "height": "150px",
+              "opacity": "0.7"
+            },
+            "aria_label": "User input field, displayed for context"
+          },
+          {
+            "type": "alert_message",
+            "message_type": "error",
+            "message": "An unexpected error occurred. Please try again or refine your prompt.",
+            "id": "error_message",
+            "styles": {
+              "backgroundColor": "#FEF2F2",
+              "borderColor": "#FEE2E2",
+              "textColor": "#B91C1C",
+              "fontSize": "14px",
+              "borderRadius": "6px",
+              "padding": "12px 16px",
+              "marginTop": "20px",
+              "marginBottom": "8px"
+            },
+            "aria_label": "Error message indicating a problem with the AI request"
+          },
+          {
+            "type": "button",
+            "label": "Try Again",
+            "id": "try_again_button",
+            "state": "enabled",
+            "styles": {
+              "backgroundColor": "#3B82F6",
+              "textColor": "#FFFFFF",
+              "fontSize": "14px",
+              "fontWeight": "500",
+              "borderRadius": "6px",
+              "padding": "10px 20px",
+              "marginTop": "16px",
+              "marginRight": "8px",
+              "hoverBackgroundColor": "#2563EB",
+              "focusOutline": "2px solid #3B82F6"
+            },
+            "aria_label": "Button to retry the previous AI request"
+          },
+          {
+            "type": "button",
+            "label": "Refine Prompt",
+            "id": "refine_error_button",
+            "state": "enabled",
+            "styles": {
+              "backgroundColor": "#F3F4F6",
+              "textColor": "#1F2937",
+              "fontSize": "14px",
+              "fontWeight": "500",
+              "borderRadius": "6px",
+              "padding": "10px 20px",
+              "marginTop": "16px",
+              "hoverBackgroundColor": "#E5E7EB",
+              "focusOutline": "2px solid #D1D5DB"
+            },
+            "aria_label": "Button to refine the prompt after an error"
+          }
+        ],
+        "footer": null
+      },
+      "visual_elements": {
+        "background": {
+          "color": "#F3F4F6"
+        }
+      }
+    }
+  ],
+  "ui_kit": {
+    "color_palette": {
+      "primary": {
+        "name": "Brand Blue",
+        "hex": "#3B82F6",
+        "rgb": "59, 130, 246",
+        "description": "Used for primary actions, buttons, and active states. Evokes trust and intelligence."
+      },
+      "secondary": {
+        "name": "Success Green",
+        "hex": "#10B981",
+        "rgb": "16, 185, 129",
+        "description": "Used for positive feedback or secondary call-to-actions."
+      },
+      "neutral_light": {
+        "name": "Cloud White",
+        "hex": "#FFFFFF",
+        "rgb": "255, 255, 255",
+        "description": "Primary background color for content areas. Provides a clean and spacious feel."
+      },
+      "neutral_medium": {
+        "name": "Stone Gray",
+        "hex": "#D1D5DB",
+        "rgb": "209, 213, 219",
+        "description": "Used for borders, dividers, and disabled states. Offers subtle visual separation."
+      },
+      "neutral_dark": {
+        "name": "Charcoal",
+        "hex": "#1F2937",
+        "rgb": "31, 41, 55",
+        "description": "Primary text color. Ensures high readability."
+      },
+      "accent_error": {
+        "name": "Alarm Red",
+        "hex": "#B91C1C",
+        "rgb": "185, 28, 28",
+        "description": "Used for error messages and critical alerts."
+      },
+      "background_page": {
+        "name": "Pale Gray",
+        "hex": "#F3F4F6",
+        "rgb": "243, 244, 246",
+        "description": "Overall page background color, creating a soft and neutral canvas."
+      },
+      "text_secondary": {
+        "name": "Muted Gray",
+        "hex": "#6B7280",
+        "rgb": "107, 114, 128",
+        "description": "Secondary text color for labels and less prominent information."
+      },
+      "disabled_background": {
+        "name": "Disabled Gray",
+        "hex": "#E5E7EB",
+        "rgb": "229, 231, 235",
+        "description": "Background color for disabled input fields."
+      }
+    },
+    "typography": {
+      "font_family": {
+        "primary": "'Inter', sans-serif",
+        "secondary": "'Inter', sans-serif"
+      },
+      "weights": {
+        "regular": 400,
+        "medium": 500,
+        "semibold": 600
+      },
+      "sizes": {
+        "h1": {"size": "32px", "lineHeight": "40px", "weight": 600},
+        "h2": {"size": "24px", "lineHeight": "32px", "weight": 600},
+        "body_large": {"size": "18px", "lineHeight": "28px", "weight": 400},
+        "body_default": {"size": "16px", "lineHeight": "24px", "weight": 400},
+        "body_small": {"size": "14px", "lineHeight": "20px", "weight": 400},
+        "button_text": {"size": "16px", "lineHeight": "24px", "weight": 600},
+        "label": {"size": "14px", "lineHeight": "20px", "weight": 500}
+      }
+    },
+    "components": {
+      "button": {
+        "default": {
+          "padding": "12px 24px",
+          "borderRadius": "8px",
+          "fontSize": "16px",
+          "fontWeight": 600,
+          "textColor": "#FFFFFF",
+          "backgroundColor": "#3B82F6",
+          "hoverBackgroundColor": "#2563EB",
+          "focusOutline": "2px solid #3B82F6",
+          "cursor": "pointer"
+        },
+        "secondary": {
+          "padding": "10px 20px",
+          "borderRadius": "6px",
+          "fontSize": "14px",
+          "fontWeight": 500,
+          "textColor": "#1F2937",
+          "backgroundColor": "#F3F4F6",
+          "hoverBackgroundColor": "#E5E7EB",
+          "focusOutline": "2px solid #D1D5DB",
+          "cursor": "pointer"
+        },
+        "success": {
+          "padding": "10px 20px",
+          "borderRadius": "6px",
+          "fontSize": "14px",
+          "fontWeight": 500,
+          "textColor": "#FFFFFF",
+          "backgroundColor": "#10B981",
+          "hoverBackgroundColor": "#059669",
+          "focusOutline": "2px solid #10B981",
+          "cursor": "pointer"
+        }
+      },
+      "input_textarea": {
+        "padding": "12px 16px",
+        "borderRadius": "8px",
+        "fontSize": "16px",
+        "lineHeight": "24px",
+        "textColor": "#1F2937",
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#D1D5DB",
+        "focusOutline": "2px solid #3B82F6",
+        "height": "150px",
+        "placeholderColor": "#6B7280"
+      },
+      "alert_message": {
+        "error": {
+          "padding": "12px 16px",
+          "borderRadius": "6px",
+          "fontSize": "14px",
+          "lineHeight": "20px",
+          "textColor": "#B91C1C",
+          "backgroundColor": "#FEF2F2",
+          "borderColor": "#FEE2E2",
+          "borderWidth": "1px",
+          "iconColor": "#B91C1C"
+        }
+      },
+      "visual_indicator": {
+        "animated_dots": {
+          "color": "#3B82F6",
+          "fontSize": "18px",
+          "fontWeight": 500,
+          "animation": "blink 1.4s infinite both",
+          "animationDelay": "-0.32s"
+        }
+      },
+      "header": {
+        "backgroundColor": "#FFFFFF",
+        "textColor": "#1F2937",
+        "fontSize": "20px",
+        "fontWeight": 600,
+        "padding": "16px 24px",
+        "borderBottom": "1px solid #E5E7EB"
+      }
+    },
+    "logo": {
+      "url": "logo_placeholder.svg",
+      "alt_text": "AI Assistant Logo",
+      "description": "A clean, abstract mark representing intelligence and connection. Uses the primary brand blue and a subtle gradient."
+    },
+    "accessibility": {
+      "wcag_compliance": "WCAG 2.1 AA",
+      "color_contrast": "Ensured sufficient contrast ratios for all text and interactive elements.",
+      "keyboard_navigation": "All interactive elements are focusable and operable via keyboard.",
+      "screen_reader_support": "Appropriate ARIA attributes and semantic HTML are used for screen reader compatibility.",
+      "focus_management": "Clear visual focus indicators are provided for keyboard users.",
+      "semantic_html": "Utilized semantic HTML elements for structure and meaning."
+    }
+  }
+}
+
+
+
+Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project.

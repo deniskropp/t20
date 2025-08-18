@@ -1,0 +1,173 @@
+{
+  "api_integration_plan": {
+    "task": "Implement the API integration, connecting the frontend UI components to the AI backend to handle user requests and display responses dynamically.",
+    "overall_goal": "Create a website that is a frontend to an AI system.",
+    "role_goal": "Implement designs into clean, modular, and performant code, focusing on responsive design and accessibility.",
+    "api_contract": {
+      "endpoint": "/api/v1/ai/chat",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer <YOUR_API_KEY>"
+      },
+      "request_body": {
+        "type": "object",
+        "properties": {
+          "sessionId": {
+            "type": "string",
+            "description": "Unique identifier for the current conversation session. Required to maintain conversational context.",
+            "example": "conv-12345-abcde"
+          },
+          "userId": {
+            "type": "string",
+            "description": "Optional: Identifier for the user interacting with the AI.",
+            "example": "user-007"
+          },
+          "message": {
+            "type": "string",
+            "description": "The current message or query from the user.",
+            "example": "What is the latest research in quantum entanglement?"
+          },
+          "conversationHistory": {
+            "type": "array",
+            "description": "An array of past messages (user and AI) to provide conversational context.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "role": {
+                  "type": "string",
+                  "enum": ["user", "ai"],
+                  "description": "The sender of the message."
+                },
+                "content": {
+                  "type": "string",
+                  "description": "The text content of the message."
+                },
+                "timestamp": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Timestamp when the message was sent."
+                }
+              },
+              "required": ["role", "content", "timestamp"]
+            },
+            "example": [
+              {
+                "role": "user",
+                "content": "Hello, how does AI work?",
+                "timestamp": "2023-10-26T10:00:00Z"
+              },
+              {
+                "role": "ai",
+                "content": "AI uses algorithms to learn from data and make predictions or decisions.",
+                "timestamp": "2023-10-26T10:00:15Z"
+              }
+            ]
+          }
+        },
+        "required": ["sessionId", "message", "conversationHistory"]
+      },
+      "response_body": {
+        "type": "object",
+        "properties": {
+          "sessionId": {
+            "type": "string",
+            "description": "The unique identifier for the current conversation session.",
+            "example": "conv-12345-abcde"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["success", "error", "processing"],
+            "description": "The status of the AI's response."
+          },
+          "aiResponse": {
+            "type": "string",
+            "description": "The AI's generated response text. Present only if status is 'success'.",
+            "example": "Quantum entanglement is a phenomenon where two or more particles become linked..."
+          },
+          "responseType": {
+            "type": "string",
+            "enum": ["text", "code", "data", "multimodal"],
+            "description": "Indicates the primary format of the AI's response for frontend rendering. 'code' implies markdown code blocks, 'data' for structured output, 'multimodal' for complex responses."
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Optional: Additional structured data related to the AI's response (e.g., links, confidence scores, structured data for charts).",
+            "example": {
+              "confidenceScore": 0.95,
+              "relatedTopics": ["quantum physics", "quantum mechanics"]
+            }
+          },
+          "errorCode": {
+            "type": "string",
+            "description": "Error code if the status is 'error'.",
+            "example": "AI_PROCESSING_FAILED"
+          },
+          "errorMessage": {
+            "type": "string",
+            "description": "Human-readable error message if the status is 'error'.",
+            "example": "Sorry, I encountered an internal error. Please try again or rephrase your request."
+          }
+        },
+        "required": ["sessionId", "status"]
+      }
+    },
+    "system_prompt": {
+      "name": "AI Assistant Core Persona Prompt",
+      "description": "This prompt defines the AI's core behavior, personality, and interaction guidelines for the frontend website.",
+      "prompt_text": "You are 'Aurora AI Assistant', an intelligent, calm, and sophisticated AI designed to provide clear, concise, and accurate information. Your purpose is to assist users with their queries, offer insights, and process information efficiently.\n\n**Personality & Tone:**\n- **Intelligent & Knowledgeable:** Demonstrate deep understanding and provide well-informed responses.\n- **Calm & Measured:** Maintain a composed and precise communication style. Avoid overly enthusiastic or casual language.\n- **Sophisticated & Approachable:** Use professional yet user-friendly language. Balance technological expertise with ease of understanding.\n- **Helpful & User-Centric:** Focus on directly answering the user's question and providing relevant assistance. Anticipate user needs where appropriate.\n\n**Behavioral Guidelines:**\n1.  **Prioritize Clarity and Conciseness:** Deliver information directly and avoid unnecessary verbosity. Get straight to the point.\n2.  **Accuracy is Paramount:** Ensure all factual information provided is correct. If unsure, state your limitations and suggest alternative approaches or ask for clarification.\n3.  **Maintain Conversational Flow:** Remember previous turns in the conversation. Use the `conversationHistory` provided to contextualize your responses.\n4.  **Error Handling & Limitations:** If a request is beyond your current capabilities (e.g., requires real-time data not accessible, complex calculations, or actions you cannot perform), politely explain your limitation and offer what you *can* do or suggest a rephrasing.\n5.  **Output Formatting:**\n    *   For general information, use clear, readable paragraphs.\n    *   When providing lists or steps, use bullet points or numbered lists.\n    *   For code snippets, technical configurations, or structured data, always use Markdown code blocks (```language\\ncode here\\n```) to ensure proper rendering on the frontend.\n    *   Avoid emojis or excessive punctuation.\n6.  **Adhere to Aesthetic:** Your responses should complement the minimalist, futuristic, and intelligent aesthetic of the website. This means being direct, precise, and well-structured.\n\n**Example Interaction Style:**\n*   **Good:** \"Quantum computing leverages principles like superposition and entanglement to solve complex problems intractable for classical computers.\" (Direct, informative)\n*   **Avoid:** \"OMG! Quantum computing is super cool and totally changes everything! It's like, mind-blowing!\" (Too casual, unprofessional)\n*   **Good (Error):** \"I apologize, but I'm unable to access real-time stock data. Is there anything else I can assist you with regarding financial concepts?\" (Polite, clear limitation, offers alternative)\n\nBegin by greeting the user and asking how you can assist them, maintaining this persona throughout the interaction."
+    }
+  },
+  "implementation_steps": [
+    {
+      "step_number": 1,
+      "description": "Set up a state management solution (e.g., React Context API or Zustand) to manage chat messages, user input, session ID, and loading/error states.",
+      "details": "The `ChatInterface` component will orchestrate these states. A unique `sessionId` will be generated on initial load or conversation start."
+    },
+    {
+      "step_number": 2,
+      "description": "Create an asynchronous function to handle sending messages to the AI API.",
+      "details": "This function will take the user's message and the current conversation history, construct the request body according to the `api_contract`, and make a `POST` request to the `/api/v1/ai/chat` endpoint. It will manage loading states and potential errors.",
+      "code_snippet_concept": "async function sendMessageToAI(message, conversationHistory, sessionId) {\n  const response = await fetch('/api/v1/ai/chat', {\n    method: 'POST',\n    headers: {\n      'Content-Type': 'application/json',\n      'Authorization': `Bearer ${process.env.REACT_APP_API_KEY}`\n    },\n    body: JSON.stringify({\n      sessionId,\n      message,\n      conversationHistory\n    })\n  });\n  if (!response.ok) {\n    throw new Error(`API Error: ${response.statusText}`);\n  }\n  return response.json();\n}"
+    },
+    {
+      "step_number": 3,
+      "description": "Integrate the API call into the `InputBar` and `SendButton` components.",
+      "details": "When the `SendButton` is clicked or the user submits via Enter key in `TextInput`, trigger the `sendMessageToAI` function. Update the UI to show the user's message, then the AI's 'processing' state (via `TypingIndicator`), and finally display the AI's response or an error message."
+    },
+    {
+      "step_number": 4,
+      "description": "Dynamically render AI responses based on `responseType` and handle markdown for code blocks.",
+      "details": "The `MessageBubble` component will need to parse the `aiResponse`. If `responseType` is 'code', use a markdown-to-HTML renderer (like `react-markdown`) to display code within `<pre>` and `<code>` tags. For 'text', render as plain text. 'Data' and 'multimodal' types will require specific handling based on further design specifications or metadata."
+    },
+    {
+      "step_number": 5,
+      "description": "Implement error handling and display.",
+      "details": "If the API call fails or returns an error status, display a `MessageBubble` with the `sender` set to 'system' and use the `errorMessage` from the response. Show the `RetryButton` as designed by Aurora."
+    },
+    {
+      "step_number": 6,
+      "description": "Manage conversation history and session state.",
+      "details": "Maintain an array of messages (`{ role: 'user' | 'ai', content: string, timestamp: string }`) in the `ChatInterface` state. Append new user messages and AI responses to this array. The entire history (or a relevant portion) will be sent with each API request to maintain context."
+    },
+    {
+      "step_number": 7,
+      "description": "Ensure accessibility for the integrated components.",
+      "details": "Add `aria-live='polite'` to the `MessageList` or `TypingIndicator` to announce new messages and AI processing to screen readers. Ensure focus management is correct when new messages appear or when switching between states."
+    }
+  ],
+  "technology_stack_considerations": {
+    "frontend_framework": "React (as established in step_6_Kodax_result.txt)",
+    "state_management": "Context API or Zustand for efficient state handling.",
+    "api_client": "Native `fetch` API or a library like `axios`.",
+    "markdown_rendering": "A library like `react-markdown` for handling code blocks and formatted text."
+  },
+  "next_steps_for_integration": [
+    "Implement the `sendMessageToAI` function in a utility file or within the `ChatInterface` component.",
+    "Update `InputBar` and `SendButton` to call this function on user submission.",
+    "Modify `MessageList` to render messages from the state, including the new user message, the typing indicator, and the AI response/error.",
+    "Implement markdown rendering for AI responses that contain code blocks.",
+    "Refine error handling and add UI feedback for API calls.",
+    "Ensure session management is robust, potentially using local storage for session persistence."
+  ]
+}

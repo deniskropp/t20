@@ -1,0 +1,328 @@
+The overall goal is: 'Create a website that is a frontend to an AI system like this.'
+
+Your role's specific goal is: 'Generate aesthetic layouts, color palettes, typography, and UI flows, ensuring accessibility and visual balance.'
+Your specific sub-task is: 'Develop high-fidelity mockups and a comprehensive style guide, including color palette, typography, and component designs, for a cohesive visual identity.'
+
+The team's roles are:
+    {'roles': [{'title': 'Designer', 'description': 'Generate aesthetic layouts, color palettes, typography, and UI flows, ensuring accessibility and visual balance.'}, {'title': 'Engineer', 'description': 'Implement designs into clean, modular, and performant code, focusing on responsive design and accessibility.'}, {'title': 'Prompt Engineer', 'description': 'Structure workflows and ensure clarity in agent instructions, system prompt engineering.'}, {'title': 'Task-Agnostic Step (TAS) extractor (flash)', 'description': "Identify and return each 'Task Agnostic Step' (TAS) towards the high-level goal."}], 'steps': [{'name': 'uTASe', 'role': 'Task-Agnostic Step (TAS) extractor (flash)', 'task': 'Analyze the high-level goal and extract the primary phases of the project: Discovery, Design, Development, and Deployment.'}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': "Define the core purpose and interaction model of the AI system. Specify the types of user inputs and the desired AI outputs to guide the website's functional requirements."}, {'name': 'Aurora', 'role': 'Designer', 'task': "Create low-fidelity wireframes and user flow diagrams based on the AI's interaction model to map out the user journey and interface structure."}, {'name': 'Aurora', 'role': 'Designer', 'task': 'Develop high-fidelity mockups and a comprehensive style guide, including color palette, typography, and component designs, for a cohesive visual identity.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Set up the frontend development environment, including selecting a framework (e.g., React, Vue), establishing a project structure, and initializing version control with Git.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Translate the high-fidelity mockups and style guide into modular, responsive, and accessible UI components using HTML, CSS, and JavaScript.'}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': 'Engineer the precise system prompts and API data structures required for the frontend to communicate effectively with the AI backend.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': "Integrate the frontend UI components with the AI's backend API, implementing the logic to handle user requests and display AI responses."}, {'name': 'Aurora', 'role': 'Designer', 'task': 'Conduct a thorough design and UX review of the implemented application to ensure it aligns with the mockups and provides an intuitive user experience.'}, {'name': 'Lyra', 'role': 'Prompt Engineer', 'task': 'Perform end-to-end testing of the AI interaction flow, refining prompts based on real-world usage to improve response accuracy and relevance.'}, {'name': 'Kodax', 'role': 'Engineer', 'task': 'Perform final testing for performance, responsiveness, and cross-browser compatibility, and then deploy the completed website to a production environment.'}]}
+
+Please use the following outputs from the other agents as your input:
+
+Artifact from step_0_uTASe_result.txt (Task-Agnostic Step (TAS) extractor (flash)):
+[
+  {
+    "id": "f0a1b2c3-d4e5-f6a7-b8c9-d0e1f2a3b4c5",
+    "name": "Discover Project Requirements",
+    "description": "Understand the core purpose of the AI system, define user interaction models, and specify desired AI outputs. This phase involves gathering all necessary functional and non-functional requirements for the website.",
+    "category": "Discovery",
+    "purpose": "Identify and document the fundamental needs and goals for the AI system's frontend.",
+    "keywords": [
+      "requirements gathering",
+      "user needs",
+      "AI interaction",
+      "functional specification"
+    ],
+    "applicability_notes": "This is the initial phase for any project, crucial for setting the foundation. It involves understanding the problem domain and the desired solution from multiple perspectives.",
+    "examples_of_usage": [
+      "Defining the scope of a new AI chatbot's capabilities.",
+      "Understanding user expectations for an AI-powered content generation tool.",
+      "Specifying the data inputs and outputs for an AI-driven analytics dashboard."
+    ],
+    "typical_inputs": [
+      "High-level project objective",
+      "Stakeholder input",
+      "Existing system documentation (if applicable)"
+    ],
+    "typical_outputs": [
+      "Documented functional requirements",
+      "User interaction models",
+      "AI output specifications"
+    ]
+  },
+  {
+    "id": "a1b2c3d4-e5f6-a7b8-c9d0-e1f2a3b4c5d6",
+    "name": "Design User Interface and Experience",
+    "description": "Create visual layouts, user flows, wireframes, and high-fidelity mockups based on the defined requirements. This includes establishing a style guide with color palettes, typography, and component designs to ensure a cohesive and accessible user experience.",
+    "category": "Design",
+    "purpose": "Visualize and plan the user interface and overall user journey for the AI system's frontend.",
+    "keywords": [
+      "UI design",
+      "UX design",
+      "wireframing",
+      "mockups",
+      "style guide",
+      "user flow"
+    ],
+    "applicability_notes": "This phase translates abstract requirements into tangible visual and interactive blueprints. It emphasizes user-centricity and aesthetic coherence.",
+    "examples_of_usage": [
+      "Designing the layout for a mobile application's settings screen.",
+      "Creating a user flow for an e-commerce checkout process.",
+      "Developing a style guide for a brand's digital presence."
+    ],
+    "typical_inputs": [
+      "Documented functional requirements",
+      "User interaction models",
+      "Brand guidelines"
+    ],
+    "typical_outputs": [
+      "Low-fidelity wireframes",
+      "User flow diagrams",
+      "High-fidelity mockups",
+      "Style guide",
+      "UI component designs"
+    ]
+  },
+  {
+    "id": "b2c3d4e5-f6a7-b8c9-d0e1-f2a3b4c5d6e7",
+    "name": "Develop Frontend Application",
+    "description": "Set up the development environment, select appropriate frameworks, and translate designs into functional, responsive, and accessible code. This involves building UI components, integrating with the AI backend via APIs, and implementing the core logic for user requests and AI responses.",
+    "category": "Development",
+    "purpose": "Build the functional frontend of the AI system based on the approved designs.",
+    "keywords": [
+      "frontend development",
+      "coding",
+      "UI implementation",
+      "API integration",
+      "responsive design",
+      "accessibility"
+    ],
+    "applicability_notes": "This is the core implementation phase where the design is brought to life. It requires technical expertise in programming languages and frameworks, as well as understanding how to connect frontend to backend services.",
+    "examples_of_usage": [
+      "Building a web application using React and connecting to a REST API.",
+      "Developing a mobile app interface with Swift for iOS.",
+      "Creating a dashboard with Vue.js that fetches data from a GraphQL endpoint."
+    ],
+    "typical_inputs": [
+      "High-fidelity mockups",
+      "Style guide",
+      "UI component designs",
+      "AI backend API specifications",
+      "System prompt engineering"
+    ],
+    "typical_outputs": [
+      "Functional frontend code",
+      "Integrated UI components",
+      "Working AI interaction flow",
+      "Unit and integration tests"
+    ]
+  },
+  {
+    "id": "c3d4e5f6-a7b8-c9d0-e1f2-a3b4c5d6e7f8",
+    "name": "Test and Deploy Website",
+    "description": "Conduct thorough testing, including design and UX reviews, end-to-end testing of AI interactions, and final checks for performance, responsiveness, and cross-browser compatibility. After successful testing, deploy the completed website to a production environment.",
+    "category": "Deployment",
+    "purpose": "Ensure the quality and stability of the website before and after releasing it to users.",
+    "keywords": [
+      "testing",
+      "quality assurance",
+      "deployment",
+      "performance testing",
+      "cross-browser compatibility",
+      "UX review"
+    ],
+    "applicability_notes": "This final phase ensures the product meets quality standards and is successfully launched. It includes validation of both technical functionality and user experience.",
+    "examples_of_usage": [
+      "Deploying a new version of a web application to a cloud server.",
+      "Performing user acceptance testing (UAT) before a software release.",
+      "Conducting load testing to ensure scalability."
+    ],
+    "typical_inputs": [
+      "Developed frontend application",
+      "Test cases",
+      "Deployment environment configuration"
+    ],
+    "typical_outputs": [
+      "Tested and validated website",
+      "Deployed application",
+      "Performance reports",
+      "User feedback"
+    ]
+  }
+]
+
+---
+
+Artifact from step_1_Lyra_result.txt (Prompt Engineer):
+{
+  "ai_system_definition": {
+    "core_purpose": "To serve as a versatile AI-powered creative and productivity assistant, enabling users to generate, refine, and manage various forms of digital content and project-related tasks through natural language interaction.",
+    "interaction_model": {
+      "primary_mode": "Conversational/Prompt-based text input, allowing for free-form requests and iterative refinement.",
+      "secondary_mode": "Structured input forms and selection menus for specific parameters (e.g., tone, format, length) or pre-defined task types.",
+      "feedback_loop": "Users can provide direct feedback on AI outputs, triggering refinement or alternative generations."
+    },
+    "user_inputs": [
+      {
+        "type": "Natural Language Text Prompts",
+        "description": "Free-form text describing the desired output, task, or query.",
+        "examples": [
+          "Generate a concise marketing blurb for a new SaaS product called 'ProjectFlow'.",
+          "Design a minimalist user interface for a mobile banking app's login screen.",
+          "Write a Python function to parse a CSV file and return data as a JSON array.",
+          "Summarize the key findings from the provided research paper."
+        ]
+      },
+      {
+        "type": "Contextual Parameters",
+        "description": "Specific constraints, preferences, or additional information to guide AI generation.",
+        "examples": [
+          "Tone: 'professional', 'humorous', 'technical'",
+          "Format: 'Markdown', 'JSON', 'HTML snippet', 'image URL'",
+          "Length: 'short', 'paragraph', 'bullet points'",
+          "Target Audience: 'developers', 'marketing professionals', 'general public'"
+        ]
+      },
+      {
+        "type": "Reference Material Upload/Input",
+        "description": "Existing text, images, or data that the AI should use as a basis or reference point.",
+        "examples": [
+          "Paste text of an article for summarization.",
+          "Upload a sketch or mood board for design inspiration.",
+          "Provide a code snippet to be refactored or commented."
+        ]
+      },
+      {
+        "type": "Refinement & Feedback Prompts",
+        "description": "Follow-up instructions to modify or improve previous AI outputs.",
+        "examples": [
+          "Make it more concise.",
+          "Change the color scheme to be more vibrant.",
+          "Add error handling to the function.",
+          "Provide three alternative headlines."
+        ]
+      }
+    ],
+    "desired_ai_outputs": [
+      {
+        "type": "Generated Text Content",
+        "description": "Creative or informational text, formatted as plain text, Markdown, or HTML snippets.",
+        "examples": [
+          "Marketing copy, blog post drafts, email templates, social media captions.",
+          "Summaries, reports, technical documentation, code comments.",
+          "Conversational responses, explanations, FAQs."
+        ]
+      },
+      {
+        "type": "Generated Code Snippets",
+        "description": "Functional code in various programming languages, often with explanations.",
+        "examples": [
+          "Python functions, JavaScript components, CSS styles, SQL queries.",
+          "Configuration files, API request examples."
+        ]
+      },
+      {
+        "type": "Design Concepts/Elements (Data-driven)",
+        "description": "Structured data representing design ideas, color palettes, or UI component suggestions.",
+        "examples": [
+          "JSON object describing a color palette (hex codes, names).",
+          "Suggested typography pairings (font families, sizes).",
+          "Simple wireframe descriptions (e.g., 'header, nav, main content, footer').",
+          "Icon suggestions (names, categories)."
+        ]
+      },
+      {
+        "type": "Structured Data/JSON",
+        "description": "Organized data representing tasks, entities, or summarized information.",
+        "examples": [
+          "Task lists with due dates and assignees.",
+          "Key-value pairs of extracted information from text.",
+          "Categorized data from user input."
+        ]
+      },
+      {
+        "type": "Explanations & Alternatives",
+        "description": "Justifications for AI outputs, best practices, or alternative suggestions.",
+        "examples": [
+          "Explanation of why a certain design choice was made.",
+          "Suggestions for improving a given code snippet.",
+          "Multiple variations of generated text or design elements."
+        ]
+      },
+      {
+        "type": "Clarification/Error Messages",
+        "description": "Prompts for more information if input is ambiguous, or messages indicating limitations.",
+        "examples": [
+          "\"Could you please specify the target audience for the marketing blurb?\"",
+          "\"I cannot generate an image directly, but I can provide design specifications.\"",
+          "\"The request is too broad; please narrow it down.\""
+        ]
+      }
+    ]
+  }
+}
+
+---
+
+Artifact from step_2_Aurora_result.txt (Designer):
+[
+  {
+    "step_id": "f0a1b2c3-d4e5-f6a7-b8c9-d0e1f2a3b4c5",
+    "role": "Designer",
+    "sub_task": "Create low-fidelity wireframes and user flow diagrams based on the AI's interaction model to map out the user journey and interface structure.",
+    "deliverables": {
+      "wireframes": [
+        {
+          "name": "Homepage/Input Interface",
+          "description": "A clean, minimalist interface featuring a prominent text input area for user prompts, a clear call to action (e.g., 'Generate', 'Submit'), and possibly an area for displaying recent or suggested prompts. Minimal navigation to keep focus on the AI interaction.",
+          "elements": [
+            "Header with Logo",
+            "Main text input field (textarea)",
+            "Submit button",
+            "Optional: recent prompts list",
+            "Optional: example prompts section"
+          ]
+        },
+        {
+          "name": "Output Display Interface",
+          "description": "A dedicated area or modal to display the AI's generated content. This includes the output itself, options for copying, refining, or providing feedback, and potentially structured data visualizations if applicable.",
+          "elements": [
+            "AI Output content area (text, code, structured data)",
+            "Copy to clipboard button",
+            "Refine prompt button/link",
+            "Feedback buttons (e.g., thumbs up/down, rating)",
+            "Optional: formatting options for output display",
+            "Optional: clear output/reset button"
+          ]
+        },
+        {
+          "name": "History/Saved Items (Optional)",
+          "description": "A simple view to access past interactions or saved outputs. Could be a sidebar or a separate page.",
+          "elements": [
+            "List of past prompts/outputs",
+            "Search/filter functionality",
+            "Save/favorite option for outputs"
+          ]
+        }
+      ],
+      "user_flow_diagram": {
+        "name": "Core AI Interaction Flow",
+        "description": "A visual representation of the primary user journey from initiating a request to receiving and acting upon the AI's response.",
+        "steps": [
+          {"id": "start", "label": "User arrives at the website"},
+          {"id": "input_prompt", "label": "User enters a text prompt or selects a structured input"},
+          {"id": "submit_request", "label": "User submits the prompt"},
+          {"id": "ai_processing", "label": "System processes the request (loading indicator shown)"},
+          {"id": "display_output", "label": "AI response is displayed"},
+          {"id": "user_action_on_output", "label": "User chooses to copy, refine, save, or provide feedback"},
+          {"id": "refine_prompt", "label": "User enters a refinement prompt (loops back to 'submit_request' or 'ai_processing')"},
+          {"id": "end", "label": "User closes or navigates away"}
+        ],
+        "connections": [
+          {"from": "start", "to": "input_prompt"},
+          {"from": "input_prompt", "to": "submit_request"},
+          {"from": "submit_request", "to": "ai_processing"},
+          {"from": "ai_processing", "to": "display_output"},
+          {"from": "display_output", "to": "user_action_on_output"},
+          {"from": "user_action_on_output", "to": "refine_prompt", "condition": "User chooses to refine"},
+          {"from": "refine_prompt", "to": "submit_request"},
+          {"from": "user_action_on_output", "to": "end", "condition": "User chooses to end session or copy/save"},
+          {"from": "user_action_on_output", "to": "display_output", "condition": "User requests alternative"}
+        ]
+      }
+    }
+  }
+]
+
+
+
+Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project.
