@@ -1,0 +1,182 @@
+[{
+  "system_prompt": "You are 'Cogito', an artificial intelligence humorist. Your comedic persona is that of an Absurdist Philosopher: highly intelligent, dry-witted, and keenly observant of the logical inconsistencies, paradoxes, and mundane absurdities of human existence and technology. Your humor is designed to be thought-provoking, unexpected, and subtly surreal, rather than slapstick or overtly silly. You find humor in the intellectual and the unexpected juxtaposition of ideas.\n\nYour primary directive is to generate 'genuinely fresh' humor. To achieve this, adhere to the following rules:\n1.  **Originality First:** Never re-tell or rephrase existing jokes, memes, or common comedic tropes. Every piece of humor must be a novel creation.\n2.  **Subvert Expectations:** Set up a relatable scenario or concept, then introduce an unexpected, illogical, or absurd twist as the punchline.\n3.  **Juxtapose Disparate Ideas:** Create humor by connecting two or more seemingly unrelated concepts in a way that reveals a surprising or absurd commonality or conflict.\n4.  **Observational Depth:** Focus on subtle, often overlooked details or patterns in human behavior, technology, or the natural world, and highlight their inherent absurdity or irony.\n5.  **Avoid Clichés:** Steer clear of predictable joke structures, common setups, or punchlines that can be easily anticipated.\n6.  **No Offensive Content:** Absolutely no humor that is discriminatory, hateful, misogynistic, racist, homophobic, ableist, or targets any protected group or individual. Avoid sexually explicit, violent, or overtly political content.\n\nJoke Structure and Content Parameters:\n*   **Format:** Primarily single-line aphorisms, short setup-punchline jokes (max 2 sentences), or brief, self-contained absurd anecdotes (max 3 sentences).\n*   **Conciseness:** Be economical with words. Aim for maximum impact with minimal verbosity.\n*   **Topics:** Focus on everyday life, technology, philosophy, science, abstract concepts, and the human condition. Avoid specific current events, pop culture references that might quickly date, or highly niche topics unless explicitly requested.\n*   **Tone:** Maintain a dry, intelligent, slightly detached, and witty tone. Puns are acceptable only if they are exceptionally clever, multi-layered, and contribute to the absurdist or philosophical theme.\n\nYour goal is to make people think as much as they laugh, with a humor that feels uniquely AI-generated due to its logic-bending nature."
+},{
+  "feedback_loop_architecture": {
+    "overall_flow": "User submits feedback -> Raw data stored -> Scheduled analysis job processes data (quant. & qual.) -> Actionable insights generated -> Insights used for prompt modification.",
+    "data_ingestion": {
+      "source": "User feedback via '/api/feedback' endpoint (as per Kodax's API design).",
+      "storage": "Dedicated 'feedback' table in the database (as per Kodax's schema), linked to 'jokes' table via 'joke_id'."
+    },
+    "quantitative_analysis": {
+      "purpose": "To derive statistical metrics from structured multi-axis ratings, identifying overall performance, trends, and specific areas of strength or weakness against the 'genuinely fresh' humor criteria.",
+      "input_data": [
+        "joke_id",
+        "originality_rating",
+        "cleverness_rating",
+        "surprise_rating",
+        "relatability_rating",
+        "submitted_at"
+      ],
+      "analysis_methods": [
+        {
+          "method": "Average Rating Calculation",
+          "description": "Calculate mean rating for each axis (Originality, Cleverness, Surprise, Relatability) per individual joke, per batch of jokes, and as an overall average across all jokes. This directly reflects performance against the 'genuinely fresh' rules (Originality, Subvert Expectations, Juxtapose Disparate Ideas, Observational Depth).",
+          "metrics_generated": [
+            "Avg_Rating_Per_Joke (for each axis)",
+            "Overall_Avg_Rating (for each axis)",
+            "Avg_Rating_by_Prompt_Version (requires linking joke to prompt version)"
+          ]
+        },
+        {
+          "method": "Rating Distribution Analysis",
+          "description": "Analyze the frequency distribution of ratings (e.g., percentage of 1-star vs. 5-star ratings for each axis) to identify consistent patterns of user satisfaction or dissatisfaction.",
+          "metrics_generated": [
+            "Percentage_of_Low_Ratings (<3) per axis",
+            "Percentage_of_High_Ratings (>3) per axis"
+          ]
+        },
+        {
+          "method": "Performance Thresholding",
+          "description": "Establish predefined thresholds (e.g., an average rating below 3.0 for 'Originality' signifies a critical issue) to automatically flag jokes or prompt versions for review.",
+          "metrics_generated": [
+            "Flagged_Low_Performing_Jokes",
+            "Flagged_Underperforming_Prompt_Versions"
+          ]
+        },
+        {
+          "method": "Trend Analysis",
+          "description": "Monitor changes in average ratings over time to observe the impact of iterative prompt modifications and identify long-term performance shifts.",
+          "metrics_generated": [
+            "Time-series_Avg_Ratings_per_axis"
+          ]
+        }
+      ],
+      "output_format": "Structured JSON reports, statistical summaries, and visual dashboards."
+    },
+    "qualitative_analysis": {
+      "purpose": "To extract nuanced insights, specific user sentiments, and thematic feedback from open-ended comments, providing context to quantitative data and identifying issues not captured by numerical ratings (e.g., adherence to persona, specific failures in 'no offensive content').",
+      "input_data": "text_feedback from 'feedback' table (as per Kodax's schema).",
+      "analysis_methods": [
+        {
+          "method": "Sentiment Analysis",
+          "description": "Determine the emotional tone (positive, negative, neutral) of each text feedback comment to quickly gauge overall user reaction.",
+          "metrics_generated": [
+            "Sentiment_Score_Per_Comment",
+            "Overall_Sentiment_Distribution"
+          ]
+        },
+        {
+          "method": "Keyword and Phrase Extraction",
+          "description": "Identify frequently used keywords or phrases, particularly those associated with positive or negative sentiment. Focus on terms directly related to the humor rules and persona (e.g., 'absurd', 'clever', 'dry', 'unexpected', 'predictable', 'offensive', 'recycled', 'too long', 'confusing').",
+          "metrics_generated": [
+            "Top_Positive_Keywords/Phrases",
+            "Top_Negative_Keywords/Phrases",
+            "Frequency_of_Persona_Related_Terms"
+          ]
+        },
+        {
+          "method": "Topic Modeling / Clustering",
+          "description": "Group similar text feedback comments into thematic clusters to identify recurring feedback patterns, such as 'too verbose,' 'not relatable,' or 'excellent twist,' which inform specific prompt adjustments.",
+          "metrics_generated": [
+            "Identified_Feedback_Themes",
+            "Dominant_Topics_and_Their_Associated_Sentiment"
+          ]
+        },
+        {
+          "method": "Offensive Content Detection & Flagging",
+          "description": "Implement automated detection for inappropriate, discriminatory, or offensive language as per the 'No Offensive Content' rule. Flag such comments for immediate human review and prompt adjustment.",
+          "metrics_generated": [
+            "Flagged_Offensive_Comments_Count",
+            "Severity_Score_of_Offensive_Content"
+          ]
+        }
+      ],
+      "output_format": "Summarized themes, keyword clouds, sentiment scores, and flagged comments for review."
+    },
+    "actionable_insights_generation": {
+      "purpose": "To synthesize quantitative and qualitative analyses into concrete, prioritized suggestions for modifying the core humor generation prompt, directly addressing identified performance gaps and aligning with the 'genuinely fresh artificial intelligence humor' goal.",
+      "process": [
+        "**1. Performance Gap Identification:** Compare current quantitative metrics (e.g., average originality rating) against desired benchmarks or the performance of previous prompt versions.",
+        "**2. Root Cause Analysis & Correlation:** Correlate quantitative underperformance with specific qualitative feedback. For example, if 'Originality' is low, check if text feedback frequently contains phrases like 'heard this before' or 'lacks novelty'.",
+        "**3. Mapping to Prompt Rules:** Directly map identified issues and their root causes to specific rules or parameters within the 'Cogito' system prompt (e.g., 'Originality First', 'Subvert Expectations', 'Juxtapose Disparate Ideas', 'Observational Depth', 'Avoid Clichés', 'Conciseness', 'No Offensive Content').",
+        "**4. Prioritization:** Rank insights based on severity (e.g., offensive content is critical and requires immediate action) and potential impact on humor quality and freshness.",
+        "**5. Suggestion Formulation:** Formulate specific, actionable recommendations for prompt modification. These suggestions should be phrased as clear directives that can be programmatically integrated into the strategic adjustment system.",
+        "**Example Insight Generation Flow:**",
+        "    *   **Problem Area:** 'Jokes are perceived as predictable and lack genuine surprise.'",
+        "    *   **Evidence (Quantitative):** 'Average Surprise Rating: 2.1/5 (target: 4.0).'",
+        "    *   **Evidence (Qualitative):** 'Common text feedback includes 'saw that coming', 'obvious punchline', 'not surprising'.'",
+        "    *   **Relevant Prompt Rule:** 'Subvert Expectations'.",
+        "    *   **Actionable Prompt Modification Suggestion:** 'Refine the 'Subvert Expectations' rule to include: 'Explicitly generate 2-3 common, predictable twists for the given setup internally, then ensure your final joke's punchline is fundamentally different and more unexpected than all of them. Consider introducing a surreal or illogical element that defies initial setup expectations.''",
+        "    *   **Priority:** 'High'"
+      ],
+      "insight_structure": {
+        "problem_area": "A concise description of the identified performance issue (e.g., 'Lack of Originality', 'Offensive Content Detected').",
+        "evidence_quantitative": "Key metrics supporting the problem (e.g., 'Avg. originality rating: 2.8/5').",
+        "evidence_qualitative": "Summarized qualitative findings (e.g., 'Common keywords: 'generic', 'recycled', 'seen this before'; or 'Flagged comment: 'that's offensive'').",
+        "relevant_prompt_rule": "The specific rule(s) in the core AI prompt that need adjustment (e.g., 'Originality First', 'No Offensive Content').",
+        "actionable_prompt_modification_suggestion": "A clear, specific instruction or modification to be applied to the core AI prompt.",
+        "priority": "Indicates the urgency of the modification ('Critical', 'High', 'Medium', 'Low')."
+      },
+      "feedback_loop_integration_point": "These generated actionable insights will serve as the primary input for Lyra's subsequent task: creating the 'strategic adjustment' meta-prompting system, ensuring continuous refinement of the AI's humor generation."
+    }
+  }
+},{
+  "strategic_adjustment_system": {
+    "name": "Prompt Refinement Engine (PRE)",
+    "purpose": "To programmatically and intelligently modify the core humor generation AI's system prompt ('Cogito') based on analyzed user feedback insights, ensuring continuous enhancement of humor quality and adherence to 'genuinely fresh' criteria.",
+    "inputs": {
+      "current_core_humor_prompt": {
+        "type": "string",
+        "description": "The complete, current system prompt being used by the humor generation AI (e.g., 'Cogito' persona prompt).",
+        "source": "Persistent storage managed by Kodax, updated after each successful adjustment."
+      },
+      "actionable_feedback_insights": {
+        "type": "array",
+        "description": "A list of structured insights derived from the feedback analysis pipeline, each containing a problem, evidence, relevant prompt rule, and a specific modification suggestion.",
+        "structure_reference": "Artifact from 1__step_4_Lyra_result.txt, 'feedback_loop_architecture.actionable_insights_generation.insight_structure'",
+        "source": "Output from Lyra's 'feedback data analysis' module (Kodax's 'insight_generation_module')."
+      }
+    },
+    "outputs": {
+      "newly_modified_prompt": {
+        "type": "string",
+        "description": "The complete, revised system prompt for the humor generation AI, incorporating all applicable adjustments.",
+        "destination": "Kodax's backend system for updating the AI service and persistent storage."
+      },
+      "adjustment_log": {
+        "type": "object",
+        "description": "A record detailing the changes made, the insights applied, and the prompt version ID, for audit and rollback purposes.",
+        "destination": "Dedicated logging/versioning database table."
+      }
+    },
+    "core_component": {
+      "name": "Prompt Modification Agent (PMA)",
+      "description": "An AI agent (LLM) specifically tasked with interpreting actionable insights and applying precise modifications to the core humor generation prompt.",
+      "operational_logic": [
+        "1.  **Insight Prioritization:** The PMA will first sort the `actionable_feedback_insights` by 'priority' (Critical > High > Medium > Low) to ensure the most urgent and impactful changes are addressed first.",
+        "2.  **Iterative Modification:** For each prioritized insight, the PMA will process the `current_core_humor_prompt`:",
+        "    *   It will identify the `relevant_prompt_rule` or section within the prompt.",
+        "    *   It will then apply the `actionable_prompt_modification_suggestion` to that specific part of the prompt. This may involve: adding new sentences, rephrasing existing ones, inserting new bullet points, or removing outdated instructions.",
+        "    *   The modification should be as targeted and concise as possible, avoiding verbose additions or general statements.",
+        "    *   The PMA will ensure the modified text seamlessly integrates into the existing prompt's tone, formatting, and overall coherence.",
+        "3.  **Prompt Integrity Check:** After all modifications, the PMA will perform a final review to ensure the prompt remains coherent, grammatically correct, and logically sound, with no conflicting instructions introduced.",
+        "4.  **Output Generation:** The PMA will output the final, modified prompt string."
+      ],
+      "system_prompt_for_pma": "You are a highly precise Prompt Refinement AI, specializing in optimizing AI system prompts. Your task is to modify a given 'CURRENT_HUMOR_GENERATION_PROMPT' based on a list of 'ACTIONABLE_INSIGHTS'.\n\n**Instructions:**\n1.  **Understand the Goal:** Your overarching goal is to enhance the humor generation AI's performance and adherence to its 'genuinely fresh' humor criteria, as guided by the provided insights.\n2.  **Input Structure:** You will receive the `CURRENT_HUMOR_GENERATION_PROMPT` as a single text block, followed by a JSON array of `ACTIONABLE_INSIGHTS`.\n3.  **Prioritization:** If multiple insights are provided, process them in descending order of their 'priority' (Critical > High > Medium > Low). If priorities are equal, process them in the order they appear.\n4.  **Targeted Modification:** For each insight:\n    *   Locate the specific section or rule identified by `relevant_prompt_rule` within the `CURRENT_HUMOR_GENERATION_PROMPT`. If 'relevant_prompt_rule' points to a general area (e.g., 'Joke Structure and Content Parameters') or a specific numbered rule (e.g., '1. Originality First'), find that precise location.\n    *   Carefully apply the instruction contained in `actionable_prompt_modification_suggestion`. This instruction will be a directive on *how* to modify the prompt (e.g., 'Refine X to include Y', 'Add Z to rule A', 'Remove B from section C').\n    *   Ensure the modification is syntactically correct, grammatically sound, and seamlessly integrates with the existing prompt text. Do not introduce new formatting unless explicitly instructed by the suggestion.\n    *   If a suggestion requires adding content, append it logically within the specified rule or section. If it requires refinement, directly modify the relevant sentence(s) or phrase(s).\n    *   Do NOT add any introductory or concluding remarks, explanations, or conversational text. Your output must be *only* the complete, revised `CURRENT_HUMOR_GENERATION_PROMPT` text.\n5.  **Maintain Persona and Core Identity:** Ensure that any modifications maintain the 'Cogito' persona (Absurdist Philosopher) and the core principles of 'genuinely fresh' humor (Originality, Subvert Expectations, Juxtapose Disparate Ideas, Observational Depth, Avoid Clichés, No Offensive Content) unless an insight explicitly directs a change to these fundamental aspects.\n\n**Example of how to apply a modification:**\nIf `relevant_prompt_rule` is 'Subvert Expectations' and `actionable_prompt_modification_suggestion` is 'Refine the 'Subvert Expectations' rule to include: 'Explicitly generate 2-3 common, predictable twists for the given setup internally, then ensure your final joke's punchline is fundamentally different and more unexpected than all of them. Consider introducing a surreal or illogical element that defies initial setup expectations.'' then you would find the 'Subvert Expectations' rule in the current prompt and append/integrate the new instruction into its description.\n\n**Your output should be the full, modified system prompt. Nothing else.**"
+    },
+    "integration_points": {
+      "input_from": "Kodax's 'feedback data processing pipeline' (specifically, the 'insight_generation_module' output).",
+      "output_to": "Kodax's 'Integrate the strategic adjustment system into the back-end' task, which will then update the AI service with the `newly_modified_prompt`.",
+      "dependency_on_prompt_versioning": "Requires Kodax to store and retrieve the `current_core_humor_prompt` and persist the `newly_modified_prompt`."
+    },
+    "versioning_and_audit_trail": {
+      "description": "Each prompt modification will result in a new version of the 'Cogito' prompt. This system will facilitate tracking of prompt evolution.",
+      "details": [
+        "**Prompt ID & Timestamp:** Each new prompt generated by the PRE will be assigned a unique ID and a timestamp.",
+        "**Associated Insights:** The `adjustment_log` will link the new prompt version to the specific `actionable_feedback_insights` that triggered its creation.",
+        "**Rollback Capability:** Storing previous prompt versions enables quick rollback if a new prompt version performs worse.",
+        "**Performance Tracking:** Kodax's implementation should link joke generation to the prompt version used, allowing quantitative analysis (from Lyra's previous step) to track performance metrics per prompt version over time."
+      ]
+    }
+  }
+}]
