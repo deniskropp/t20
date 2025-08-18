@@ -1,4 +1,5 @@
 Links: [MTC|LCP](https://ai.violass.club/mtc-lcp/)
+[test logs](./logs)
 
 
 # T20 Multi-Agent System
