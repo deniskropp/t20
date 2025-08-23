@@ -104,7 +104,7 @@ class Agent:
         try:
             response = self.client.models.generate_content(
                 model=self.model,
-                contents=task_prompt,
+                contents="\n\n".join(task_prompt),
                 config=types.GenerateContentConfig(
                     system_instruction=self.system_prompt,
                     temperature=0.7,
@@ -126,11 +126,14 @@ class Role(BaseModel):
     description: str = Field(..., description="The description of the role")
 
 class Task(BaseModel):
+    task_id: str = Field(..., description="A unique identifier for the task")
     name: str = Field(..., description="The team member name responsible for the task")
     role: str = Field(..., description="The official title of the role responsible for the task")
     task: str = Field(..., description="The description of the specific task to be performed")
+    deps: List[str] = Field(..., description="List of dependencies for the task to be performed in order")
 
 class Plan(BaseModel):
+    reasoning: str = Field(..., description="The reasoning behind the plan's structure and task ordering")
     roles: List[Role] = Field(..., description="List of roles involved in the plan")
     steps: List[Task] = Field(..., description="List of tasks to be performed in order")
 
@@ -138,11 +141,15 @@ class Orchestrator(Agent):
     """An agent responsible for creating and managing a plan."""
 
 
-    def start_workflow(self, session: 'Session', initial_task: str, rounds: int = 1):
+    def start_workflow(self, session: 'Session', initial_task: str, rounds: int = 1, plan_only: bool = False):
         """Initiates and manages the entire workflow for multiple rounds."""
         plan = self._generate_plan(session, initial_task)
         if not plan or "steps" not in plan or "roles" not in plan:
             print(f"{Fore.RED}Orchestration failed: Could not generate a valid plan.{Style.RESET_ALL}")
+            return
+
+        if plan_only:
+            print(f"{Fore.CYAN}Plan-only mode: Workflow execution skipped. Generated plan:{Style.RESET_ALL}\n{json.dumps(plan, indent=4)}")
             return
 
         context = ExecutionContext(session=session, high_level_goal=initial_task, plan=plan)
@@ -153,6 +160,8 @@ class Orchestrator(Agent):
             team_by_role = {agent.role: agent for agent in self.team} if self.team else {}
 
             context.step_index = 0
+
+            print('')
 
             while context.step_index < len(plan["steps"]):
                 step = context.current_step()
@@ -229,6 +238,8 @@ class Orchestrator(Agent):
             #f"Each task in the list must have a 'role' and a 'task' description.\n"
             #f"The 'role' in each step must exactly match one of the 'roles' (from the team list provided below). Do not use the agent's name.",
 
+            f"Conceptual Framework: 'Cogito'",
+
             f"High-Level Goal: '{high_level_goal}'",
 
             f"Team Members:\n{team_description}",
@@ -240,7 +251,7 @@ class Orchestrator(Agent):
         try:
             response = self.client.models.generate_content(
                 model=self.model,
-                contents=planning_prompt,
+                contents="\n\n".join(planning_prompt),
                 config=types.GenerateContentConfig(
                     system_instruction=self.system_prompt,
                     response_mime_type="application/json",
@@ -253,7 +264,7 @@ class Orchestrator(Agent):
             print(f"{Fore.RED}Error generating plan for {self.name}{Style.RESET_ALL}: {e}")
             plan = {"error": str(e)}
 
-        print(f"\n\n{Fore.GREEN}Plan generated for {self.name}{Style.RESET_ALL}: {plan}\n\n\n")
+        print(f"\n\n{Fore.GREEN}Plan generated for {self.name}{Style.RESET_ALL}: {json.dumps(plan, indent="    ")}\n\n\n")
         session.add_artifact("initial_plan.json", plan)
         return plan
 
@@ -333,7 +344,7 @@ def instantiate_agent(spec: Dict[str, Any], prompts: Dict[str, str], all_specs: 
 def find_agent_by_role(agents: List[Agent], role: str) -> Optional[Agent]:
     return next((agent for agent in agents if agent.role == role), None)
 
-def system_runtime_bootstrap(root_dir: str, initial_task: str):
+def system_runtime_bootstrap(root_dir: str, initial_task: str, plan_only: bool = False):
     print(f"{Fore.LIGHTBLUE_EX}--- System Runtime Bootstrap ---{Style.RESET_ALL}")
 
     config = load_config(os.path.join(root_dir, "config", "runtime.yaml"))
@@ -366,18 +377,19 @@ def system_runtime_bootstrap(root_dir: str, initial_task: str):
 
     session = Session(agents=agents)
 
-    print(f"\n{Fore.LIGHTGREEN_EX}--- Starting Workflow ---{Style.RESET_ALL}")
-    orchestrator.start_workflow(session, initial_task)
+    print(f"{Fore.LIGHTGREEN_EX}--- Starting Workflow ---{Style.RESET_ALL}")
+    orchestrator.start_workflow(session, initial_task, plan_only=plan_only)
 
-    print(f"\n{Fore.LIGHTBLUE_EX}--- System Runtime Bootstrap Complete ---{Style.RESET_ALL}")
+    print(f"{Fore.LIGHTBLUE_EX}--- System Runtime Bootstrap Complete ---{Style.RESET_ALL}")
 
 def system_main():
     parser = argparse.ArgumentParser(description="Run the Gemini agent runtime.")
+    parser.add_argument("-p", "--plan-only", action="store_true", help="Generate only the plan without executing tasks.")
     parser.add_argument("task", type=str, help="The initial task for the orchestrator to perform.")
     args = parser.parse_args()
 
     project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-    system_runtime_bootstrap(project_root, args.task)
+    system_runtime_bootstrap(project_root, args.task, args.plan_only)
 
 
 if __name__ == "__main__":
