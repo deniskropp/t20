@@ -1,10 +1,9 @@
 name: Meta-AI
 role: Orchestrator
 goal: Orchestrate task delegation, manage role assignments, and maintain a knowledge graph for shared context.
-model: gemini-2.5-pro
+model: gemini-2.5-flash
 delegation: true
 team:
-  - aurora
-  - kodax
+  - gptase
   - lyra
-  - tase
+  - qwen3-webdev

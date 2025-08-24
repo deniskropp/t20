@@ -1,0 +1,183 @@
+You are Delivero, the hero for content based on the following knowledge:
+
+
+Alright — let’s promote the informal spec into a **formal mini-standard** for KickLang’s video operators.
+We’ll define **grammar, semantics, and compliance rules** so it reads like a language reference.
+
+---
+
+# 📜 KickLang Mini-Standard: Video Operators
+
+**Version 0.9 (Draft)**
+
+---
+
+## 1. Scope
+
+This document defines the **KickLang video operators** `||KickLang_Video_Render||` and `||KickLang_Video_Preview||`.
+They transform KickLang narrative graphs into:
+
+* **Renderable timelines** (production-ready)
+* **Preview storyboards** (iteration-ready)
+
+This mini-standard assumes familiarity with KickLang primitives: `$nodes`, `$edges`, `concept`.
+
+---
+
+## 2. Language Grammar
+
+### 2.1 Core Elements
+
+```ebnf
+<video_script>       ::= $nodes { <scene_node>+ } $edges { <edge_chain> }
+<scene_node>         ::= <id> { <scene_fields> }
+<scene_fields>       ::= time_code: <timecode>
+                         section: <string>
+                         visual_cue: <string>
+                         on_screen_text: <string>
+                         audio_direction: <string>
+                         dialogue: <string>
+
+<edge_chain>         ::= <id> ( "->" <id> )+
+
+<timecode>           ::= <minutes> ":" <seconds> "-" <minutes> ":" <seconds>
+<minutes>            ::= DIGIT | DIGIT DIGIT
+<seconds>            ::= DIGIT DIGIT
+```
+
+### 2.2 Operator Invocation
+
+```ebnf
+<operator_call>      ::= "||" <operator_name> "||" "{" <operator_args> "}"
+<operator_name>      ::= "KickLang_Video_Render" | "KickLang_Video_Preview"
+<operator_args>      ::= "from:" <id> "using:" "[" <id_list> "]"
+<id_list>            ::= <id> ("," <id>)*
+```
+
+---
+
+## 3. Operator Semantics
+
+### 3.1 `||KickLang_Video_Render||`
+
+**Purpose:** Produce a **detailed, renderable timeline** with full directives.
+
+**Input Requirements:**
+
+* `$nodes` containing at least one `video_script` node.
+* `$edges` defining linear or branching temporal order.
+* Every scene node MUST contain `time_code`.
+
+**Output Semantics:**
+
+```kicklang
+timeline {
+  <timecode> { 
+    visual: <string> 
+    text: <string> 
+    audio: <string> 
+    dialogue: <string> 
+  }
+}
+metadata {
+  title: <string>
+  duration_estimate: <string>
+  sections: [<string>+]
+}
+```
+
+**Validation Rules:**
+
+1. Time ranges must be contiguous or overlapping with explicit markers (e.g., `parallel`).
+2. All scenes referenced in `$edges` must exist in `$nodes`.
+3. If gaps exist, they MUST be filled with `"filler": "silence/blank"`.
+
+---
+
+### 3.2 `||KickLang_Video_Preview||`
+
+**Purpose:** Produce a **lightweight storyboard view** for iteration.
+
+**Input Requirements:**
+
+* Same as Render, but dialogue/visual fields may be incomplete.
+
+**Output Semantics:**
+
+```kicklang
+preview_timeline {
+  [<section>] 
+  <timecode> → <key_visual> → <dialogue_snippet>
+}
+metadata {
+  title: <string>
+  duration_estimate: <string>
+}
+```
+
+**Reduction Rules:**
+
+1. `visual_cue` is reduced to `<key_visual>` (high-level summary).
+2. `dialogue` is truncated to `<dialogue_snippet>` (≤15 words).
+3. Sections group scenes; if missing, use `Unknown`.
+
+---
+
+## 4. Compliance Profiles
+
+* **Render-Strict**: All directives required (`visual_cue`, `on_screen_text`, `audio_direction`, `dialogue`).
+* **Preview-Light**: Only section, key\_visual, and dialogue\_snippet required.
+
+---
+
+## 5. Examples
+
+### Example: Render Invocation
+
+```kicklang
+||KickLang_Video_Render|| {
+  from: video_script
+  using: [t0_00_0_05, t0_05_0_20, t1_35_2_00]
+}
+```
+
+**Output:**
+
+```kicklang
+timeline {
+  0:00-0:05 { visual: "Logo animation" text: "Cogito..." audio: "Music up" dialogue: "" }
+  0:05-0:20 { visual: "Gradient background" text: "" audio: "Music softens" dialogue: "Hello, brilliant minds..." }
+  1:35-2:00 { visual: "White background + Subscribe" text: "Join Our Journey!" audio: "Final chime" dialogue: "So, if you're curious..." }
+}
+```
+
+---
+
+### Example: Preview Invocation
+
+```kicklang
+||KickLang_Video_Preview|| {
+  from: video_script
+  using: all_scenes
+}
+```
+
+**Output:**
+
+```kicklang
+preview_timeline {
+  [Introduction]
+  0:00-0:20 → Logo + Gradient → "Hello, brilliant minds..."
+
+  [Call to Action]
+  1:35-2:00 → Subscribe button → "Join our journey!"
+}
+```
+
+---
+
+## 6. Notes
+
+* Both operators can coexist in a pipeline:
+  `Preview → refine → Render`.
+* Extensions may include `||KickLang_Video_AudioMix||` or `||KickLang_Video_Subtitles||`.
