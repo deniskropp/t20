@@ -1,0 +1,272 @@
+:root {
+    --color-dark-bg: #0a0a1a;
+    --color-primary-blue: #007bff;
+    --color-accent-purple: #8a2be2;
+    --color-accent-green: #28a745;
+    --color-text-light: #e0e0e0;
+    --color-text-muted: #a0a0b0;
+    --color-player-bg: #1c1c3a;
+    --color-progress-bg: #3a3a5a;
+    --color-progress-fill: #00bcd4;
+    --color-glow-effect: #00bcd480;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: var(--color-dark-bg);
+    color: var(--color-text-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden; /* Prevent scrollbar from background */
+    position: relative;
+}
+
+/* Subtle background pattern/gradient for uTASe theme */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(0, 123, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
+        linear-gradient(135deg, rgba(40, 167, 69, 0.05) 0%, transparent 70%);
+    background-size: 100% 100%;
+    opacity: 0.7;
+    z-index: -1;
+}
+
+.container {
+    background: var(--color-player-bg);
+    border-radius: 15px;
+    box-shadow: 0 0 40px var(--color-glow-effect);
+    padding: 30px;
+    max-width: 700px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    border: 1px solid rgba(0, 188, 212, 0.2);
+}
+
+.track-info {
+    margin-bottom: 30px;
+}
+
+.track-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.5em;
+    color: var(--color-progress-fill);
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px rgba(0, 188, 212, 0.5);
+}
+
+.artist-name {
+    font-size: 1.2em;
+    color: var(--color-text-muted);
+    margin-bottom: 20px;
+}
+
+.description {
+    font-size: 0.95em;
+    line-height: 1.6;
+    color: var(--color-text-light);
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.audio-player {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap; /* Allow controls to wrap on smaller screens */
+    justify-content: center;
+}
+
+.player-button {
+    background: var(--color-accent-purple);
+    color: var(--color-text-light);
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 1.8em;
+    cursor: pointer;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    outline: none;
+    box-shadow: 0 0 15px rgba(138, 43, 226, 0.4);
+}
+
+.player-button:hover {
+    background: var(--color-accent-blue);
+    box-shadow: 0 0 25px rgba(0, 123, 255, 0.6);
+}
+
+/* Play/Pause icon using CSS */
+#playPauseBtn::before {
+    content: '▶'; /* Play icon */
+}
+#playPauseBtn.playing::before {
+    content: '❚❚'; /* Pause icon */
+}
+
+.progress-area {
+    flex-grow: 1;
+    min-width: 180px; /* Ensure it doesn't get too small */
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: var(--color-progress-bg);
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--color-primary-blue), var(--color-progress-fill));
+    border-radius: 5px;
+    transition: width 0.1s linear; /* Smooth progress update */
+}
+
+.time-display {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85em;
+    color: var(--color-text-muted);
+}
+
+.volume-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.volume-button {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2em;
+    background: var(--color-accent-green);
+    box-shadow: 0 0 10px rgba(40, 167, 69, 0.4);
+}
+
+.volume-button:hover {
+    background: var(--color-accent-green);
+    box-shadow: 0 0 15px rgba(40, 167, 69, 0.6);
+}
+
+/* Mute icon using CSS */
+#muteBtn::before {
+    content: '🔊'; /* Volume high icon */
+}
+#muteBtn.muted::before {
+    content: '🔇'; /* Mute icon */
+}
+
+.volume-slider {
+    width: 100px;
+    height: 5px;
+    background: var(--color-progress-bg);
+    border-radius: 5px;
+    outline: none;
+    -webkit-appearance: none; /* Hide default slider */
+    appearance: none;
+    cursor: pointer;
+}
+
+.volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: var(--color-progress-fill);
+    cursor: pointer;
+    box-shadow: 0 0 8px var(--color-glow-effect);
+}
+
+.volume-slider::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: var(--color-progress-fill);
+    cursor: pointer;
+    box-shadow: 0 0 8px var(--color-glow-effect);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+        width: 95%;
+    }
+
+    .track-title {
+        font-size: 1.8em;
+    }
+
+    .artist-name {
+        font-size: 1em;
+    }
+
+    .description {
+        font-size: 0.85em;
+    }
+
+    .controls {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .player-button {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5em;
+    }
+
+    .progress-area {
+        min-width: unset;
+        width: 100%;
+    }
+
+    .volume-control {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .volume-slider {
+        width: 120px;
+    }
+}
+
+@media (max-width: 400px) {
+    .track-title {
+        font-size: 1.5em;
+    }
+    .artist-name {
+        font-size: 0.9em;
+    }
+    .description {
+        font-size: 0.8em;
+    }
+}
