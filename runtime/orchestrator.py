@@ -5,11 +5,10 @@ from typing import List, Dict, Any, Optional
 
 from colorama import Fore, Style, init
 from pydantic import BaseModel, Field
-from google import genai
-from google.genai import types
 
 from runtime.agent import Agent # Import Agent base class
 from runtime.core import ExecutionContext, Session # Import Session and ExecutionContext
+from runtime.llm import LLM
 
 # Initialize colorama for cross-platform colored output
 init()
@@ -19,7 +18,11 @@ from runtime.types import Plan
 class Orchestrator(Agent):
     """An agent responsible for creating and managing a plan for multi-agent workflows."""
 
-    def start_workflow(self, session: Session, initial_task: str, rounds: int = 1, plan_only: bool = False):
+    def __init__(self, name, role, goal, model, system_prompt) -> None:
+        super().__init__(name, role, goal, model, system_prompt)
+        self.llm = LLM.factory()
+
+    def start_workflow(self, session: Session, initial_task: str, rounds: int = 1, plan_only: bool = False, files: List[str] = []):
         """
         Initiates and manages the entire workflow for multiple rounds.
 
@@ -28,8 +31,21 @@ class Orchestrator(Agent):
             initial_task (str): The high-level goal for the workflow.
             rounds (int): The number of rounds to execute the workflow.
             plan_only (bool): If True, only generates the plan without executing tasks.
+            files (List[str]): List of files to be used in the task.
         """
-        plan = self._generate_plan(session, initial_task)
+        file_contents = {}
+        if files:
+            print(f"{Fore.CYAN}Files provided:{Style.RESET_ALL}")
+            for file_path in files:
+                try:
+                    with open(file_path, 'r') as f:
+                        content = f.read()
+                        file_contents[file_path] = content
+                        print(f"  - {file_path}")
+                except Exception as e:
+                    print(f"{Fore.RED}Error reading file {file_path}: {e}{Style.RESET_ALL}")
+
+        plan = self._generate_plan(session, initial_task, file_contents)
         print(f"{Fore.CYAN}Generated plan:{Style.RESET_ALL}\n{json.dumps(plan, indent=4)}")
 
         if not plan or "tasks" not in plan or "roles" not in plan:
@@ -45,7 +61,7 @@ class Orchestrator(Agent):
         for context.round_num in range(1, rounds + 1):
             print(f"{Fore.YELLOW}Orchestrator {self.name} is starting workflow round {context.round_num} for goal{Style.RESET_ALL}: '{initial_task}'")
 
-            team_by_role = {agent.role: agent for agent in self.team} if self.team else {}
+            team_by_name = {agent.name: agent for agent in self.team.values()} if self.team else {}
 
             context.step_index = 0
 
@@ -53,20 +69,21 @@ class Orchestrator(Agent):
 
             while context.step_index < len(plan["tasks"]):
                 step = context.current_step()
-                role = step.get("role", "Any Role")
-                delegate_agent = team_by_role.get(role)
+                name = step.get("name", "Any")
+                delegate_agent = team_by_name.get(name)
 
                 if not delegate_agent:
-                    print(f"{Fore.RED}Warning: No agent found with role '{role}'{Style.RESET_ALL}. Skipping step {context.step_index}.")
+                    print(f"{Fore.RED}Warning: No agent found with name '{name}'{Style.RESET_ALL}. Skipping step {context.step_index}.")
                     context.step_index += 1
                     continue
 
                 if delegate_agent.role == 'Prompt Engineer':
-                    print(f"{Fore.LIGHTBLUE_EX}Orchestrator detected special role{Style.RESET_ALL}: {delegate_agent.role}. Preparing inputs.")
+                    print(f"{Fore.YELLOW}Orchestrator detected special name{Style.RESET_ALL}: {delegate_agent.name}. Preparing inputs.")
 
                 result = delegate_agent.execute_task(context)
                 if result:
                     context.record_artifact(f"{delegate_agent.name}_result.txt", result, True)
+
                     if delegate_agent.role == 'Prompt Engineer':
                         try:
                             response = json.loads(result)
@@ -119,7 +136,7 @@ class Orchestrator(Agent):
             new_system_prompt = obj.get("new_system_prompt")
 
             if target_agent_name and new_system_prompt:
-                target_agent = next((a for a in self.team or () if a.name == target_agent_name), None)
+                target_agent = next((a for a in self.team.values() or () if a.name == target_agent_name), None)
                 if not target_agent:
                     target_agent = next((a for a in session.agents if a.name == target_agent_name), None)
 
@@ -128,19 +145,20 @@ class Orchestrator(Agent):
                 else:
                     print(f"{Fore.CYAN}Warning: Target agent '{target_agent_name}' not found for prompt update.{Style.RESET_ALL}")
 
-    def _generate_plan(self, session: Session, high_level_goal: str) -> Dict[str, Any]:
+    def _generate_plan(self, session: Session, high_level_goal: str, file_contents: Dict[str, str] = None) -> Dict[str, Any]:
         """
         Invokes the language model to get a structured plan for the given high-level goal.
 
         Args:
             session (Session): The current session object.
             high_level_goal (str): The high-level goal for which to generate a plan.
+            file_contents (Dict[str, str]): A dictionary of file paths and their contents.
 
         Returns:
             Dict[str, Any]: The generated plan as a dictionary, or an empty dictionary if an error occurs.
         """
         print(f"{Fore.MAGENTA}Orchestrator {self.name} is generating a plan for{Style.RESET_ALL}: '{high_level_goal}'")
-        if not self.client or not self.team:
+        if not self.llm or not self.team:
             print(f"{Fore.RED}Error: Orchestrator client or team not initialized.{Style.RESET_ALL}")
             return {}
 
@@ -148,9 +166,9 @@ class Orchestrator(Agent):
             f"- Name: '{agent.name}'\n"
             f"  Role: `{agent.role}`\n"
             f"  Goal: \"{agent.goal}\""
-            for agent in self.team
+            for agent in self.team.values()
         )
-        
+
         planning_prompt = [
             f"We are meta-artificial intelligence, cohesively creating an iterative role and task plan, thinking step-by-step towards the high-level goal.",
 
@@ -162,21 +180,26 @@ class Orchestrator(Agent):
 
             f"Leverage each team member, guided by their goals, to maximize collaboration. Use prompt engineering to refine the system prompts for each agent based on their roles and tasks.",
         ]
+
+        if file_contents:
+            file_section = [f"\n--- Files Content ---"]
+            for file_path, content in file_contents.items():
+                file_section.append(f"File: {file_path}\n```\n{content}\n```")
+            planning_prompt.append("\n".join(file_section))
+
         print(planning_prompt)
         session.add_artifact("planning_prompt.txt", "\n\n".join(planning_prompt))
 
         try:
-            response = self.client.models.generate_content(
-                model=self.model,
+            response = self.llm.generate_content(
+                model_name=self.model,
                 contents="\n\n".join(planning_prompt),
-                config=types.GenerateContentConfig(
-                    system_instruction=self.system_prompt,
-                    response_mime_type="application/json",
-                    response_schema=Plan,
-                    temperature=0.1,
-                ),
+                system_instruction=self.system_prompt,
+                temperature=0.1,
+                response_mime_type='application/json', #if self.role == 'Prompt Engineer' else None
+                response_schema=Plan
             )
-            plan = json.loads(response.text or '{}')
+            plan = json.loads(response or '{}')
         except Exception as e:
             print(f"{Fore.RED}Error generating plan for {self.name}{Style.RESET_ALL}: {e}")
             plan = {"error": str(e)}

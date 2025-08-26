@@ -72,7 +72,7 @@ class Session:
                     json.dump(content, f, indent=4)
                 else:
                     f.write(str(content))
-            print(f"{Fore.LIGHTGREEN_EX}Artifact '{Fore.LIGHTBLUE_EX}{name}{Fore.LIGHTGREEN_EX}' saved in session {self.session_id}.{Style.RESET_ALL}")
+            print(f"{Fore.BLUE}Artifact{Style.RESET_ALL} '{Fore.LIGHTBLUE_EX}{name}{Fore.LIGHTGREEN_EX}' saved in session {self.session_id}.{Style.RESET_ALL}")
         except (TypeError, IOError) as e:
             print(f"{Fore.RED}Error saving artifact '{name}'{Style.RESET_ALL}: {e}")
 

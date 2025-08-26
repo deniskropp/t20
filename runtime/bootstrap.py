@@ -14,7 +14,7 @@ from runtime.loader import load_config, load_agent_templates, load_prompts
 # Initialize colorama for cross-platform colored output
 init()
 
-def system_runtime_bootstrap(root_dir: str, initial_task: str, plan_only: bool = False):
+def system_runtime_bootstrap(root_dir: str, initial_task: str, plan_only: bool = False, rounds: int = 1, files: List[str] = []):
     """
     Bootstraps the multi-agent runtime system.
 
@@ -22,6 +22,8 @@ def system_runtime_bootstrap(root_dir: str, initial_task: str, plan_only: bool =
         root_dir (str): The root directory of the project.
         initial_task (str): The initial task for the orchestrator to perform.
         plan_only (bool): If True, only generates the plan without executing tasks.
+        rounds (int): The number of rounds to execute the workflow.
+        files (List[str]): List of files to be used in the task.
     """
     print(f"{Fore.LIGHTBLUE_EX}--- System Runtime Bootstrap ---{Style.RESET_ALL}")
 
@@ -57,7 +59,7 @@ def system_runtime_bootstrap(root_dir: str, initial_task: str, plan_only: bool =
     session = Session(agents=agents)
 
     print(f"{Fore.LIGHTGREEN_EX}--- Starting Workflow ---{Style.RESET_ALL}")
-    orchestrator.start_workflow(session, initial_task, plan_only=plan_only)
+    orchestrator.start_workflow(session, initial_task, rounds=rounds, plan_only=plan_only, files=files)
 
     print(f"{Fore.LIGHTBLUE_EX}--- System Runtime Bootstrap Complete ---{Style.RESET_ALL}")
 
@@ -67,11 +69,13 @@ def system_main():
     """
     parser = argparse.ArgumentParser(description="Run the Gemini agent runtime.")
     parser.add_argument("-p", "--plan-only", action="store_true", help="Generate only the plan without executing tasks.")
+    parser.add_argument("--rounds", type=int, default=1, help="The number of rounds to execute the workflow.")
+    parser.add_argument("--files", nargs='*', help="List of files to be used in the task.")
     parser.add_argument("task", type=str, help="The initial task for the orchestrator to perform.")
     args = parser.parse_args()
 
     project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-    system_runtime_bootstrap(project_root, args.task, args.plan_only)
+    system_runtime_bootstrap(project_root, args.task, args.plan_only, args.rounds, args.files or [])
 
 
 if __name__ == "__main__":

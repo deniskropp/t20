@@ -1,5 +1,5 @@
 # config/runtime.yaml
-default_agent: Meta-AI
+default_agent: Orchestrator
 max_concurrent_agents: 3
 logging_level: INFO
 api_endpoints:
