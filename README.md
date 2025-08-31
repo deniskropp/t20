@@ -1,6 +1,6 @@
-Links: [MTC|LCP](https://ai.violass.club/mtc-lcp/)
-[Demo Logs](./logs)
-[Docs](https://ai.violass.club/t20)
+Links: [🧮 MTC|LCP](https://ai.violass.club/mtc-lcp/)
+[🪽 Demo Logs](./logs)
+[📖 Docs](https://ai.violass.club/t20)
 
 
 # T20 Multi-Agent System
