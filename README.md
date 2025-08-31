@@ -120,6 +120,19 @@ Let's ask the team to design and build a simple webpage.
 t20-cli "Design and create the HTML and CSS for a modern, minimalist landing page for a new SaaS product called 'Innovate'."
 ```
 
+### Command-Line Options
+
+The `t20-cli` command supports several options to control the workflow:
+
+| Argument | Short | Description | Default |
+|---|---|---|---|
+| `--plan-only` | `-p` | Generate only the plan without executing tasks. | `False` |
+| `--rounds` | `-r` | The number of rounds to execute the workflow. | `1` |
+| `--files` | `-f` | List of files to be used in the task. | `None` |
+| `--orchestrator` | `-o` | The name of the orchestrator to use. | `Meta-AI` |
+| `task` | | The initial task for the orchestrator to perform. | |
+
+
 ### What Happens Next
 
 1.  A new session is created in the `sessions/` directory.
