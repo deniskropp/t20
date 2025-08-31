@@ -1,0 +1,168 @@
+{
+  "output": "Identify and return each 'Task Agnostic Step' (TAS) towards the high-level goal.",
+  "files": [
+    {
+      "name": "TAS_Extraction_for_Hardstyle_Anthem.json",
+      "content": [
+        {
+          "id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+          "name": "Define Anthem Theme",
+          "description": "Establish the central theme, narrative arc, and emotional landscape for the hardstyle anthem. This involves identifying core concepts that resonate with the genre's intensity and energy, such as overcoming challenges, relentless ambition, or euphoric transcendence. The narrative should guide the listener through a progression towards a powerful climax, and the emotional tone should balance aggression, determination, euphoria, and raw power.",
+          "category": "Init",
+          "purpose": "To set the foundational thematic and emotional direction for the anthem.",
+          "keywords": [
+            "theme definition",
+            "narrative structure",
+            "emotional tone",
+            "concept development",
+            "genre alignment"
+          ],
+          "applicability_notes": "This step is crucial for any creative work, especially music, as it provides the conceptual blueprint. The specific themes will vary greatly depending on the desired impact and target audience, but the process of defining them remains consistent.",
+          "examples_of_usage": [
+            "Define the theme of a sci-fi movie score as 'exploration of the unknown with a sense of awe and danger'.",
+            "Establish the narrative for a marketing campaign as 'empowering small businesses to achieve global reach'.",
+            "Set the emotional tone for a video game as 'intense combat combined with moments of melancholic reflection'."
+          ],
+          "typical_inputs": [
+            "High-level goal or objective",
+            "Genre conventions",
+            "Target audience insights"
+          ],
+          "typical_outputs": [
+            "Defined theme statement",
+            "Narrative outline",
+            "Emotional palette description"
+          ]
+        },
+        {
+          "id": "b2c3d4e5-f6a7-8901-2345-67890abcdef1",
+          "name": "Generate Lyrical Content",
+          "description": "Create the lyrical content for the hardstyle anthem based on the defined theme, narrative, and emotional tone. This includes developing verses, choruses, bridges, and outros that are impactful, memorable, and align with the aggressive yet euphoric nature of the genre. The lyrics should build energy and contribute to the overall climax of the song.",
+          "category": "Content Generation",
+          "purpose": "To craft the vocal narrative and emotional expression of the anthem.",
+          "keywords": [
+            "lyric writing",
+            "songwriting",
+            "narrative lyrics",
+            "chorus development",
+            "vocal arrangement"
+          ],
+          "applicability_notes": "This step is fundamental to vocal-centric music genres. The style and complexity of lyric generation can be adapted based on the specific musical style and desired message.",
+          "examples_of_usage": [
+            "Write lyrics for a pop song about summer love, focusing on catchy hooks.",
+            "Develop a spoken-word narrative for a hip-hop track about social injustice.",
+            "Create chanting lyrics for a metal song that evoke a sense of power and rebellion."
+          ],
+          "typical_inputs": [
+            "Defined theme statement",
+            "Narrative outline",
+            "Emotional tone description",
+            "Genre-specific lyrical conventions"
+          ],
+          "typical_outputs": [
+            "Complete set of lyrics",
+            "Lyrical structure (verses, chorus, etc.)",
+            "Rhyme scheme and meter"
+          ]
+        },
+        {
+          "id": "c3d4e5f6-a7b8-9012-3456-7890abcdef12",
+          "name": "Define Sonic Palette",
+          "description": "Specify the key sonic elements that will define the hardstyle anthem's sound. This includes determining the tempo (BPM), signature synth melodies and textures, powerful kick drum characteristics, driving basslines, energetic percussion, and overall sound design principles that embody the genre's intensity and euphoria. The goal is to create a distinct and powerful audio identity.",
+          "category": "Content Generation",
+          "purpose": "To establish the core sound design and musical characteristics of the anthem.",
+          "keywords": [
+            "sound design",
+            "music production",
+            "sonic elements",
+            "BPM definition",
+            "synth programming",
+            "kick drum",
+            "bassline"
+          ],
+          "applicability_notes": "This step is critical for any music production, especially in electronic genres where sound design is paramount. The specific parameters will vary widely based on the genre and desired aesthetic.",
+          "examples_of_usage": [
+            "Define the sound palette for a lo-fi hip-hop track, emphasizing vinyl crackle, warm bass, and mellow Rhodes piano.",
+            "Specify the sonic elements for a cinematic orchestral piece, focusing on soaring strings and powerful brass.",
+            "Determine the sound characteristics for an ambient electronic track, prioritizing atmospheric pads and subtle textures."
+          ],
+          "typical_inputs": [
+            "Defined theme statement",
+            "Emotional tone description",
+            "Genre conventions",
+            "Desired energy level"
+          ],
+          "typical_outputs": [
+            "Target BPM range",
+            "Key synth sound descriptions",
+            "Kick drum and bassline characteristics",
+            "Percussion style",
+            "Overall sonic mood"
+          ]
+        },
+        {
+          "id": "d4e5f6a7-b8c9-0123-4567-890abcdef123",
+          "name": "Compose and Arrange Music",
+          "description": "Develop the musical composition and arrangement for the hardstyle anthem, ensuring it complements the lyrical themes and the defined sonic palette. This involves creating melodies, harmonies, rhythmic patterns, and structuring the song (intro, build-ups, drops, breakdowns, outro) to maximize impact and adhere to hardstyle genre conventions. The arrangement should build tension and release, leading to powerful, energetic sections.",
+          "category": "Refinement",
+          "purpose": "To create the instrumental and structural foundation of the anthem.",
+          "keywords": [
+            "music composition",
+            "song arrangement",
+            "hardstyle structure",
+            "build-ups",
+            "drops",
+            "melodic development",
+            "rhythmic patterns"
+          ],
+          "applicability_notes": "This is a core step in music creation. The complexity of composition and arrangement varies greatly depending on the genre and the desired level of detail.",
+          "examples_of_usage": [
+            "Compose a jazz piece with complex improvisation sections and a walking bassline.",
+            "Arrange a folk song with acoustic guitar, banjo, and vocal harmonies.",
+            "Create a minimalist techno track focusing on repetitive synth loops and a driving kick drum."
+          ],
+          "typical_inputs": [
+            "Complete set of lyrics",
+            "Defined sonic palette",
+            "Song structure guidelines",
+            "Genre-specific musical conventions"
+          ],
+          "typical_outputs": [
+            "Musical composition (melodies, harmonies, rhythms)",
+            "Arrangement of musical parts",
+            "Song structure (intro, verses, chorus, drops, etc.)"
+          ]
+        },
+        {
+          "id": "e5f6a7b8-c9d0-1234-5678-90abcdef1234",
+          "name": "Compile Prompt",
+          "description": "Consolidate all finalized elements into a single, comprehensive prompt for generating the epic hardstyle anthem. This prompt should clearly articulate the theme, narrative, emotional tone, detailed lyrical content, and all specified sonic characteristics and musical arrangements. The goal is to provide a clear and actionable instruction set for an AI model to produce the desired anthem.",
+          "category": "Output Generation",
+          "purpose": "To create a unified prompt that encapsulates all requirements for anthem generation.",
+          "keywords": [
+            "prompt engineering",
+            "prompt compilation",
+            "instruction generation",
+            "AI prompting",
+            "creative brief"
+          ],
+          "applicability_notes": "This step is essential for effectively guiding AI generation tools. The quality and specificity of the prompt directly influence the output quality.",
+          "examples_of_usage": [
+            "Compile a prompt for an AI image generator specifying style, subject, composition, and lighting.",
+            "Create a prompt for a story-writing AI detailing plot points, character arcs, and desired tone.",
+            "Assemble a prompt for a code generation AI outlining the desired functionality, programming language, and constraints."
+          ],
+          "typical_inputs": [
+            "Finalized lyrics",
+            "Defined sonic palette",
+            "Musical composition and arrangement details",
+            "Overall goal description"
+          ],
+          "typical_outputs": [
+            "Comprehensive AI generation prompt"
+          ]
+        }
+      ]
+    }
+  ]
+}

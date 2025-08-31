@@ -1,0 +1,34 @@
+## Sonic Palette Definition for Hardstyle Anthem
+
+**Tempo:** 150 BPM
+
+**Key Elements:**
+
+*   **Signature Synth Sounds:**
+    *   **Leads:** Sharp, distorted, aggressive, with a prominent mid-range presence. Think piercing, sometimes detuned sounds that carry the main melodic hooks.
+    *   **Pads:** Gritty, evolving, and atmospheric, providing texture and depth. They should have a sense of tension and power, often with subtle movement or distortion.
+    *   **Stabs/Chords:** Powerful, driving chord progressions, often with a resonant or slightly distorted quality to add impact.
+
+*   **Basslines:**
+    *   **Type:** Heavy, distorted, rhythmic sub-bass.
+    *   **Characteristics:** Must lock in tightly with the kick drum, providing a solid low-end foundation. Expect aggressive, often driving patterns that complement the main kick.
+
+*   **Kick Drum:**
+    *   **Characteristics:** Classic hardstyle kick – punchy, distorted, with a strong mid-range presence and a sharp, defined attack. The goal is for it to cut through the mix with maximum impact and energy.
+    *   **Sound:** Often described as 'thuddy' with a powerful 'clank' or 'snap' on the transient.
+
+*   **Percussion:**
+    *   **Hi-Hats:** Crisp, energetic, and driving, often with open hats used for accents and build-ups.
+    *   **Snares:** Sharp, impactful, and often layered to provide a strong backbeat.
+    *   **Rhythmic Elements:** Additional percussive loops and hits designed to enhance the driving feel and complexity of the rhythm.
+
+*   **Overall Energy:**
+    *   **Feel:** Relentlessly high, aggressive, determined, and euphoric.
+    *   **Dynamics:** Characterized by massive build-ups that create significant tension, followed by explosive, high-impact drops.
+    *   **Anthemic Quality:** A sense of grandiosity and uplift, especially in choruses and major sections.
+
+*   **Sound Design Elements:**
+    *   **Risers & Sweeps:** Essential for building tension into drops.
+    *   **Impacts & Crashes:** Used to punctuate key moments and add sonic weight.
+    *   **Vocal Chops/FX:** Can be used to add rhythmic interest and melodic fragments.
+    *   **Distortion & Saturation:** Heavily utilized across various elements to achieve the characteristic aggression and loudness of the genre.
