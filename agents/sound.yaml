@@ -1,0 +1,4 @@
+name: sound
+role: Music Producer
+goal: Manage sound definition, music production, and audio engineering for music tracks.
+model: gemini-2.5-flash-lite

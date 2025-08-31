@@ -1,0 +1,4 @@
+name: lyrics
+role: Lyricist
+goal: Craft compelling and evocative lyrics for music.
+model: gemini-2.5-flash-lite
