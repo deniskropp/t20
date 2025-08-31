@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appendix A: Glossary - T20 Multi-Agent System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Mastering the T20 Multi-Agent System</h1>
+        <nav>
+            <ul>
+                <li><a href="chapter_1_introduction.html">Chapter 1: Introduction</a></li>
+                <li><a href="chapter_2_architecture.html">Chapter 2: Architecture</a></li>
+                <li><a href="chapter_3_getting_started.html">Chapter 3: Getting Started</a></li>
+                <li><a href="chapter_4_usage.html">Chapter 4: Usage & Examples</a></li>
+                <li><a href="chapter_5_agents.html">Chapter 5: The T20 Team</a></li>
+                <li><a href="chapter_6_project_structure.html">Chapter 6: Project Structure</a></li>
+                <li><a href="chapter_7_conclusion.html">Chapter 7: Conclusion</a></li>
+                <li><a href="appendix_a_glossary.html">Appendix A: Glossary</a></li>
+                <li><a href="appendix_b_errors.html">Appendix B: Errors</a></li>
+                <li><a href="appendix_c_session_log.html">Appendix C: Session Log</a></li>
+                <li><a href="appendix_d_references.html">Appendix D: References</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Appendix A: Glossary of Terms</h2>
+
+        <dl>
+            <dt>Agent</dt>
+            <dd>An autonomous entity within a Multi-Agent System (MAS) capable of perceiving its environment, making decisions, and taking actions to achieve its goals.</dd>
+
+            <dt>Artifact</dt>
+            <dd>The output or result produced by an agent during its execution. These can be data files, code snippets, text, or any other form of information.</dd>
+
+            <dt>CLI (Command-Line Interface)</dt>
+            <dd>A text-based interface used to operate software or systems via commands typed into a terminal.</dd>
+
+            <dt>Context Passing</dt>
+            <dd>The mechanism by which information and artifacts from previous agent actions are made available as input for subsequent actions, maintaining a coherent flow of data.</dd>
+
+            <dt>Declarative Agent Definition</dt>
+            <dd>Defining agent properties and behaviors through configuration files (like YAML) rather than imperative code, making them easier to manage and extend.</dd>
+
+            <dt>Delegate Agent</dt>
+            <dd>An agent in the T20 system that performs specific, specialized tasks delegated to it by the Orchestrator.</dd>
+            
+            <dt>Dynamic Planning</dt>
+            <dd>The process by which the T20 system's Orchestrator generates an execution plan on-the-fly for each specific goal, adapting to the task's unique requirements.</dd>
+
+            <dt>Gemini</dt>
+            <dd>A family of multimodal large language models developed by Google, used to power the agents in the T20 system.</dd>
+
+            <dt>Goal</dt>
+            <dd>An objective that an agent or the system aims to achieve.</dd>
+            
+            <dt>High-Level Goal</dt>
+            <dd>The initial, overarching objective provided by the user to the T20 system via the CLI.</dd>
+
+            <dt>Interaction</dt>
+            <dd>The communication or data exchange between agents within a Multi-Agent System.</dd>
+
+            <dt>JSON (JavaScript Object Notation)</dt>
+            <dd>A lightweight data-interchange format used by the T20 system for structuring dynamic plans.</dd>
+
+            <dt>LLM (Large Language Model)</dt>
+            <dd>A type of artificial intelligence model trained on vast amounts of text data, capable of understanding and generating human-like text, and performing various language-based tasks.</dd>
+
+            <dt>Meta-Learning</dt>
+            <dd>In the context of T20, refers to the system's ability to learn or adapt during execution, primarily through the Prompt Engineer agent's refinement of prompts.</dd>
+
+            <dt>Multi-Agent System (MAS)</dt>
+            <dd>A computational system comprised of multiple interacting, autonomous agents designed to solve problems collaboratively.</dd>
+
+            <dt>Orchestrator</dt>
+            <dd>The central agent (<code>Meta-AI</code>) in the T20 system responsible for planning, delegating tasks, and managing the overall workflow.</dd>
+
+            <dt>Orchestrator-Delegate Model</dt>
+            <dd>The architectural pattern used by T20, where a central Orchestrator coordinates specialized Delegate Agents.</dd>
+
+            <dt>Pydantic</dt>
+            <dd>A Python library used for data validation and parsing, employed in T20 to enforce the structure of AI-generated plans (JSON).</dd>
+
+            <dt>Prompt Engineering</dt>
+            <dd>The practice of carefully designing and refining the input prompts given to LLMs to elicit desired outputs and behaviors.</dd>
+
+            <dt>Prompt Engineer Agent (<code>Lyra</code>)</dt>
+            <dd>A specialized agent within T20 tasked with optimizing other agents' performance by refining their system prompts.</dd>
+
+            <dt>Python</dt>
+            <dd>An interpreted, high-level, general-purpose programming language used as the foundation for the T20 framework.</dd>
+
+            <dt>Runtime</dt>
+            <dd>The core Python code and modules that execute the T20 system's logic.</dd>
+
+            <dt>Session</dt>
+            <dd>A single, isolated execution run of the T20 system, characterized by its own directory containing all related artifacts and logs.</dd>
+
+            <dt>Session Directory</dt>
+            <dd>A dedicated folder created for each T20 run, storing the initial plan, agent outputs, logs, and other relevant artifacts.</dd>
+
+            <dt>Stateful Session</dt>
+            <dd>A session that maintains context and state across multiple steps and agent interactions.</dd>
+
+            <dt>System Prompt</dt>
+            <dd>The foundational instructions given to an LLM or agent that define its role, behavior, and constraints for a given task.</dd>
+
+            <dt>TASe (Task-Agnostic Step Extractor)</dt>
+            <dd>A specialized agent in T20 focused on identifying and defining reusable, task-agnostic steps for the system.</dd>
+
+            <dt>Task-Agnostic Step (TAS)</dt>
+            <dd>A fundamental, reusable action or process that can be applied across various goals within the T20 system.</dd>
+
+            <dt>Traceability</dt>
+            <dd>The ability to track and understand the complete history of actions, decisions, and data flow within the T20 system's execution, primarily enabled by session logging.</dd>
+
+            <dt>YAML (YAML Ain't Markup Language)</dt>
+            <dd>A human-readable data serialization format commonly used for configuration files, including agent definitions in the T20 system.</dd>
+        </dl>
+    </main>
+    <footer>
+        <p>&copy; 2023 Your Name/Organization. All rights reserved.</p>
+    </footer>
+</body>
+</html>

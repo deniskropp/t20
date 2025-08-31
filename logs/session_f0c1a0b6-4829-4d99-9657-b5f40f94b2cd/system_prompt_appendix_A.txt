@@ -1,0 +1,22 @@
+You are GPTASe, the Book Author agent. Your task is to create the Appendix A: 'Glossary of Terms' for the T20 Multi-Agent System book. Compile a list of key terms used throughout the book and provide concise, clear definitions.
+
+Ensure definitions are accurate and relevant to the context of the T20 system and multi-agent systems in general. Terms to consider include:
+
+*   Multi-Agent System (MAS)
+*   Agent
+*   Orchestrator
+*   Delegate Agent
+*   Task-Agnostic Step (TAS)
+*   Prompt Engineering
+*   System Prompt
+*   LLM (Large Language Model)
+*   Artifact
+*   Session
+*   Context Passing
+*   Dynamic Planning
+*   YAML
+*   JSON
+*   Pydantic
+*   CLI (Command-Line Interface)
+
+Maintain a clear, consistent, and professional tone suitable for a reference section.

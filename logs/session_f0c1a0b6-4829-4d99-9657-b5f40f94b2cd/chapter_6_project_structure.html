@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 6: Project Structure - T20 Multi-Agent System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Mastering the T20 Multi-Agent System</h1>
+        <nav>
+            <ul>
+                <li><a href="chapter_1_introduction.html">Chapter 1: Introduction</a></li>
+                <li><a href="chapter_2_architecture.html">Chapter 2: Architecture</a></li>
+                <li><a href="chapter_3_getting_started.html">Chapter 3: Getting Started</a></li>
+                <li><a href="chapter_4_usage.html">Chapter 4: Usage & Examples</a></li>
+                <li><a href="chapter_5_agents.html">Chapter 5: The T20 Team</a></li>
+                <li><a href="chapter_6_project_structure.html">Chapter 6: Project Structure</a></li>
+                <li><a href="chapter_7_conclusion.html">Chapter 7: Conclusion</a></li>
+                <li><a href="appendix_a_glossary.html">Appendix A: Glossary</a></li>
+                <li><a href="appendix_b_errors.html">Appendix B: Errors</a></li>
+                <li><a href="appendix_c_session_log.html">Appendix C: Session Log</a></li>
+                <li><a href="appendix_d_references.html">Appendix D: References</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Chapter 6: Project Structure and Internals</h2>
+
+        <p>This chapter provides a technical overview of the T20 system's architecture and how to customize it. We will delve into the directory layout, the purpose of key files and modules within the <code>runtime/</code> directory, and discuss methods for customizing orchestration logic and advanced prompt engineering techniques.</p>
+
+        <h3>6.1 Directory Layout Explained</h3>
+
+        <p>The T20 project follows a structured directory layout designed for clarity and maintainability:</p>
+        <pre><code class="language-tree">
+t20-multi-agent/
+
+	├── agents/                 # YAML definitions for each agent
+	│   ├── orchestrator.yaml
+	│   ├── lyra.yaml
+	│   ├── aurora.yaml
+	│   ├── kodax.yaml
+	│   └── tase.yaml
+
+	├── prompts/                # System prompts and instructions for agents (can be text files or structured data)
+	│   ├── orchestrator_instructions.txt
+	│   └── ...
+
+	├── runtime/                # Core Python source code for the framework
+	│   ├── __init__.py
+	│   ├── executor.py         # Main execution logic, agent classes, CLI entry point
+	│   └── loader.py           # Utilities for loading configs, agents, and prompts
+
+	├── sessions/               # Output directory for all runtime sessions (auto-generated)
+	│   └── session_...
+	│       ├── initial_plan.json
+	│       ├── 0__step_0_Lyra_result.txt
+	│       └── ...
+
+	├── setup.py                # Project setup and dependencies definition
+	├── README.md               # Project overview and documentation
+	└── .env                    # Environment variables (e.g., API keys)
+</code></pre>
+        <ul>
+            <li><strong><code>agents/</code>:</strong> Contains the declarative configurations (YAML) for each agent, defining their roles, goals, and models.</li>
+            <li><strong><code>prompts/</code>:</strong> Stores the system prompts and instructions used to guide agent behavior.</li>
+            <li><strong><code>runtime/</code>:</strong> Houses the core Python logic of the T20 framework, including the execution engine and configuration loaders.</li>
+            <li><strong><code>sessions/</code>:</strong> Automatically generated directory where all artifacts, logs, and plans for each T20 run are stored.</li>
+            <li><strong><code>setup.py</code>:</strong> Standard Python packaging file used for installation and dependency management.</li>
+        </ul>
+
+        <h3>6.2 The <code>runtime/</code> Module</h3>
+
+        <p>The <code>runtime/</code> directory is the heart of the T20 framework's execution logic.</p>
+        <ul>
+            <li><strong><code>executor.py</code>:</strong> This file contains the main execution loop, the base classes for agents, and the entry point for the <code>t20-cli</code> command. It orchestrates the loading of agents, processing of goals, generation of plans, and delegation of tasks.</li>
+            <li><strong><code>loader.py</code>:</strong> Provides utility functions for loading agent configurations from YAML files, loading prompts, and managing environment variables (like API keys). It ensures the system can correctly interpret and utilize its components.</li>
+        </ul>
+
+        <h3>6.3 Customizing the Orchestration Logic</h3>
+
+        <p>For advanced users seeking to modify the system's core behavior, the orchestration logic offers avenues for customization:</p>
+        <ul>
+            <li><strong>Modifying Planning Strategies:</strong> The way <code>Meta-AI</code> generates plans could be influenced by changing the prompts it receives or by modifying the internal logic within <code>executor.py</code> that interacts with the planning LLM. For instance, one might experiment with different meta-prompts to encourage more robust or creative plan generation.</li>
+            <li><strong>Implementing New Delegation Patterns:</strong> The logic for how tasks are delegated could be altered. This might involve introducing new criteria for agent selection or implementing different communication protocols between agents. Such changes would likely require modifications within the <code>executor.py</code> or related modules.</li>
+        </ul>
+        <p><em>Note: Customizing core logic requires a good understanding of the Python codebase and the T20 framework's internal workings.</em></p>
+
+        <h3>6.4 Advanced Prompt Engineering Techniques</h3>
+
+        <p>Effective prompt engineering is crucial for maximizing agent performance. Best practices include:</p>
+        <ul>
+            <li><strong>Clear Task Definition:</strong> Ensure prompts clearly state the desired output format, constraints, and goals.</li>
+            <li><strong>Contextual Information:</strong> Provide relevant context from previous steps or the overall goal.</li>
+            <li><strong>Role-Playing:</strong> Instructing the agent to adopt a specific persona (e.g., "Act as a senior software engineer...") can significantly influence its output.</li>
+            <li><strong>Few-Shot Prompting:</strong> Including examples of desired input/output pairs within the prompt can guide the LLM effectively, especially for complex or nuanced tasks. For example, when defining prompts for <code>Aurora</code>, providing a few examples of minimalist design descriptions could yield better results.</li>
+        </ul>
+        <p>The T20 system's integration with <code>Lyra</code> allows for dynamic adaptation of these techniques during runtime, further optimizing the results.</p>
+    </main>
+    <footer>
+        <p>&copy; 2023 Your Name/Organization. All rights reserved.</p>
+    </footer>
+</body>
+</html>
