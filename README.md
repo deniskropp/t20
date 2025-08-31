@@ -1,5 +1,5 @@
 Links: [🧮 MTC|LCP](https://ai.violass.club/mtc-lcp/)
-[🪽 Demo Logs](./logs)
+[🪽 Demo](./logs/session_f0c1a0b6-4829-4d99-9657-b5f40f94b2cd)
 [📖 Docs](https://ai.violass.club/t20)
 
 
