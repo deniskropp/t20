@@ -69,8 +69,8 @@ def system_main():
     """
     parser = argparse.ArgumentParser(description="Run the Gemini agent runtime.")
     parser.add_argument("-p", "--plan-only", action="store_true", help="Generate only the plan without executing tasks.")
-    parser.add_argument("--rounds", type=int, default=1, help="The number of rounds to execute the workflow.")
-    parser.add_argument("--files", nargs='*', help="List of files to be used in the task.")
+    parser.add_argument("-r", "--rounds", type=int, default=1, help="The number of rounds to execute the workflow.")
+    parser.add_argument("-f", "--files", nargs='*', help="List of files to be used in the task.")
     parser.add_argument("task", type=str, help="The initial task for the orchestrator to perform.")
     args = parser.parse_args()
 
