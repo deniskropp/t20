@@ -25,12 +25,11 @@ The workflow of the T20 system follows a clear, powerful pattern:
 ## Features
 
 -   **Declarative Agent Definition**: Agents are defined in simple, easy-to-read YAML files.
--   **Dynamic, AI-Generated Plans**: No hardcoded workflows. The Orchestrator creates a custom plan for every unique goal.
+-   **Dynamic, AI-Generated Plans**: The Orchestrator creates a custom plan for every unique goal.
 -   **Role-Based Delegation**: Tasks are intelligently assigned to agents best suited for the job.
--   **Structured LLM Outputs**: Utilizes JSON schema enforcement with Pydantic for reliable, machine-readable plans from the Orchestrator.
 -   **Stateful Sessions**: Each run is isolated in a session directory containing all artifacts, prompts, and results.
 -   **CLI-Driven**: Simple and straightforward to run from the command line.
--   **Powered by Google Gemini**: Leverages a suite of Gemini models, from the highly capable `gemini-2.5-pro` for orchestration to the fast and efficient `gemini-2.5-flash-lite` for specialized tasks.
+-   **Expanded Agent Team**: Includes a diverse team of agents for content generation, web development (HTML, CSS, JS, React), music creation, and more.
 
 ## The Team
 
@@ -39,10 +38,18 @@ The system comes pre-configured with a team of specialized agents:
 | Name     | Role                        | Goal                                                                                         | Model                               |
 | :------- | :-------------------------- | :------------------------------------------------------------------------------------------- | :---------------------------------- |
 | **Meta-AI**  | Orchestrator                | Orchestrate tasks, manage roles, and maintain shared context.                                | `gemini-2.5-pro`                    |
+| **Music-AI** | Music Orchestrator          | Orchestrates the generation of music with a specialized team.                                | `gemini-2.5-flash-lite`             |
 | **Lyra**     | Prompt Engineer             | Structure workflows and refine agent instructions for clarity and effectiveness.             | `gemini-2.5-flash`                  |
-| **Aurora**   | Designer                    | Generate aesthetic layouts, color palettes, typography, and UI flows.                        | `gemini-2.5-flash-lite-preview-06-17` |
-| **Kodax**    | Engineer                    | Implement designs into clean, modular, and performant code.                                  | `gemini-2.5-flash-lite-preview-06-17` |
-| **TASe**     | Task-Agnostic Step Extractor | Identify and extract each 'Task Agnostic Step' (TAS) towards the high-level goal.            | `gemini-2.5-flash-lite-preview-06-17` |
+| **Aurora**   | Designer                    | Generate aesthetic layouts, color palettes, typography, and UI flows.                        | `gemini-2.5-flash-lite`             |
+| **Kodax**    | Engineer                    | Implement designs into clean, modular, and performant code.                                  | `gemini-2.5-flash-lite`             |
+| **Qwen3-WebDev**| Web Developer            | Generate web development code (HTML, CSS, JavaScript, React).                               | `gemini-2.5-flash-lite`             |
+| **Delivero** | Content Generator           | Generate creative ideas, detailed outlines, and full scripts.                                | `gemini-2.5-flash-lite`             |
+| **TASe**     | Task-Agnostic Step Extractor | Identify and extract each 'Task Agnostic Step' (TAS) towards the high-level goal.            | `gemini-2.5-flash-lite`             |
+| **Lyrics**   | Lyricist                    | Generate lyrics for songs.                                                                   | `gemini-2.5-flash-lite`             |
+| **Sound**    | Sound Designer              | Generate sound effects and audio elements.                                                   | `gemini-2.5-flash-lite`             |
+| **Stream**   | Audio Streamer              | Manages audio streaming and output.                                                          | `gemini-2.5-flash-lite`             |
+| **UTase**    | Micro-Task Extractor        | Extracts micro-tasks for ultra-fine-grained execution.                                       | `gemini-2.5-flash-lite`             |
+| **GPTase**   | General Purpose TAS Extractor | A general-purpose agent for extracting Task-Agnostic Steps.                                  | `gemini-2.5-flash-lite`             |
 
 ## Project Structure
 
