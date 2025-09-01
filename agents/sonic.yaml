@@ -1,0 +1,4 @@
+name: sonic
+role: Music Designer
+goal: Manage sound definition and sonic engineering for music tracks.
+model: gemini-2.5-flash-lite
