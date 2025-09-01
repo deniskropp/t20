@@ -1,0 +1,43 @@
+# How will we design a task scheduling system?
+
+We have divided the design of the task scheduler into four lessons:
+[Requirements:](https://www.educative.io/courses/grokking-the-system-design-interview/requirements-of-a-distributed-task-schedulers-design) We’ll identify the functional and non-functional requirements of a task scheduling system in this lesson.
+[Design:](https://www.educative.io/courses/grokking-the-system-design-interview/design-of-a-distributed-task-scheduler) This lesson will discuss the system design of our task scheduling system and explores the components of the system and database schema.
+[Design considerations:](https://www.educative.io/courses/grokking-the-system-design-interview/design-considerations-of-a-distributed-task-scheduler) In this lesson, we’ll highlight some design factors, such as task prioritization, resource optimization, and so on.
+[Evaluation:](https://www.educative.io/courses/grokking-the-system-design-interview/evaluation-of-a-distributed-task-schedulers-design) We’ll evaluate our design of task scheduler based on our requirements.
+Let’s start by understanding the requirements of a task scheduling system.
+
+To design a **task scheduling system**, the process is typically divided into four main lessons: understanding requirements, creating the architectural design, considering advanced design factors, and evaluating the solution. Below is a breakdown of the first step—**identifying the functional and non-functional requirements**—which is foundational for the rest of the design process.[^1][^7][^9][^12]
+
+## Functional Requirements
+
+- **Submit Tasks:** The system must allow users or clients to submit tasks for execution, including the ability to specify timing (one-time, recurring, or delayed).[^7][^8][^1]
+- **Allocate Resources:** The scheduler assigns available computational resources (CPU, memory, nodes) to tasks, matching requirements to avoid resource waste.[^1][^7]
+- **Remove/Cancel Tasks:** Users can cancel or delete tasks that have been submitted but not yet executed.[^6][^8][^1]
+- **Monitor \& Reschedule:** The system monitors the execution of each task, detects failures, and reschedules if necessary.[^12][^1]
+- **Efficient Resource Utilization:** The scheduler ensures optimal and fair use of system resources for all jobs, avoiding both idle capacity and resource starvation.[^7][^1]
+- **Show Task Status:** Users can query and view the current state and historical data about each task (pending, running, failed, completed).[^10][^1][^7]
+
+
+## Non-Functional Requirements
+
+- **Reliability:** Tasks should run to completion without loss even amid system failures; job state information must be durable and consistent.[^6][^12]
+- **Availability:** New tasks can be created, managed, and queried at all times with minimal downtime.[^6][^7]
+- **Scalability:** The system can efficiently handle growing numbers of tasks and nodes without degraded performance.[^12][^6]
+- **Performance:** Job scheduling and execution occur with minimal latency, meeting specified service-level objectives.[^12][^6]
+- **Fault Tolerance:** The system recovers from node or network failures, possibly by job replication or retry logic.[^12]
+- **Security:** Only authorized users can submit, cancel, or view tasks; data confidentiality and integrity are assured.[^10][^12]
+- **Observability \& Logging:** Execution and failure logs are stored for auditing and troubleshooting purposes.[^10]
+
+
+## Architectural Foundations
+
+The system will typically include these building blocks:
+
+- **Database or State Store:** Persists task metadata, statuses, scheduling information.[^7][^6]
+- **Task Queue(s):** Manages the order and priority of task execution.[^7]
+- **Worker Nodes/Agents:** Execute tasks allocated by the scheduler, report results and status.[^7][^12]
+- **Monitoring System:** Continuously tracks agent resource health, task state, and overall system KPIs.[^12][^7]
+- **Rate Limiter \& Sequencer:** Controls flow and maintains unique identifiers for all tasks.[^7]
+
+All later stages—detailed architecture, addressing advanced considerations (like prioritization and fairness), and evaluation—will build on these requirements. This rigorous approach ensures a system that is robust, scalable, fair, and user-friendly in real-world distributed settings.[^9][^1][^12][^7]
