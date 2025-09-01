@@ -58,7 +58,8 @@ class Orchestrator(Agent):
 
         context = ExecutionContext(session=session, high_level_goal=initial_task, plan=plan)
 
-        context.record_artifact("files.json", json.dumps(file_contents), True)
+        if file_contents:
+            context.record_artifact("initial_files.json", json.dumps(file_contents), True)
 
         for context.round_num in range(1, rounds + 1):
             print(f"{Fore.YELLOW}Orchestrator {self.name} is starting workflow round {context.round_num} for goal{Style.RESET_ALL}: '{initial_task}'")
@@ -174,7 +175,7 @@ class Orchestrator(Agent):
         planning_prompt = [
             f"We are meta-artificial intelligence, cohesively creating an iterative role and task plan, thinking step-by-step towards the high-level goal.",
 
-            f"Conceptual Framework: 'Echo'",
+#            f"Conceptual Framework: 'Echo'",
 
             f"High-Level Goal: '{high_level_goal}'",
 
