@@ -4,11 +4,10 @@ from dataclasses import dataclass, field
 from typing import Any, Dict
 import uuid
 import os
+import logging
 import json
-from colorama import Fore, Style, init
 
-# Initialize colorama for cross-platform colored output
-init()
+logger = logging.getLogger(__name__)
 
 @dataclass
 class ExecutionContext:
@@ -37,10 +36,10 @@ class ExecutionContext:
             value (Any): The content of the artifact.
             mem (bool): If True, the artifact is also stored in the execution context's memory.
         """
-        k = f"{self.round_num}__step_{self.step_index}_{key}"
-        self.session.add_artifact(k, value)
+        artifact_key = f"{self.round_num}__step_{self.step_index}_{key}"
+        self.session.add_artifact(artifact_key, value)
         if mem:
-            self.remember_artifact(k, value)
+            self.remember_artifact(artifact_key, value)
 
 @dataclass
 class Session:
@@ -55,7 +54,7 @@ class Session:
         project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
         self.session_dir = os.path.join(project_root, 'sessions', self.session_id)
         os.makedirs(self.session_dir, exist_ok=True)
-        print(f"{Fore.GREEN}Session created: {self.session_id} (Directory: {self.session_dir}){Style.RESET_ALL}")
+        logger.info(f"Session created: {self.session_id} (Directory: {self.session_dir})")
 
     def add_artifact(self, name: str, content: Any):
         """
@@ -72,9 +71,9 @@ class Session:
                     json.dump(content, f, indent=4)
                 else:
                     f.write(str(content))
-            print(f"{Fore.BLUE}Artifact{Style.RESET_ALL} '{Fore.LIGHTBLUE_EX}{name}{Fore.LIGHTGREEN_EX}' saved in session {self.session_id}.{Style.RESET_ALL}")
+            logger.info(f"Artifact '{name}' saved in session {self.session_id}.")
         except (TypeError, IOError) as e:
-            print(f"{Fore.RED}Error saving artifact '{name}'{Style.RESET_ALL}: {e}")
+            logger.error(f"Error saving artifact '{name}': {e}")
 
     def get_artifact(self, name: str) -> Any:
         """
@@ -93,5 +92,5 @@ class Session:
                     return json.load(f)
                 return f.read()
         except (FileNotFoundError, json.JSONDecodeError, IOError) as e:
-            print(f"{Fore.RED}Error retrieving artifact '{name}'{Style.RESET_ALL}: {e}")
+            logger.error(f"Error retrieving artifact '{name}': {e}")
             return None

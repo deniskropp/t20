@@ -2,16 +2,15 @@
 
 import json
 from typing import List, Dict, Any, Optional
+import logging
 
-from colorama import Fore, Style, init
 from pydantic import BaseModel, Field
 
 from runtime.agent import Agent # Import Agent base class
 from runtime.core import ExecutionContext, Session # Import Session and ExecutionContext
 from runtime.llm import LLM
 
-# Initialize colorama for cross-platform colored output
-init()
+logger = logging.getLogger(__name__)
 
 from runtime.types import Plan
 
@@ -20,7 +19,6 @@ class Orchestrator(Agent):
 
     def __init__(self, name, role, goal, model, system_prompt) -> None:
         super().__init__(name, role, goal, model, system_prompt)
-        self.llm = LLM.factory()
 
     def start_workflow(self, session: Session, initial_task: str, rounds: int = 1, plan_only: bool = False, files: List[str] = []):
         """
@@ -35,25 +33,25 @@ class Orchestrator(Agent):
         """
         file_contents = {}
         if files:
-            print(f"{Fore.CYAN}Files provided:{Style.RESET_ALL}")
+            logger.info("Files provided:")
             for file_path in files:
                 try:
                     with open(file_path, 'r') as f:
                         content = f.read()
                         file_contents[file_path] = content
-                        print(f"  - {file_path}")
+                        logger.info(f"  - {file_path}")
                 except Exception as e:
-                    print(f"{Fore.RED}Error reading file {file_path}: {e}{Style.RESET_ALL}")
+                    logger.error(f"Error reading file {file_path}: {e}")
 
         plan = self._generate_plan(session, initial_task, file_contents)
-        print(f"{Fore.CYAN}Generated plan:{Style.RESET_ALL}\n{json.dumps(plan, indent=4)}")
+        logger.info(f"Generated plan:\n{json.dumps(plan, indent=4)}")
 
         if not plan or "tasks" not in plan or "roles" not in plan:
-            print(f"{Fore.RED}Orchestration failed: Could not generate a valid plan.{Style.RESET_ALL}")
+            logger.error("Orchestration failed: Could not generate a valid plan.")
             return
 
         if plan_only:
-            print(f"{Fore.CYAN}Plan-only mode: Workflow execution skipped.")
+            logger.info("Plan-only mode: Workflow execution skipped.")
             return
 
         context = ExecutionContext(session=session, high_level_goal=initial_task, plan=plan)
@@ -62,13 +60,13 @@ class Orchestrator(Agent):
             context.record_artifact("initial_files.json", json.dumps(file_contents), True)
 
         for context.round_num in range(1, rounds + 1):
-            print(f"{Fore.YELLOW}Orchestrator {self.name} is starting workflow round {context.round_num} for goal{Style.RESET_ALL}: '{initial_task}'")
+            logger.info(f"Orchestrator {self.name} is starting workflow round {context.round_num} for goal: '{initial_task}'")
 
             team_by_name = {agent.name: agent for agent in self.team.values()} if self.team else {}
 
             context.step_index = 0
 
-            print('')
+            logger.info('')
 
             while context.step_index < len(plan["tasks"]):
                 step = context.current_step()
@@ -76,12 +74,12 @@ class Orchestrator(Agent):
                 delegate_agent = team_by_name.get(name)
 
                 if not delegate_agent:
-                    print(f"{Fore.RED}Warning: No agent found with name '{name}'{Style.RESET_ALL}. Skipping step {context.step_index}.")
+                    logger.warning(f"No agent found with name '{name}'. Skipping step {context.step_index}.")
                     context.step_index += 1
                     continue
 
                 if delegate_agent.role == 'Prompt Engineer':
-                    print(f"{Fore.YELLOW}Orchestrator detected special name{Style.RESET_ALL}: {delegate_agent.name}. Preparing inputs.")
+                    logger.info(f"Orchestrator detected special role: {delegate_agent.name}. Preparing inputs.")
 
                 result = delegate_agent.execute_task(context)
                 if result:
@@ -98,13 +96,13 @@ class Orchestrator(Agent):
                                     else:
                                         self._check_new_prompts(session, list(value))
                         except json.JSONDecodeError:
-                            print(f"{Fore.RED}Prompt Engineer's output was not a valid JSON for prompt update.{Style.RESET_ALL}")
+                            logger.error("Prompt Engineer's output was not a valid JSON for prompt update.")
 
                 context.step_index += 1
 
-            print(f"{Fore.LIGHTRED_EX}Orchestrator has completed workflow round {context.round_num}.{Style.RESET_ALL}")
+            logger.info(f"Orchestrator has completed workflow round {context.round_num}.")
 
-    def _check_new_prompts(self, session: Session, obj: dict | list):
+    def _check_new_prompts(self, session: Session, data_structure: dict | list):
         """
         Recursively checks for new prompts within a dictionary or list of objects
         and updates agent system prompts if 'target_agent_name' and 'new_system_prompt'
@@ -112,15 +110,15 @@ class Orchestrator(Agent):
 
         Args:
             session (Session): The current session object.
-            obj (dict | list): The object (dictionary or list) to traverse for new prompt information.
+            data_structure (dict | list): The object (dictionary or list) to traverse for new prompt information.
         """
-        if isinstance(obj, dict):
-            self._check_new_prompt(session, obj)
-            for key, value in obj.items():
+        if isinstance(data_structure, dict):
+            self._check_new_prompt(session, data_structure)
+            for key, value in data_structure.items():
                 if isinstance(value, (dict, list)):
                     self._check_new_prompts(session, value)
-        elif isinstance(obj, list):
-            for item in obj:
+        elif isinstance(data_structure, list):
+            for item in data_structure:
                 if isinstance(item, (dict, list)):
                     self._check_new_prompts(session, item)
 
@@ -146,9 +144,9 @@ class Orchestrator(Agent):
                 if target_agent:
                     target_agent.update_system_prompt(new_system_prompt)
                 else:
-                    print(f"{Fore.CYAN}Warning: Target agent '{target_agent_name}' not found for prompt update.{Style.RESET_ALL}")
+                    logger.warning(f"Target agent '{target_agent_name}' not found for prompt update.")
 
-    def _generate_plan(self, session: Session, high_level_goal: str, file_contents: Dict[str, str] = None) -> Dict[str, Any]:
+    def _generate_plan(self, session: Session, high_level_goal: str, file_contents: Dict[str, str] = {}) -> Dict[str, Any]:
         """
         Invokes the language model to get a structured plan for the given high-level goal.
 
@@ -160,9 +158,9 @@ class Orchestrator(Agent):
         Returns:
             Dict[str, Any]: The generated plan as a dictionary, or an empty dictionary if an error occurs.
         """
-        print(f"{Fore.MAGENTA}Orchestrator {self.name} is generating a plan for{Style.RESET_ALL}: '{high_level_goal}'")
+        logger.info(f"Orchestrator {self.name} is generating a plan for: '{high_level_goal}'")
         if not self.llm or not self.team:
-            print(f"{Fore.RED}Error: Orchestrator client or team not initialized.{Style.RESET_ALL}")
+            logger.error("Orchestrator client or team not initialized.")
             return {}
 
         team_description = "\n".join(
@@ -190,7 +188,7 @@ class Orchestrator(Agent):
                 file_section.append(f"File: {file_path}\n```\n{content}\n```")
             planning_prompt.append("\n".join(file_section))
 
-        print(planning_prompt)
+        logger.debug(planning_prompt)
         session.add_artifact("planning_prompt.txt", "\n\n".join(planning_prompt))
 
         try:
@@ -204,9 +202,9 @@ class Orchestrator(Agent):
             )
             plan = json.loads(response or '{}')
         except Exception as e:
-            print(f"{Fore.RED}Error generating plan for {self.name}{Style.RESET_ALL}: {e}")
+            logger.error(f"Error generating plan for {self.name}: {e}")
             plan = {"error": str(e)}
 
-        print(f"\n\n{Fore.GREEN}Plan generated for {self.name}{Style.RESET_ALL}: {json.dumps(plan, indent="    ")}\n\n\n")
+        logger.info(f"\n\nPlan generated for {self.name}: {json.dumps(plan, indent='    ')}\n\n\n")
         session.add_artifact("initial_plan.json", plan)
         return plan

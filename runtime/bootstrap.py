@@ -2,18 +2,16 @@
 
 import os
 import argparse
+import logging
 from typing import List, Optional
-
-from colorama import Fore, Style, init
 
 from runtime.core import Session
 from runtime.agent import Agent, instantiate_agent, find_agent_by_role
 from runtime.orchestrator import Orchestrator
 from runtime.loader import load_config, load_agent_templates, load_prompts
+from runtime.log import setup_logging
 
-# Initialize colorama for cross-platform colored output
-init()
-
+logger = logging.getLogger(__name__)
 
 def system_runtime_bootstrap(root_dir: str, initial_task: str, plan_only: bool = False, rounds: int = 1, files: List[str] = [], orchestrator_name: Optional[str] = None):
     """
@@ -27,7 +25,9 @@ def system_runtime_bootstrap(root_dir: str, initial_task: str, plan_only: bool =
         files (List[str]): List of files to be used in the task.
         orchestrator_name (str, optional): The name of the orchestrator to use. Defaults to None.
     """
-    print(f"{Fore.LIGHTBLUE_EX}--- System Runtime Bootstrap ---{Style.RESET_ALL}")
+    setup_logging()
+
+    logger.info("--- System Runtime Bootstrap ---")
 
     config = load_config(os.path.join(root_dir, "config", "runtime.yaml"))
     agent_specs = load_agent_templates(os.path.join(root_dir, "agents"))
@@ -44,7 +44,7 @@ def system_runtime_bootstrap(root_dir: str, initial_task: str, plan_only: bool =
                 agents.append(agent)
 
     if not agents:
-        print(f"{Fore.RED}Error: No agents could be instantiated. Bootstrap aborted.{Style.RESET_ALL}")
+        logger.error("No agents could be instantiated. Bootstrap aborted.")
         return
 
     orchestrator: Optional[Agent] = None
@@ -56,19 +56,19 @@ def system_runtime_bootstrap(root_dir: str, initial_task: str, plan_only: bool =
 
     if not orchestrator:
         error_msg = f"Orchestrator with name '{orchestrator_name}' not found." if orchestrator_name else "Orchestrator with role 'Orchestrator' not found."
-        print(f"{Fore.RED}Error: {error_msg} Bootstrap aborted.{Style.RESET_ALL}")
+        logger.error(f"{error_msg} Bootstrap aborted.")
         return
 
     if not isinstance(orchestrator, Orchestrator):
-        print(f"{Fore.RED}Error: Agent '{orchestrator.name}' is not a valid Orchestrator instance. Bootstrap aborted.{Style.RESET_ALL}")
+        logger.error(f"Agent '{orchestrator.name}' is not a valid Orchestrator instance. Bootstrap aborted.")
         return
 
     session = Session(agents=agents)
 
-    print(f"{Fore.LIGHTGREEN_EX}--- Starting Workflow ---{Style.RESET_ALL}")
+    logger.info("--- Starting Workflow ---")
     orchestrator.start_workflow(session, initial_task, rounds=rounds, plan_only=plan_only, files=files)
 
-    print(f"{Fore.LIGHTBLUE_EX}--- System Runtime Bootstrap Complete ---{Style.RESET_ALL}")
+    logger.info("--- System Runtime Bootstrap Complete ---")
 
 
 def system_main():

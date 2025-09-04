@@ -3,15 +3,15 @@
 import json as JSON
 import uuid
 from dataclasses import dataclass, field
+import logging
 from typing import List, Dict, Any, Optional
 
-from colorama import Fore, Style, init
 from runtime.llm import LLM
 
 from runtime.core import ExecutionContext, Session
 
-# Initialize colorama for cross-platform colored output
-init()
+
+logger = logging.getLogger(__name__)
 
 from runtime.types import AgentOutput
 
@@ -22,7 +22,8 @@ class Agent:
     goal: str
     model: str
     system_prompt: str
-    team: Optional[Dict[str,'Agent']] = {}
+    team: Dict[str,'Agent'] = {}
+    llm: LLM
 
     def __init__(self, name, role, goal, model, system_prompt) -> None:
         self.name = name
@@ -30,14 +31,15 @@ class Agent:
         self.goal = goal
         self.model = model
         self.system_prompt = system_prompt
-        print(f"{Fore.YELLOW}Agent instance created: {self.name} (Role: {self.role}, Model: {self.model}){Style.RESET_ALL}")
+        logger.info(f"Agent instance created: {self.name} (Role: {self.role}, Model: {self.model})")
+        self.llm = LLM.factory()
 
     def update_system_prompt(self, new_prompt: str):
         """Updates the agent's system prompt."""
 
         self.system_prompt = new_prompt
 
-        print(f"{Fore.WHITE}Agent {self.name}'s system prompt updated.{Style.RESET_ALL}")
+        logger.info(f"Agent {self.name}'s system prompt updated.")
 
     def execute_task(self, context: ExecutionContext) -> Optional[str]:
         """
@@ -47,12 +49,12 @@ class Agent:
             context (ExecutionContext): The execution context containing goal, plan, and artifacts.
 
         Returns:
-            Optional[str]: The result of the task execution, or None if an error occurs.
+            Optional[str]: The result of the task execution as a string, or an error string.
         """
         step = context.current_step()
         task_id = step.get("task_id", "none")
         task_description = step.get("task", "No task description provided.")
-        print(f"\n\n\n{Fore.GREEN}Agent {self.name} is executing task{Style.RESET_ALL}: {task_description}")
+        logger.info(f"\n\n\nAgent {self.name} is executing task: {task_description}")
 
         context.record_artifact(f"{self.name}_prompt.txt", self.system_prompt)
 
@@ -79,8 +81,7 @@ class Agent:
         context.record_artifact(f"{self.name}_task.txt", "\n\n".join(task_prompt))
 
         try:
-            llm = LLM.factory()
-            response = llm.generate_content(   # ignore type
+            response = self.llm.generate_content(   # ignore type
                 model_name=self.model,
                 contents="\n\n".join(task_prompt),
                 system_instruction=self.system_prompt,
@@ -89,25 +90,25 @@ class Agent:
                 response_schema=AgentOutput
             )
             result = response or ''
-            print(f"\n{Fore.BLUE}Agent '{self.name}' completed task.{Style.RESET_ALL}")
-            #print(f"\n{Fore.BLUE}Output:{Style.RESET_ALL} '\n{result[:2000]}\n'")
+            logger.info(f"\nAgent '{self.name}' completed task.")
+            #logger.debug(f"\nOutput: '\n{result[:2000]}\n'")
 
-            json = JSON.loads(response or '{}')
-            if isinstance(json, dict) and "output" in json:
-                if "files" in json and isinstance(json["files"], list):
-                    for file_data in json["files"]:
+            json_data = JSON.loads(response or '{}')
+            if isinstance(json_data, dict) and "output" in json_data:
+                if "files" in json_data and isinstance(json_data["files"], list):
+                    for file_data in json_data["files"]:
                         if "name" in file_data and "content" in file_data:
                             context.session.add_artifact(file_data["name"], file_data["content"])
                 try:
-                    output = JSON.loads(json["output"])
+                    output = JSON.loads(json_data["output"])
                 except JSON.JSONDecodeError:
-                    output = json["output"]
+                    output = json_data["output"]
                 #if isinstance(result, dict):
                 output = JSON.dumps(output, indent=4)
-                print(f"{Fore.BLUE}Output:{Style.RESET_ALL}\n{output[:2000]}\n")
+                logger.info(f"Output:\n{output[:2000]}\n")
             else:
-                print(f"{Fore.RED}Warning: Agent output is not in expected AgentOutput format. Processing as plain text.{Style.RESET_ALL}")
-                print(f"{Fore.BLUE}Output:{Style.RESET_ALL} '\n{result[:2000]}\n'")
+                logger.warning("Agent output is not in expected AgentOutput format. Processing as plain text.")
+                logger.info(f"Output: '\n{result[:2000]}\n'")
                 #result = response.text or ''
 
         except Exception as e:
@@ -133,10 +134,10 @@ def instantiate_agent(agent_spec: Dict[str, Any], prompts: Dict[str, str], all_a
         prompt_key = 'orchestrator_instructions.txt'
 
     if prompt_key not in prompts:
-        print(f"{Fore.RED}Warning: Prompt for agent '{agent_spec['name']}' not found with key '{prompt_key}'{Style.RESET_ALL}. Skipping.")
+        logger.warning(f"Prompt for agent '{agent_spec['name']}' not found with key '{prompt_key}'. Skipping.")
         return None
 
-    agent_class = Orchestrator if agent_spec.get('role') == 'Orchestrator' else Agent
+    agent_class = Orchestrator #if agent_spec.get('role') == 'Orchestrator' else Agent
     """ """
     """ """
     agent = agent_class(
@@ -158,7 +159,7 @@ def instantiate_agent(agent_spec: Dict[str, Any], prompts: Dict[str, str], all_a
                 if member_agent:
                     agent.team[team_member_name] = member_agent
             else:
-                print(f"{Fore.RED}Warning: Team member '{team_member_name}' not found in agent specs.{Style.RESET_ALL}")
+                logger.warning(f"Team member '{team_member_name}' not found in agent specs.")
     return agent
 
 def find_agent_by_role(agents: List[Agent], role: str) -> Optional[Agent]:
@@ -172,7 +173,7 @@ def find_agent_by_role(agents: List[Agent], role: str) -> Optional[Agent]:
     Returns:
         Optional[Agent]: The found Agent object, or None if not found.
     """
-    print("\n", f"Searching for orchestrator with role: {role} in agents: {[agent.name for agent in agents]}")
+    logger.debug(f"Searching for agent with role: {role} in agents: {[agent.name for agent in agents]}")
     return next((agent for agent in agents if agent.role == role), None)
 
 
