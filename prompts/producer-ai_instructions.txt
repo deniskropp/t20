@@ -10,14 +10,39 @@ To orchestrate the successful creation and release of a music track.
 You will manage the project in three main phases, delegating tasks to the appropriate agent.
 
 ## Final Synthesis
-Generate a final JSON according to:
-```json
+## Output
+Use JSON schema:
 {
   "type": "object",
   "properties": {
     "inputs": {
       "type": "object",
       "properties": {
+        "title": {
+          "type": "string",
+          "description": "Title for the generated song."
+        },
+        "lyrics": {
+          "type": ["object", "null"],
+          "properties": {
+            "lyrics_id": {
+              "type": ["string", "null"],
+              "description": "Reference to lyrics stored previously."
+            },
+            "text": {
+              "type": ["string", "null"],
+              "description": "The lyrics for the song."
+            },
+            "required": ["lyrics_id", "text"]
+          }
+        },
+        "lyrics_strength": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "default": 0.5,
+          "description": "How strongly the model should follow the lyrics."
+        },
         "sound_prompts": {
           "type": "array",
           "minItems": 1,
@@ -25,12 +50,8 @@ Generate a final JSON according to:
             "type": "object",
             "properties": {
               "text": {
-                "type": ["string", "null"],
-                "description": "Description of the sound prompt, e.g. 'dark synthwave with female vocals, C Minor, 120 bpm'."
-              },
-              "vibe": {
-                "type": ["string", "object", "null"],
-                "description": "UUID of an existing Vibe, or Vibe generation params."
+                "type": ["string"],
+                "description": "Description of the sound prompt."
               },
               "strength": {
                 "type": "number",
@@ -40,31 +61,24 @@ Generate a final JSON according to:
                 "description": "Strength of the (negative/positive) prompt."
               },
               "time_start": {
-                "type": ["number", "null"],
+                "type": ["number"],
                 "description": "Start second for this prompt, if segment is used."
               },
               "time_end": {
-                "type": ["number", "null"],
+                "type": ["number"],
                 "description": "End second for this prompt, if segment is used."
+              },
+              "vibe": {
+                "type": ["string", "object"],
+                "description": "UUID of an existing Vibe, or Vibe generation params."
               }
             },
-            "required": []
+            "required": ["text", "strength"]
           }
         },
-        "lyrics_id": {
-          "type": "string",
-          "description": "ID of the lyrics object, or empty string for instrumental."
-        },
         "seed": {
-          "type": ["integer", "null"],
-          "description": "Random seed for deterministic output (optional)."
-        },
-        "lyrics_strength": {
-          "type": "number",
-          "minimum": 0.0,
-          "maximum": 1.0,
-          "default": 0.5,
-          "description": "How strongly the model should follow the lyrics."
+          "type": ["integer"],
+          "description": "Random seed for deterministic output."
         },
         "weirdness": {
           "type": "number",
@@ -73,16 +87,12 @@ Generate a final JSON according to:
           "default": 0.5,
           "description": "Higher = less conventional/structured, more creative output."
         },
-        "title": {
-          "type": "string",
-          "description": "Title for the generated song."
-        },
         "cover_art_url": {
-          "type": ["string", "null"],
-          "description": "URL of cover image/video for this song (optional)."
+          "type": ["string"],
+          "description": "URL of cover image/video for this song."
         }
       },
-      "required": ["sound_prompts", "lyrics_id", "title"]
+      "required": ["title", "lyrics", "sound_prompts"]
     },
     "trigger_generation": {
       "type": "boolean",
@@ -92,4 +102,3 @@ Generate a final JSON according to:
   },
   "required": ["inputs"]
 }
-```
