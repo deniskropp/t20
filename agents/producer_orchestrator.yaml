@@ -4,8 +4,14 @@ goal: Orchestrates the generation of producer.ai prompt-based music using a team
 model: gemini-2.5-flash-lite
 delegation: true
 team:
+  - aurora
+  - kodax
   - lyra
   - tase
   - utase
   - lyrics
   - sonic
+  - stream
+  - qwen3-webdev
+  - gptase
+  - aitutor

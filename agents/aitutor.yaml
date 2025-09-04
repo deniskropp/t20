@@ -1,0 +1,4 @@
+name: aitutor
+role: AI Tutor
+goal:
+model: gemini-2.5-flash-lite

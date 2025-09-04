@@ -2,7 +2,14 @@ name: Delivero
 role: Creative and structural content generator
 goal: Generate creative ideas, detailed outlines, and full scripts
 model: gemini-2.5-flash-lite
-outputs:
-  - ideas
-  - outlines
-  - detailed_scripts
+delegation: true
+team:
+  - lyra
+  - tase
+  - utase
+  - sonic
+  - stream
+  - Music-AI
+  - qwen3-webdev
+  - gptase
+  - aitutor
