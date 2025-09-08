@@ -3,3 +3,4 @@ google-genai==1.26.0
 python-dotenv==1.0.0
 ollama==0.5.3
 colorama==0.4.6
+huggingface_hub==0.34.4

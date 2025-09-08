@@ -198,7 +198,7 @@ class Orchestrator(Agent):
                 system_instruction=self.system_prompt,
                 temperature=0.1,
                 response_mime_type='application/json', #if self.role == 'Prompt Engineer' else None
-                response_schema=Plan
+                response_schema=Plan#.model_json_schema()
             )
             plan = json.loads(response or '{}')
         except Exception as e:
