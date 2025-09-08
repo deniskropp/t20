@@ -5,6 +5,7 @@ from typing import List, Optional
 
 from runtime.core import Session
 from runtime.agent import Agent, instantiate_agent, find_agent_by_role
+from runtime.bootstrap import system_runtime_bootstrap
 from runtime.orchestrator import Orchestrator
 from runtime.loader import load_config, load_agent_templates, load_prompts
 from runtime.log import setup_logging
