@@ -20,7 +20,7 @@ def load_config(config_path):
     with open(config_path, 'r', encoding='utf-8') as f:
         return yaml.safe_load(f)
 
-def load_agent_templates(agents_dir):
+def load_agent_templates(agents_dir, config, default_model):
     """
     Loads all agent specifications from YAML files within a specified directory.
 
@@ -41,6 +41,7 @@ def load_agent_templates(agents_dir):
                 base_dir = os.path.dirname(agent_file)
                 prompt_path = os.path.abspath(os.path.join(base_dir, template['system_prompt']))
                 template['system_prompt_path'] = prompt_path
+            template["model"] = default_model
             templates.append(template)
     logger.info(f"{len(templates)} agent templates loaded.")
     return templates

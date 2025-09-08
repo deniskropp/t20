@@ -13,7 +13,7 @@ from runtime.log import setup_logging
 
 logger = logging.getLogger(__name__)
 
-def system_runtime_bootstrap(root_dir: str, initial_task: str, plan_only: bool = False, rounds: int = 1, files: List[str] = [], orchestrator_name: Optional[str] = None):
+def system_runtime_bootstrap(root_dir: str, initial_task: str, plan_only: bool = False, rounds: int = 1, files: List[str] = [], orchestrator_name: Optional[str] = None, default_model: str = "Olli"):
     """
     Bootstraps the multi-agent runtime system.
 
@@ -29,14 +29,17 @@ def system_runtime_bootstrap(root_dir: str, initial_task: str, plan_only: bool =
 
     logger.info("--- System Runtime Bootstrap ---")
 
+    print(f"Using default model: {default_model}")
+
     config = load_config(os.path.join(root_dir, "config", "runtime.yaml"))
-    agent_specs = load_agent_templates(os.path.join(root_dir, "agents"))
+    agent_specs = load_agent_templates(os.path.join(root_dir, "agents"), config, default_model)
     prompts = load_prompts(os.path.join(root_dir, "prompts"))
 
     all_team_members = {member.lower() for spec in agent_specs if 'team' in spec for member in spec['team']}
 
     agents: List[Agent] = []
     for spec in agent_specs:
+        spec["model"] = spec.get("model__", default_model)
         # Only instantiate top-level agents, not those that are part of another agent's team
         if spec['name'].lower() not in all_team_members:
             agent = instantiate_agent(spec, prompts, agent_specs)
@@ -80,11 +83,12 @@ def system_main():
     parser.add_argument("-r", "--rounds", type=int, default=1, help="The number of rounds to execute the workflow.")
     parser.add_argument("-f", "--files", nargs='*', help="List of files to be used in the task.")
     parser.add_argument("-o", "--orchestrator", type=str, help="The name of the orchestrator to use.", default="Meta-AI")
+    parser.add_argument("-m", "--model", type=str, help="Default LLM.", default="gemini-2.5-pro")
     parser.add_argument("task", type=str, help="The initial task for the orchestrator to perform.")
     args = parser.parse_args()
 
     project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-    system_runtime_bootstrap(project_root, args.task, args.plan_only, args.rounds, args.files or [], args.orchestrator)
+    system_runtime_bootstrap(project_root, args.task, args.plan_only, args.rounds, args.files or [], args.orchestrator, args.model)
 
 
 if __name__ == "__main__":

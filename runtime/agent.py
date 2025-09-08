@@ -32,7 +32,7 @@ class Agent:
         self.model = model
         self.system_prompt = system_prompt
         logger.info(f"Agent instance created: {self.name} (Role: {self.role}, Model: {self.model})")
-        self.llm = LLM.factory()
+        self.llm = LLM.factory(model)
 
     def update_system_prompt(self, new_prompt: str):
         """Updates the agent's system prompt."""

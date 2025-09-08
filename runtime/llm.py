@@ -21,30 +21,34 @@ class LLM(ABC):
 
     @abstractmethod
     def generate_content(self, model_name: str, contents: str, system_instruction: str = '',
-                         temperature: float = 0.7, response_mime_type: str = 'text/plain', response_schema: BaseModel | None = None) -> Optional[str]:
+                         temperature: float = 0.7, response_mime_type: str = 'text/plain', response_schema: BaseModel = None) -> Optional[str]: # type: ignore
         """Generates content using an LLM."""
         pass
 
     @staticmethod
-    def factory(role_name: str = '') -> 'LLM':
-        if role_name == 'Olli':
+    def factory(species: str) -> 'LLM':
+        print(f"LLM Factory: Creating LLM instance for species '{species}'")
+        if species == 'Olli':
             return Olli()
-        elif role_name == 'Kimi':
+        elif species == 'Kimi':
             return Kimi()
-        #else:
-        # TODO: Make this configurable, e.g., from runtime.yaml or an environment variable.
-        return Gemini()
+        if species.startswith('ollama:'):
+            # Extract model name after 'ollama:'
+            model_name = species.split(':', 1)[1]
+            return Olli(species=model_name)
+        return Gemini(species)
 
 
 class Gemini(LLM):
     """
     Provides a centralized place for LLM-related configurations and utilities.
     """
-    def __init__(self):
+    def __init__(self, species: str):
         self.client = None
+        self.species = species
 
     def generate_content(self, model_name: str, contents: str, system_instruction: str = '',
-                         temperature: float = 0.7, response_mime_type: str = 'text/plain', response_schema: Any = None) -> Optional[str]:
+                         temperature: float = 0.7, response_mime_type: str = 'text/plain', response_schema: BaseModel = None) -> Optional[str]: # type: ignore
         """
         Generates content using the specified GenAI model.
 
@@ -113,11 +117,12 @@ class Olli(LLM):
     """
     Provides a centralized place for LLM-related configurations and utilities.
     """
-    def __init__(self):
+    def __init__(self, species: str = 'Olli'):
         self.client = None
+        self.species = species
 
     def generate_content(self, model_name: str, contents: str, system_instruction: str = '',
-                         temperature: float = 0.7, response_mime_type: str = 'text/plain', response_schema: Any = None) -> Optional[str]:
+                         temperature: float = 0.7, response_mime_type: str = 'text/plain', response_schema: BaseModel = None) -> Optional[str]: # type: ignore
         """
         Generates content using the specified GenAI model.
 
@@ -132,16 +137,27 @@ class Olli(LLM):
         Returns:
             types.GenerateContentResponse: The response from the GenAI model.
         """
+        print(f"Olli: Using model {model_name} with temperature {temperature}")
         client = self._get_client()
         if not client:
             return None
 
         try:
-            response = client.chat(model=model_name,
-                                   messages=[{"role": "user", "content": contents}],
-                                   options={"temperature": temperature, "system_instruction": system_instruction},
-                                   stream=False)
-            return response.message.content
+            out = ""
+            fmt = response_schema.model_json_schema()
+            print(f"Olli: Using response format {fmt}")
+            response = client.generate(
+                model=self.species,#model_name,
+                prompt=contents,
+                format=fmt,
+                options={"temperature": temperature, "system_instruction": system_instruction},
+                stream=True
+            )
+            for chunk in response:
+                if hasattr(chunk, "response") and chunk.response:
+                    print(chunk.response, end="")
+                    out += chunk.response
+            return out
         except Exception as e:
             logger.error(f"Error generating content with model {model_name}: {e}")
             return None
@@ -152,7 +168,7 @@ class Olli(LLM):
         """
         try:
             if (self.client is None):
-                self.client = Ollama(base_url='http://localhost:11436')
+                self.client = Ollama()#base_url='http://localhost:11434')
             return self.client
         except Exception as e:
             logger.error(f"Error initializing GenAI client: {e}")
@@ -170,11 +186,12 @@ class Kimi(LLM):
     """
     Provides a centralized place for LLM-related configurations and utilities.
     """
-    def __init__(self):
+    def __init__(self, species: str = 'Kimi'):
         self.client = None
+        self.species = species
 
     def generate_content(self, model_name: str, contents: str, system_instruction: str = '',
-                         temperature: float = 0.7, response_mime_type: str = 'text/plain', response_schema: BaseModel | None = None) -> Optional[str]:
+                         temperature: float = 0.7, response_mime_type: str = 'text/plain', response_schema: BaseModel = None) -> Optional[str]: # type: ignore
         """
         Generates content using the specified GenAI model.
 

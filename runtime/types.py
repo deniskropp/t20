@@ -33,7 +33,7 @@ class Plan(BaseModel):
 
 class Artifact(BaseModel):
     name: str = Field(..., description="The name of the artifact")
-    content: Any = Field(..., description="The content of the artifact")
+    content: str = Field(..., description="The content of the artifact")
 
 class AgentOutput(BaseModel):
     """Represents the structured output expected from an agent's execution."""
