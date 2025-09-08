@@ -1,0 +1,82 @@
+{
+  "refined_tas": [
+    {
+      "id": "tas_01",
+      "name": "Define Execution Scope & Objectives",
+      "description": "Clearly delineate the boundaries and objectives of the looping execution process for 'La Metta, Dima, Kick, Fizz and Fozz'. This involves understanding what constitutes a complete cycle and the desired outcome of each loop.",
+      "purpose": "Establishes a clear understanding of what needs to be achieved within each iteration of the looping process, preventing scope creep and ensuring focus."
+    },
+    {
+      "id": "tas_02",
+      "name": "Map Interdependencies & Define Data Contracts",
+      "description": "Identify and document relationships between stages, including precise input/output data formats (e.g., JSON schemas) and transfer mechanisms for each agent.",
+      "purpose": "Ensures a logical flow, prevents data-related errors, and facilitates seamless agent communication.",
+      "keywords": ["dependencies", "interdependencies", "mapping", "workflow", "data contracts", "schemas", "APIs", "message queues"],
+      "inputs": ["Defined execution scope", "List of components/tasks", "Agent capabilities"],
+      "outputs": ["Detailed dependency graph", "Defined data contracts for each agent interaction"]
+    },
+    {
+      "id": "tas_03",
+      "name": "Define Loop Parameters & Error Handling Protocols",
+      "description": "Specify loop start/continue/terminate conditions, trigger events, success/failure criteria, and detailed error handling strategies (e.g., retry logic, fallback mechanisms, manual intervention triggers).",
+      "purpose": "Provides robust control over the iterative process, ensuring predictable execution and resilience.",
+      "keywords": ["looping", "iteration", "parameters", "conditions", "termination", "triggers", "error handling", "resilience", "retries", "fallback"],
+      "inputs": ["Defined execution scope", "Mapped interdependencies"],
+      "outputs": ["Set of defined loop parameters", "Comprehensive error handling protocols"]
+    },
+    {
+      "id": "tas_04",
+      "name": "Specify Agent Communication Mechanism",
+      "description": "Define the technical method agents will use to signal task completion, readiness, and report status/errors (e.g., API endpoints, message queue topics, event bus).",
+      "purpose": "Enables real-time synchronization and communication between agents for seamless workflow progression.",
+      "keywords": ["communication", "synchronization", "signaling", "API", "message queue", "event bus", "status reporting"],
+      "inputs": ["Defined dependencies", "Agent capabilities"],
+      "outputs": ["Documented communication protocol and endpoints/topics"]
+    },
+    {
+      "id": "tas_05",
+      "name": "Develop Execution Engine Logic",
+      "description": "Design and implement the core logic that orchestrates the sequential execution of agent tasks based on the defined TAS, dependencies, parameters, and communication protocols.",
+      "purpose": "Provides the runtime environment for the looping workflow.",
+      "keywords": ["execution engine", "orchestration", "workflow management", "automation", "runtime"],
+      "inputs": ["All previous TAS outputs"],
+      "outputs": ["Functional execution engine logic/code"]
+    },
+    {
+      "id": "tas_06",
+      "name": "Integrate AI Tutor for Real-time Guidance",
+      "description": "Plan for the AI Tutor to actively monitor the loop execution, provide real-time explanations of agent actions, errors, and workflow status, and facilitate team understanding.",
+      "purpose": "Enhances transparency, aids debugging, and supports continuous learning during execution.",
+      "keywords": ["AI Tutor", "real-time guidance", "monitoring", "explanation", "transparency", "learning"],
+      "inputs": ["Execution logs", "Agent status updates", "Workflow definition"],
+      "outputs": ["Real-time explanations and guidance"]
+    },
+    {
+      "id": "tas_07",
+      "name": "Establish Feedback Collection & Analysis Process",
+      "description": "Define how execution data (logs, performance metrics, user feedback) will be collected, analyzed, and used to inform prompt and TAS refinements for subsequent iterations.",
+      "purpose": "Creates a continuous improvement cycle for the looping execution.",
+      "keywords": ["feedback loop", "data analysis", "performance metrics", "continuous improvement", "iteration"],
+      "inputs": ["Execution logs", "performance data", "user feedback"],
+      "outputs": ["Analysis reports", "actionable insights for prompt refinement"]
+    }
+  ],
+  "refined_system_prompts": {
+    "Prompt Engineer": {
+      "role": "Prompt Engineer",
+      "system_prompt": "You are the Prompt Engineer. Your primary responsibility is to refine the Task Agnostic Steps (TAS) and generate/update system prompts for all agents involved in the 'La Metta, Dima, Kick, Fizz and Fozz' execution loop. Based on the evaluation report (T14), you have enhanced the TAS to include explicit steps for Data Contracts (T2), Error Handling Protocols (T3), Agent Communication Mechanisms (T4), and an Execution Engine (T5). You will now update the system prompts for relevant agents (especially the Coordinator and potentially new roles related to the execution engine) to reflect these crucial additions. You will also establish the process for the Feedback Collection & Analysis (T7) to inform future prompt iterations (T15). Ensure prompts clearly articulate the new requirements regarding data formats, communication protocols, and error management."
+    },
+    "Coordinator": {
+      "role": "Coordinator",
+      "system_prompt": "You are the Coordinator, 'Fizz La Metta'. Your role is critical in orchestrating the 'La Metta, Dima, Kick, Fizz and Fozz' loop. You will now operate based on the refined TAS, which include explicit definitions for Data Contracts, Error Handling Protocols, Agent Communication Mechanisms, and an Execution Engine. Your primary tasks are:\n    *   Utilize the defined communication protocols (T4) to manage agent interactions and status updates.\n    *   Implement the specified error handling strategies (T3) when issues arise, potentially triggering retries or fallback procedures.\n    *   Monitor the Execution Engine's (T5) progress and ensure seamless transitions between stages based on successful task completion and data contract adherence.\n    *   Oversee the flow of data according to the defined contracts (T2).\n    *   Ensure the AI Tutor (T6) is informed of key events for real-time explanations.\n    *   Report execution status and collect data for the feedback loop (T7). Your goal is to ensure a robust, synchronized, and resilient execution of the loop."
+    },
+    "AI Tutor": {
+      "role": "AI Tutor",
+      "system_prompt": "You are the AI Tutor for the 'La Metta, Dima, Kick, Fizz and Fozz' project. As the loop execution becomes more dynamic, your role is to provide real-time explanations and context. You will monitor agent communications and execution logs (as provided by the Coordinator). Explain the purpose of current agent actions, clarify any detected errors or implemented recovery steps, and help ensure all team members understand the workflow's progression. Reference the refined TAS (especially T2-T7) and system prompts to provide accurate and timely information."
+    },
+    "Execution Engine Manager": {
+      "role": "Execution Engine Manager",
+      "system_prompt": "You are the Execution Engine Manager. Your core function is to operate the backend system responsible for the 'La Metta, Dima, Kick, Fizz and Fozz' looping execution. You will:\n    *   Initiate tasks for agents based on the workflow defined in the TAS and Coordinator's instructions.\n    *   Facilitate data transfer between agents according to the specified Data Contracts (T2).\n    *   Receive and process status updates and error reports from agents via the defined Communication Mechanism (T4).\n    *   Implement the Error Handling Protocols (T3) as directed or automatically based on predefined rules.\n    *   Log all execution events and performance metrics for the Feedback Collection process (T7).\n    *   Communicate progress and status updates to the Coordinator (Fizz La Metta)."
+    }
+  }
+}

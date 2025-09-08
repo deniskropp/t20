@@ -1,0 +1,82 @@
+{
+  "design_concept": {
+    "name": "Symbiotic Symphony",
+    "description": "A clean, visually balanced aesthetic that uses natural elements and subtle animations to illustrate the interconnectedness of co-evolutionary greetings. The design aims for an approachable, wonder-filled tone, making complex biological concepts accessible and engaging.",
+    "mood": "Curious, harmonious, vibrant, informative"
+  },
+  "color_palette": {
+    "primary": {
+      "name": "Deep Forest Green",
+      "hex": "#2A4F3B",
+      "description": "Represents nature, growth, and stability. Used for backgrounds and foundational elements."
+    },
+    "secondary": {
+      "name": "Sunlit Meadow Yellow",
+      "hex": "#FFD700",
+      "description": "Evokes energy, warmth, and discovery. Used for accents, calls to action, and highlighting key information."
+    },
+    "accent_1": {
+      "name": "Oceanic Teal",
+      "hex": "#3CB371",
+      "description": "Adds a touch of vibrancy and depth, suggesting interaction and flow. Used for subtle animations and transition elements."
+    },
+    "accent_2": {
+      "name": "Ethereal White",
+      "hex": "#F5F5DC",
+      "description": "Provides clean contrast and readability for text. Used for primary text and UI elements."
+    },
+    "text_contrast": {
+      "name": "Soft Charcoal",
+      "hex": "#333333",
+      "description": "Ensures high readability for body text against lighter backgrounds, offering a softer alternative to pure black."
+    }
+  },
+  "typography": {
+    "heading_font": {
+      "name": "Montserrat",
+      "weights": ["Bold", "SemiBold"],
+      "usage": "Titles, section headers, and key callouts. Its geometric forms and clean lines convey modernity and clarity."
+    },
+    "body_font": {
+      "name": "Lato",
+      "weights": ["Regular", "Italic"],
+      "usage": "Body text, explanations, and captions. Lato's warm and friendly appearance ensures readability and approachability."
+    },
+    "accessibility_notes": "Sufficient contrast ratios will be maintained between text and background colors (e.g., Ethereal White on Deep Forest Green, Soft Charcoal on Sunlit Meadow Yellow). Font sizes will be optimized for vertical viewing on mobile devices."
+  },
+  "visual_elements_and_flow": {
+    "layout_style": "Minimalist, organic, and dynamic.",
+    "elements": [
+      "Clean, uncluttered backgrounds using primary and secondary colors.",
+      "Subtle, nature-inspired animations (e.g., gentle leaf sway, water ripple effect) to guide the eye and add visual interest without distraction.",
+      "Iconography: Simple, line-based icons representing biological concepts (e.g., a stylized bee, flower, DNA strand).",
+      "Transitions: Smooth, organic transitions between segments, perhaps using flowing lines or subtle color fades.",
+      "Text Overlays: Used sparingly for key terms or definitions, utilizing the chosen typography and contrast."
+    ],
+    "ui_flow_concept": {
+      "hook_segment": {
+        "visual": "Rapid montage of diverse, captivating species interactions (e.g., hummingbird feeding, ant colony working, fox and rabbit). Fast cuts, energetic feel.",
+        "text_overlay": "Question: 'How do species say hello?' (Montserrat Bold, Sunlit Meadow Yellow on Deep Forest Green)."
+      },
+      "explanation_segment": {
+        "visual": "Animated graphic showing two simple shapes (representing species) influencing each other's form over time. Subtle green/teal flow lines connect them.",
+        "text_overlay": "'Co-evolution: Evolving together.' (Montserrat SemiBold). Definition: 'Species adapting to each other's signals.' (Lato Regular, Ethereal White on Deep Forest Green)."
+      },
+      "example_segments": {
+        "visual": "High-quality footage or animated sequences of specific examples (e.g., bee on flower, cheetah/gazelle interaction). Focus on the interaction.",
+        "text_overlay": "Key terms or brief descriptions appear using Lato Regular in Ethereal White."
+      },
+      "conclusion_segment": {
+        "visual": "A concluding montage of interconnected visuals, perhaps a web graphic forming. Ends with a static screen.",
+        "text_overlay": "'Nature's secret conversations...' (Montserrat Bold). Call to action: 'What examples do YOU know?' (Montserrat SemiBold, Sunlit Meadow Yellow)."
+      }
+    }
+  },
+  "accessibility_considerations": [
+    "High contrast ratios for all text elements to ensure readability for users with visual impairments.",
+    "Clear, simple language in all text overlays and voiceovers.",
+    "Visuals are designed to complement, not replace, the audio information, catering to different learning preferences.",
+    "Animations are subtle and brief, avoiding flashing or strobing effects that could trigger photosensitive epilepsy.",
+    "Font choices (Montserrat and Lato) are known for their legibility."
+  ]
+}

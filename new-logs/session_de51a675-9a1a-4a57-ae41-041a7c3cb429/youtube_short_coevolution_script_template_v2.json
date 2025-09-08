@@ -1,0 +1,75 @@
+{
+  "script_title": "Co-evolutionary Greetings: Nature's Secret Handshake",
+  "logline": "Discover how species evolve together through fascinating 'greetings' in this quick dive into co-evolution!",
+  "target_audience": "General YouTube audience, ages 13+, curious about science and nature.",
+  "constraints": {
+    "platform": "YouTube Shorts",
+    "duration_seconds": "< 60",
+    "aspect_ratio": "Vertical (9:16)",
+    "hook_time_seconds": "0-3",
+    "pacing": "Very fast, dynamic, engaging"
+  },
+  "script_structure": [
+    {
+      "segment_id": "S01_HOOK",
+      "segment_name": "Opening Hook",
+      "time_estimate_seconds": "0-3",
+      "visual_cue": "[DESIGN_REF: Rapid, visually arresting cuts of diverse species interactions. Focus on movement and striking imagery. E.g., extreme close-up of bee on vibrant flower, chameleon changing color.]",
+      "dialogue_placeholder": "[VOICEOVER: Nature's Greetings?]",
+      "notes": "Must be highly engaging from the very first second. Utilize bold text overlay: 'Nature's Greetings?' (Poppins Bold, Sunbeam Yellow on Deep Jungle Green)."
+    },
+    {
+      "segment_id": "S02_INTRO",
+      "segment_name": "Intro to Co-evolutionary Greetings",
+      "time_estimate_seconds": "3-10",
+      "visual_cue": "[DESIGN_REF: Clean animation: two abstract forms rapidly influencing each other. Vivid Teal animated lines pulse between them. Text overlay: 'Co-evolution'.]",
+      "dialogue_placeholder": "[VOICEOVER: Species don't just live together, they evolve TOGETHER! These interactions? They're nature's unique 'greetings'.]",
+      "notes": "Define co-evolution simply. Introduce 'greetings' as signals/interactions driving evolution. Text overlay: 'Co-evolution' (Poppins SemiBold, Cloud White)."
+    },
+    {
+      "segment_id": "S03_EXAMPLE_1",
+      "segment_name": "Example 1: Mutualism (Pollinators)",
+      "time_estimate_seconds": "10-25",
+      "visual_cue": "[DESIGN_REF: High-energy footage/animation. Macro shots of bee collecting pollen from specialized flower. Quick animation showing flower shape/color evolving for bee attraction.]",
+      "dialogue_placeholder": "[VOICEOVER: Like this bee and flower! The flower evolved vibrant colors to attract the bee, and the bee evolved to perfectly pollinate it. A win-win handshake!]",
+      "notes": "Focus on reciprocal adaptations. Use dynamic visuals. Text overlay: 'Pollinators' (Poppins Regular, Cloud White on Vivid Teal snippet)."
+    },
+    {
+      "segment_id": "S04_EXAMPLE_2",
+      "segment_name": "Example 2: Predator-Prey Adaptation",
+      "time_estimate_seconds": "25-40",
+      "visual_cue": "[DESIGN_REF: Dynamic footage/animation. Split screen showing cheetah's speed vs. gazelle's agility. Emphasize the 'chase' element.]",
+      "dialogue_placeholder": "[VOICEOVER: Or the classic chase! Faster prey forces predators to get faster too. Each adaptation is a response – a co-evolutionary conversation!]",
+      "notes": "Illustrate the 'arms race'. Use contrasting visuals. Text overlay: 'Predator-Prey' (Poppins Regular, Cloud White on Vivid Teal snippet)."
+    },
+    {
+      "segment_id": "S05_EXAMPLE_3",
+      "segment_name": "Example 3: Symbiosis (Cleaner Fish)",
+      "time_estimate_seconds": "40-50",
+      "visual_cue": "[DESIGN_REF: Short, clear clip of a cleaner fish interacting with a larger host fish. Focus on the specialized interaction.]",
+      "dialogue_placeholder": "[VOICEOVER: Even cleaner fish and their clients have a greeting – a vital service traded for survival!]",
+      "notes": "Briefly showcase symbiosis. Text overlay: 'Symbiosis' (Poppins Regular, Cloud White on Vivid Teal snippet)."
+    },
+    {
+      "segment_id": "S06_CONCLUSION",
+      "segment_name": "Conclusion & Call to Action",
+      "time_estimate_seconds": "50-60",
+      "visual_cue": "[DESIGN_REF: Fast montage recap of previous examples, dissolving into a stylized, pulsing network graphic. Ends on a clear, bold end screen.]",
+      "dialogue_placeholder": "[VOICEOVER: Nature's constantly talking! What other amazing co-evolutionary greetings have you seen? Let us know below!]",
+      "notes": "Recap interconnectedness. Encourage comments. End screen text: 'Nature's Talking!' (Poppins Bold, Sunbeam Yellow). Call to action: 'What greetings have YOU seen?' (Poppins SemiBold, Cloud White)."
+    }
+  ],
+  "adaptability_notes": "Replace bracketed placeholders with specific details derived from the final script content. Ensure visual cues align directly with the dialogue and the refined design aesthetic (minimalist, dynamic, high-contrast). Adjust timing slightly if needed, but maintain overall <60s duration and fast pacing. Use the specified fonts (Poppins, Open Sans) and color palette (Deep Jungle Green, Lush Meadow Green, Sunbeam Yellow, Vivid Teal, Cloud White, Charcoal Gray) for all on-screen text and graphic elements.",
+  "core_concepts_to_emphasize": [
+    "Co-evolution: Species evolving in response to each other.",
+    "Reciprocal Adaptation: A driving force in evolution.",
+    "Interactions as 'Greetings': How species signal or communicate.",
+    "Ecosystem Interconnectedness: Highlighting how species rely on these exchanges."
+  ],
+  "key_information_points_for_script": [
+    "Co-evolution means species evolving together.",
+    "'Greetings' are the signals/interactions driving this.",
+    "Examples: Pollinator-plant, predator-prey, symbiosis.",
+    "Nature is highly interconnected."
+  ]
+}

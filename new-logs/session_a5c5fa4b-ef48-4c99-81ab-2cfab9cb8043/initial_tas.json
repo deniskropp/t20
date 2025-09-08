@@ -1,0 +1,50 @@
+[
+  {
+    "id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+    "name": "Define Execution Scope",
+    "description": "Clearly delineate the boundaries and parameters of the iterative execution process, including the specific components or stages that will be repeated.",
+    "category": "Planning",
+    "purpose": "Ensures a shared understanding of what will be iterated upon, preventing scope creep and focusing efforts.",
+    "keywords": ["scope", "boundaries", "parameters", "iteration"],
+    "applicability_notes": "Essential for any project involving repetitive cycles or phases.",
+    "examples_of_usage": ["Planning a recurring marketing campaign", "Designing a software feature with multiple release cycles", "Structuring a musical piece with repeating sections"],
+    "typical_inputs": ["High-level objective for looping execution"],
+    "typical_outputs": ["Defined scope document or statement"]
+  },
+  {
+    "id": "b1a7b2c3-d4e5-f6a7-b8c9-d0e1f2a3b4c5",
+    "name": "Identify Iteration Triggers",
+    "description": "Determine the specific events, conditions, or metrics that will initiate a new loop or iteration of the process.",
+    "category": "Planning",
+    "purpose": "Establishes clear conditions for advancing to the next cycle, ensuring a systematic progression.",
+    "keywords": ["triggers", "conditions", "initiation", "iteration"],
+    "applicability_notes": "Crucial for managing automated or semi-automated iterative processes.",
+    "examples_of_usage": ["Setting a performance threshold to trigger a new marketing campaign iteration", "Defining a bug count that initiates a new development sprint", "Specifying a user engagement level for a new music release cycle"],
+    "typical_inputs": ["Defined execution scope", "Success metrics"],
+    "typical_outputs": ["List of triggers and their conditions"]
+  },
+  {
+    "id": "c2b8d9e0-f1a2-b3c4-d5e6-f7a8b9c0d1e2",
+    "name": "Map Inter-Loop Dependencies",
+    "description": "Analyze and document how the output or state of one loop influences the input or starting conditions of the subsequent loop.",
+    "category": "Analysis",
+    "purpose": "Ensures continuity and knowledge transfer between cycles, enabling progressive improvement.",
+    "keywords": ["dependencies", "inter-loop", "state transfer", "continuity"],
+    "applicability_notes": "Vital for processes where learning and adaptation occur across iterations.",
+    "examples_of_usage": ["Tracking how user feedback from one product release informs the next", "Understanding how performance data from one ad campaign affects future targeting", "Assessing how lyrical revisions impact musical arrangement"],
+    "typical_inputs": ["Defined execution scope", "Potential loop outputs"],
+    "typical_outputs": ["Dependency map or matrix"]
+  },
+  {
+    "id": "d3a9b0c1-e2f3-a4b5-c6d7-e8f9a0b1c2d3",
+    "name": "Establish Review and Refinement Criteria",
+    "description": "Define the criteria and methods for evaluating the success and identifying areas for improvement at the end of each loop.",
+    "category": "Planning",
+    "purpose": "Facilitates objective assessment and continuous improvement by setting clear standards for evaluation.",
+    "keywords": ["review", "refinement", "criteria", "evaluation", "improvement"],
+    "applicability_notes": "Applicable to any iterative process requiring learning and adaptation.",
+    "examples_of_usage": ["Setting criteria for A/B testing in marketing", "Defining bug acceptance criteria for software development", "Establishing standards for music critique and revision"],
+    "typical_inputs": ["Success metrics", "Execution scope"],
+    "typical_outputs": ["List of review criteria and refinement guidelines"]
+  }
+]

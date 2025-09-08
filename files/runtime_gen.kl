@@ -1,0 +1,314 @@
+# KickLang representation of runtime/types.py
+
+concept Role {
+  description: "The definition of an agent's role within the system."
+  properties: {
+    title: "string",
+    description: "string"
+  }
+}
+
+concept Task {
+  description: "A specific unit of work to be performed by an agent."
+  properties: {
+    task_id: "string",
+    task: "string",
+    role: "string",
+    name: "string",
+    requires: "list<string>" # List of task_ids
+  }
+}
+
+concept Plan {
+  description: "A structured sequence of roles and tasks to achieve a goal."
+  properties: {
+    reasoning: "string",
+    roles: "list<Role>",
+    tasks: "list<Task>"
+  }
+}
+
+concept Artifact {
+  description: "A piece of data or file generated during task execution."
+  properties: {
+    name: "string",
+    content: "any"
+  }
+}
+
+concept AgentOutput {
+  description: "The structured output produced by an agent after completing a task."
+  properties: {
+    output: "string",
+    files: "list<Artifact>"
+  }
+}
+
+concept RuntimeConfig {
+  description: "Configuration settings for the runtime environment."
+  properties: {
+    default_agent: "string",
+    max_concurrent_agents: "integer",
+    logging_level: "string",
+    api_endpoints: "map<string, string>" # Map of endpoint names to URLs
+  }
+}
+
+# KickLang representation of runtime/agent.py
+
+concept Agent {
+  description: "Represents a runtime agent instance capable of executing tasks."
+  properties: {
+    name: "string",
+    role: "string",
+    goal: "string",
+    model: "string",
+    system_prompt: "string",
+    team: "map<string, Agent>", # Recursive reference to other Agents
+    llm: "LLM" # Assuming LLM is another concept or primitive type
+  }
+  functions: [UpdateSystemPrompt, ExecuteTask]
+}
+
+concept UpdateSystemPrompt {
+  description: "Updates the agent's system prompt."
+  input: {
+    new_prompt: "string"
+  }
+  output: "void"
+}
+
+concept ExecuteTask {
+  description: "Executes a task using the Generative AI model based on the provided context."
+  input: {
+    context: "ExecutionContext" # Assuming ExecutionContext is another concept
+  }
+  output: "optional<string>" # Result of task execution or error string
+}
+
+concept InstantiateAgent {
+  description: "Instantiates an Agent (or a subclass) based on the provided specification."
+  input: {
+    agent_spec: "map<string, any>", # Dictionary containing agent's specifications
+    prompts: "map<string, string>", # Dictionary of available system prompts
+    all_agent_specs: "list<map<string, any>>" # List of all agent specifications for team resolution
+  }
+  output: "optional<Agent>" # Instantiated Agent object or null
+}
+
+concept FindAgentByRole {
+  description: "Finds an agent in a list by its role."
+  input: {
+    agents: "list<Agent>", # A list of Agent objects
+    role: "string" # The role of the agent to find
+  }
+  output: "optional<Agent>" # The found Agent object or null
+}
+
+# Assuming LLM, ExecutionContext, and Session are also defined as concepts elsewhere or are primitives
+# concept LLM {}
+# concept ExecutionContext {}
+# concept Session {}
+
+# KickLang representation of runtime/core.py
+
+concept ExecutionContext {
+  description: "Holds the state and context for a multi-agent workflow."
+  properties: {
+    session: "Session", # Reference to the Session concept
+    high_level_goal: "string",
+    plan: "map<string, any>", # Dictionary representing the plan
+    step_index: "integer",
+    round_num: "integer",
+    artifacts: "map<string, any>" # Dictionary of artifacts
+  }
+  functions: [CurrentStep, RememberArtifact, RecordArtifact]
+}
+
+concept CurrentStep {
+  description: "Returns the current step in the plan."
+  output: "map<string, any>"
+}
+
+concept RememberArtifact {
+  description: "Remembers an artifact from a step's execution for future tasks."
+  input: {
+    key: "string",
+    value: "any"
+  }
+  output: "void"
+}
+
+concept RecordArtifact {
+  description: "Records an artifact from a step's execution and optionally remembers it."
+  input: {
+    key: "string",
+    value: "any",
+    mem: "boolean" # If True, the artifact is also stored in the execution context's memory.
+  }
+  output: "void"
+}
+
+concept Session {
+  description: "Manages the runtime context for a task, including session ID and artifact storage."
+  properties: {
+    session_id: "string",
+    agents: "list<Agent>", # List of Agent concepts
+    state: "string",
+    session_dir: "string"
+  }
+  functions: [AddArtifact, GetArtifact]
+}
+
+concept AddArtifact {
+  description: "Saves an artifact in the session directory."
+  input: {
+    name: "string",
+    content: "any"
+  }
+  output: "void"
+}
+
+concept GetArtifact {
+  description: "Loads an artifact from the session directory."
+  input: {
+    name: "string"
+  }
+  output: "any" # The content of the artifact or null
+}
+
+# KickLang representation of runtime/loader.py
+
+concept LoadConfig {
+  description: "Loads the runtime configuration from a YAML file."
+  input: {
+    config_path: "string" # The absolute path to the configuration file.
+  }
+  output: "map<string, any>" # The loaded configuration as a dictionary.
+}
+
+concept LoadAgentTemplates {
+  description: "Loads all agent specifications from YAML files within a specified directory."
+  input: {
+    agents_dir: "string", # The absolute path to the directory containing agent YAML files.
+    config: "map<string, any>", # The loaded runtime configuration.
+    default_model: "string" # The default model to assign to agents.
+  }
+  output: "list<map<string, any>>" # A list of agent specifications.
+}
+
+concept LoadPrompts {
+  description: "Loads all system prompts from text files within a specified directory."
+  input: {
+    prompts_dir: "string" # The absolute path to the directory containing prompt text files.
+  }
+  output: "map<string, string>" # A dictionary of prompt filenames to their content.
+}
+
+# KickLang representation of runtime/llm.py
+
+concept LLM {
+  description: "Abstract base class for Large Language Models, providing a centralized place for configurations and utilities."
+  functions: [GenerateContent, Factory]
+}
+
+concept GenerateContent {
+  description: "Generates content using an LLM."
+  input: {
+    model_name: "string",
+    contents: "string",
+    system_instruction: "string",
+    temperature: "float",
+    response_mime_type: "string",
+    response_schema: "BaseModel" # Assuming BaseModel is a concept or a reference to a schema definition
+  }
+  output: "optional<string>"
+}
+
+concept Factory {
+  description: "Creates an LLM instance based on the specified species."
+  input: {
+    species: "string"
+  }
+  output: "LLM"
+}
+
+concept Gemini {
+  description: "Implementation of LLM for Google GenAI models."
+  properties: {
+    client: "any", # GenAI client instance
+    species: "string"
+  }
+  functions: [GenerateContent, GetClient]
+}
+
+concept Olli {
+  description: "Implementation of LLM for Ollama models."
+  properties: {
+    client: "any", # Ollama client instance
+    species: "string"
+  }
+  functions: [GenerateContent, GetClient]
+}
+
+concept Kimi {
+  description: "Implementation of LLM for HuggingFace InferenceClient models (e.g., Kimi-K2-Instruct)."
+  properties: {
+    client: "any", # HuggingFace InferenceClient instance
+    species: "string"
+  }
+  functions: [GenerateContent, GetClient]
+}
+
+concept GetClient {
+  description: "Returns an LLM client instance (GenAI, Ollama, or HuggingFace InferenceClient)."
+  output: "any"
+}
+
+# KickLang representation of runtime/orchestrator.py
+
+concept Orchestrator {
+  description: "An agent responsible for creating and managing a plan for multi-agent workflows."
+  extends: "Agent", # Inherits from the Agent concept
+  functions: [StartWorkflow, CheckNewPrompts, CheckNewPrompt, GeneratePlan]
+}
+
+concept StartWorkflow {
+  description: "Initiates and manages the entire workflow for multiple rounds."
+  input: {
+    session: "Session", # The current session object
+    initial_task: "string", # The high-level goal for the workflow
+    rounds: "integer", # The number of rounds to execute the workflow
+    plan_only: "boolean", # If True, only generates the plan without executing tasks
+    files: "list<string>" # List of files to be used in the task
+  }
+  output: "void"
+}
+
+concept CheckNewPrompts {
+  description: "Recursively checks for new prompts and updates agent system prompts."
+  input: {
+    session: "Session", # The current session object
+    data_structure: "any" # Dictionary or list to traverse for new prompt information
+  }
+  output: "void"
+}
+
+concept CheckNewPrompt {
+  description: "Updates a single agent's system prompt."
+  input: {
+    session: "Session", # The current session object
+    obj: "map<string, any>" # Dictionary containing 'target_agent_name' and 'new_system_prompt'
+  }
+  output: "void"
+}
+
+concept GeneratePlan {
+  description: "Invokes the language model to get a structured plan for the given high-level goal."
+  input: {
+    session: "Session", # The current session object
+    high_level_goal: "string", # The high-level goal for which to generate a plan
+    file_contents: "map<string, string>" # A dictionary of file paths and their contents
+  }
+  output: "map<string, any>" # The generated plan as a dictionary or an empty dictionary if an error occurs
+}

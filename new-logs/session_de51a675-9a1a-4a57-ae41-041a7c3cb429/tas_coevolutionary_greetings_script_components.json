@@ -1,0 +1,50 @@
+[
+  {
+    "id": "c1d2e3f4-a5b6-7890-1234-567890abcdef",
+    "name": "Define Co-evolutionary Greetings Concepts",
+    "description": "Distill the essence of 'co-evolutionary greetings' into clear, concise, and easily understandable core concepts. This involves identifying the fundamental biological principles and examples that define how species evolve in response to each other's 'signals' or interactions.",
+    "category": "Analysis",
+    "purpose": "To establish a foundational understanding of co-evolutionary greetings that can be effectively communicated to a general audience.",
+    "keywords": ["co-evolution", "greetings", "biology", "symbiosis", "mutualism", "adaptation", "concepts"],
+    "applicability_notes": "This step is crucial for any content explaining complex biological interactions to a broad audience, especially in a short-form format where clarity is paramount.",
+    "examples_of_usage": ["Explaining the relationship between flowering plants and pollinators", "Illustrating predator-prey adaptations", "Summarizing the concept of reciprocal evolutionary changes"],
+    "typical_inputs": ["Topic: Co-evolutionary greetings", "Scientific literature on co-evolution", "Target audience profile (general)"],
+    "typical_outputs": ["List of core concepts (e.g., reciprocal adaptation, signaling, mutual benefit)", "Simplified definitions of key terms"]
+  },
+  {
+    "id": "d5e6f7a8-b9c0-1234-5678-90abcdef1234",
+    "name": "Structure YouTube Short Narrative Arc",
+    "description": "Develop a compelling narrative arc tailored for a YouTube Short (under 60 seconds). This includes crafting a strong hook to grab attention immediately, presenting the core concepts and examples engagingly, and concluding with a memorable takeaway or call to reflection.",
+    "category": "Planning",
+    "purpose": "To create a logical, engaging, and concise flow for the script that maximizes viewer retention and comprehension within the constraints of a short-form video.",
+    "keywords": ["narrative arc", "script structure", "youtube short", "hook", "engagement", "storytelling", "short-form content"],
+    "applicability_notes": "Essential for scripting any short-form video content. The arc must prioritize immediate engagement and efficient information delivery.",
+    "examples_of_usage": ["Designing a fast-paced educational video segment", "Structuring a compelling explainer for social media", "Outlining a quick science communication piece"],
+    "typical_inputs": ["Defined core concepts", "Script objectives (inform, entertain)", "YouTube Short format constraints (length, pacing)"],
+    "typical_outputs": ["Narrative outline (Hook -> Explanation -> Examples -> Conclusion)", "Scene/segment breakdown", "Pacing plan"]
+  },
+  {
+    "id": "e9f0a1b2-c3d4-5678-9012-345678abcdef",
+    "name": "Identify Key Examples and Visuals",
+    "description": "Select specific, illustrative examples of co-evolutionary greetings that are visually interesting and easy to understand. Identify potential visual cues or elements that can be incorporated into the script to enhance comprehension and engagement, considering the visual nature of YouTube.",
+    "category": "Analysis",
+    "purpose": "To provide concrete, memorable examples and suggest visual elements that make the abstract concepts of co-evolutionary greetings tangible and engaging for the audience.",
+    "keywords": ["examples", "visuals", "illustration", "engagement", "co-evolutionary examples", "script elements", "visual storytelling"],
+    "applicability_notes": "Crucial for visual media like YouTube Shorts, where strong examples and visual support are key to conveying information effectively and quickly.",
+    "examples_of_usage": ["Choosing compelling animal interactions for a nature documentary short", "Selecting striking plant-pollinator relationships for an educational clip", "Suggesting animations or graphics to explain biological processes"],
+    "typical_inputs": ["Core concepts of co-evolutionary greetings", "Narrative structure", "Audience understanding level", "Available visual resources (conceptual)"],
+    "typical_outputs": ["List of curated examples (e.g., specific species pairs)", "Suggestions for visual aids, animations, or B-roll footage"]
+  },
+  {
+    "id": "f1a2b3c4-d5e6-7890-1234-567890abcdef",
+    "name": "Adhere to YouTube Short Constraints",
+    "description": "Ensure all script elements, including dialogue length, pacing, visual cues, and overall message, strictly adhere to the technical and best-practice constraints of the YouTube Shorts platform (e.g., vertical format, <60 seconds duration, strong initial hook, fast pacing).",
+    "category": "Analysis",
+    "purpose": "To guarantee that the final script is optimized for performance and audience engagement on the YouTube Shorts platform.",
+    "keywords": ["youtube shorts", "constraints", "format", "optimization", "platform guidelines", "vertical video", "short-form best practices"],
+    "applicability_notes": "This step is non-negotiable for content intended for YouTube Shorts. It influences every aspect of the script from initial concept to final wording.",
+    "examples_of_usage": ["Limiting sentence length for quick comprehension", "Ensuring the first 3-5 seconds are highly engaging", "Specifying vertical aspect ratio considerations for visuals", "Checking total runtime is under 60 seconds"],
+    "typical_inputs": ["Draft script outline", "YouTube Shorts platform specifications", "Target audience viewing habits"],
+    "typical_outputs": ["Validated script adhering to platform constraints", "List of technical specifications for production"]
+  }
+]

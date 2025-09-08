@@ -1,0 +1,62 @@
+[
+  {
+    "id": "b1a2b3c4-d5e6-7890-1234-567890abcdef",
+    "name": "Evaluate Clarity and Conciseness",
+    "description": "Review the script's language to ensure it is easily understandable, direct, and free of unnecessary jargon, confirming that complex ideas are simplified for a broad audience within the given time constraints.",
+    "category": "Review",
+    "purpose": "To ensure the script's message is effectively communicated and easily grasped by the target audience, maximizing comprehension and engagement.",
+    "keywords": ["clarity", "conciseness", "language", "understandability", "simplification", "review"],
+    "applicability_notes": "Essential for any content, especially short-form, where audience attention is limited and complex topics need to be distilled.",
+    "examples_of_usage": ["Reviewing a marketing copy for brevity", "Editing a technical explanation for a general audience", "Refining dialogue for a short film"],
+    "typical_inputs": ["Draft script", "Target audience description", "Content objective"],
+    "typical_outputs": ["Annotated script highlighting unclear phrases", "Suggestions for simpler wording", "Edited script sections"]
+  },
+  {
+    "id": "c2b3a4d5-e6f7-8901-2345-67890abcdef0",
+    "name": "Assess Thematic Adherence",
+    "description": "Verify that all elements of the script, including dialogue, examples, and visual cues, consistently align with and reinforce the central theme of 'co-evolutionary greetings'.",
+    "category": "Review",
+    "purpose": "To maintain focus and coherence, ensuring the script effectively delivers on its core subject matter without straying into unrelated topics.",
+    "keywords": ["theme", "adherence", "consistency", "focus", "relevance", "review"],
+    "applicability_notes": "Crucial for maintaining the integrity of the message, particularly when dealing with specific or nuanced topics.",
+    "examples_of_usage": ["Checking if a story consistently follows its genre", "Ensuring a presentation stays on topic", "Validating that a script's elements support the main concept"],
+    "typical_inputs": ["Draft script", "Core theme definition", "Narrative outline"],
+    "typical_outputs": ["List of thematic deviations", "Recommendations for aligning content with the theme"]
+  },
+  {
+    "id": "d3c4b5a6-f7e8-9012-3456-7890abcdef1234",
+    "name": "Review Pacing and Flow",
+    "description": "Analyze the script's structure and timing to ensure a smooth, engaging, and appropriate pace for the intended format (YouTube Short), identifying areas where pacing might be too fast, too slow, or transitions are abrupt.",
+    "category": "Review",
+    "purpose": "To optimize the viewer's experience by creating a dynamic and captivating rhythm that holds attention throughout the short duration.",
+    "keywords": ["pacing", "flow", "rhythm", "timing", "engagement", "transitions", "review"],
+    "applicability_notes": "Especially important for short-form content where maintaining viewer interest is paramount. Affects how information is absorbed.",
+    "examples_of_usage": ["Optimizing a trailer for maximum impact", "Ensuring a tutorial flows logically", "Adjusting the speed of a presentation"],
+    "typical_inputs": ["Draft script", "Format constraints (e.g., duration)", "Narrative arc"],
+    "typical_outputs": ["Notes on pacing issues", "Suggestions for adjusting segment lengths", "Recommendations for smoother transitions"]
+  },
+  {
+    "id": "e4d5c6b7-8901-2345-6789-0abcdef123456",
+    "name": "Analyze Visual Suggestions",
+    "description": "Evaluate the quality, relevance, and feasibility of the visual cues and suggestions provided within the script, ensuring they effectively support the narrative and enhance audience comprehension and engagement.",
+    "category": "Review",
+    "purpose": "To ensure that the visual elements planned for the video are impactful, appropriate, and align with the script's content and overall message.",
+    "keywords": ["visuals", "suggestions", "analysis", "support", "comprehension", "engagement", "review"],
+    "applicability_notes": "Critical for video content, where visuals play a key role in storytelling and information delivery.",
+    "examples_of_usage": ["Reviewing storyboard ideas", "Assessing the appropriateness of suggested B-roll footage", "Evaluating the clarity of animated sequences"],
+    "typical_inputs": ["Draft script with visual cues", "Design guidelines", "Content context"],
+    "typical_outputs": ["Feedback on visual effectiveness", "Suggestions for alternative or improved visuals", "Confirmation of visual-script alignment"]
+  },
+  {
+    "id": "f5e6d7c8-9012-3456-7890-abcdef1234567",
+    "name": "Identify Improvement Areas",
+    "description": "Systematically identify specific sections, dialogue, or visual elements within the script that could be enhanced for greater impact, clarity, or adherence to the objective, providing actionable feedback for refinement.",
+    "category": "Review",
+    "purpose": "To pinpoint opportunities for enhancing the script's quality, ensuring it maximally achieves its intended goals and resonates effectively with the audience.",
+    "keywords": ["improvement", "refinement", "enhancement", "feedback", "actionable insights", "review"],
+    "applicability_notes": "A fundamental step in any iterative creative or development process, aiming to elevate the final output.",
+    "examples_of_usage": ["Highlighting weak plot points in a story", "Suggesting areas for more data in a report", "Pinpointing confusing instructions in a manual"],
+    "typical_inputs": ["Draft script", "Project goals", "Audience profile", "Previous review feedback"],
+    "typical_outputs": ["List of specific areas for improvement", "Concrete suggestions for revisions", "Prioritized list of changes"]
+  }
+]

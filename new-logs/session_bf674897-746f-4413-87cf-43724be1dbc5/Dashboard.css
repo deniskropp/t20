@@ -1,0 +1,352 @@
+/* Basic Reset & Body Styling */
+body {
+  font-family: 'Open Sans', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f7f6; /* Off-white, very light grey */
+  color: #263238; /* Dark Slate for text */
+  line-height: 1.6;
+  scroll-behavior: smooth; /* For smooth scrolling in logs */
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Montserrat', sans-serif;
+  margin-top: 0;
+  color: #00BCD4; /* Cyan-Dark for main headings */
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #80DEEA; /* Cyan-Medium underline */
+  padding-bottom: 0.5rem;
+}
+
+h3 {
+  font-size: 1.3rem;
+  color: #263238; /* Dark Slate for agent names */
+}
+
+h4 {
+  font-size: 1.1rem;
+  color: #00BCD4; /* Cyan-Dark for section titles */
+  margin-bottom: 1rem;
+}
+
+/* Dashboard Container */
+.dashboard-container {
+  max-width: 1440px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 40px); /* Adjust for margin */
+  box-sizing: border-box;
+}
+
+/* Dashboard Header */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e0f7fa; /* Cyan-Light border */
+  margin-bottom: 30px;
+  flex-shrink: 0; /* Prevent header from shrinking */
+}
+
+.logo {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #00BCD4; /* Cyan-Dark */
+  background-color: #e0f7fa; /* Cyan-Light background */
+  padding: 5px 15px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.dashboard-header h1 {
+  flex-grow: 1;
+  text-align: center;
+  margin: 0;
+  color: #263238; /* Dark Slate for main title */
+  font-size: 2.2rem; /* Slightly larger */
+}
+
+.global-status {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #FF9800; /* Orange for active status */
+  background-color: #fff8e1; /* Light Amber background */
+  padding: 8px 15px;
+  border-radius: 4px;
+  border: 1px solid #ffe082; /* Subtle border */
+  flex-shrink: 0;
+}
+
+/* Dashboard Main Area */
+.dashboard-main {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  flex-grow: 1; /* Allow main content to grow */
+}
+
+/* Sections */
+.agents-section, .details-section, .log-section {
+  background-color: #ffffff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04); /* Lighter shadow for sections */
+  display: flex;
+  flex-direction: column;
+}
+
+.agents-section h2, .details-section h2, .log-section h4 {
+  margin-bottom: 1.5rem;
+}
+
+.agents-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  flex-grow: 1; /* Allow grid to grow */
+}
+
+/* Agent Card */
+.agent-card {
+  background-color: #e0f7fa; /* Cyan-Light background for agent cards */
+  padding: 20px;
+  border-radius: 6px;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  border-left: 5px solid #80DEEA; /* Cyan-Medium accent border */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Push task to bottom */
+  min-height: 150px; /* Ensure cards have a minimum height */
+  box-sizing: border-box;
+}
+
+.agent-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.agent-card h3 {
+  margin-bottom: 10px;
+  color: #00BCD4;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.status-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.status-active {
+  background-color: #4CAF50; /* Green */
+}
+
+.status-idle {
+  background-color: #FFC107; /* Amber */
+}
+
+.status-error {
+  background-color: #F44336; /* Red */
+}
+
+.status-pending {
+  background-color: #9E9E9E; /* Grey */
+}
+
+.status-completed {
+  background-color: #8BC34A; /* Light Green */
+}
+
+.status-text {
+  font-weight: 700;
+  text-transform: capitalize;
+  font-size: 0.9rem;
+}
+
+.current-task {
+  font-size: 0.85rem;
+  color: #455a64; /* Slightly lighter dark slate */
+  word-wrap: break-word;
+  margin-top: auto; /* Push task to the bottom */
+  padding-top: 10px;
+}
+
+/* Details Section Grid */
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 25px;
+  flex-grow: 1;
+}
+
+/* Artifacts Section */
+.artifacts-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.artifacts-section li {
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.artifacts-section a {
+  color: #00BCD4; /* Cyan-Dark */
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+  display: inline-block; /* For hover effect */
+}
+
+.artifacts-section a:hover, .artifacts-section a:focus {
+  color: #80DEEA; /* Cyan-Medium */
+  text-decoration: underline;
+}
+
+/* Orchestrator Prompt Section */
+.orchestrator-prompt-section p {
+  font-size: 0.95rem;
+  color: #455a64;
+  background-color: #e0f7fa; /* Cyan-Light background */
+  padding: 15px;
+  border-radius: 4px;
+  border-left: 4px solid #00BCD4; /* Cyan-Dark accent */
+  margin-top: auto; /* Push to bottom if it's the last element */
+}
+
+/* Log Feed Section */
+.log-feed-container {
+  grid-column: 1 / -1; /* Span across both columns */
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Allow log section to grow */
+}
+
+.log-messages {
+  height: 250px; /* Fixed height for the log area */
+  overflow-y: auto;
+  background-color: #f8f9fa; /* Very light grey background for logs */
+  padding: 15px;
+  border-radius: 4px;
+  border: 1px solid #e0f7fa; /* Cyan-Light border */
+  font-size: 0.85rem;
+  color: #555;
+  flex-grow: 1; /* Allow log messages to fill container */
+}
+
+.log-entry {
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed #c5e1e4; /* Light Cyan dashed separator */
+  display: flex;
+  align-items: baseline;
+}
+
+.log-entry:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.log-timestamp {
+  color: #80DEEA; /* Cyan-Medium for timestamp */
+  margin-right: 10px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.log-message {
+  color: #263238; /* Dark Slate for message */
+  word-break: break-word;
+}
+
+.log-entry.log-error .log-message {
+  color: #F44336; /* Red for error logs */
+  font-weight: 700;
+}
+
+.log-entry.log-warn .log-message {
+  color: #FFC107; /* Amber for warning logs */
+  font-weight: 700;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+  .dashboard-container {
+    margin: 10px;
+    padding: 15px;
+    min-height: calc(100vh - 20px);
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+  }
+
+  .dashboard-header h1 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: left;
+    font-size: 2rem;
+  }
+
+  .global-status {
+    margin-top: 5px;
+  }
+
+  .dashboard-main {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .log-feed-container {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 768px) {
+  .agents-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .agent-card {
+    border-left-width: 3px;
+    min-height: unset; /* Allow cards to size naturally on smaller screens */
+  }
+
+  .dashboard-header h1 {
+    font-size: 1.8rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .log-messages {
+    height: 200px;
+  }
+}

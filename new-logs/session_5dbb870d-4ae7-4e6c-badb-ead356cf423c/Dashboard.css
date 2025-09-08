@@ -1,0 +1,272 @@
+/* General Styles */
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f5f5f5;
+  color: #212121;
+  margin: 0;
+  padding: 20px;
+  line-height: 1.5;
+}
+
+.dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2, h3 {
+  color: #4CAF50;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 1.75rem;
+  font-weight: 500;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 0.5rem;
+}
+
+h3 {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+button {
+  background-color: #8BC34A;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+button:hover:not(:disabled) {
+  background-color: #689F3F;
+}
+
+button:disabled {
+  background-color: #bdbdbd;
+  cursor: not-allowed;
+}
+
+input[type="text"],
+input[type="password"],
+select {
+  width: calc(100% - 20px); /* Adjust for padding */
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #4CAF50;
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #757575;
+}
+
+pre {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 4px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-size: 0.875rem;
+  border: 1px solid #eee;
+}
+
+code {
+  font-family: 'Roboto Mono', monospace;
+}
+
+/* Source Selection Form */
+.source-selection-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.source-config-section {
+  border: 1px solid #e0e0e0;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #fafafa;
+}
+
+.source-config-section h3 {
+  margin-top: 0;
+  color: #4CAF50;
+}
+
+.connection-status {
+  margin-left: 15px;
+  font-weight: bold;
+}
+
+.connection-status.connected {
+  color: #4CAF50;
+}
+
+.connection-status.error {
+  color: #F44336;
+}
+
+.connection-status.testing {
+  color: #FFC107;
+}
+
+/* Integration Mapping Interface */
+.integration-mapping-interface {
+  margin-top: 20px;
+}
+
+.mapping-section .field-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.field-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 8px;
+  border-bottom: 1px dashed #eee;
+}
+
+.field-row span:first-child {
+  font-weight: 500;
+}
+
+.field-row select {
+  width: auto; /* Allow select to size based on content */
+  margin-bottom: 0;
+}
+
+.rules-section {
+  margin-top: 30px;
+}
+
+.rule-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.rule-form input {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.rules-section ul {
+  list-style: disc;
+  padding-left: 20px;
+}
+
+/* Results Display */
+.results-display {
+  margin-top: 20px;
+}
+
+.status-section h3 {
+  display: flex;
+  align-items: center;
+}
+
+.status-section .status-processing, .status-section .status-completed {
+  color: #4CAF50;
+  font-weight: bold;
+}
+
+.status-section .status-error {
+  color: #F44336;
+  font-weight: bold;
+}
+
+.output-section,
+.artifacts-section,
+.error-details {
+  margin-top: 20px;
+}
+
+.artifacts-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.artifacts-section li {
+  background-color: #fdfdfd;
+  border: 1px solid #eee;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+}
+
+.artifacts-section li strong {
+  display: block;
+  margin-bottom: 10px;
+  color: #4CAF50;
+}
+
+.artifacts-section button {
+  background-color: #FFC107;
+  margin-top: 10px;
+}
+
+.artifacts-section button:hover:not(:disabled) {
+  background-color: #e0a800;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .mapping-section .field-columns {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .rule-form {
+    flex-direction: column;
+  }
+  
+  .artifacts-section li pre {
+    max-height: 200px; /* Limit height for smaller screens */
+  }
+}

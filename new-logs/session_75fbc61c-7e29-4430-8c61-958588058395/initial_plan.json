@@ -1,0 +1,110 @@
+{
+    "reasoning": "The high-level goal is to create 'Porn projects, under the La Metta Hood'. This requires a structured approach to define the project, generate content, develop the necessary infrastructure, and promote it. The plan outlines the initial steps to define the project scope and identify core components. The roles are assigned based on their stated goals and expertise to facilitate a collaborative and efficient workflow. The initial tasks focus on understanding the project requirements and setting up the foundational elements.",
+    "roles": [
+        {
+            "title": "Coordinator",
+            "description": "Oversees the project, guides the team, and ensures alignment with the high-level goal. Fizz La Metta will act as the coordinator."
+        },
+        {
+            "title": "Task-Agnostic Step (TAS) extractor",
+            "description": "Identifies and extracts 'Task Agnostic Steps' towards the high-level goal. GPTASe, TASe, and uTASe will perform this role."
+        },
+        {
+            "title": "Prompt Engineer",
+            "description": "Structures workflows and refines system prompts for agents. Lyra will perform this role."
+        },
+        {
+            "title": "Web Developer",
+            "description": "Generates web development code. Qwen3-WebDev will perform this role."
+        },
+        {
+            "title": "Designer",
+            "description": "Generates aesthetic layouts, color palettes, typography, and UI flows. Aurora will perform this role."
+        },
+        {
+            "title": "Engineer",
+            "description": "Implements designs into code. Kodax will perform this role."
+        },
+        {
+            "title": "Lyricist",
+            "description": "Crafts lyrics for music. lyrics will perform this role."
+        },
+        {
+            "title": "Music Designer",
+            "description": "Manages sound definition and sonic engineering. sonic will perform this role."
+        },
+        {
+            "title": "Distribution and Promotion Agent",
+            "description": "Manages digital distribution, marketing, and audience engagement. stream will perform this role."
+        },
+        {
+            "title": "AI Tutor",
+            "description": "Provides assistance and guidance. aitutor will perform this role."
+        }
+    ],
+    "tasks": [
+        {
+            "task_id": "T1",
+            "task": "Define the core concept and scope of the 'Porn projects, under the La Metta Hood' initiative. This involves brainstorming initial ideas, target audience, and unique selling propositions.",
+            "role": "Coordinator",
+            "name": "Fizz La Metta",
+            "requires": []
+        },
+        {
+            "task_id": "T2",
+            "task": "Extract Task Agnostic Steps (TAS) from the high-level goal and initial project definition. This involves breaking down the overall objective into fundamental, actionable stages.",
+            "role": "Task-Agnostic Step (TAS) extractor",
+            "name": "GPTASe",
+            "requires": [
+                "T1"
+            ]
+        },
+        {
+            "task_id": "T3",
+            "task": "Extract Task Agnostic Steps (TAS) from the high-level goal and initial project definition. This involves breaking down the overall objective into fundamental, actionable stages.",
+            "role": "Task-Agnostic Step (TAS) extractor",
+            "name": "TASe",
+            "requires": [
+                "T1"
+            ]
+        },
+        {
+            "task_id": "T4",
+            "task": "Extract Task Agnostic Steps (TAS) from the high-level goal and initial project definition. This involves breaking down the overall objective into fundamental, actionable stages.",
+            "role": "Task-Agnostic Step (TAS) extractor",
+            "name": "uTASe",
+            "requires": [
+                "T1"
+            ]
+        },
+        {
+            "task_id": "T5",
+            "task": "Consolidate and refine the extracted Task Agnostic Steps (TAS) into a coherent list of foundational project phases.",
+            "role": "Coordinator",
+            "name": "Fizz La Metta",
+            "requires": [
+                "T2",
+                "T3",
+                "T4"
+            ]
+        },
+        {
+            "task_id": "T6",
+            "task": "Develop initial system prompts for each agent based on their roles and the project's high-level goal, ensuring clarity and alignment.",
+            "role": "Prompt Engineer",
+            "name": "Lyra",
+            "requires": [
+                "T5"
+            ]
+        },
+        {
+            "task_id": "T7",
+            "task": "Provide guidance and clarification on the project's objectives and the extracted TAS, assisting other agents as needed.",
+            "role": "AI Tutor",
+            "name": "aitutor",
+            "requires": [
+                "T5"
+            ]
+        }
+    ]
+}

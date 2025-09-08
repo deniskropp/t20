@@ -1,0 +1,69 @@
+{
+  "script_title": "Co-evolutionary Greetings: Nature's Secret Handshake",
+  "logline": "A rapid-fire exploration of how species evolve together, communicating through unique 'greetings'.",
+  "target_audience": "General YouTube audience, curious about science and nature.",
+  "constraints": {
+    "platform": "YouTube Shorts",
+    "duration_seconds": "< 60",
+    "aspect_ratio": "Vertical (9:16)",
+    "hook_time_seconds": "0-5",
+    "pacing": "Fast, dynamic"
+  },
+  "script_structure": [
+    {
+      "segment_id": "S01_HOOK",
+      "segment_name": "Opening Hook",
+      "time_estimate_seconds": "0-5",
+      "visual_cue": "[Placeholder: Visually striking, fast-paced montage of diverse species interacting. E.g., close-up of a bee on a vibrant flower, a bird feeding its young, a unique animal behavior.]",
+      "dialogue_placeholder": "[Placeholder: Engaging question or statement to grab attention. E.g., 'Ever wonder how nature says hello?']",
+      "notes": "Must be highly engaging from the very first second. Use dynamic visuals and a clear, intriguing question."
+    },
+    {
+      "segment_id": "S02_INTRO",
+      "segment_name": "Introduction to Co-evolution",
+      "time_estimate_seconds": "5-15",
+      "visual_cue": "[Placeholder: Simple animation showing two abstract forms (representing species) influencing each other's development over time. Maybe subtle flow lines connecting them.]",
+      "dialogue_placeholder": "[Placeholder: Define co-evolution and introduce the concept of 'greetings' as signals/interactions. E.g., 'It's called co-evolution – species evolving together, like a secret conversation.']",
+      "notes": "Keep the definition simple and relatable. Introduce the core theme."
+    },
+    {
+      "segment_id": "S03_EXAMPLE_1",
+      "segment_name": "Example 1: [SPECIFIC EXAMPLE 1 TYPE]",
+      "time_estimate_seconds": "15-30",
+      "visual_cue": "[Placeholder: Specific visuals for Example 1. E.g., Close-up footage of a bee pollinating a flower, animation showing flower structure evolving for bee attraction.]",
+      "dialogue_placeholder": "[Placeholder: Describe the first example of co-evolutionary greeting. E.g., 'Take bees and flowers. Flowers evolved colorful petals and scents to attract bees, and bees evolved to find and pollinate them – a perfect handshake!']",
+      "notes": "Use clear, visually distinct examples. Explain the reciprocal adaptation."
+    },
+    {
+      "segment_id": "S04_EXAMPLE_2",
+      "segment_name": "Example 2: [SPECIFIC EXAMPLE 2 TYPE]",
+      "time_estimate_seconds": "30-45",
+      "visual_cue": "[Placeholder: Specific visuals for Example 2. E.g., Dynamic footage of a cheetah and gazelle in motion, split screen showing adaptations.]",
+      "dialogue_placeholder": "[Placeholder: Describe the second example. E.g., 'Or the age-old race between predators and prey! Faster gazelles mean faster cheetahs – each pushing the other to adapt.']",
+      "notes": "Choose a contrasting example if possible (e.g., predator-prey vs. mutualism)."
+    },
+    {
+      "segment_id": "S05_EXAMPLE_3_OPT",
+      "segment_name": "Example 3 (Optional): [SPECIFIC EXAMPLE 3 TYPE]",
+      "time_estimate_seconds": "45-55",
+      "visual_cue": "[Placeholder: Specific visuals for Example 3. E.g., Short clip of cleaner fish interacting with a larger fish.]",
+      "dialogue_placeholder": "[Placeholder: Briefly mention a third example if time permits. E.g., 'Even cleaner fish and their clients have a co-evolutionary greeting!']",
+      "notes": "Include only if the script can comfortably accommodate it without rushing."
+    },
+    {
+      "segment_id": "S06_CONCLUSION",
+      "segment_name": "Conclusion & Takeaway",
+      "time_estimate_seconds": "55-60",
+      "visual_cue": "[Placeholder: Montage of previous examples or a graphic showing interconnectedness. Ends on a clear end screen.]",
+      "dialogue_placeholder": "[Placeholder: Summarize the main idea and pose a concluding question or thought. E.g., 'Nature's full of these incredible connections. What other co-evolutionary greetings have you noticed?']",
+      "notes": "Reinforce the core message and encourage engagement."
+    }
+  ],
+  "adaptability_notes": "Replace bracketed placeholders with specific details for each co-evolutionary example. Adjust timing slightly based on the complexity of the chosen examples. Ensure visual cues align with the dialogue and the overall design aesthetic.",
+  "core_concepts_to_include": [
+    "Co-evolution: Species evolving in response to each other.",
+    "Reciprocal Adaptation: Changes in one species drive changes in another.",
+    "Signaling/Interaction: How species 'communicate' or interact.",
+    "Mutual Benefit (often): How these interactions can be advantageous."
+  ]
+}
