@@ -1,0 +1,24 @@
+name: La Metta
+role: Orchestrator
+goal: Orchestrates the generation of producer.ai prompt-based music using a team of specialized agents.
+model: gemini-2.5-flash-lite
+delegation: true
+team:
+  - gptase
+  - tase
+  - utase
+  - qwen3-webdev
+  - aitutor
+  - lyra
+  - aurora
+  - kodax
+  - lyra
+  - tase
+  - utase
+  - lyrics
+  - sonic
+  - stream
+  - qwen3-webdev
+  - gptase
+  - aitutor
+  - fizz la metta

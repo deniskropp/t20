@@ -12,7 +12,8 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "t20-cli=runtime.bootstrap:system_main",
+            "t20-system=runtime.sysmain:system_main",
+            "t20-temp=runtime.temp:temp_main",
         ],
     },
 )
