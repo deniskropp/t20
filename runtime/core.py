@@ -66,6 +66,7 @@ class Session:
         """
         artifact_path = os.path.join(self.session_dir, name)
         try:
+            os.makedirs(os.path.dirname(artifact_path), exist_ok=True)
             with open(artifact_path, 'w', encoding='utf-8') as f:
                 if isinstance(content, (dict, list)):
                     json.dump(content, f, indent=4)
