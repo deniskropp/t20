@@ -1,0 +1,135 @@
+[
+  {
+    "id": "f4a2b1c9-0d8e-4f7a-8b3c-1a2b3c4d5e6f",
+    "name": "Define Creative Constraints",
+    "description": "Establish the specific thematic, stylistic, and structural boundaries for a creative project. This involves identifying the core subject matter, desired genre or style, and any specific requirements or limitations that will guide the creation process.",
+    "category": "Planning",
+    "purpose": "Sets the foundational parameters for creative work, ensuring a clear scope and direction.",
+    "keywords": ["constraints", "scope", "theme", "style", "genre", "subject"],
+    "applicability_notes": "This step is crucial for any project, ensuring alignment between the initial vision and the final output. It applies to music, writing, visual arts, software development, and more.",
+    "examples_of_usage": [
+      "Defining the genre (e.g., Orchestral-SpeedCore), lyrical subject (Fizz La Metta), and overall mood for a music track.",
+      "Specifying the artistic style (e.g., Impressionistic), subject matter (e.g., a landscape), and medium (e.g., oil on canvas) for a painting.",
+      "Setting technical requirements (e.g., programming language, performance metrics) and functional scope for a software application."
+    ],
+    "typical_inputs": [
+      "High-level creative objective"
+    ],
+    "typical_outputs": [
+      "List of defined creative constraints and requirements"
+    ]
+  },
+  {
+    "id": "e3b1c0d8-1e7f-4a9b-8c2d-0a1b2c3d4e5f",
+    "name": "Develop Thematic Content",
+    "description": "Generate the core ideas, narratives, messages, or lyrical concepts that will form the basis of the creative output. This involves brainstorming and outlining the substance of the work.",
+    "category": "Analysis",
+    "purpose": "Ensures the creative work has a meaningful and coherent underlying message or story.",
+    "keywords": ["theme", "narrative", "content", "ideas", "message", "lyrics"],
+    "applicability_notes": "Fundamental for any content-driven creation, including music lyrics, story writing, marketing copy, and conceptual art.",
+    "examples_of_usage": [
+      "Crafting lyrics about 'Fizz La Metta', exploring potential themes related to the character or concept.",
+      "Developing a plot outline and character backstories for a novel.",
+      "Brainstorming key selling points and a narrative arc for a product launch."
+    ],
+    "typical_inputs": [
+      "Defined creative constraints",
+      "Inspirational source material"
+    ],
+    "typical_outputs": [
+      "Thematic concepts",
+      "Narrative outlines",
+      "Key messages",
+      "Lyrical ideas"
+    ]
+  },
+  {
+    "id": "d2a0b9e7-2f6a-4b8c-9d1e-f0a1b2c3d4e5",
+    "name": "Define Stylistic Elements",
+    "description": "Identify and specify the characteristic aesthetic, sonic, or visual attributes that define the project's unique style. This includes elements like instrumentation, genre fusion, color palettes, or vocal delivery.",
+    "category": "Planning",
+    "purpose": "Establishes the desired aesthetic and sensory qualities of the final product, ensuring consistency and impact.",
+    "keywords": ["style", "aesthetics", "sonic", "visual", "tone", "genre fusion", "instrumentation"],
+    "applicability_notes": "Crucial for creative fields where distinct styles are a hallmark, such as music production, graphic design, and film scoring.",
+    "examples_of_usage": [
+      "Specifying the blend of orchestral elements and SpeedCore characteristics for a music track.",
+      "Defining the color palette, typography, and visual mood for a brand identity.",
+      "Determining the architectural style and material choices for a building."
+    ],
+    "typical_inputs": [
+      "Defined creative constraints",
+      "Thematic content"
+    ],
+    "typical_outputs": [
+      "List of stylistic specifications",
+      "Mood boards",
+      "Sound palettes"
+    ]
+  },
+  {
+    "id": "c1f9a8b6-3e5d-4c7a-8b0f-e1d2c3b4a5f6",
+    "name": "Structure Composition",
+    "description": "Organize the temporal or spatial arrangement of elements within the creative work, defining its flow, progression, and sectional components.",
+    "category": "Planning",
+    "purpose": "Ensures a logical and engaging progression of the creative output, guiding the audience's experience.",
+    "keywords": ["structure", "composition", "arrangement", "flow", "sequence", "sections"],
+    "applicability_notes": "Applicable to sequential arts like music, film, literature, and even user interface design, defining how elements are ordered and interact.",
+    "examples_of_usage": [
+      "Outlining the song structure, including intros, verses, choruses, bridges, and outros for an Orchestral-SpeedCore track.",
+      "Storyboarding a film sequence, defining shot order and scene transitions.",
+      "Designing the user journey and information architecture for a website."
+    ],
+    "typical_inputs": [
+      "Thematic content",
+      "Stylistic elements"
+    ],
+    "typical_outputs": [
+      "Structural outline",
+      "Sequence map",
+      "Flowchart"
+    ]
+  },
+  {
+    "id": "b0e8d7c5-4f3a-4b6c-7d9e-f2a1b0c9d8e7",
+    "name": "Integrate Content and Style",
+    "description": "Combine the developed thematic content with the defined stylistic elements and structural plan into a cohesive whole. This involves ensuring that the message, aesthetics, and form work harmoniously together.",
+    "category": "Execution",
+    "purpose": "Merges conceptual, stylistic, and structural aspects to create a unified and impactful final product.",
+    "keywords": ["integration", "synthesis", "cohesion", "combination", "harmony"],
+    "applicability_notes": "A core step in any creative production process where disparate elements must be brought together to form a coherent final piece.",
+    "examples_of_usage": [
+      "Writing lyrics that fit the rhythm, mood, and style of the Orchestral-SpeedCore music.",
+      "Composing music that effectively conveys the narrative and emotional tone of the lyrics.",
+      "Designing a user interface where the visual design (style) complements the user experience flow (structure) and content."
+    ],
+    "typical_inputs": [
+      "Thematic content",
+      "Stylistic elements",
+      "Structural outline"
+    ],
+    "typical_outputs": [
+      "Draft creative output",
+      "Integrated elements"
+    ]
+  },
+  {
+    "id": "a9f7e6d4-5c3b-4a5d-6b8c-a1b0c9d8e7f6",
+    "name": "Refine and Polish",
+    "description": "Review and enhance the integrated creative output, making iterative improvements to quality, coherence, and impact. This includes editing, mixing, mastering, and fine-tuning all aspects of the work.",
+    "category": "Refactoring",
+    "purpose": "Elevates the quality of the creative work, addressing flaws and optimizing for the intended effect.",
+    "keywords": ["refinement", "polish", "iteration", "optimization", "review", "editing", "mastering"],
+    "applicability_notes": "Essential for achieving a high-quality final product in any creative discipline, ensuring professional standards and maximum impact.",
+    "examples_of_usage": [
+      "Editing lyrics for clarity, rhythm, and rhyme, and adjusting the music mix and mastering for optimal sound.",
+      "Proofreading a manuscript and refining sentence structure for better readability.",
+      "Conducting user acceptance testing and debugging a software application."
+    ],
+    "typical_inputs": [
+      "Draft creative output"
+    ],
+    "typical_outputs": [
+      "Finalized creative output"
+    ]
+  }
+]
