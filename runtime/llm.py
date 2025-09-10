@@ -7,7 +7,6 @@ from abc import ABC, abstractmethod
 import logging
 from pydantic import BaseModel
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -21,7 +20,7 @@ class LLM(ABC):
 
     @abstractmethod
     def generate_content(self, model_name: str, contents: str, system_instruction: str = '',
-                         temperature: float = 0.7, response_mime_type: str = 'text/plain', response_schema: BaseModel = None) -> Optional[str]: # type: ignore
+                         temperature: float = 0.7, response_mime_type: str = 'text/plain', response_schema: Any = None) -> Optional[str]: # type: ignore
         """Generates content using an LLM."""
         pass
 
@@ -36,6 +35,14 @@ class LLM(ABC):
             # Extract model name after 'ollama:'
             model_name = species.split(':', 1)[1]
             return Olli(species=model_name)
+        if species.startswith('opi:'):
+            # Extract model name after 'opi:'
+            model_name = species.split(':', 1)[1]
+            return Opi(species=model_name)
+        if species.startswith('mistral:'):
+            # Extract model name after 'mistral:'
+            model_name = species.split(':', 1)[1]
+            return Mistral(species=model_name)
         return Gemini(species)
 
 
@@ -256,4 +263,181 @@ class Kimi(LLM):
             return self.client
         except Exception as e:
             logger.error(f"Error initializing GenAI client: {e}")
+            return None
+
+
+
+from openai import OpenAI
+from openai.types.chat.completion_create_params import ResponseFormat
+
+
+class Opi(LLM):
+    """
+    Provides a centralized place for LLM-related configurations and utilities.
+    """
+    def __init__(self, species: str = 'Opi'):
+        self.client = None
+        self.species = species
+
+    def generate_content(self, model_name: str, contents: str, system_instruction: str = '',
+                         temperature: float = 0.7, response_mime_type: str = 'text/plain', response_schema: BaseModel = None) -> Optional[str]: # type: ignore
+        """
+        Generates content using the specified GenAI model.
+
+        Args:
+            model_name (str): The name of the model to use (e.g., "gemini-pro").
+            contents (str): The input content for the model.
+            system_instruction (str, optional): System-level instructions for the model.
+            temperature (float, optional): Controls the randomness of the output. Defaults to 0.7.
+            response_mime_type (str, optional): The desired MIME type for the response.
+            response_schema (Any, optional): The schema for the response.
+
+        Returns:
+            types.GenerateContentResponse: The response from the GenAI model.
+        """
+        client = self._get_client()
+        if not client:
+            return None
+
+        try:
+            out = ""
+
+            response_format: ResponseFormat = {"type": "text"}
+
+            if response_mime_type == 'application/json':
+                response_format = {"type": "json_object"}
+
+            if response_schema:
+                response_format = {"type": "json_schema", "json_schema": response_schema.model_json_schema()}   # type: ignore
+
+            print(f"Opi: Using response format {response_format}")
+
+            stream = client.chat.completions.create(
+                model=model_name,
+                messages=[
+                    {
+                        "role": "system",
+                        "content": system_instruction
+                    },
+                    {
+                        "role": "user",
+                        "content": contents
+                    },
+                ],
+                temperature=temperature,
+                max_tokens=50000,
+                top_p=1,
+                stream=True,
+                response_format=response_format
+            )
+
+            for chunk in stream:
+                if chunk.choices[0].delta.content is None:
+                    continue
+                print(chunk.choices[0].delta.content, end="")
+                out += chunk.choices[0].delta.content
+
+            return out
+        except Exception as e:
+            logger.error(f"Error generating content with model {model_name}: {e}")
+            return None
+
+    def _get_client(self):
+        """
+        Returns a OpenAI client instance.
+        """
+        try:
+            if (self.client is None):
+                self.client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY",""), base_url=os.environ.get("OPENAI_API_BASE"))
+            return self.client
+        except Exception as e:
+            logger.error(f"Error initializing OpenAI client: {e}")
+            return None
+
+
+
+
+##
+
+
+from mistralai import Mistral as MistralClient
+from mistralai.extra import response_format_from_pydantic_model
+
+class Mistral(LLM):
+    """
+    Provides a centralized place for LLM-related configurations and utilities.
+    """
+    def __init__(self, species: str = 'Mistral'):
+        self.client = None
+        self.species = species
+
+    def generate_content(self, model_name: str, contents: str, system_instruction: str = '',
+                         temperature: float = 0.7, response_mime_type: str = 'text/plain', response_schema: BaseModel = None) -> Optional[str]: # type: ignore
+        """
+        Generates content using the specified Mistral model.
+
+        Args:
+            model_name (str): The name of the model to use (e.g., "mistral-large-latest").
+            contents (str): The input content for the model.
+            system_instruction (str, optional): System-level instructions for the model.
+            temperature (float, optional): Controls the randomness of the output. Defaults to 0.7.
+            response_mime_type (str, optional): The desired MIME type for the response.
+            response_schema (Any, optional): The schema for the response.
+
+        Returns:
+            str: The response from the Mistral model.
+        """
+        client = self._get_client()
+        if not client:
+            return None
+        try:
+            messages = []
+            if system_instruction:
+                messages.append({"role": "system", "content": system_instruction})
+            messages.append({"role": "user", "content": contents})
+
+            print(f"Mistral: Using model {model_name} with temperature {temperature}")
+
+            response_format: ResponseFormat = {"type": "text"}
+
+            if response_mime_type == 'application/json':
+                response_format = {"type": "json_object"}
+
+            if response_schema:
+                response_format = response_format_from_pydantic_model(response_schema)
+                #response_format =  {"type": "json_schema", "json_schema": response_schema}
+
+
+            out = ""
+            stream = client.chat.stream(
+                model=self.species,#model_name,
+                messages=messages,
+                temperature=temperature,
+                max_tokens=50000,
+                response_format=response_format
+            )
+            for chunk in stream:
+                if chunk.data.choices[0].delta.content is None:
+                    continue
+                print(chunk.data.choices[0].delta.content, end="")
+                out += str(chunk.data.choices[0].delta.content)
+
+            return out
+        except Exception as e:
+            print(f"Error generating content with model {model_name}: {e}")
+            return None
+
+    def _get_client(self):
+        """
+        Returns a Mistral client instance.
+        """
+        try:
+            if self.client is None:
+                api_key = os.environ.get("MISTRAL_API_KEY")
+                if not api_key:
+                    raise ValueError("MISTRAL_API_KEY environment variable not set.")
+                self.client = MistralClient(api_key=api_key)
+            return self.client
+        except Exception as e:
+            logger.error(f"Error initializing Mistral client: {e}")
             return None

@@ -13,7 +13,7 @@ from runtime.core import ExecutionContext, Session
 
 logger = logging.getLogger(__name__)
 
-from runtime.types import AgentOutput
+from runtime.custom_types import AgentOutput
 
 class Agent:
     """Represents a runtime agent instance."""

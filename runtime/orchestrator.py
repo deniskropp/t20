@@ -4,15 +4,18 @@ import json
 from typing import List, Dict, Any, Optional
 import logging
 
+from colorama import Fore, Style
+
 from pydantic import BaseModel, Field
 
 from runtime.agent import Agent # Import Agent base class
 from runtime.core import ExecutionContext, Session # Import Session and ExecutionContext
 from runtime.llm import LLM
+from runtime.util import read_file
 
 logger = logging.getLogger(__name__)
 
-from runtime.types import Plan
+from runtime.custom_types import Plan
 
 class Orchestrator(Agent):
     """An agent responsible for creating and managing a plan for multi-agent workflows."""
@@ -182,6 +185,16 @@ class Orchestrator(Agent):
             f"Leverage each team member, guided by their goals, to maximize collaboration. Use prompt engineering to refine the system prompts for each agent based on their roles and tasks.",
         ]
 
+        prompt = read_file("prompts/orcis_planning.txt").strip()
+        planning_prompt = [prompt.format(
+            high_level_goal=high_level_goal,
+            team_description=team_description
+        )]
+
+        prompt = "\n\n".join(planning_prompt)
+
+        print(f"{Fore.LIGHTCYAN_EX}Orchestrator {self.name}Planning Prompt:\n{prompt}{Style.RESET_ALL}")
+
         if file_contents:
             file_section = [f"\n--- Files Content ---"]
             for file_path, content in file_contents.items():
@@ -189,7 +202,7 @@ class Orchestrator(Agent):
             planning_prompt.append("\n".join(file_section))
 
         logger.debug(planning_prompt)
-        session.add_artifact("planning_prompt.txt", "\n\n".join(planning_prompt))
+        session.add_artifact("planning_prompt.txt", prompt)
 
         try:
             response = self.llm.generate_content(
@@ -198,7 +211,7 @@ class Orchestrator(Agent):
                 system_instruction=self.system_prompt,
                 temperature=0.1,
                 response_mime_type='application/json', #if self.role == 'Prompt Engineer' else None
-                response_schema=Plan#.model_json_schema()
+                response_schema=Plan
             )
             plan = json.loads(response or '{}')
         except Exception as e:
