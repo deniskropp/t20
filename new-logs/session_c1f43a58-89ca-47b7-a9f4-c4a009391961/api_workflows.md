@@ -1,0 +1,86 @@
+## Workflow Designs for 3D API Operations and Data Processing
+
+This document outlines the designed workflows for key API operations and data processing tasks, building upon the System Design (T5) and Data Ingestion/Management Plan (T13). These workflows aim to ensure efficient, scalable, and reliable execution of core functionalities.
+
+### 1. Asset Ingestion Workflow
+
+This workflow covers the process from receiving an asset file to its storage and validation.
+
+*   **Trigger:** `POST /v1/assets/upload` request or batch ingestion process.
+*   **Actors:** API Gateway, Geometry Service, Asset Storage (S3), Database, Data Validator Service, Message Queue.
+*   **Steps:**
+    1.  **Request Reception:** API Gateway receives the upload request (file + metadata).
+    2.  **Initial Validation:** API Gateway performs authentication and basic request validation.
+    3.  **File Handling:** Request forwarded to Geometry Service. Service performs initial file checks (type, size) and generates a unique asset ID.
+    4.  **Storage:** Geometry Service uploads the raw asset file to AWS S3. The S3 path and initial metadata are stored in the Database (PostgreSQL/MongoDB), associated with the asset ID.
+    5.  **Asynchronous Validation Trigger:** Geometry Service publishes a `asset_validated` message to the Message Queue (e.g., RabbitMQ) with the asset ID.
+    6.  **Data Validation:** A worker instance of the Data Validator Service consumes the message.
+    7.  **Content Validation:** Data Validator Service performs in-depth validation of the asset's geometry, materials, and textures. It may invoke specific parsing or analysis tools.
+    8.  **Status Update:** Data Validator Service updates the asset's status in the Database (e.g., 'VALIDATED', 'FAILED'). If validation fails, it logs the error details.
+    9.  **Optional Conversion:** If format conversion is required, the Data Validator Service publishes a `convert_asset` message to the Message Queue, triggering a conversion worker.
+    10. **Completion Notification:** Upon successful validation (and optional conversion), the Data Validator Service can publish a `asset_ready` message for downstream services.
+*   **Optimization Notes:** Utilize S3 multipart uploads for large files. Implement efficient metadata extraction. Scale Data Validator workers based on queue depth.
+
+### 2. Scene Creation/Update Workflow
+
+This workflow handles the creation and modification of scene definitions.
+
+*   **Trigger:** `POST /v1/scenes` or `PUT /v1/scenes/{scene_id}` request.
+*   **Actors:** API Gateway, Scene Management Service, Database.
+*   **Steps:**
+    1.  **Request Reception:** API Gateway receives the scene definition (JSON payload referencing asset IDs, transformations, etc.).
+    2.  **Authentication & Authorization:** API Gateway handles authentication and authorization.
+    3.  **Scene Processing:** Request forwarded to Scene Management Service.
+    4.  **Asset Reference Validation:** Scene Management Service optionally checks if referenced asset IDs exist and are accessible (by querying the Database or Asset Metadata service).
+    5.  **Database Operation:** Scene Management Service performs the `CREATE` or `UPDATE` operation on the scene data in the Database.
+    6.  **Response:** Scene Management Service returns the scene ID and status to the API Gateway, which relays it to the client.
+*   **Optimization Notes:** Ensure efficient database indexing for scene queries. Cache frequently accessed scene data if applicable.
+
+### 3. Render Job Submission Workflow
+
+This workflow manages the process of submitting and queuing rendering tasks.
+
+*   **Trigger:** `POST /v1/renderjobs` request.
+*   **Actors:** API Gateway, Rendering Service, Scene Management Service, Database, Message Queue.
+*   **Steps:**
+    1.  **Request Reception:** API Gateway receives the render job request (scene ID, camera configuration, output settings).
+    2.  **Authentication & Authorization:** API Gateway handles authentication and authorization.
+    3.  **Scene Retrieval:** Request forwarded to Rendering Service, which then requests scene data from the Scene Management Service (or directly from the Database).
+    4.  **Render Job Creation:** Rendering Service creates a new `RenderJob` entry in the Database with 'PENDING' status.
+    5.  **Job Queuing:** Rendering Service publishes a `render_job_submitted` message to the Message Queue, including the `job_id` and relevant scene/camera details.
+    6.  **Response:** Rendering Service returns the `job_id` to the API Gateway, which relays it to the client.
+*   **Optimization Notes:** Implement robust job prioritization in the message queue if needed. Provide clear feedback to the client on job submission status.
+
+### 4. Rendering Execution Workflow (Worker)
+
+This workflow describes the process executed by rendering worker instances.
+
+*   **Trigger:** Consumption of `render_job_submitted` message from the Message Queue.
+*   **Actors:** Rendering Worker, Asset Storage (S3), Database, Rendering Engine.
+*   **Steps:**
+    1.  **Job Consumption:** Rendering Worker picks up a `render_job_submitted` message.
+    2.  **Status Update:** Worker updates the `RenderJob` status in the Database to 'PROCESSING'.
+    3.  **Asset Fetching:** Worker retrieves necessary scene data and asset files (models, textures) from S3 based on the scene information.
+    4.  **Rendering Execution:** Worker utilizes the Rendering Engine to perform the rendering based on the job parameters (camera, resolution, etc.).
+    5.  **Output Storage:** Rendered output is uploaded to S3.
+    6.  **Database Update:** Worker updates the `RenderJob` status in the Database to 'COMPLETED' and stores the output URL. If an error occurs, the status is updated to 'FAILED' with error details.
+    7.  **Completion Notification (Optional):** Worker can publish a `render_job_completed` message for post-processing or client notifications.
+*   **Optimization Notes:** Utilize efficient asset caching on worker nodes. Optimize rendering engine parameters. Implement health checks and automatic restarts for workers.
+
+### 5. Data Processing/Transformation Workflow (General)
+
+This is a general template for asynchronous data processing tasks (e.g., format conversion, optimization).
+
+*   **Trigger:** Message published to a specific processing queue (e.g., `convert_asset`, `optimize_mesh`).
+*   **Actors:** Processing Worker, Database, Asset Storage (S3), specific processing tools/libraries.
+*   **Steps:**
+    1.  **Job Consumption:** Worker consumes message containing task details (e.g., asset ID, source path, target format).
+    2.  **Status Update:** Update associated record in Database to 'PROCESSING'.
+    3.  **Data Fetching:** Retrieve source data from S3.
+    4.  **Processing:** Execute the required processing task (e.g., convert format, optimize mesh).
+    5.  **Output Storage:** Store processed data in S3 (potentially with a new asset ID or version).
+    6.  **Database Update:** Update record with new location/status. Log any errors.
+    7.  **Downstream Notification:** Publish a message indicating task completion/failure for further actions.
+*   **Optimization Notes:** Design workers to be stateless and horizontally scalable. Implement retry mechanisms for transient failures. Monitor processing times and resource utilization.
+
+These workflows provide a structured approach to API operations and data processing, emphasizing asynchronous execution, service decoupling, and robust error handling, aligning with the overall system design and data management strategy.

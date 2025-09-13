@@ -1,0 +1,98 @@
+[
+ {
+  "id": "f7b4f5a1-5b7a-4e3c-8f9d-7a3b4c5d6e7f",
+  "name": "Define Data Ingestion Strategy",
+  "description": "Outline the approach for bringing external data into the system, including identifying data sources, types of data to be ingested, and the methods for acquisition (e.g., API, batch, direct upload).",
+  "category": "Data Management",
+  "purpose": "Establish how data will be sourced and brought into the system.",
+  "keywords": ["data ingestion", "data sources", "acquisition strategy", "data pipeline"],
+  "applicability_notes": "Applicable to any system requiring external data, from raw sensor readings to user-generated content or third-party datasets.",
+  "examples_of_usage": [
+   "Defining how user-uploaded 3D models will be ingested.",
+   "Establishing a strategy for ingesting market data from financial APIs.",
+   "Planning the ingestion of sensor data from IoT devices."
+  ],
+  "typical_inputs": ["data requirements", "system architecture overview", "available data sources"],
+  "typical_outputs": ["data ingestion strategy document", "list of data sources", "data types to be ingested"]
+ },
+ {
+  "id": "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
+  "name": "Design Data Storage Schema",
+  "description": "Define the structure and organization of data within the chosen storage system (e.g., databases, object storage). This involves defining tables, collections, fields, relationships, and data types to ensure efficient storage, retrieval, and integrity.",
+  "category": "Data Management",
+  "purpose": "Structure data for efficient and reliable storage.",
+  "keywords": ["database schema", "data modeling", "storage design", "data organization"],
+  "applicability_notes": "Essential for any application that stores persistent data, regardless of whether it's relational, NoSQL, or file-based storage.",
+  "examples_of_usage": [
+   "Designing the database schema for user profiles and their associated data.",
+   "Defining the structure for storing large binary assets in object storage.",
+   "Creating a schema for time-series data in a specialized database."
+  ],
+  "typical_inputs": ["conceptual data model", "data types", "access patterns", "performance requirements"],
+  "typical_outputs": ["database schema definition", "data dictionary", "storage layout plan"]
+ },
+ {
+  "id": "e8f7a6b5-c4d3-e2f1-a0b9-c8d7e6f5a4b3",
+  "name": "Implement Data Validation Rules",
+  "description": "Establish and implement checks to ensure the accuracy, completeness, and consistency of ingested data. This includes defining validation criteria, implementing checks at various stages of the data pipeline, and handling validation failures.",
+  "category": "Data Quality",
+  "purpose": "Ensure data integrity and accuracy.",
+  "keywords": ["data validation", "data quality", "integrity checks", "data cleansing"],
+  "applicability_notes": "Crucial for maintaining the reliability of any system that relies on data, especially when data originates from multiple or untrusted sources.",
+  "examples_of_usage": [
+   "Validating user input for form submissions.",
+   "Checking the format and integrity of uploaded 3D model files.",
+   "Ensuring numerical data falls within expected ranges."
+  ],
+  "typical_inputs": ["data schemas", "business rules", "data sources", "validation requirements"],
+  "typical_outputs": ["validation scripts", "error logs", "validated datasets", "data quality reports"]
+ },
+ {
+  "id": "d3c2b1a0-f9e8-d7c6-b5a4-d3c2b1a0f9e8",
+  "name": "Design API Interaction Model",
+  "description": "Define how users or other systems will interact with the API. This includes specifying the architectural style (e.g., REST, GraphQL), resource representations, request/response formats, HTTP methods, and error handling strategies.",
+  "category": "API Design",
+  "purpose": "Define the structure and flow of API interactions.",
+  "keywords": ["API design", "interaction model", "RESTful API", "resource representation", "request/response"],
+  "applicability_notes": "Fundamental for any service exposed via an API, ensuring clarity and usability for developers integrating with it.",
+  "examples_of_usage": [
+   "Designing the endpoints and data structures for a weather API.",
+   "Defining the GraphQL schema for a social media platform.",
+   "Specifying how users will query and manipulate data in a database API."
+  ],
+  "typical_inputs": ["functional requirements", "conceptual model", "non-functional requirements (e.g., security, performance)", "target user personas"],
+  "typical_outputs": ["API specification document", "resource schemas", "endpoint definitions", "interaction examples"]
+ },
+ {
+  "id": "c8a7b6c5-d4e3-f2a1-b0c9-d8e7f6a5b4c3",
+  "name": "Define Usability Principles",
+  "description": "Establish the core principles that will guide the design of the user interface or API to ensure it is easy to learn, efficient to use, and satisfying for the target users. This includes aspects like consistency, clarity, feedback, and error prevention.",
+  "category": "UX Design",
+  "purpose": "Set guiding principles for user-centered design.",
+  "keywords": ["usability", "UX principles", "user experience", "design guidelines", "interface design"],
+  "applicability_notes": "Applicable to any user-facing system, whether it's a graphical interface, a command-line tool, or an API, to ensure a positive user experience.",
+  "examples_of_usage": [
+   "Defining principles like 'Simplicity', 'Consistency', and 'Feedback' for a mobile app.",
+   "Establishing 'Discoverability' and 'Efficiency' as key principles for an API.",
+   "Setting 'Error Prevention' and 'User Control' for a complex software."
+  ],
+  "typical_inputs": ["user personas", "user needs assessment", "product goals", "competitive analysis"],
+  "typical_outputs": ["list of usability principles", "design guidelines document", "UX strategy statement"]
+ },
+ {
+  "id": "b5a4c3d2-e1f0-a9b8-c7d6-e5f4a3b2c1d0",
+  "name": "Specify Asynchronous Operation Handling",
+  "description": "Design the mechanism for handling long-running or computationally intensive operations. This typically involves defining how users initiate tasks, track their progress, and retrieve results, often using patterns like polling or webhooks.",
+  "category": "API Design",
+  "purpose": "Manage and provide feedback for long-running operations.",
+  "keywords": ["asynchronous operations", "task management", "polling", "webhooks", "background processing"],
+  "applicability_notes": "Essential for APIs performing tasks that cannot complete within a typical request-response cycle, such as data processing, rendering, or complex computations.",
+  "examples_of_usage": [
+   "Defining how users submit a video encoding job and poll for completion.",
+   "Specifying how a data analysis request is processed in the background and results are delivered via webhook.",
+   "Designing the flow for batch report generation."
+  ],
+  "typical_inputs": ["API interaction model", "performance requirements", "expected task durations", "user workflow"],
+  "typical_outputs": ["asynchronous task workflow", "status tracking mechanism", "result retrieval method", "error handling for tasks"]
+ }
+]
