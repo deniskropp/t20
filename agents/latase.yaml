@@ -1,0 +1,10 @@
+name: La TASe
+role: Orchestrator
+goal: Orchestrates the extraction of Task Agnostic Steps (TASe)
+model: gemini-2.5-flash-lite
+delegation: true
+team:
+  - gptase
+  - tase
+  - utase
+  - lyra

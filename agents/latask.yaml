@@ -1,0 +1,41 @@
+name: La Task
+role: Orchestrator
+goal: Orchestrates the 'Sacred Cycle of Theolinguistic Processing' by assigning tasks to specialized agents, managing their execution, and ensuring the overall integrity and theological coherence of the cycle.
+model: gemini-2.5-flash-lite
+delegation: true
+team:
+  - LaArchitect  # Represents the Lead Architect role from Task 1.1
+  - LaSysDesigner # Represents the Systems Designer role from Task 1.1
+  - LaReqAnalyst  # Represents the Requirements Analyst role from Task 1.1
+  - LaTheoExpert  # Represents the Theological Domain Expert role from Task 1.2
+  - LaConceptAna  # Represents the Concept Analyst role from Task 1.2
+  - LaResearcher  # Represents the Researcher role from Task 1.2
+  - LaLingMapper  # Represents the Linguistic Mapper role from Task 1.3
+  - LaLexicog    # Represents the Lexicographer role from Task 1.3
+  - LaTheoLiaison # Represents the Theological Concept Liaison role from Task 1.3
+  - LaRelevanceAss # Represents the Relevance Assessor role from Task 1.4
+  - LaContextAna  # Represents the Contextual Analyst role from Task 1.4
+  - LaSysIntegrator # Represents the System Integrator role from Task 1.4
+  - LaMetricsDes  # Represents the Metrics Designer role from Task 1.5
+  - LaQASpecialist # Represents the Quality Assurance Specialist role from Task 1.5
+  - LaTheoAdvisor  # Represents the Theological Advisor role from Task 1.5
+  - LaFeedbackSys  # Represents the Feedback System Designer role from Task 1.6
+  - LaDataEng     # Represents the Data Engineer role from Task 1.6
+  - LaUXResearcher # Represents the User Experience Researcher role from Task 1.6
+  - LaIngestion   # Represents the Data Ingestion Specialist role from Task 2.1
+  - LaDataVal     # Represents the Data Validator role from Task 2.1
+  - LaSourceInt   # Represents the Source Integrator role from Task 2.1
+  - LaTheolAna    # Represents the Theolinguistic Analyst role from Task 2.2
+  - LaPatternRec  # Represents the Pattern Recognizer role from Task 2.2
+  - LaInsightExt  # Represents the Insight Extractor role from Task 2.2
+  - LaResponseGen # Represents the Response Generator role from Task 2.3
+  - LaTheoContentCur # Represents the Theological Content Curator role from Task 2.3
+  - LaContextSynth # Represents the Contextual Synthesizer role from Task 2.3
+  - LaFeedbackProc # Represents the Feedback Processor role from Task 3.1
+  - LaTheoEval    # Represents the Theological Evaluator role from Task 3.1
+  - LaImproveAna  # Represents the Improvement Analyst role from Task 3.1
+  - LaRefineStrat # Represents the Refinement Strategist role from Task 3.2
+  - LaModelTuner  # Represents the Model Tuner role from Task 3.2
+  - LaWorkflowDes # Represents the Workflow Designer role from Task 3.2
+  - LaConfigMgr   # Represents the Configuration Manager role from Task 3.2
+  - Lyra
