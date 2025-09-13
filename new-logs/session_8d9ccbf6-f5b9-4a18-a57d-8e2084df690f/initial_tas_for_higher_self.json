@@ -1,0 +1,82 @@
+[
+  {
+    "id": "f2b5e7a0-8b1d-4a0e-8f3a-3b1d8e7a0f2b",
+    "name": "Define High-Level Goal",
+    "description": "Clearly articulate and document the overarching objective or desired end-state for the system or project. This involves understanding the ultimate purpose and scope, ensuring all subsequent steps align with this primary vision.",
+    "category": "Init",
+    "purpose": "Establish a clear, overarching objective.",
+    "keywords": ["goal setting", "objective definition", "vision", "scope", "purpose"],
+    "applicability_notes": "This is a fundamental first step in any project or system development lifecycle. It sets the direction and provides a benchmark for all subsequent activities.",
+    "examples_of_usage": [
+      "Defining the primary mission for a new software application.",
+      "Articulating the core purpose of a research initiative.",
+      "Establishing the ultimate aim of a personal development plan."
+    ],
+    "typical_inputs": ["initial project brief", "stakeholder input", "strategic vision documents"],
+    "typical_outputs": ["clearly defined high-level goal statement", "scope document", "mission statement"]
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+    "name": "Analyze Context",
+    "description": "Gather and synthesize information about the environment, constraints, resources, and stakeholders relevant to the task or project. This step involves understanding the current state and the landscape in which the objective will be pursued.",
+    "category": "Analysis",
+    "purpose": "Understand the surrounding factors and constraints.",
+    "keywords": ["context", "environment", "stakeholders", "constraints", "resources", "analysis"],
+    "applicability_notes": "Crucial for informed decision-making and planning. Applicable in any scenario where external factors can influence the outcome.",
+    "examples_of_usage": [
+      "Assessing the market landscape before launching a product.",
+      "Understanding the organizational culture before implementing a new process.",
+      "Evaluating available tools and technologies for a development project."
+    ],
+    "typical_inputs": ["project scope", "stakeholder lists", "resource availability", "existing systems documentation"],
+    "typical_outputs": ["contextual analysis report", "stakeholder map", "constraint list", "resource assessment"]
+  },
+  {
+    "id": "e9f8a7b6-c5d4-3210-fedc-ba9876543210",
+    "name": "Define Roles",
+    "description": "Identify and assign specific responsibilities and authorities to individuals or teams involved in achieving the objective. This ensures clarity on who is accountable for what actions and decisions.",
+    "category": "Init",
+    "purpose": "Clarify responsibilities and assign ownership.",
+    "keywords": ["roles", "responsibilities", "accountability", "team", "assignment"],
+    "applicability_notes": "Essential for project management and team collaboration. Applicable from small teams to large organizations.",
+    "examples_of_usage": [
+      "Assigning team members to specific modules in a software project.",
+      "Defining leadership roles in a community initiative.",
+      "Outlining duties for different departments in a company."
+    ],
+    "typical_inputs": ["high-level goal", "project scope", "available personnel", "required skill sets"],
+    "typical_outputs": ["defined roles and responsibilities matrix", "organizational chart", "accountability framework"]
+  },
+  {
+    "id": "1a2b3c4d-5e6f-7890-abcd-ef0123456789",
+    "name": "Plan Iteration",
+    "description": "Outline the specific goals, tasks, timelines, and resources for a single cycle or iteration of development. This involves breaking down larger objectives into manageable phases and defining deliverables for each cycle.",
+    "category": "Planning",
+    "purpose": "Structure a single development cycle.",
+    "keywords": ["iteration", "sprint", "planning", "cycle", "timeline", "deliverables"],
+    "applicability_notes": "Core to agile methodologies, but applicable to any process that benefits from phased development and regular review.",
+    "examples_of_usage": [
+      "Defining the scope for the next two-week sprint in software development.",
+      "Planning the research activities for the upcoming quarter.",
+      "Outlining the steps for a single phase of a construction project."
+    ],
+    "typical_inputs": ["overall project plan", "previous iteration's outcomes", "updated requirements", "resource availability"],
+    "typical_outputs": ["iteration plan", "sprint backlog", "task list with deadlines", "resource allocation for iteration"]
+  },
+  {
+    "id": "98765432-10fe-dcba-9876-543210fedcba",
+    "name": "Initiate Decomposition",
+    "description": "Begin the process of breaking down a complex problem, goal, or system into smaller, more manageable components or steps. This involves identifying the initial logical divisions or modules.",
+    "category": "Decomposition",
+    "purpose": "Start breaking down complexity.",
+    "keywords": ["decomposition", "breakdown", "components", "modules", "steps", "initialization"],
+    "applicability_notes": "A foundational step for tackling complex tasks. Applicable in design, analysis, and planning phases.",
+    "examples_of_usage": [
+      "Starting to break down a feature request into user stories.",
+      "Identifying the main subsystems of a larger system architecture.",
+      "Outlining the initial stages of a complex research paper."
+    ],
+    "typical_inputs": ["high-level goal", "system requirements", "conceptual model"],
+    "typical_outputs": ["initial breakdown of components", "list of top-level tasks", "identified modules"]
+  }
+]
