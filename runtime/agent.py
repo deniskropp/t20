@@ -66,18 +66,27 @@ class Agent:
             f"The team's roles are:\n    {context.plan}",
         ]
 
-        required_task_ids = step.get('requires', [])
-        if required_task_ids:
-            required_artifacts = {
-                key: value for key, value in context.artifacts.items()
-                if value['s'].get('task_id') in required_task_ids
-            }
-            if required_artifacts:
-                previous_artifacts = "\n\n---\n\n".join(
-                    f"Artifact from {key} ({value['s'].get('role')})[{value['s'].get('task_id')}]:\n{value['v']}"
-                    for key, value in required_artifacts.items()
-                )
-                task_prompt.append(f"Please use the following outputs from the other agents as your input:\n\n{previous_artifacts}\n\n")
+        required_task_ids = ['none']
+        required_task_ids.extend(step.get('requires', []))
+
+        print( f"Task requires outputs from task IDs: {required_task_ids}" )
+
+        required_artifacts = {}
+
+        if len(required_task_ids) != 0:
+            for key, value in context.artifacts.items():
+                print( f"Checking artifact from {key} with task ID {value['s'].get('task_id')}" )
+                if value['s'].get('task_id') in required_task_ids:
+                    required_artifacts[key] = value
+
+        previous_artifacts = "\n\n---\n\n".join(
+            f"Artifact from {key} ({value['s'].get('role')})[{value['s'].get('task_id')}]:\n{value['v']}"
+            for key, value in required_artifacts.items()
+        )
+
+        print( f"Found {len(required_artifacts)} required artifacts from previous tasks. Previous artifacts preview: {previous_artifacts[:500]}" )
+
+        task_prompt.append(f"Please use the following outputs from the other agents as your input:\n\n{previous_artifacts}\n\n")
 
         task_prompt.append(
             f"Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project."

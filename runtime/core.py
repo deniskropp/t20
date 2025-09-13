@@ -41,6 +41,18 @@ class ExecutionContext:
         if mem:
             self.remember_artifact(artifact_key, value)
 
+    def record_initial(self, key: str, value: Any):
+        """
+        Records an artifact from a step's execution and optionally remembers it.
+
+        Args:
+            key (str): The key under which to store the artifact.
+            value (Any): The content of the artifact.
+        """
+        artifact_key = f"{self.round_num}__step_{self.step_index}_{key}"
+        self.session.add_artifact(artifact_key, value)
+        self.artifacts[artifact_key] = {'v': value, 's': { 'task_id': 'none', 'requires': [] }}
+
 @dataclass
 class Session:
     """Manages the runtime context for a task, including session ID and artifact storage."""

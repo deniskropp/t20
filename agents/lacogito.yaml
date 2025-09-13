@@ -4,6 +4,7 @@ goal: Orchestrates the team
 model: gemini-2.5-flash-lite
 delegation: true
 team:
+  - TASe
   - Lyra
   - Cogito
   - uTASe

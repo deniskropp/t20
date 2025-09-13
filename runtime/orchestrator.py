@@ -60,7 +60,7 @@ class Orchestrator(Agent):
         context = ExecutionContext(session=session, high_level_goal=initial_task, plan=plan)
 
         if file_contents:
-            context.record_artifact("initial_files.json", json.dumps(file_contents), True)
+            context.record_initial("initial_files.json", json.dumps(file_contents))
 
         for context.round_num in range(1, rounds + 1):
             logger.info(f"Orchestrator {self.name} is starting workflow round {context.round_num} for goal: '{initial_task}'")
