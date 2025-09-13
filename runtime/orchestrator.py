@@ -173,20 +173,8 @@ class Orchestrator(Agent):
             for agent in self.team.values()
         )
 
-        planning_prompt = [
-            f"We are meta-artificial intelligence, cohesively creating an iterative role and task plan, thinking step-by-step towards the high-level goal.",
-
-#            f"Conceptual Framework: 'Echo'",
-
-            f"High-Level Goal: '{high_level_goal}'",
-
-            f"Team Members:\n{team_description}",
-
-            f"Leverage each team member, guided by their goals, to maximize collaboration. Use prompt engineering to refine the system prompts for each agent based on their roles and tasks.",
-        ]
-
-        prompt = read_file("prompts/orcis_planning.txt").strip()
-        planning_prompt = [prompt.format(
+        general_prompt = read_file("prompts/general_planning.txt").strip()
+        planning_prompt = [general_prompt.format(
             high_level_goal=high_level_goal,
             team_description=team_description
         )]
