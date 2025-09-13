@@ -1,8 +1,8 @@
 # T20 Multi-Agent System
 
-🧮[[MTC|LCP](https://ai.violass.club/mtc-lcp/)](https://ai.violass.club/mtc-lcp/)
-🪬[[Demo](./new-logs/session_c1f43a58-89ca-47b7-a9f4-c4a009391961)](./new-logs/session_c1f43a58-89ca-47b7-a9f4-c4a009391961)
-📖[[Docs](https://ai.violass.club/t20)](https://ai.violass.club/t20)
+🧮[![MTC|LCP](https://ai.violass.club/mtc-lcp/)](https://ai.violass.club/mtc-lcp/)
+🪬[![Demo](./new-logs/session_c1f43a58-89ca-47b7-a9f4-c4a009391961)](./new-logs/session_c1f43a58-89ca-47b7-a9f4-c4a009391961)
+📖[![Docs](https://ai.violass.club/t20)](https://ai.violass.club/t20)
 
 **T20 is a sophisticated, multi-agent framework designed to tackle complex tasks through collaborative AI. It empowers you to solve complex problems by assembling a team of specialized AI agents that work together, orchestrated by a central planner.**
 
