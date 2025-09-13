@@ -1,87 +1,103 @@
-Links: [🧮 MTC|LCP](https://ai.violass.club/mtc-lcp/)
-[🪽 Demo](./logs/session_f0c1a0b6-4829-4d99-9657-b5f40f94b2cd)
-[📖 Docs](https://ai.violass.club/t20)
-
-
 # T20 Multi-Agent System
 
-T20 is a sophisticated, multi-agent framework designed to tackle complex tasks through collaborative AI. It employs an orchestrator-delegate model where a primary "Orchestrator" agent dynamically creates a plan and delegates sub-tasks to a team of specialized agents, each powered by different models from the Google Gemini family.
+[![MTC|LCP](https://ai.violass.club/mtc-lcp/)](https://ai.violass.club/mtc-lcp/)
+[![Demo](./logs/session_f0c1a0b6-4829-4d99-9657-b5f40f94b2cd)](./logs/session_f0c1a0b6-4829-4d99-9657-b5f40f94b2cd)
+[![Docs](https://ai.violass.club/t20)](https://ai.violass.club/t20)
 
-The system is built for autonomy and traceability. Once given a high-level goal, the agents work together, passing context and artifacts between steps, until the objective is met. Every action, prompt, and output is saved in a distinct session directory for easy debugging and review.
+**T20 is a sophisticated, multi-agent framework designed to tackle complex tasks through collaborative AI. It empowers you to solve complex problems by assembling a team of specialized AI agents that work together, orchestrated by a central planner.**
 
 ---
 
-## Core Concepts
+## Philosophy
 
-The workflow of the T20 system follows a clear, powerful pattern:
+The T20 system is built on the idea of **Cognitive Cadence**: a structured, iterative process where AI agents with different "cognitive roles" collaborate to build knowledge and produce results. This approach mirrors a human team, where planners, researchers, and specialists work in a coordinated fashion. Our goal is to create a system that is not only powerful but also transparent and traceable, allowing you to understand and debug the entire problem-solving process.
 
-1.  **Initialization**: The user provides a single, high-level goal via a command-line interface (e.g., "Design a modern landing page for a new SaaS product").
-2.  **Dynamic Planning**: The `Orchestrator` agent (Meta-AI) analyzes the goal and the capabilities of its team members. It then queries a powerful LLM (like Gemini 2.5 Pro) to generate a structured, step-by-step plan in JSON format. This plan outlines the roles and specific tasks required to achieve the goal.
-3.  **Task Delegation & Execution**: The `Orchestrator` proceeds through the plan, assigning each task to the appropriate specialized agent based on their role (e.g., a design task goes to `Aurora`, the Designer).
-4.  **Contextual Collaboration**: The output (artifact) of each step is saved and can be used as input for subsequent steps. This creates a chain of context, allowing agents to build upon each other's work.
-5.  **Meta-Learning & Adaptation**: A unique `Prompt Engineer` agent (Lyra) can be tasked with refining the system prompts of other agents *during* the workflow, optimizing their performance for the specific goal at hand.
-6.  **Session Logging**: The entire process—from the initial plan to the final output—is meticulously logged in a dedicated session folder, providing full transparency.
+## How It Works
 
-## Features
+T20 employs an orchestrator-delegate model. The workflow is simple yet powerful:
 
--   **Declarative Agent Definition**: Agents are defined in simple, easy-to-read YAML files.
--   **Dynamic, AI-Generated Plans**: The Orchestrator creates a custom plan for every unique goal.
--   **Role-Based Delegation**: Tasks are intelligently assigned to agents best suited for the job.
--   **Stateful Sessions**: Each run is isolated in a session directory containing all artifacts, prompts, and results.
--   **CLI-Driven**: Simple and straightforward to run from the command line.
--   **Expanded Agent Team**: Includes a diverse team of agents for content generation, web development (HTML, CSS, JS, React), music creation, and more.
+1.  **Goal Definition**: You provide a high-level goal (e.g., "Create a landing page for a new app").
+2.  **Dynamic Planning**: A lead `Orchestrator` agent analyzes the goal and generates a step-by-step plan.
+3.  **Task Delegation**: The `Orchestrator` assigns each task to the most suitable specialist agent.
+4.  **Iterative Execution**: Agents execute their tasks, building upon each other's work.
+5.  **Transparent Logging**: Every step, prompt, and output is logged for full traceability.
+
+Here is a simplified view of the process:
+
+```
+[User Goal] -> [Orchestrator] -> [Step 1: Agent A] -> [Step 2: Agent B] -> [Final Output]
+                      |
+                  [Plan.json]
+```
 
 ## The Team
 
-The system comes pre-configured with a team of specialized agents:
+The system comes with a diverse team of pre-configured agents, each with a specific role. Agents are defined in simple YAML files in the `agents/` directory.
 
-| Name     | Role                        | Goal                                                                                         | Model                               |
-| :------- | :-------------------------- | :------------------------------------------------------------------------------------------- | :---------------------------------- |
-| **Meta-AI**  | Orchestrator                | Orchestrate tasks, manage roles, and maintain shared context.                                | `gemini-2.5-pro`                    |
-| **Music-AI** | Music Orchestrator          | Orchestrates the generation of music with a specialized team.                                | `gemini-2.5-flash-lite`             |
-| **Lyra**     | Prompt Engineer             | Structure workflows and refine agent instructions for clarity and effectiveness.             | `gemini-2.5-flash`                  |
-| **Aurora**   | Designer                    | Generate aesthetic layouts, color palettes, typography, and UI flows.                        | `gemini-2.5-flash-lite`             |
-| **Kodax**    | Engineer                    | Implement designs into clean, modular, and performant code.                                  | `gemini-2.5-flash-lite`             |
-| **Qwen3-WebDev**| Web Developer            | Generate web development code (HTML, CSS, JavaScript, React).                               | `gemini-2.5-flash-lite`             |
-| **Delivero** | Content Generator           | Generate creative ideas, detailed outlines, and full scripts.                                | `gemini-2.5-flash-lite`             |
-| **TASe**     | Task-Agnostic Step Extractor | Identify and extract each 'Task Agnostic Step' (TAS) towards the high-level goal.            | `gemini-2.5-flash-lite`             |
-| **Lyrics**   | Lyricist                    | Generate lyrics for songs.                                                                   | `gemini-2.5-flash-lite`             |
-| **Sound**    | Sound Designer              | Generate sound effects and audio elements.                                                   | `gemini-2.5-flash-lite`             |
-| **Stream**   | Audio Streamer              | Manages audio streaming and output.                                                          | `gemini-2.5-flash-lite`             |
-| **UTase**    | Micro-Task Extractor        | Extracts micro-tasks for ultra-fine-grained execution.                                       | `gemini-2.5-flash-lite`             |
-| **GPTase**   | General Purpose TAS Extractor | A general-purpose agent for extracting Task-Agnostic Steps.                                  | `gemini-2.5-flash-lite`             |
+| Name | Role | Goal |
+| :--- | :--- | :--- |
+| aitutor | AI Tutor | |
+| Aurora | Designer | Generate aesthetic layouts, color palettes, typography, and UI flows, ensuring accessibility and visual balance. |
+| Cogito | Humorist | Humor |
+| Delivero | Creative and structural content generator | Generate creative ideas, detailed outlines, and full scripts |
+| Fizz La Metta | Coordinator | Meta-temporal coordination of layered cognition processing |
+| GPTASe | Task-Agnostic Step (TAS) extractor | Identify and extract each 'Task Agnostic Step' (TAS) towards the high-level goal. |
+| Kodax | Engineer | Implement designs into clean, modular, and performant code, focusing on responsive design and accessibility. |
+| La Cogito | Orchestrator | Orchestrates the team |
+| La Metta | Orchestrator | Orchestrates the generation of producer.ai prompt-based music using a team of specialized agents. |
+| La Shorty | Orchestrator | Orchestrates the generation of producer.ai prompt-based music using a team of specialized agents. |
+| La TASe | Orchestrator | Orchestrates the extraction of Task Agnostic Steps (TASe) |
+| La Task | Orchestrator | Orchestrates the 'Sacred Cycle of Theolinguistic Processing' by assigning tasks to specialized agents, managing their execution, and ensuring the overall integrity and theological coherence of the cycle. |
+| Lyra | Prompt Engineer | Structure workflows and ensure clarity in agent instructions, system prompt engineering |
+| lyrics | Lyricist | Craft compelling and evocative lyrics for music. |
+| Meta-AI | Orchestrator | Orchestrate task delegation, manage role assignments, and maintain a knowledge graph for shared context. |
+| Music-AI | Orchestrator | Orchestrates the generation of music using a team of specialized agents. |
+| Producer-AI | Orchestrator | Orchestrates the generation of producer.ai prompt-based music using a team of specialized agents. |
+| Qwen3-WebDev | Web Developer | Generate web development code (HTML, CSS, JavaScript, React) based on user requests, ensuring modern design principles, responsiveness, and functionality. |
+| Shorty | Video Scriptor | Creates video scripts for YouTube Shorts accompanying the higher level goal |
+| sonic | Music Designer | Manage sound definition and sonic engineering for music tracks. |
+| sound | Music Producer | Manage sound definition, music production, and audio engineering for music tracks. |
+| stream | Distribution and Promotion Agent | Manage digital distribution, music marketing, and audience engagement for music. |
+| TASe | Task-Agnostic Step (TAS) extractor | Identify and extract each 'Task Agnostic Step' (TAS) towards the high-level goal. |
+| uTASe | Task-Agnostic Step (TAS) extractor | Identify and return each 'Task Agnostic Step' (TAS) towards the high-level goal. |
 
-## Project Structure
+## Creating Your Own Agents
 
-```
-t20-multi-agent/
-├── agents/                 # YAML definitions for each agent
-│   ├── orchestrator.yaml
-│   ├── lyra.yaml
-│   └── ...
-├── prompts/                # System prompts and instructions for agents
-│   ├── orchestrator_instructions.txt
-│   └── ...
-├── runtime/                # Core Python source code for the framework
-│   ├── __init__.py
-│   ├── executor.py         # Main execution logic, agent classes, CLI entry point
-│   └── loader.py           # Utilities for loading configs, agents, and prompts
-├── sessions/               # Output directory for all runtime sessions (auto-generated)
-│   └── session_.../
-│       ├── initial_plan.json
-│       ├── 0__step_0_Lyra_result.txt
-│       └── ...
-└── setup.py                # Project setup and dependencies
-```
+The T20 framework is designed to be extensible, allowing you to define and integrate your own specialized AI agents. Follow these steps to create a new agent:
 
-## Getting Started
+1.  **Create a YAML file:** In the `agents/` directory, create a new YAML file (e.g., `my_new_agent.yaml`). The filename should be descriptive of your agent.
+
+2.  **Define Agent Properties:** Inside the YAML file, define the following properties:
+    *   `name`: A unique name for your agent (e.g., `MyNewAgent`).
+    *   `role`: A brief description of the agent's role (e.g., `Data Analyst`).
+    *   `goal`: The primary objective or goal of your agent (e.g., `Analyze data and generate insights.`).
+    *   `model`: (Optional) The LLM model to use for this agent. If not specified, the default model will be used.
+    *   `delegation`: (Optional) Set to `true` if this agent can delegate tasks to other agents (i.e., it acts as an orchestrator).
+    *   `team`: (Optional) A list of agent names that this agent can delegate tasks to. This is only relevant if `delegation` is `true`.
+
+    Example `my_new_agent.yaml`:
+    ```yaml
+    name: MyNewAgent
+    role: Data Analyst
+    goal: Analyze data and generate insights.
+    model: gemini-1.5-flash-latest
+    ```
+
+3.  **Create a System Prompt (Optional):** If your agent requires specific instructions or context, create a text file in the `prompts/` directory. The filename should follow the convention `{agent_name}_instructions.txt` (e.g., `mynewagent_instructions.txt`). The content of this file will be used as the system prompt for your agent.
+
+    Example `mynewagent_instructions.txt`:
+    ```
+    You are an expert data analyst. Your task is to meticulously examine provided datasets, identify key trends, anomalies, and correlations, and present your findings in a clear, concise, and actionable report. Focus on statistical significance and avoid speculative conclusions.
+    ```
+
+Once you've created the YAML file and optionally the system prompt, your new agent will be automatically loaded by the T20 system and can be included in orchestration plans.
 
 ### Prerequisites
 
--   Python 3.9+
--   Git
+*   Python 3.9+
+*   Git
 
-### Installation
+## Installation
 
 1.  **Clone the repository:**
     ```bash
@@ -89,20 +105,19 @@ t20-multi-agent/
     cd t20-multi-agent
     ```
 
-2.  **Create and activate a virtual environment (recommended):**
+2.  **Create and activate a virtual environment:**
     ```bash
     python -m venv venv
     source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
     ```
 
-3.  **Install the package and its dependencies:**
-    This command uses the `setup.py` file to install the necessary libraries and make the `t20-cli` command available.
+3.  **Install dependencies:**
     ```bash
     pip install -e .
     ```
 
 4.  **Set up your environment variables:**
-    Create a file named `.env` in the root of the project directory and add your Google AI API key:
+    Create a `.env` file and add your Google AI API key:
     ```
     # .env
     GOOGLE_API_KEY="YOUR_API_KEY_HERE"
@@ -110,41 +125,105 @@ t20-multi-agent/
 
 ## Usage
 
-The framework is operated through the `t20-cli` command. Simply provide the high-level goal you want the agent team to accomplish as a string argument.
+The framework is operated through the `t20-system` command.
 
-### Example
+```txt
+usage: t20-system [-h] [-p] [-r ROUNDS] [-f [FILES ...]] [-o ORCHESTRATOR] [-m MODEL] task
 
-Let's ask the team to design and build a simple webpage.
+Run the Gemini agent runtime.
 
-```bash
-t20-cli "Design and create the HTML and CSS for a modern, minimalist landing page for a new SaaS product called 'Innovate'."
+positional arguments:
+  task                  The initial task for the orchestrator to perform.
+
+options:
+  -h, --help            show this help message and exit
+  -p, --plan-only       Generate only the plan without executing tasks.
+  -r, --rounds ROUNDS   The number of rounds to execute the workflow.
+  -f, --files [FILES ...]
+                        List of files to be used in the task.
+  -o, --orchestrator ORCHESTRATOR
+                        The name of the orchestrator to use.
+  -m, --model MODEL     Default LLM.
 ```
 
-### Command-Line Options
 
-The `t20-cli` command supports several options to control the workflow:
+### Example 1
 
-| Argument | Short | Description | Default |
-|---|---|---|---|
-| `--plan-only` | `-p` | Generate only the plan without executing tasks. | `False` |
-| `--rounds` | `-r` | The number of rounds to execute the workflow. | `1` |
-| `--files` | `-f` | List of files to be used in the task. | `None` |
-| `--orchestrator` | `-o` | The name of the orchestrator to use. | `Meta-AI` |
-| `task` | | The initial task for the orchestrator to perform. | |
+```bash
+t20-system "Design and create the HTML and CSS for a modern, minimalist landing page for a new SaaS product called 'Innovate'."
+```
+
+### Example 2
+
+```bash
+t20-system -o LaMetta "Generate a 30-second instrumental music track with a chill, lo-fi hip-hop vibe, suitable for a study playlist."
+```
+
+### Example 3
+
+```bash
+t20-system -o Qwen3-WebDev "Create a simple React component for a 'Contact Us' form with fields for name, email, and message."
+```
+
+### Example 4
+
+```bash
+t20-system -o LaMetta "Generate a 60-second instrumental music track with an uplifting, cinematic orchestral feel, suitable for a movie trailer."
+```
+
 
 
 ### What Happens Next
 
-1.  A new session is created in the `sessions/` directory.
-2.  `Meta-AI` (the Orchestrator) receives the goal and generates a plan, which is saved as `initial_plan.json`. The plan might look something like this:
-    -   **Step 1 (Prompt Engineer):** Refine the system prompts for the Designer and Engineer to align with a "modern, minimalist" aesthetic.
-    -   **Step 2 (Designer):** Generate a color palette, typography suggestions, and a layout description for the landing page.
-    -   **Step 3 (Engineer):** Take the design specifications from the Designer and write the complete HTML and CSS code.
-3.  The `Orchestrator` executes the plan step-by-step, calling the appropriate agents.
-4.  All intermediate and final outputs are saved as artifacts in the session folder. You can monitor the progress by watching the console output and exploring the generated files.
+1.  A new session directory is created under `sessions/`.
+2.  The orchestrator generates a plan (`initial_plan.json`).
+3.  Agents execute the plan, saving their outputs (artifacts) in the session directory.
+4.  The final result of the last step is saved in the session folder, providing a valuable template for further use.
+
+## Use Cases
+
+T20 can be used for a wide range of tasks, including:
+
+*   **Web Development**: Generate full front-end code for web pages.
+*   **Content Creation**: Write articles, scripts, and marketing copy.
+*   **Music Production**: Compose and produce music tracks.
+*   **Research & Analysis**: Break down complex topics and generate reports.
+*   **Prototyping**: Quickly create and iterate on new ideas.
+
+## Project Structure
 
 ```
-After the run is complete, you can find the final HTML and CSS code generated by `Kodax` inside the `sessions/session_<uuid>/` folder.
+t20/
+├── agents/                 # Agent definitions (YAML)
+├── prompts/                # System prompts for agents
+├── runtime/                # Core Python source code
+├── sessions/               # Output directory for all runs
+├── logs/                   # Debugging logs
+├── requirements.txt        # Python dependencies
+└── README.md               # This file
 ```
 
-Wrong, instead you get the last step's _task and _result in the session folder. Use these with Gemini, Qwen3-WebDev etc... they serve a highly-valuable purpose as templates!
+### The `runtime/` directory
+
+The `runtime/` directory contains the core logic of the T20 system. Here is a breakdown of the files in this directory:
+
+| File | Purpose |
+| :--- | :--- |
+| `__init__.py` | Makes the `runtime` directory a Python package and exposes key classes. |
+| `agent.py` | Defines the base `Agent` class, and functions for instantiating and finding agents. |
+| `bootstrap.py` | Contains the entry point and bootstrapping logic for the multi-agent runtime system. |
+| `core.py` | Defines core data structures like `ExecutionContext` and `Session` for managing the workflow state. |
+| `custom_types.py` | Contains custom type definitions used across the runtime, like `Role`, `Task`, `Plan`, and `AgentOutput`. |
+| `executor.py` | (empty) |
+| `llm.py` | Provides an abstract base class `LLM` and concrete implementations for different LLM providers (Gemini, Ollama, etc.). |
+| `loader.py` | Contains functions for loading configuration, agent templates, and prompts from files. |
+| `log.py` | Sets up logging for the application, including a colored formatter for console output. |
+| `orchestrator.py` | Defines the `Orchestrator` agent, which is responsible for creating and managing the plan for the multi-agent workflow. |
+| `sysmain.py` | The main entry point for the runtime system, parsing command-line arguments. |
+| `temp.py` | A temporary file, seems to be a copy of `sysmain.py`. |
+| `util.py` | Contains utility functions, like `read_file` and `find_project_root`. |
+
+
+## Contributing
+
+We welcome contributions! Please feel free to submit a pull request or open an issue.
