@@ -66,12 +66,18 @@ class Agent:
             f"The team's roles are:\n    {context.plan}",
         ]
 
-        previous_artifacts = "\n\n---\n\n".join(
-            f"Artifact from {key} ({value['s'].get("role")})[{value['s'].get("task_id")}]:\n{value['v']}"
-            for key, value in context.artifacts.items()
-        )
-        if previous_artifacts:
-            task_prompt.append(f"Please use the following outputs from the other agents as your input:\n\n{previous_artifacts}\n\n")
+        required_task_ids = step.get('requires', [])
+        if required_task_ids:
+            required_artifacts = {
+                key: value for key, value in context.artifacts.items()
+                if value['s'].get('task_id') in required_task_ids
+            }
+            if required_artifacts:
+                previous_artifacts = "\n\n---\n\n".join(
+                    f"Artifact from {key} ({value['s'].get('role')})[{value['s'].get('task_id')}]:\n{value['v']}"
+                    for key, value in required_artifacts.items()
+                )
+                task_prompt.append(f"Please use the following outputs from the other agents as your input:\n\n{previous_artifacts}\n\n")
 
         task_prompt.append(
             f"Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project."
@@ -134,18 +140,14 @@ def instantiate_agent(agent_spec: Dict[str, Any], prompts: Dict[str, str], all_a
         prompt_key = 'orchestrator_instructions.txt'
 
     if prompt_key not in prompts:
-        logger.warning(f"Prompt for agent '{agent_spec['name']}' not found with key '{prompt_key}'. Skipping.")
-        return None
+        logger.warning(f"Prompt for agent '{agent_spec['name']}' not found with key '{prompt_key}'. Empty system prompt will be used.")
 
-    agent_class = Orchestrator #if agent_spec.get('role') == 'Orchestrator' else Agent
-    """ """
-    """ """
-    agent = agent_class(
+    agent = Orchestrator(
         name=agent_spec.get('name', 'Unnamed Agent'),
         role=agent_spec.get('role', 'Agent'),
         goal=agent_spec.get('goal', ''),
         model=agent_spec.get('model', 'default-model'),
-        system_prompt=prompts[prompt_key]
+        system_prompt="" if prompt_key not in prompts else prompts[prompt_key]
     )
 
     if agent_spec.get('delegation') and 'team' in agent_spec:
@@ -153,13 +155,14 @@ def instantiate_agent(agent_spec: Dict[str, Any], prompts: Dict[str, str], all_a
         for team_member_name in agent_spec['team']:
             member_spec = next((s for s in all_agent_specs if s['name'].lower() == team_member_name.lower()), None)
             if member_spec:
-                """ """
-                """ """
                 member_agent = instantiate_agent(member_spec, prompts, all_agent_specs) # Recursive call
-                if member_agent:
-                    agent.team[team_member_name] = member_agent
             else:
                 logger.warning(f"Team member '{team_member_name}' not found in agent specs.")
+                member_agent = instantiate_agent(agent_spec = {
+                        'name': team_member_name, 'role': 'Unknown', 'goal': '', 'model': agent_spec.get('model', 'default-model'), 'system_prompt': ''
+                    }, prompts=prompts, all_agent_specs=all_agent_specs) # Recursive call
+            if member_agent:
+                agent.team[team_member_name] = member_agent
     return agent
 
 def find_agent_by_role(agents: List[Agent], role: str) -> Optional[Agent]:
@@ -177,4 +180,4 @@ def find_agent_by_role(agents: List[Agent], role: str) -> Optional[Agent]:
     return next((agent for agent in agents if agent.role == role), None)
 
 
-from runtime.orchestrator import Orchestrator # Import Session and ExecutionContext
+from runtime.orchestrator import Orchestrator
