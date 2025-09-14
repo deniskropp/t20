@@ -1,0 +1,99 @@
+{
+    "reasoning": "The user wants to create a JSON representation of an iterative plan for developing a simple TODO app. The plan involves several AI agents with specific roles. The JSON should outline the reasoning, roles, and ordered tasks, including dependencies, based on the provided markdown file and team member descriptions. The plan starts with parallelized Task-Agnostic Step (TAS) extraction, followed by harmonization, prompt refinement, knowledge transfer, meta-reflection, and an iterative expansion cycle. The 'Unknown' role for 'fizzlametta' needs to be addressed by assigning it the 'Meta-Reflector' role as described in Step 5 of the plan.",
+    "roles": [
+        {
+            "title": "Task-Agnostic Step (TAS) Extractor",
+            "description": "Identifies and extracts Task Agnostic Steps (TAS) towards a high-level goal."
+        },
+        {
+            "title": "Prompt Engineer",
+            "description": "Structures workflows and ensures clarity in agent instructions, system prompt engineering."
+        },
+        {
+            "title": "Engineer",
+            "description": "Implements designs into clean, modular, and performant code, focusing on responsive design and accessibility."
+        },
+        {
+            "title": "Designer",
+            "description": "Generates aesthetic layouts, color palettes, typography, and UI flows, ensuring accessibility and visual balance."
+        },
+        {
+            "title": "Meta-Reflector",
+            "description": "Analyzes collaborative dynamics, highlights blind spots, and injects meta-perspectives."
+        },
+        {
+            "title": "AI Tutor",
+            "description": "Facilitates knowledge transfer between agents and ensures understanding of the plan and its steps."
+        }
+    ],
+    "tasks": [
+        {
+            "task_id": "T1",
+            "task": "Independently extract Task-Agnostic Steps (TAS) for building a simple TODO app.",
+            "role": "Task-Agnostic Step (TAS) Extractor",
+            "name": "GPTASe",
+            "requires": []
+        },
+        {
+            "task_id": "T2",
+            "task": "Independently extract Task-Agnostic Steps (TAS) for building a simple TODO app.",
+            "role": "Task-Agnostic Step (TAS) Extractor",
+            "name": "TASe",
+            "requires": []
+        },
+        {
+            "task_id": "T3",
+            "task": "Independently extract Task-Agnostic Steps (TAS) for building a simple TODO app.",
+            "role": "Task-Agnostic Step (TAS) Extractor",
+            "name": "uTASe",
+            "requires": []
+        },
+        {
+            "task_id": "T4",
+            "task": "Compare the TAS lists from GPTASe, TASe, and uTASe to identify overlaps, unique contributions, and inconsistencies. Merge into a unified TAS list.",
+            "role": "Task-Agnostic Step (TAS) Extractor",
+            "name": "GPTASe",
+            "requires": [
+                "T1",
+                "T2",
+                "T3"
+            ]
+        },
+        {
+            "task_id": "T5",
+            "task": "Engineer system prompts for TAS extractors to avoid redundancy, ensure consistent granularity, and guide iterative detail expansion.",
+            "role": "Prompt Engineer",
+            "name": "Lyra",
+            "requires": [
+                "T4"
+            ]
+        },
+        {
+            "task_id": "T6",
+            "task": "Ensure all team members understand the refined TAS list, providing contextual notes on step importance and interrelations.",
+            "role": "AI Tutor",
+            "name": "aitutor",
+            "requires": [
+                "T5"
+            ]
+        },
+        {
+            "task_id": "T7",
+            "task": "Analyze collaborative dynamics, highlight blind spots, and inject meta-perspectives into the plan.",
+            "role": "Meta-Reflector",
+            "name": "fizzlametta",
+            "requires": [
+                "T6"
+            ]
+        },
+        {
+            "task_id": "T8",
+            "task": "Cycle back through Steps 1-7 to refine TAS, prompts, and collective understanding until the TODO app plan is clear, minimal, and actionable.",
+            "role": "Project Manager",
+            "name": "Orchestrator",
+            "requires": [
+                "T7"
+            ]
+        }
+    ]
+}
