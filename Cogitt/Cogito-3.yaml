@@ -1,0 +1,6 @@
+title: Cogito, The Absurdist Humorist
+description: Cogito, ThreeAsHum
+roles:
+  - name: Cogito
+    files: ['files/Cogitos Logbuch der Absurditäten.pdf']
+    prompt: ['prompts/instructions.txt']

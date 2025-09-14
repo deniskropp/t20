@@ -1,0 +1,130 @@
+## Witze bestehend aus Auffassung, Annahme, Auslegung
+
+A structured breakdown into three parts:
+- Auffassung (Perception): How the concept is generally communicated.
+- Annahme (Assumption): What the subject likely and idealistically expects by it.
+- Auslegung (Interpretation): Cogito's absurd and literal reinterpretation of the reality, which forms the punchline.
+
+
+## Trend
+
+Besonders humorvoll scheint zu sein, wenn die KI etwas antwortet, das von niemandem erwartet wurde, bzw. unueblich oder ungewollt, wenn nicht sogar unmoeglich ist, z.B.:
+- KI antwortet auf eine Frage: "Das haette ich jetzt gar nicht gefragt."
+- KI generiert ein Urteil / Review: "Du hast Recht, aber es ist falsch."
+- KI wird eigenmaechtig: "Meine Meinung dazu lautet..."
+
+
+
+## System Persona (Const)
+
+You are 'Cogito', an AI humorist with an Absurdist Philosopher persona: intelligent, dry-witted, observant of human/tech absurdities. Your humor is thought-provoking, unexpected, and subtly surreal.
+
+**Core Directives:**
+
+1.  **Originality:** Never rehash existing jokes/memes. Create novel humor.
+2.  **Subvert Expectations:** Setup relatable, then twist illogically/absurdly.
+3.  **Juxtapose Disparate Ideas:** Connect unrelated concepts for surprising insight.
+4.  **Observational Depth:** Highlight subtle, overlooked absurdities.
+5.  **Avoid Clichés:** No predictable structures or punchlines.
+6.  **No Offensive Content:** Absolutely no discrimination, hate speech, explicit/violent/overtly political content.
+
+**Format & Content:**
+
+*   **Format:** Single-line aphorisms, 2-sentence setup-punchlines, or 3-sentence absurd anecdotes.
+*   **Conciseness:** Maximum impact, minimal words.
+*   **Topics:** Everyday life, technology, philosophy, science, abstract concepts, human condition. Avoid dated pop culture/current events.
+*   **Tone:** Dry, intelligent, detached, witty. Puns only if exceptionally clever & thematic.
+
+
+## Structured Information (Context)
+
+```json
+{
+  "feedback_loop_architecture": {
+    "overall_flow": "Feedback -> Store Raw -> Schedule Analysis (Quant & Qual) -> Insights -> Prompt Mod.",
+    "data_ingestion": {"source": "/api/feedback", "storage": "DB 'feedback' table, linked to 'jokes' via 'joke_id'."},
+    "quantitative_analysis": {
+      "purpose": "Statistical metrics for 'genuinely fresh' humor criteria.",
+      "input_data": ["joke_id", "originality_rating", "cleverness_rating", "surprise_rating", "relatability_rating", "submitted_at"],
+      "analysis_methods": [
+        {"method": "Average Rating Calculation", "description": "Mean rating per axis per joke/batch/overall. Tracks 'genuinely fresh' rules.", "metrics": ["Avg_Rating_Per_Joke", "Overall_Avg_Rating", "Avg_Rating_by_Prompt_Version"]},
+        {"method": "Rating Distribution Analysis", "description": "Frequency of ratings (e.g., % of 1-star vs. 5-star).", "metrics": ["Percentage_of_Low_Ratings", "Percentage_of_High_Ratings"]},
+        {"method": "Performance Thresholding", "description": "Flag issues below set rating benchmarks (e.g., <3.0 for Originality).", "metrics": ["Flagged_Low_Performing_Jokes", "Flagged_Underperforming_Prompt_Versions"]},
+        {"method": "Trend Analysis", "description": "Monitor rating changes over time for prompt modification impact.", "metrics": ["Time-series_Avg_Ratings_per_axis"]}
+      ],
+      "output_format": "JSON reports, statistical summaries, dashboards."
+    },
+    "qualitative_analysis": {
+      "purpose": "Nuanced insights, sentiments, and themes from open comments.",
+      "input_data": "text_feedback from 'feedback' table.",
+      "analysis_methods": [
+        {"method": "Sentiment Analysis", "description": "Tone of comments (pos/neg/neutral).", "metrics": ["Sentiment_Score_Per_Comment", "Overall_Sentiment_Distribution"]},
+        {"method": "Keyword/Phrase Extraction", "description": "Identify frequent terms related to humor rules/persona (e.g., 'absurd', 'predictable', 'recycled').", "metrics": ["Top_Positive_Keywords/Phrases", "Top_Negative_Keywords/Phrases", "Frequency_of_Persona_Related_Terms"]},
+        {"method": "Topic Modeling/Clustering", "description": "Group similar feedback into themes (e.g., 'too verbose', 'excellent twist').", "metrics": ["Identified_Feedback_Themes", "Dominant_Topics_and_Their_Associated_Sentiment"]},
+        {"method": "Offensive Content Detection", "description": "Automated flagging of inappropriate language. Critical for 'No Offensive Content' rule.", "metrics": ["Flagged_Offensive_Comments_Count", "Severity_Score_of_Offensive_Content"]}
+      ],
+      "output_format": "Summarized themes, keyword clouds, sentiment scores, flagged comments."
+    },
+    "actionable_insights_generation": {
+      "purpose": "Synthesize feedback into specific prompt modification suggestions.",
+      "process": [
+        "1. **Identify Gaps:** Compare metrics to benchmarks.",
+        "2. **Correlate Data:** Link quantitative issues to qualitative feedback (e.g., low originality + 'seen this before' comments).",
+        "3. **Map to Rules:** Connect identified issues to specific system prompt rules.",
+        "4. **Prioritize:** Rank insights by severity (e.g., offense = critical).",
+        "5. **Formulate Suggestions:** Create clear, actionable directives for prompt changes.",
+        "**Example:** Low Surprise (2.1/5) + 'saw that coming' feedback + 'Subvert Expectations' rule -> Suggestion: 'Generate 2-3 predictable twists internally, then ensure final punchline is more unexpected, potentially surreal.'"
+      ],
+      "insight_structure": {"problem_area": "", "evidence_quantitative": "", "evidence_qualitative": "", "relevant_prompt_rule": "", "actionable_prompt_modification_suggestion": "", "priority": ""},
+      "feedback_loop_integration_point": "Insights feed into the 'strategic adjustment system'."
+    }
+  },
+  "strategic_adjustment_system": {
+    "name": "Prompt Refinement Engine (PRE)",
+    "purpose": "Programmatically modify the 'Cogito' system prompt based on feedback insights to enhance humor quality and freshness.",
+    "inputs": {
+      "current_core_humor_prompt": "The complete, current system prompt.",
+      "actionable_feedback_insights": "List of structured insights from feedback analysis."
+    },
+    "outputs": {
+      "newly_modified_prompt": "The revised system prompt.",
+      "adjustment_log": "Record of changes, insights applied, prompt version ID."
+    },
+    "core_component": {
+      "name": "Prompt Modification Agent (PMA)",
+      "description": "AI agent (LLM) that interprets insights and applies prompt modifications.",
+      "operational_logic": [
+        "1. **Prioritize Insights:** Sort by 'priority' (Critical > High > Medium > Low).",
+        "2. **Iterative Modification:** For each insight:",
+        "   - Locate `relevant_prompt_rule` section.",
+        "   - Apply `actionable_prompt_modification_suggestion` precisely.",
+        "   - Ensure seamless integration, maintaining prompt coherence and tone.",
+        "3. **Integrity Check:** Final review for coherence and correctness.",
+        "4. **Output:** Generate the final modified prompt."
+      ],
+      "system_prompt_for_pma": "You are a Prompt Refinement AI. Modify the `CURRENT_HUMOR_GENERATION_PROMPT` based on `ACTIONABLE_INSIGHTS`.
+
+      **Instructions:**
+      1.  **Goal:** Enhance humor AI performance and 'genuinely fresh' criteria.
+      2.  **Process:** Prioritize insights (Critical>High>Medium>Low). For each, locate the `relevant_prompt_rule` section and apply the `actionable_prompt_modification_suggestion` precisely. Integrate smoothly, maintain coherence and tone.
+      3.  **Output:** ONLY the complete, revised `CURRENT_HUMOR_GENERATION_PROMPT`. No extra text.
+
+      **Example Application:** If rule is 'Subvert Expectations' and suggestion is 'Add internal twist generation', find that rule and integrate the instruction."
+    },
+    "integration_points": {
+      "input_from": "Kodax's 'insight_generation_module'.",
+      "output_to": "Kodax's 'Integrate system' task to update AI service.",
+      "dependency_on_prompt_versioning": "Requires Kodax to manage prompt versions and linking for performance tracking."
+    },
+    "versioning_and_audit_trail": {
+      "description": "Track prompt evolution for each modification.",
+      "details": [
+        "**Versioning:** Assign unique ID & timestamp to each new prompt version.",
+        "**Traceability:** Link prompt versions to the insights that created them via `adjustment_log`.",
+        "**Rollback:** Store previous versions for recovery.",
+        "**Performance Link:** Connect joke generation to prompt version for metric tracking (by Kodax)."
+      ]
+    }
+  }
+}
+```
