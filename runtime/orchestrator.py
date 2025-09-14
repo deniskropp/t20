@@ -1,4 +1,8 @@
-"""Orchestrator agent definition and related planning models."""
+"""This module defines the Orchestrator agent and its planning capabilities.
+
+The Orchestrator is a specialized agent responsible for generating, managing,
+and executing the workflow plan based on a high-level goal.
+"""
 
 import json
 from typing import List, Dict, Any, Optional

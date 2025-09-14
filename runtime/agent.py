@@ -1,4 +1,8 @@
-"""Agent definitions and related utility functions."""
+"""This module defines the core Agent class and related functionalities.
+
+It includes the agent's lifecycle methods, task execution logic, and
+helper functions for agent instantiation and discovery.
+"""
 
 import json as JSON
 import uuid
@@ -67,24 +71,28 @@ class Agent:
         ]
 
         required_task_ids = ['none']
-        required_task_ids.extend(step.get('requires', []))
+        required_task_ids.extend(step.get("requires", []))
 
-        print( f"Task requires outputs from task IDs: {required_task_ids}" )
+        logger.info(f"Task requires outputs from task IDs: {required_task_ids}")
 
         required_artifacts = {}
 
         if len(required_task_ids) != 0:
-            for key, value in context.artifacts.items():
-                print( f"Checking artifact from {key} with task ID {value['s'].get('task_id')}" )
-                if value['s'].get('task_id') in required_task_ids:
-                    required_artifacts[key] = value
+            for key, artifact in context.artifacts.items():
+                logger.info(
+                    f"Checking artifact from {key} with task ID {artifact['step'].get('task_id')}"
+                )
+                if artifact["step"].get("task_id") in required_task_ids:
+                    required_artifacts[key] = artifact
 
         previous_artifacts = "\n\n---\n\n".join(
-            f"Artifact from {key} ({value['s'].get('role')})[{value['s'].get('task_id')}]:\n{value['v']}"
-            for key, value in required_artifacts.items()
+            f"Artifact from {key} ({artifact['step'].get('role')})[{artifact['step'].get('task_id')}]:\n{artifact['content']}"
+            for key, artifact in required_artifacts.items()
         )
 
-        print( f"Found {len(required_artifacts)} required artifacts from previous tasks. Previous artifacts preview: {previous_artifacts[:500]}" )
+        logger.info(
+            f"Found {len(required_artifacts)} required artifacts from previous tasks. Previous artifacts preview: {previous_artifacts[:500]}"
+        )
 
         task_prompt.append(f"Please use the following outputs from the other agents as your input:\n\n{previous_artifacts}\n\n")
 
@@ -132,48 +140,6 @@ class Agent:
 
         return result
 
-def instantiate_agent(agent_spec: Dict[str, Any], prompts: Dict[str, str], all_agent_specs: List[Dict[str, Any]]) -> Optional[Agent]:
-    """
-    Instantiates an Agent (or a subclass) based on the provided specification.
-
-    Args:
-        agent_spec (Dict[str, Any]): A dictionary containing the agent's specifications.
-        prompts (Dict[str, str]): A dictionary of available system prompts.
-        all_agent_specs (List[Dict[str, Any]]): A list of all agent specifications for team resolution.
-
-    Returns:
-        Optional[Agent]: An instantiated Agent object, or None if the prompt is not found.
-    """
-    prompt_key = f"{agent_spec['name'].lower()}_instructions.txt"
-    if agent_spec.get('name') == 'Meta-AI':
-        prompt_key = 'orchestrator_instructions.txt'
-
-    if prompt_key not in prompts:
-        logger.warning(f"Prompt for agent '{agent_spec['name']}' not found with key '{prompt_key}'. Empty system prompt will be used.")
-
-    agent = Orchestrator(
-        name=agent_spec.get('name', 'Unnamed Agent'),
-        role=agent_spec.get('role', 'Agent'),
-        goal=agent_spec.get('goal', ''),
-        model=agent_spec.get('model', 'default-model'),
-        system_prompt="" if prompt_key not in prompts else prompts[prompt_key]
-    )
-
-    if agent_spec.get('delegation') and 'team' in agent_spec:
-        agent.team = {}
-        for team_member_name in agent_spec['team']:
-            member_spec = next((s for s in all_agent_specs if s['name'].lower() == team_member_name.lower()), None)
-            if member_spec:
-                member_agent = instantiate_agent(member_spec, prompts, all_agent_specs) # Recursive call
-            else:
-                logger.warning(f"Team member '{team_member_name}' not found in agent specs.")
-                member_agent = instantiate_agent(agent_spec = {
-                        'name': team_member_name, 'role': 'Unknown', 'goal': '', 'model': agent_spec.get('model', 'default-model'), 'system_prompt': ''
-                    }, prompts=prompts, all_agent_specs=all_agent_specs) # Recursive call
-            if member_agent:
-                agent.team[team_member_name] = member_agent
-    return agent
-
 def find_agent_by_role(agents: List[Agent], role: str) -> Optional[Agent]:
     """
     Finds an agent in a list by its role.
@@ -187,6 +153,3 @@ def find_agent_by_role(agents: List[Agent], role: str) -> Optional[Agent]:
     """
     logger.debug(f"Searching for agent with role: {role} in agents: {[agent.name for agent in agents]}")
     return next((agent for agent in agents if agent.role == role), None)
-
-
-from runtime.orchestrator import Orchestrator

@@ -1,4 +1,8 @@
-"""Core data structures and utilities for the runtime."""
+"""This module provides the core data structures for the multi-agent runtime.
+
+It defines the ExecutionContext for managing workflow state and the Session
+for handling artifacts and session-specific data.
+"""
 
 from dataclasses import dataclass, field
 from typing import Any, Dict
@@ -23,9 +27,9 @@ class ExecutionContext:
         """Returns the current step in the plan."""
         return self.plan.get("tasks", [])[self.step_index]
 
-    def remember_artifact(self, key: str, value: Any):
+    def _remember_artifact(self, key: str, value: Any):
         """Remembers an artifact from a step's execution for future tasks."""
-        self.artifacts[key] = {'v': value, 's': self.current_step()}
+        self.artifacts[key] = {"content": value, "step": self.current_step()}
 
     def record_artifact(self, key: str, value: Any, mem: bool = False):
         """
@@ -39,7 +43,7 @@ class ExecutionContext:
         artifact_key = f"{self.round_num}__step_{self.step_index}_{key}"
         self.session.add_artifact(artifact_key, value)
         if mem:
-            self.remember_artifact(artifact_key, value)
+            self._remember_artifact(artifact_key, value)
 
     def record_initial(self, key: str, value: Any):
         """
@@ -51,7 +55,10 @@ class ExecutionContext:
         """
         artifact_key = f"{self.round_num}__step_{self.step_index}_{key}"
         self.session.add_artifact(artifact_key, value)
-        self.artifacts[artifact_key] = {'v': value, 's': { 'task_id': 'none', 'requires': [] }}
+        self.artifacts[artifact_key] = {
+            "content": value,
+            "step": {"task_id": "none", "requires": []},
+        }
 
 @dataclass
 class Session:

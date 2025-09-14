@@ -1,10 +1,16 @@
+"""This module serves as the main entry point for the command-line interface.
+
+It parses command-line arguments and initiates the system bootstrap process,
+acting as the primary interface for running the multi-agent system.
+"""
+
 import os
 import argparse
 import logging
 from typing import List, Optional
 
 from runtime.core import Session
-from runtime.agent import Agent, instantiate_agent, find_agent_by_role
+from runtime.agent import Agent, find_agent_by_role
 from runtime.bootstrap import system_runtime_bootstrap
 from runtime.orchestrator import Orchestrator
 from runtime.loader import load_config, load_agent_templates, load_prompts

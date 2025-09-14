@@ -1,4 +1,8 @@
-"""Type definitions for the runtime."""
+"""This module defines custom data types and Pydantic models for the runtime.
+
+It ensures data consistency and validation across different modules by providing
+centralized, well-defined data structures for plans, tasks, and agent outputs.
+"""
 
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, TypedDict

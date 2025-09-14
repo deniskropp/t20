@@ -1,3 +1,9 @@
+"""This module provides miscellaneous utility functions for the runtime.
+
+It includes helper functions that are used across different modules
+but do not belong to a specific component.
+"""
+
 import os
 
 def read_file(file_path: str) -> str:

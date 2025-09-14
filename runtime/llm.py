@@ -1,3 +1,9 @@
+"""This module abstracts interactions with Large Language Models (LLMs).
+
+It provides a unified interface for various LLM providers and models,
+allowing for easy integration and interchangeability of different LLMs.
+"""
+
 import os
 from google import genai
 from google.genai import types

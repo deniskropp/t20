@@ -1,3 +1,9 @@
+"""This module configures and sets up the logging for the application.
+
+It defines the log format, level, and handlers (console, file, JSONL),
+providing a centralized and consistent logging setup.
+"""
+
 import logging
 import os
 import re

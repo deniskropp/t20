@@ -1,4 +1,8 @@
-"""Entry point and bootstrapping logic for the multi-agent runtime system."""
+"""This module handles the bootstrapping process of the multi-agent system.
+
+It sets up the environment, loads configurations, instantiates agents,
+and kicks off the main workflow orchestrator.
+"""
 
 import os
 import argparse
@@ -6,7 +10,8 @@ import logging
 from typing import List, Optional
 
 from runtime.core import Session
-from runtime.agent import Agent, instantiate_agent, find_agent_by_role
+from runtime.agent import Agent, find_agent_by_role
+from runtime.factory import instantiate_agent
 from runtime.orchestrator import Orchestrator
 from runtime.loader import load_config, load_agent_templates, load_prompts
 from runtime.log import setup_logging

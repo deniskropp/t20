@@ -1,3 +1,8 @@
+"""This module handles loading of configurations, agent templates, and prompts.
+
+It provides utility functions to read and parse various files required
+for the runtime, centralizing file I/O and configuration management.
+"""
 # runtime/loader.py
 import os
 import yaml
