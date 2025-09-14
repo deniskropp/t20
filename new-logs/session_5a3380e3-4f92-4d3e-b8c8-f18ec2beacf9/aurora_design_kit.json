@@ -1,0 +1,107 @@
+{
+  "goal": "Higher Self",
+  "design_philosophy": "Minimally natural, clean aesthetic evoking introspection, growth, and elevated consciousness. Prioritizing visual balance, accessibility, and a sense of calm spaciousness.",
+  "color_palette": {
+    "primary": {
+      "name": "Serene Sky",
+      "hex": "#A8D8FF",
+      "description": "A soft, airy blue representing clarity and expanded perspective."
+    },
+    "secondary": {
+      "name": "Earthy Dawn",
+      "hex": "#F5E6CC",
+      "description": "A warm, gentle off-white/beige evoking natural light and grounding."
+    },
+    "accent": {
+      "name": "Verdant Growth",
+      "hex": "#8FBC8F",
+      "description": "A muted, natural green symbolizing growth, balance, and vitality."
+    },
+    "text": {
+      "name": "Deep Contemplation",
+      "hex": "#333333",
+      "description": "A dark, grounding charcoal for readability."
+    },
+    "background": {
+      "name": "Misty Horizon",
+      "hex": "#F8F8F8",
+      "description": "A very light, almost imperceptible gray for a soft, neutral backdrop."
+    }
+  },
+  "typography": {
+    "headings": {
+      "font_family": "Lora",
+      "variant": "Semi-Bold",
+      "size_desktop": "2.5rem",
+      "size_mobile": "2rem",
+      "description": "A serif font that adds a touch of wisdom and classic elegance, suitable for titles and key statements."
+    },
+    "body": {
+      "font_family": "Inter",
+      "variant": "Regular",
+      "size_desktop": "1.1rem",
+      "size_mobile": "1rem",
+      "description": "A clean, highly readable sans-serif font ensuring accessibility and modern clarity for content."
+    },
+    "captions": {
+      "font_family": "Inter",
+      "variant": "Light",
+      "size_desktop": "0.9rem",
+      "size_mobile": "0.8rem",
+      "description": "Lighter weight for secondary information, maintaining hierarchy."
+    }
+  },
+  "logo_concept": {
+    "name": "The Ascending Seed",
+    "description": "A minimalist icon combining a subtle upward curve (representing growth/ascent) with a small, grounded seed or sprout at its base. The lines are fluid and organic, rendered in the 'Verdant Growth' accent color against a soft background. It symbolizes potential, grounded beginnings, and the natural unfolding towards a higher state. It avoids sharp edges, favoring gentle curves.",
+    "visual_elements": [
+      "Soft, organic curves",
+      "Subtle upward motion",
+      "Grounded element (seed/sprout)",
+      "Minimalist form"
+    ]
+  },
+  "ui_flow_concepts": [
+    {
+      "name": "Guided Inquiry Flow",
+      "description": "Instead of rigid tasks, this flow presents users with gentle, open-ended 'Inquiries' or 'Reflections' (inspired by fizzlametta's meta-reflection). Each inquiry is presented on a spacious card with ample white space. Users can journal responses, select affirmations, or engage with short guided meditations. Navigation is non-linear, allowing users to explore related inquiries or revisit previous ones. The UI uses subtle animations to guide attention, like a gentle fade-in or a soft parallax scroll.",
+      "key_elements": [
+        "Inquiry Cards",
+        "Journaling Interface",
+        "Affirmation Selection",
+        "Guided Meditation Player",
+        "Non-linear Navigation (tags, related inquiries)",
+        "Subtle, calming animations"
+      ],
+      "accessibility_notes": "High contrast text, adjustable font sizes, keyboard navigation support, screen reader compatibility for all interactive elements."
+    },
+    {
+      "name": "Personalized Growth Path",
+      "description": "Visualizes the 'Higher Self' journey not as a checklist, but as an evolving landscape or a branching tree. Users can mark moments of insight or practice. The interface uses soft gradients and organic shapes to represent progress. Instead of 'completing' steps, users 'cultivate' areas of their path. This acknowledges the non-linear and experiential nature of growth.",
+      "key_elements": [
+        "Evolving visual landscape (e.g., a growing plant, a flowing river)",
+        "Milestone markers (insights, practices)",
+        "Cultivation metaphor for progress",
+        "Gentle visual feedback for interaction"
+      ],
+      "accessibility_notes": "Ensure visual representations have textual alternatives. Color choices must maintain sufficient contrast. Interactive elements clearly indicated and navigable."
+    }
+  ],
+  "layout_principles": [
+    "Generous use of white space (Misty Horizon)",
+    "Asymmetrical balance to feel organic and less rigid",
+    "Focus on natural imagery and textures (subtly integrated, e.g., background patterns)",
+    "Clear visual hierarchy using typography and color",
+    "Minimalist UI elements: soft-edged buttons, subtle icons",
+    "Responsive design ensuring optimal viewing across devices"
+  ],
+  "accessibility_focus": [
+    "WCAG 2.1 AA compliance as a baseline.",
+    "Sufficient color contrast ratios for all text and interactive elements.",
+    "Keyboard navigability for all interactive components.",
+    "Clear focus indicators.",
+    "Scalable text and responsive layouts.",
+    "Semantic HTML structure for screen reader compatibility.",
+    "Avoidance of purely color-based information conveyance."
+  ]
+}
