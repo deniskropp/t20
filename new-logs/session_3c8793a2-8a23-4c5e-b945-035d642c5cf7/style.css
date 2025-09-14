@@ -1,0 +1,321 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+:root {
+    --primary-bg: #F8F9FA;
+    --secondary-bg: #FFFFFF;
+    --primary-text: #212529;
+    --secondary-text: #6C757D;
+    --accent-color: #007BFF;
+    --completion-color: #28A745;
+    --delete-color: #DC3545;
+    --border-color: #DEE2E6;
+    --font-family: 'Inter', sans-serif;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--primary-bg);
+    color: var(--primary-text);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+.container {
+    background-color: var(--secondary-bg);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 600px;
+    box-sizing: border-box;
+}
+
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.app-header h1 {
+    font-size: 24pt;
+    font-weight: 700;
+    color: var(--primary-text);
+    margin: 0;
+}
+
+.add-btn {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14pt;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.add-btn:hover {
+    background-color: #0056b3;
+}
+
+.add-btn svg {
+    stroke: white;
+    stroke-width: 2;
+}
+
+.task-input-area {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    transition: height 0.3s ease, opacity 0.3s ease;
+    overflow: hidden;
+    align-items: center;
+}
+
+.task-input-area.hidden {
+    height: 0;
+    opacity: 0;
+    margin-bottom: 0;
+    pointer-events: none;
+}
+
+#task-input {
+    flex-grow: 1;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    font-size: 14pt;
+    font-family: var(--font-family);
+    color: var(--primary-text);
+    outline: none;
+}
+
+#task-input::placeholder {
+    color: var(--secondary-text);
+}
+
+#task-input:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.save-btn, .cancel-btn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14pt;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.save-btn {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.save-btn:hover {
+    background-color: #0056b3;
+}
+
+.cancel-btn {
+    background-color: var(--border-color);
+    color: var(--primary-text);
+}
+
+.cancel-btn:hover {
+    background-color: #adb5bd;
+}
+
+.task-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.task-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.2s ease;
+}
+
+.task-item:last-child {
+    border-bottom: none;
+}
+
+.task-item.completed {
+    color: var(--secondary-text);
+    text-decoration: line-through;
+    background-color: var(--primary-bg);
+}
+
+.task-item.completed .task-description {
+    color: var(--secondary-text);
+}
+
+.task-item .checkbox {
+    width: 20px;
+    height: 20px;
+    margin-right: 15px;
+    cursor: pointer;
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.task-item.completed .checkbox {
+    background-color: var(--completion-color);
+    border-color: var(--completion-color);
+}
+
+.task-item .checkbox::after {
+    content: '';
+    display: block;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    opacity: 0;
+}
+
+.task-item.completed .checkbox::after {
+    opacity: 1;
+}
+
+.task-description {
+    flex-grow: 1;
+    font-size: 16pt;
+    font-weight: 500;
+    word-break: break-word;
+    transition: color 0.2s ease;
+}
+
+.delete-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 15px;
+    color: var(--delete-color);
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+    padding: 5px;
+}
+
+.delete-btn:hover {
+    opacity: 1;
+}
+
+.delete-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--secondary-text);
+    border: 2px dashed var(--border-color);
+    border-radius: 8px;
+    margin-top: 30px;
+}
+
+.empty-state p {
+    margin-bottom: 20px;
+    font-size: 14pt;
+}
+
+.empty-state .add-btn {
+    background-color: var(--accent-color);
+    font-size: 14pt;
+    padding: 10px 20px;
+}
+
+.empty-state .add-btn svg {
+    stroke: white;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+    .app-header h1 {
+        font-size: 20pt;
+    }
+    .add-btn {
+        padding: 8px 12px;
+        font-size: 12pt;
+    }
+    #task-input {
+        padding: 10px 12px;
+        font-size: 12pt;
+    }
+    .save-btn, .cancel-btn {
+        padding: 10px 15px;
+        font-size: 12pt;
+    }
+    .task-description {
+        font-size: 14pt;
+    }
+    .empty-state {
+        padding: 30px 15px;
+    }
+    .empty-state p {
+        font-size: 12pt;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+    .container {
+        padding: 15px;
+    }
+    .app-header {
+        margin-bottom: 20px;
+    }
+    .app-header h1 {
+        font-size: 18pt;
+    }
+    .task-input-area {
+        flex-wrap: wrap;
+    }
+    #task-input {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .save-btn, .cancel-btn {
+        width: 48%;
+    }
+    .task-item {
+        padding: 12px 0;
+    }
+    .task-item .checkbox {
+        margin-right: 10px;
+    }
+    .task-description {
+        font-size: 13pt;
+    }
+    .delete-btn {
+        margin-left: 10px;
+    }
+}
