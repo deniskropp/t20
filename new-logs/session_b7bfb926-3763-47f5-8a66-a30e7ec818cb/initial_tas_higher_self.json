@@ -1,0 +1,242 @@
+[
+  {
+    "id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+    "name": "Define Aspirations",
+    "description": "Articulate and clarify the desired future state or ideal self. This involves introspection to understand personal values, goals, and what 'higher self' means in a specific context. It sets the direction for subsequent actions.",
+    "category": "Init",
+    "purpose": "Establish a clear vision for personal development.",
+    "keywords": [
+      "vision",
+      "goals",
+      "values",
+      "aspiration",
+      "definition"
+    ],
+    "applicability_notes": "This step is crucial at the beginning of any self-improvement or development process, whether personal, professional, or creative.",
+    "examples_of_usage": [
+      "A person defining their career aspirations.",
+      "An organization setting its long-term vision.",
+      "An artist clarifying their creative goals for a new project."
+    ],
+    "typical_inputs": [
+      "Personal reflections",
+      "Values assessment",
+      "Environmental factors"
+    ],
+    "typical_outputs": [
+      "Defined personal/project vision statement",
+      "List of core values",
+      "Set of long-term goals"
+    ]
+  },
+  {
+    "id": "b2c3d4e5-f678-9012-3456-7890abcdef12",
+    "name": "Assess Current State",
+    "description": "Evaluate the current position relative to the defined aspirations. This involves honest self-assessment, identifying strengths, weaknesses, opportunities, and threats (SWOT analysis) relevant to the goal of reaching a 'higher self'.",
+    "category": "Analysis",
+    "purpose": "Understand the starting point for development.",
+    "keywords": [
+      "assessment",
+      "evaluation",
+      "strengths",
+      "weaknesses",
+      "self-awareness"
+    ],
+    "applicability_notes": "Applicable whenever a gap exists between a current state and a desired future state. It's fundamental for strategic planning and personal growth.",
+    "examples_of_usage": [
+      "A student assessing their academic performance against desired grades.",
+      "A company evaluating its market position before launching a new product.",
+      "An individual reflecting on their current habits and behaviors."
+    ],
+    "typical_inputs": [
+      "Defined aspirations",
+      "Performance metrics",
+      "Self-reflection data"
+    ],
+    "typical_outputs": [
+      "Identified strengths and weaknesses",
+      "Gap analysis report",
+      "List of areas for improvement"
+    ]
+  },
+  {
+    "id": "c3d4e5f6-7890-1234-5678-90abcdef1234",
+    "name": "Identify Development Areas",
+    "description": "Based on the gap between aspirations and the current state, pinpoint specific skills, knowledge, habits, or perspectives that need to be developed or refined. This focuses the effort for growth.",
+    "category": "Analysis",
+    "purpose": "Determine key focus areas for improvement.",
+    "keywords": [
+      "development",
+      "improvement",
+      "skills",
+      "knowledge",
+      "growth"
+    ],
+    "applicability_notes": "This step follows assessment and precedes action planning, guiding the 'what' needs to change or be acquired.",
+    "examples_of_usage": [
+      "Identifying the need for better communication skills for a promotion.",
+      "Recognizing the need to learn a new programming language for a project.",
+      "Determining the need for mindfulness practice to manage stress."
+    ],
+    "typical_inputs": [
+      "Gap analysis",
+      "Performance feedback",
+      "Self-assessment results"
+    ],
+    "typical_outputs": [
+      "Prioritized list of skills/knowledge to acquire",
+      "Identified habits to change",
+      "Areas for personal growth"
+    ]
+  },
+  {
+    "id": "d4e5f678-9012-3456-7890-abcdef123456",
+    "name": "Formulate Action Plan",
+    "description": "Develop a concrete, step-by-step plan to address the identified development areas. This includes defining specific, measurable, achievable, relevant, and time-bound (SMART) objectives, resources needed, and potential obstacles.",
+    "category": "Planning",
+    "purpose": "Create a roadmap for achieving development goals.",
+    "keywords": [
+      "plan",
+      "strategy",
+      "action",
+      "roadmap",
+      "SMART goals"
+    ],
+    "applicability_notes": "Essential for translating intention into execution. It provides structure and accountability for any goal-oriented endeavor.",
+    "examples_of_usage": [
+      "Creating a study plan for an exam.",
+      "Developing a project timeline with milestones.",
+      "Outlining a fitness program."
+    ],
+    "typical_inputs": [
+      "Identified development areas",
+      "Available resources",
+      "Timeline constraints"
+    ],
+    "typical_outputs": [
+      "Detailed action plan",
+      "Set of specific tasks",
+      "Resource allocation"
+    ]
+  },
+  {
+    "id": "e5f67890-1234-5678-90ab-cdef12345678",
+    "name": "Execute Actions",
+    "description": "Implement the steps outlined in the action plan. This involves actively engaging in the defined tasks, practicing new skills, acquiring knowledge, and making necessary changes to behavior or approach.",
+    "category": "Execution",
+    "purpose": "Actively work towards the defined goals.",
+    "keywords": [
+      "action",
+      "implementation",
+      "practice",
+      "execution",
+      "doing"
+    ],
+    "applicability_notes": "The core phase where effort is applied to achieve the desired outcome. It requires discipline and consistency.",
+    "examples_of_usage": [
+      "Attending classes and completing assignments.",
+      "Coding the features defined in the project plan.",
+      "Following a workout routine."
+    ],
+    "typical_inputs": [
+      "Action plan",
+      "Required resources",
+      "Time and energy"
+    ],
+    "typical_outputs": [
+      "Completed tasks",
+      "Acquired skills/knowledge",
+      "Behavioral changes"
+    ]
+  },
+  {
+    "id": "f6789012-3456-7890-abcd-ef1234567890",
+    "name": "Monitor Progress",
+    "description": "Regularly track progress against the action plan and overall aspirations. This involves collecting data, observing outcomes, and comparing current status to planned milestones and the desired end state.",
+    "category": "Monitoring",
+    "purpose": "Track advancement and identify deviations.",
+    "keywords": [
+      "monitor",
+      "track",
+      "progress",
+      "feedback",
+      "measurement"
+    ],
+    "applicability_notes": "Crucial for staying on course and making necessary adjustments. It ensures the plan remains relevant and effective.",
+    "examples_of_usage": [
+      "Tracking daily workout logs.",
+      "Reviewing project status reports.",
+      "Monitoring financial investments."
+    ],
+    "typical_inputs": [
+      "Action plan",
+      "Completed tasks",
+      "Performance data"
+    ],
+    "typical_outputs": [
+      "Progress reports",
+      "Performance metrics",
+      "Deviation analysis"
+    ]
+  },
+  {
+    "id": "78901234-5678-90ab-cdef-1234567890ab",
+    "name": "Adjust and Iterate",
+    "description": "Based on progress monitoring and feedback, make necessary adjustments to the action plan, strategies, or even the aspirations themselves. This iterative process allows for adaptation and continuous improvement.",
+    "category": "Refactoring",
+    "purpose": "Adapt to new information and optimize the path forward.",
+    "keywords": [
+      "adjust",
+      "iterate",
+      "refine",
+      "optimize",
+      "adapt"
+    ],
+    "applicability_notes": "An essential feedback loop in any dynamic process, allowing for flexibility and continuous improvement.",
+    "examples_of_usage": [
+      "Modifying a marketing campaign based on initial results.",
+      "Revising a learning strategy when encountering difficulties.",
+      "Updating project scope based on client feedback."
+    ],
+    "typical_inputs": [
+      "Progress reports",
+      "Feedback received",
+      "Updated environmental factors"
+    ],
+    "typical_outputs": [
+      "Revised action plan",
+      "Updated strategies",
+      "Modified goals"
+    ]
+  },
+  {
+    "id": "89012345-6789-0abc-def1-234567890abc",
+    "name": "Integrate Learnings",
+    "description": "Incorporate the knowledge, skills, and insights gained throughout the process into one's core being or operational framework. This step solidifies the growth achieved and ensures it becomes a lasting part of the 'higher self'.",
+    "category": "Integration",
+    "purpose": "Solidify growth and internalize changes.",
+    "keywords": [
+      "integrate",
+      "internalize",
+      "consolidate",
+      "synthesize",
+      "mastery"
+    ],
+    "applicability_notes": "This is the final stage of growth, where acquired changes become habitual or inherent, leading to a more developed state.",
+    "examples_of_usage": [
+      "Applying learned leadership skills autonomously.",
+      "Consistently demonstrating improved emotional regulation.",
+      "Operating a new software system efficiently without conscious effort."
+    ],
+    "typical_inputs": [
+      "Acquired skills and knowledge",
+      "Behavioral changes",
+      "Reflective insights"
+    ],
+    "typical_outputs": [
+      "Internalized capabilities",
+      "Sustainable behavioral patterns",
+      "Enhanced self-awareness and competence"
+    ]
+  }
+]

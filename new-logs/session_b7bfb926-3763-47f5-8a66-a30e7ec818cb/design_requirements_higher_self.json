@@ -1,0 +1,162 @@
+{
+  "design_philosophy": {
+    "theme": "Minimally Natural & Serene Growth",
+    "aesthetic": "Clean, uncluttered, inspired by natural forms and light. Focus on tranquility, introspection, and gentle guidance.",
+    "color_palette": {
+      "primary": {
+        "name": "Serene Sky",
+        "hex": "#A8DADC",
+        "description": "A soft, calming blue representing clarity and potential."
+      },
+      "secondary": {
+        "name": "Earthy Mist",
+        "hex": "#F1FAEE",
+        "description": "A light, warm off-white evoking natural light and openness."
+      },
+      "accent": {
+        "name": "Forest Canopy",
+        "hex": "#457B9D",
+        "description": "A muted, deep teal for grounding elements and calls to action."
+      },
+      "neutral": {
+        "name": "Stone Grey",
+        "hex": "#E0E0E0",
+        "description": "A soft grey for secondary text and dividers, providing subtle contrast."
+      },
+      "text": {
+        "name": "Deep Forest",
+        "hex": "#1D3557",
+        "description": "A rich, dark blue-green for primary text, ensuring readability."
+      }
+    },
+    "typography": {
+      "headings": {
+        "font_family": "Merriweather",
+        "variant": "Regular",
+        "weight": 400,
+        "style": "normal",
+        "size_desktop": "2.5rem",
+        "size_mobile": "2rem",
+        "line_height": 1.3,
+        "description": "A serif font that conveys wisdom and thoughtful consideration."
+      },
+      "body": {
+        "font_family": "Lato",
+        "variant": "Regular",
+        "weight": 400,
+        "style": "normal",
+        "size_desktop": "1.1rem",
+        "size_mobile": "1rem",
+        "line_height": 1.6,
+        "description": "A clean, highly readable sans-serif for body text, ensuring clarity and accessibility."
+      },
+      "accent": {
+        "font_family": "Lato",
+        "variant": "Italic",
+        "weight": 400,
+        "style": "italic",
+        "size_desktop": "1rem",
+        "size_mobile": "0.9rem",
+        "line_height": 1.5,
+        "description": "Italicized sans-serif for emphasis and reflective notes."
+      }
+    },
+    "iconography": {
+      "style": "Outline, minimalist, organic shapes",
+      "color": "#457B9D",
+      "description": "Icons will be simple and intuitive, evoking natural elements or gentle guidance. They will be used sparingly to enhance understanding without clutter."
+    }
+  },
+  "design_principles": [
+    "Clarity & Simplicity: Every element should serve a purpose, reducing cognitive load.",
+    "Mindful Interaction: Interactions should feel intuitive, calm, and encouraging.",
+    "Visual Balance: Use of whitespace, natural curves, and balanced layouts to create a harmonious experience.",
+    "Accessibility First: Adherence to WCAG 2.1 AA standards for color contrast, font sizes, and navigation.",
+    "Inspirational & Reflective: Design elements should prompt introspection and a sense of progress."
+  ],
+  "core_modules": [
+    {
+      "name": "Vision & Values Hub",
+      "description": "Facilitates TAS-001: Define Vision and Values. Users can journal, select values, and articulate their aspirations. Design: serene, open space with journaling prompts and interactive value selection tools.",
+      "ui_elements": ["Guided journaling interface", "Interactive value cards", "Vision statement builder"]
+    },
+    {
+      "name": "Self-Assessment & Insight",
+      "description": "Supports TAS-002: Assess Current State and TAS-003: Identify and Prioritize Development Areas. Features guided assessments, SWOT analysis tools, and reflection prompts. Design: calm, structured layout with clear progress indicators.",
+      "ui_elements": ["Guided assessment forms", "SWOT matrix visualization", "Reflection logs"]
+    },
+    {
+      "name": "Action Planning & Guidance",
+      "description": "Enables TAS-004: Formulate Action Plan. Users create SMART goals, break them down into actionable steps, and set timelines. Design: intuitive plan builder with visual progress tracking.",
+      "ui_elements": ["SMART goal setting module", "Task breakdown tool", "Calendar integration", "Progress visualization"]
+    },
+    {
+      "name": "Growth & Learning",
+      "description": "Supports TAS-005: Acquire Knowledge and Skills. Integrates resources, practice modules, and skill-building exercises. Design: clean, organized library of learning materials and practice spaces.",
+      "ui_elements": ["Resource library", "Skill practice interfaces", "Progressive learning paths"]
+    },
+    {
+      "name": "Execution & Habit Tracking",
+      "description": "Facilitates TAS-006: Execute Actions and TAS-007: Monitor Progress. Daily check-ins, habit trackers, and task completion logs. Design: minimalist dashboard with clear daily focus and immediate feedback.",
+      "ui_elements": ["Daily task list", "Habit tracker interface", "Progress logs", "Completion streaks"]
+    },
+    {
+      "name": "Reflection & Iteration",
+      "description": "Supports TAS-008: Adjust, Adapt, and Iterate. Regular review prompts, feedback mechanisms, and options to modify plans. Design: dedicated reflection spaces with prompts for adaptation.",
+      "ui_elements": ["Weekly/Monthly review templates", "Feedback submission forms", "Plan adjustment interface"]
+    },
+    {
+      "name": "Integration & Mastery",
+      "description": "Addresses TAS-009: Integrate Learnings and Solidify Growth. Celebrates milestones, showcases accumulated growth, and encourages the internalization of new states. Design: celebratory, reflective space that visualizes the journey and integrated self.",
+      "ui_elements": ["Milestone achievements", "Growth journey visualization", "Personalized affirmations"]
+    }
+  ],
+  "user_flows": [
+    {
+      "name": "Onboarding & Vision Setting",
+      "steps": [
+        "Welcome screen (Earthy Mist background, Serene Sky accent)",
+        "Brief introduction to 'Higher Self' concept",
+        "Guided journaling for initial aspirations (TAS-001)",
+        "Interactive value selection (TAS-001)",
+        "Initial vision statement generation (TAS-001)",
+        "Prompt to proceed to Self-Assessment"
+      ],
+      "description": "Guides new users through defining their core vision and values, setting the foundation for their journey."
+    },
+    {
+      "name": "Personal Growth Cycle",
+      "steps": [
+        "Start: Self-Assessment (TAS-002)",
+        "Identify Development Areas (TAS-003)",
+        "Formulate Action Plan (TAS-004)",
+        "Engage in Growth & Learning (TAS-005)",
+        "Execute Actions & Track Habits (TAS-006, TAS-007)",
+        "Regular Reflection & Adjustment (TAS-008)",
+        "Integrate Learnings (TAS-009)",
+        "Loop back to Self-Assessment or continue growth"
+      ],
+      "description": "The core cyclical process of self-improvement, from assessment to integration and iteration."
+    },
+    {
+      "name": "Daily Engagement Flow",
+      "steps": [
+        "Dashboard: Overview of daily tasks, habit status, and progress highlights.",
+        "Focus on one key task or habit for the day.",
+        "Check-in for task completion or habit adherence.",
+        "Quick reflection prompt (optional).",
+        "View daily progress summary."
+      ],
+      "description": "A streamlined flow for daily interaction, focusing on consistent action and monitoring."
+    }
+  ],
+  "logo_concept": {
+    "name": "Ascent Bloom",
+    "description": "A minimalist icon combining an upward-pointing arrow (representing ascent and progress) with a gently unfurling leaf or petal (representing natural growth and unfolding potential). The lines will be clean and organic, using the 'Forest Canopy' accent color against an 'Earthy Mist' background.",
+    "visual_elements": [
+      "Abstract upward curve",
+      "Subtle organic flourish",
+      "Negative space integration"
+    ]
+  }
+}
