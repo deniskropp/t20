@@ -1,0 +1,15 @@
+The overall goal is: 'Create a simple TDOO app'
+
+Your role's specific goal is: 'Identify and extract each 'Task Agnostic Step' (TAS) towards the high-level goal.'
+Your specific sub-task is: 'Identify and extract Task Agnostic Steps (TAS) for creating a simple TODO app.'
+
+The team's roles are:
+    {'reasoning': "The initial step is to break down the high-level goal 'Create a simple TODO app' into smaller, actionable steps. Since we have three agents (GPTASe, TASe, uTASe) with the same role and goal of extracting 'Task Agnostic Steps' (TAS), they should all be tasked with this initial breakdown. Lyra, as the Prompt Engineer, will be responsible for refining the prompts for these TAS extractors to ensure they are effective. The role and goal for 'fizzlametta' are unknown, so it will be assigned a placeholder task. 'aitutor' will be tasked with knowledge transfer, which is a supporting role at this stage.", 'roles': [{'title': 'Task-Agnostic Step (TAS) extractor', 'description': "Identifies and extracts each 'Task Agnostic Step' (TAS) towards the high-level goal."}, {'title': 'Prompt Engineer', 'description': 'Structures workflows and ensures clarity in agent instructions, system prompt engineering.'}, {'title': 'Unknown', 'description': 'Role and goal are not defined.'}, {'title': 'AI Tutor', 'description': 'Facilitates knowledge transfer between agents.'}], 'tasks': [{'task_id': 'T1', 'task': 'Identify and extract Task Agnostic Steps (TAS) for creating a simple TODO app.', 'role': 'Task-Agnostic Step (TAS) extractor', 'name': 'GPTASe', 'requires': []}, {'task_id': 'T2', 'task': 'Identify and extract Task Agnostic Steps (TAS) for creating a simple TODO app.', 'role': 'Task-Agnostic Step (TAS) extractor', 'name': 'TASe', 'requires': []}, {'task_id': 'T3', 'task': 'Identify and extract Task Agnostic Steps (TAS) for creating a simple TODO app.', 'role': 'Task-Agnostic Step (TAS) extractor', 'name': 'uTASe', 'requires': []}, {'task_id': 'T4', 'task': 'Refine the system prompts for the Task-Agnostic Step (TAS) extractors to ensure clarity and effectiveness in identifying steps for creating a simple TODO app.', 'role': 'Prompt Engineer', 'name': 'Lyra', 'requires': ['T1', 'T2', 'T3']}, {'task_id': 'T5', 'task': 'Define role and goal for fizzlametta.', 'role': 'Unknown', 'name': 'fizzlametta', 'requires': []}, {'task_id': 'T6', 'task': 'Facilitate knowledge transfer regarding the initial TAS extraction process and prompt refinement.', 'role': 'AI Tutor', 'name': 'aitutor', 'requires': ['T1', 'T2', 'T3', 'T4']}]}
+
+Please use the following outputs from the other agents as your input:
+
+
+
+
+
+Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project.
