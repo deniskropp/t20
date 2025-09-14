@@ -32,15 +32,15 @@ class Orchestrator(Agent):
             initial_task (str): The high-level goal for the workflow.
             rounds (int): The number of rounds to execute the workflow.
             plan_only (bool): If True, only generates the plan without executing tasks.
-            files (List[str]): List of files to be used in the task.
+            files (List[str]): List of file paths to be used as context in the task.
         """
         file_contents = {}
         if files:
             logger.info("Files provided:")
             for file_path in files:
                 try:
-                    with open(file_path, 'r') as f:
-                        content = f.read()
+                    with open(file_path, 'r') as file_handle:
+                        content = file_handle.read()
                         file_contents[file_path] = content
                         logger.info(f"  - {file_path}")
                 except Exception as e:
@@ -73,11 +73,11 @@ class Orchestrator(Agent):
 
             while context.step_index < len(plan["tasks"]):
                 step = context.current_step()
-                name = step.get("name", "Any")
-                delegate_agent = team_by_name.get(name)
+                agent_name = step.get("name", "Any")
+                delegate_agent = team_by_name.get(agent_name)
 
                 if not delegate_agent:
-                    logger.warning(f"No agent found with name '{name}'. Skipping step {context.step_index}.")
+                    logger.warning(f"No agent found with name '{agent_name}'. Skipping step {context.step_index}.")
                     context.step_index += 1
                     continue
 
@@ -91,6 +91,7 @@ class Orchestrator(Agent):
                     if delegate_agent.role == 'Prompt Engineer':
                         try:
                             response = json.loads(result)
+                            # Recursively check for and apply new prompts from the Prompt Engineer's output
                             self._check_new_prompts(session, response)
                             for key, value in response.items() if isinstance(response, dict) else []:
                                 if key == "refined_prompts" or key == "initial_prompts" or key == "initial_system_prompts":
@@ -105,67 +106,72 @@ class Orchestrator(Agent):
 
             logger.info(f"Orchestrator has completed workflow round {context.round_num}.")
 
-    def _check_new_prompts(self, session: Session, data_structure: dict | list):
+    def _check_new_prompts(self, session: Session, prompt_update_payload: dict | list):
         """
         Recursively checks for new prompts within a dictionary or list of objects
         and updates agent system prompts if 'target_agent_name' and 'new_system_prompt'
-        keys are found.
+        keys are found. This allows a Prompt Engineer agent to dynamically modify
+        the system prompts of other agents during a workflow.
 
         Args:
             session (Session): The current session object.
-            data_structure (dict | list): The object (dictionary or list) to traverse for new prompt information.
+            prompt_update_payload (dict | list): The object (dictionary or list) to traverse for new prompt information.
         """
-        if isinstance(data_structure, dict):
-            self._check_new_prompt(session, data_structure)
-            for key, value in data_structure.items():
+        if isinstance(prompt_update_payload, dict):
+            self._check_new_prompt(session, prompt_update_payload)
+            for key, value in prompt_update_payload.items():
                 if isinstance(value, (dict, list)):
                     self._check_new_prompts(session, value)
-        elif isinstance(data_structure, list):
-            for item in data_structure:
+        elif isinstance(prompt_update_payload, list):
+            for item in prompt_update_payload:
                 if isinstance(item, (dict, list)):
                     self._check_new_prompts(session, item)
 
-    def _check_new_prompt(self, session: Session, obj: dict):
+    def _check_new_prompt(self, session: Session, agent_update_data: dict):
         """
         Updates a single agent's system prompt if the provided dictionary contains
         'target_agent_name' and 'new_system_prompt' keys.
 
         Args:
             session (Session): The current session object.
-            obj (dict): A dictionary expected to contain 'target_agent_name' and
-                        'new_system_prompt' for a single agent update.
+            agent_update_data (dict): A dictionary expected to contain 'target_agent_name' and
+                                      'new_system_prompt' for a single agent update.
         """
-        if "target_agent_name" in obj and "new_system_prompt" in obj:
-            target_agent_name = obj.get("target_agent_name")
-            new_system_prompt = obj.get("new_system_prompt")
+        if "target_agent_name" in agent_update_data and "new_system_prompt" in agent_update_data:
+            target_agent_name = agent_update_data.get("target_agent_name")
+            new_system_prompt = agent_update_data.get("new_system_prompt")
 
             if target_agent_name and new_system_prompt:
+                # Search for the target agent within the orchestrator's team or the session's agents
                 target_agent = next((a for a in self.team.values() or () if a.name == target_agent_name), None)
                 if not target_agent:
                     target_agent = next((a for a in session.agents if a.name == target_agent_name), None)
 
                 if target_agent:
                     target_agent.update_system_prompt(new_system_prompt)
+                    logger.info(f"Agent '{target_agent_name}' system prompt updated by Prompt Engineer.")
                 else:
                     logger.warning(f"Target agent '{target_agent_name}' not found for prompt update.")
 
     def _generate_plan(self, session: Session, high_level_goal: str, file_contents: Dict[str, str] = {}) -> Dict[str, Any]:
         """
         Invokes the language model to get a structured plan for the given high-level goal.
+        The plan includes a sequence of tasks and the roles responsible for them.
 
         Args:
             session (Session): The current session object.
             high_level_goal (str): The high-level goal for which to generate a plan.
-            file_contents (Dict[str, str]): A dictionary of file paths and their contents.
+            file_contents (Dict[str, str]): A dictionary of file paths and their contents to provide context to the LLM.
 
         Returns:
             Dict[str, Any]: The generated plan as a dictionary, or an empty dictionary if an error occurs.
         """
         logger.info(f"Orchestrator {self.name} is generating a plan for: '{high_level_goal}'")
         if not self.llm or not self.team:
-            logger.error("Orchestrator client or team not initialized.")
+            logger.error("Orchestrator client or team not initialized. Cannot generate plan.")
             return {}
 
+        # Construct a description of the available agents and their roles/goals
         team_description = "\n".join(
             f"- Name: '{agent.name}'\n"
             f"  Role: `{agent.role}`\n"
@@ -173,29 +179,32 @@ class Orchestrator(Agent):
             for agent in self.team.values()
         )
 
-        general_prompt = read_file("prompts/general_planning.txt").strip()
-        planning_prompt = [general_prompt.format(
+        # Load the general planning prompt template
+        general_prompt_template = read_file("prompts/general_planning.txt").strip()
+        planning_prompt_parts = [general_prompt_template.format(
             high_level_goal=high_level_goal,
             team_description=team_description
         )]
 
-        prompt = "\n\n".join(planning_prompt)
+        # Combine prompt parts for the LLM call
+        full_prompt_for_llm = "\n\n".join(planning_prompt_parts)
 
-        print(f"{Fore.LIGHTCYAN_EX}Orchestrator {self.name}Planning Prompt:\n{prompt}{Style.RESET_ALL}")
+        logger.info(f"Orchestrator {self.name} Planning Prompt:\n{full_prompt_for_llm}")
 
+        # Include file contents if provided
         if file_contents:
             file_section = [f"\n--- Files Content ---"]
             for file_path, content in file_contents.items():
                 file_section.append(f"File: {file_path}\n```\n{content}\n```")
-            planning_prompt.append("\n".join(file_section))
+            planning_prompt_parts.append("\n".join(file_section))
 
-        logger.debug(planning_prompt)
-        session.add_artifact("planning_prompt.txt", prompt)
+        logger.debug("Planning prompt parts for LLM: %s", planning_prompt_parts)
+        session.add_artifact("planning_prompt.txt", full_prompt_for_llm)
 
         try:
             response = self.llm.generate_content(
                 model_name=self.model,
-                contents="\n\n".join(planning_prompt),
+                contents="\n\n".join(planning_prompt_parts),
                 system_instruction=self.system_prompt,
                 temperature=0.1,
                 response_mime_type='application/json', #if self.role == 'Prompt Engineer' else None

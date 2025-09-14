@@ -1,6 +1,7 @@
 import logging
 import os
 import re
+import json
 from logging.handlers import RotatingFileHandler
 
 # --- Configuration ---
@@ -92,6 +93,26 @@ def setup_logging():
         '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     )
 
+    class JsonFormatter(logging.Formatter):
+        def format(self, record):
+            log_record = {
+                "timestamp": self.formatTime(record, self.datefmt),
+                "name": record.name,
+                "level": record.levelname,
+                "message": record.getMessage(),
+                "pathname": record.pathname,
+                "lineno": record.lineno,
+                "funcName": record.funcName,
+                "process": record.process,
+                "thread": record.thread,
+                "threadName": record.threadName,
+            }
+            if record.exc_info:
+                log_record["exc_info"] = self.formatException(record.exc_info)
+            if record.stack_info:
+                log_record["stack_info"] = self.formatStack(record.stack_info)
+            return json.dumps(log_record)
+
     # --- Add Formatter to Handlers ---
     console_handler.setFormatter(console_formatter)
     file_handler.setFormatter(file_formatter)
@@ -101,6 +122,16 @@ def setup_logging():
     if not logger.handlers:
         logger.addHandler(console_handler)
         logger.addHandler(file_handler)
+
+        # --- JSONL File Handler ---
+        jsonl_file_handler = RotatingFileHandler(
+            os.path.join(LOG_FILE_DIR, "app.jsonl"),
+            maxBytes=MAX_FILE_SIZE,
+            backupCount=BACKUP_COUNT
+        )
+        jsonl_file_handler.setLevel(LOG_LEVEL)
+        jsonl_file_handler.setFormatter(JsonFormatter())
+        logger.addHandler(jsonl_file_handler)
 
 # --- Main Application Logger ---
 # It's good practice to use a named logger instead of the root logger directly
