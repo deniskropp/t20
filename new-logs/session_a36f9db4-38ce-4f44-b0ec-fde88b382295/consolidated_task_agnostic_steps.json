@@ -1,0 +1,110 @@
+[
+  {
+    "id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+    "name": "Define Data Input Mechanism",
+    "description": "Establish a method for users to provide new data entries into the system, abstracting the specific type of data. This involves defining what information is required and how it will be captured.",
+    "category": "Init",
+    "purpose": "Ensures a clear pathway exists for new information to be introduced, forming the basis of data management.",
+    "keywords": [
+      "input",
+      "data entry",
+      "creation",
+      "mechanism",
+      "capture"
+    ],
+    "applicability_notes": "Relevant whenever new information or items need to be added to a system or process, regardless of the domain. Examples include adding a new record, submitting a form, or creating a new item in a list.",
+    "examples_of_usage": [
+      "Adding a new contact to an address book",
+      "Submitting a new bug report for software",
+      "Creating a new post on a forum"
+    ],
+    "typical_inputs": [
+      "Requirement for new data",
+      "Data structure definition"
+    ],
+    "typical_outputs": [
+      "Defined input fields and submission process"
+    ]
+  },
+  {
+    "id": "b2c3d4e5-f6a7-8901-2345-67890abcdef0",
+    "name": "Establish Data Display",
+    "description": "Define how existing data items are presented to the user, allowing for retrieval and review. This includes determining the layout, order, and content to be shown.",
+    "category": "Analysis",
+    "purpose": "Enables users to see and interact with the information managed by the system.",
+    "keywords": [
+      "display",
+      "view",
+      "rendering",
+      "output",
+      "presentation"
+    ],
+    "applicability_notes": "Applicable in any system that stores and presents information to users. This could involve lists, grids, detailed views, or summaries.",
+    "examples_of_usage": [
+      "Listing available products in an e-commerce site",
+      "Showing a list of pending tasks in a productivity app",
+      "Displaying search results from a database query"
+    ],
+    "typical_inputs": [
+      "Set of data items",
+      "Display requirements"
+    ],
+    "typical_outputs": [
+      "Data presentation format and layout"
+    ]
+  },
+  {
+    "id": "c3d4e5f6-a7b8-9012-3456-7890abcdef01",
+    "name": "Define State Modification",
+    "description": "Create a mechanism to alter the status or properties of existing data items. This involves defining the possible states and the triggers for changing between them.",
+    "category": "Refactoring",
+    "purpose": "Allows for dynamic updates to data, reflecting changes in its lifecycle or user interaction.",
+    "keywords": [
+      "state change",
+      "update",
+      "modification",
+      "status",
+      "transition"
+    ],
+    "applicability_notes": "Essential for interactive systems where items can change over time or based on user actions. This step focuses on the process of changing a state, not the specific state itself.",
+    "examples_of_usage": [
+      "Marking an email as read or unread",
+      "Changing a task's priority from low to high",
+      "Updating an order status from 'pending' to 'shipped'"
+    ],
+    "typical_inputs": [
+      "Identifier for a data item",
+      "New state information or action"
+    ],
+    "typical_outputs": [
+      "Mechanism to apply state changes"
+    ]
+  },
+  {
+    "id": "d4e5f6a7-b8c9-0123-4567-890abcdef012",
+    "name": "Establish Data Removal",
+    "description": "Implement a process for permanently deleting specific data items from the system. This includes confirmation steps and handling of associated data if necessary.",
+    "category": "Maintenance",
+    "purpose": "Provides a way to manage data volume and remove obsolete or unwanted information.",
+    "keywords": [
+      "delete",
+      "remove",
+      "cleanup",
+      "discard",
+      "purge"
+    ],
+    "applicability_notes": "Necessary for systems where data may become irrelevant, needs to be purged for privacy reasons, or simply to manage storage. The focus is on the process of removal.",
+    "examples_of_usage": [
+      "Deleting a temporary file after use",
+      "Removing a user account from a system",
+      "Discarding a draft message before sending"
+    ],
+    "typical_inputs": [
+      "Identifier for a data item",
+      "Confirmation of removal"
+    ],
+    "typical_outputs": [
+      "Mechanism for data deletion"
+    ]
+  }
+]

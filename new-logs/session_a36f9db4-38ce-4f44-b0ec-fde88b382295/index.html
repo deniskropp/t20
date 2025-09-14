@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple TODO App</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <h1>TODO List</h1>
+        </header>
+        <main class="app-main">
+            <div class="task-input-area">
+                <input type="text" id="task-input" placeholder="Add a new task...">
+                <button id="add-task-btn">Add Task</button>
+            </div>
+            <ul id="task-list" class="task-list">
+                <!-- Tasks will be dynamically added here -->
+            </ul>
+        </main>
+    </div>
+
+    <div id="confirmation-modal" class="modal">
+        <div class="modal-content">
+            <h2>Confirm Deletion</h2>
+            <p>Are you sure you want to delete this task?</p>
+            <div class="modal-actions">
+                <button id="confirm-delete-btn">Delete</button>
+                <button id="cancel-delete-btn">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

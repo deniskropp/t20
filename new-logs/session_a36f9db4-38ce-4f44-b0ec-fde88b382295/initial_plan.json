@@ -1,0 +1,94 @@
+{
+    "reasoning": "The high-level goal is to create a simple TODO app. The plan should start by identifying the fundamental steps required, which will be handled by the TAS extractors. Then, the Prompt Engineer will structure these steps into a workflow. The Designer will create the visual aspects, and the Engineer will implement the code. This iterative process ensures all aspects of development are covered.",
+    "roles": [
+        {
+            "title": "Task-Agnostic Step (TAS) extractor",
+            "description": "Identifies and extracts 'Task Agnostic Steps' (TAS) towards the high-level goal."
+        },
+        {
+            "title": "Prompt Engineer",
+            "description": "Structures workflows and ensures clarity in agent instructions, system prompt engineering."
+        },
+        {
+            "title": "Designer",
+            "description": "Generates aesthetic layouts, color palettes, typography, and UI flows, ensuring accessibility and visual balance."
+        },
+        {
+            "title": "Engineer",
+            "description": "Implements designs into clean, modular, and performant code, focusing on responsive design and accessibility."
+        }
+    ],
+    "tasks": [
+        {
+            "task_id": "T1",
+            "task": "Identify the core functionalities of a simple TODO app (e.g., add task, view tasks, mark as complete, delete task).",
+            "role": "Task-Agnostic Step (TAS) extractor",
+            "name": "GPTASe",
+            "requires": []
+        },
+        {
+            "task_id": "T2",
+            "task": "Break down the identified functionalities into smaller, actionable steps.",
+            "role": "Task-Agnostic Step (TAS) extractor",
+            "name": "TASe",
+            "requires": [
+                "T1"
+            ]
+        },
+        {
+            "task_id": "T3",
+            "task": "Consolidate and refine the list of actionable steps, ensuring they are task-agnostic.",
+            "role": "Task-Agnostic Step (TAS) extractor",
+            "name": "uTASe",
+            "requires": [
+                "T2"
+            ]
+        },
+        {
+            "task_id": "T4",
+            "task": "Structure the extracted TAS into a logical development workflow, defining the order of operations and dependencies.",
+            "role": "Prompt Engineer",
+            "name": "Lyra",
+            "requires": [
+                "T3"
+            ]
+        },
+        {
+            "task_id": "T5",
+            "task": "Develop a system prompt for the Designer agent based on the workflow, specifying the need for UI elements for each core functionality.",
+            "role": "Prompt Engineer",
+            "name": "Lyra",
+            "requires": [
+                "T4"
+            ]
+        },
+        {
+            "task_id": "T6",
+            "task": "Generate aesthetic layouts, color palettes, typography, and UI flows for the TODO app, ensuring accessibility and visual balance.",
+            "role": "Designer",
+            "name": "Aurora",
+            "requires": [
+                "T5"
+            ]
+        },
+        {
+            "task_id": "T7",
+            "task": "Develop a system prompt for the Engineer agent based on the workflow and design outputs, specifying the implementation requirements.",
+            "role": "Prompt Engineer",
+            "name": "Lyra",
+            "requires": [
+                "T4",
+                "T6"
+            ]
+        },
+        {
+            "task_id": "T8",
+            "task": "Implement the TODO app's design into clean, modular, and performant code, focusing on responsive design and accessibility.",
+            "role": "Engineer",
+            "name": "Kodax",
+            "requires": [
+                "T7"
+            ]
+        }
+    ]
+}
