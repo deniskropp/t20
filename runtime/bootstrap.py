@@ -71,7 +71,7 @@ def system_runtime_bootstrap(root_dir: str, initial_task: str, plan_only: bool =
         logger.error(f"Agent '{orchestrator.name}' is not a valid Orchestrator instance. Bootstrap aborted.")
         return
 
-    session = Session(agents=agents)
+    session = Session(agents=agents, project_root="./")
 
     logger.info("--- Starting Workflow ---")
     orchestrator.start_workflow(session, initial_task, rounds=rounds, plan_only=plan_only, files=files)

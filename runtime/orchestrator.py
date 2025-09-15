@@ -4,6 +4,7 @@ The Orchestrator is a specialized agent responsible for generating, managing,
 and executing the workflow plan based on a high-level goal.
 """
 
+import os
 import json
 from typing import List, Dict, Any, Optional
 import logging
@@ -19,7 +20,7 @@ from runtime.util import read_file
 
 logger = logging.getLogger(__name__)
 
-from runtime.custom_types import Plan
+from runtime.custom_types import Plan, AgentOutput
 
 class Orchestrator(Agent):
     """An agent responsible for creating and managing a plan for multi-agent workflows."""
@@ -85,77 +86,44 @@ class Orchestrator(Agent):
                     context.step_index += 1
                     continue
 
-                if delegate_agent.role == 'Prompt Engineer':
-                    logger.info(f"Orchestrator detected special role: {delegate_agent.name}. Preparing inputs.")
-
                 result = delegate_agent.execute_task(context)
                 if result:
                     context.record_artifact(f"{delegate_agent.name}_result.txt", result, True)
+                    try:
+                        # Attempt to parse the output as AgentOutput
+                        agent_output = AgentOutput.model_validate_json(result)
+                        if agent_output.prompts:
+                            logger.info(f"Agent {delegate_agent.name} provided new prompts.")
+                            for prompt_data in agent_output.prompts:
+                                self._update_agent_prompt(session, prompt_data.name, prompt_data.content)
+                    except Exception as e:
+                        logger.warning(f"Could not parse agent output as AgentOutput: {e}. Treating as plain text.")
 
-                    if delegate_agent.role == 'Prompt Engineer':
-                        try:
-                            response = json.loads(result)
-                            # Recursively check for and apply new prompts from the Prompt Engineer's output
-                            self._check_new_prompts(session, response)
-                            for key, value in response.items() if isinstance(response, dict) else []:
-                                if key == "refined_prompts" or key == "initial_prompts" or key == "initial_system_prompts":
-                                    if "target_agent_name" in value:
-                                        self._check_new_prompts(session, value)
-                                    else:
-                                        self._check_new_prompts(session, list(value))
-                        except json.JSONDecodeError:
-                            logger.error("Prompt Engineer's output was not a valid JSON for prompt update.")
 
                 context.step_index += 1
 
             logger.info(f"Orchestrator has completed workflow round {context.round_num}.")
 
-    def _check_new_prompts(self, session: Session, prompt_update_payload: dict | list):
+    def _update_agent_prompt(self, session: Session, agent_name: str, new_prompt: str):
         """
-        Recursively checks for new prompts within a dictionary or list of objects
-        and updates agent system prompts if 'target_agent_name' and 'new_system_prompt'
-        keys are found. This allows a Prompt Engineer agent to dynamically modify
-        the system prompts of other agents during a workflow.
+        Updates an agent's system prompt.
 
         Args:
             session (Session): The current session object.
-            prompt_update_payload (dict | list): The object (dictionary or list) to traverse for new prompt information.
+            agent_name (str): The name of the agent to update.
+            new_prompt (str): The new system prompt.
         """
-        if isinstance(prompt_update_payload, dict):
-            self._check_new_prompt(session, prompt_update_payload)
-            for key, value in prompt_update_payload.items():
-                if isinstance(value, (dict, list)):
-                    self._check_new_prompts(session, value)
-        elif isinstance(prompt_update_payload, list):
-            for item in prompt_update_payload:
-                if isinstance(item, (dict, list)):
-                    self._check_new_prompts(session, item)
+        if agent_name and new_prompt:
+            # Search for the target agent within the orchestrator's team or the session's agents
+            target_agent = self.team.get(agent_name)
+            if not target_agent:
+                target_agent = next((a for a in session.agents if a.name == agent_name), None)
 
-    def _check_new_prompt(self, session: Session, agent_update_data: dict):
-        """
-        Updates a single agent's system prompt if the provided dictionary contains
-        'target_agent_name' and 'new_system_prompt' keys.
-
-        Args:
-            session (Session): The current session object.
-            agent_update_data (dict): A dictionary expected to contain 'target_agent_name' and
-                                      'new_system_prompt' for a single agent update.
-        """
-        if "target_agent_name" in agent_update_data and "new_system_prompt" in agent_update_data:
-            target_agent_name = agent_update_data.get("target_agent_name")
-            new_system_prompt = agent_update_data.get("new_system_prompt")
-
-            if target_agent_name and new_system_prompt:
-                # Search for the target agent within the orchestrator's team or the session's agents
-                target_agent = next((a for a in self.team.values() or () if a.name == target_agent_name), None)
-                if not target_agent:
-                    target_agent = next((a for a in session.agents if a.name == target_agent_name), None)
-
-                if target_agent:
-                    target_agent.update_system_prompt(new_system_prompt)
-                    logger.info(f"Agent '{target_agent_name}' system prompt updated by Prompt Engineer.")
-                else:
-                    logger.warning(f"Target agent '{target_agent_name}' not found for prompt update.")
+            if target_agent:
+                target_agent.update_system_prompt(new_prompt)
+                logger.info(f"Agent '{agent_name}' system prompt updated.")
+            else:
+                logger.warning(f"Target agent '{agent_name}' not found for prompt update.")
 
     def _generate_plan(self, session: Session, high_level_goal: str, file_contents: Dict[str, str] = {}) -> Dict[str, Any]:
         """
@@ -184,7 +152,8 @@ class Orchestrator(Agent):
         )
 
         # Load the general planning prompt template
-        general_prompt_template = read_file("prompts/general_planning.txt").strip()
+        t20_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..')) # Not used
+        general_prompt_template = read_file(os.path.join(t20_root, "prompts", "general_planning.txt")).strip()
         planning_prompt_parts = [general_prompt_template.format(
             high_level_goal=high_level_goal,
             team_description=team_description

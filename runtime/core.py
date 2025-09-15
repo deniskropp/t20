@@ -67,11 +67,13 @@ class Session:
     agents: list = field(default_factory=list) # Type hint will be updated later to List[Agent]
     state: str = "initialized"
     session_dir: str = field(init=False)
+    project_root: str = field(default_factory=str)
 
     def __post_init__(self):
         """Initializes the session directory."""
-        project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-        self.session_dir = os.path.join(project_root, 'sessions', self.session_id)
+        if not self.project_root:
+            self.project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+        self.session_dir = os.path.join(self.project_root, 'sessions', self.session_id)
         os.makedirs(self.session_dir, exist_ok=True)
         logger.info(f"Session created: {self.session_id} (Directory: {self.session_dir})")
 
