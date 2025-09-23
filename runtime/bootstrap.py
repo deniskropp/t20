@@ -15,6 +15,7 @@ from runtime.factory import instantiate_agent
 from runtime.orchestrator import Orchestrator
 from runtime.loader import load_config, load_agent_templates, load_prompts
 from runtime.log import setup_logging
+from runtime.paths import AGENTS_DIR_NAME, CONFIG_DIR_NAME, PROMPTS_DIR_NAME, RUNTIME_CONFIG_FILENAME
 
 logger = logging.getLogger(__name__)
 
@@ -36,9 +37,9 @@ def system_runtime_bootstrap(root_dir: str, initial_task: str, plan_only: bool =
 
     print(f"Using default model: {default_model}")
 
-    config = load_config(os.path.join(root_dir, "config", "runtime.yaml"))
-    agent_specs = load_agent_templates(os.path.join(root_dir, "agents"), config, default_model)
-    prompts = load_prompts(os.path.join(root_dir, "prompts"))
+    config = load_config(os.path.join(root_dir, CONFIG_DIR_NAME, RUNTIME_CONFIG_FILENAME))
+    agent_specs = load_agent_templates(os.path.join(root_dir, AGENTS_DIR_NAME), config, default_model)
+    prompts = load_prompts(os.path.join(root_dir, PROMPTS_DIR_NAME))
 
     all_team_members = {member.lower() for spec in agent_specs if 'team' in spec for member in spec['team']}
 

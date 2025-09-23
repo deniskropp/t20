@@ -5,31 +5,50 @@ for handling artifacts and session-specific data.
 """
 
 from dataclasses import dataclass, field
-from typing import Any, Dict
+from typing import Any, Dict, List
 import uuid
 import os
 import logging
 import json
 
+from runtime.custom_types import Plan, Task
+
 logger = logging.getLogger(__name__)
+
+
+class Artifact:
+    """Represents a file or data artifact generated during task execution."""
+    def __init__(self, name: str, content: Any, step: Task):
+        self.name = name
+        self.content = content
+        self.step = step
+
 
 @dataclass
 class ExecutionContext:
     """Holds the state and context for a multi-agent workflow."""
     session: 'Session'
     high_level_goal: str
-    plan: Dict[str, Any]
+    plan: Plan
     step_index: int = 0
     round_num: int = 0
-    artifacts: Dict[str, Any] = field(default_factory=dict)
+    artifacts: Dict[str, Artifact] = field(default_factory=dict)
 
-    def current_step(self) -> Dict[str, Any]:
+    def next(self):
+        logger.info(f"next() at step index {self.step_index}")
+        self.step_index += 1
+
+    def reset(self):
+        logger.info(f"reset() at step index {self.step_index}")
+        self.step_index = 0
+
+    def current_step(self) -> Task:
         """Returns the current step in the plan."""
-        return self.plan.get("tasks", [])[self.step_index]
+        return self.plan.tasks[self.step_index]
 
     def _remember_artifact(self, key: str, value: Any):
         """Remembers an artifact from a step's execution for future tasks."""
-        self.artifacts[key] = {"content": value, "step": self.current_step()}
+        self.artifacts[key] = Artifact(name=key, content=value, step=self.current_step())
 
     def record_artifact(self, key: str, value: Any, mem: bool = False):
         """
@@ -40,7 +59,7 @@ class ExecutionContext:
             value (Any): The content of the artifact.
             mem (bool): If True, the artifact is also stored in the execution context's memory.
         """
-        artifact_key = f"{self.round_num}__step_{self.step_index}_{key}"
+        artifact_key = f"{self.round_num}/__step_{self.step_index}_{key}"
         self.session.add_artifact(artifact_key, value)
         if mem:
             self._remember_artifact(artifact_key, value)
@@ -53,12 +72,10 @@ class ExecutionContext:
             key (str): The key under which to store the artifact.
             value (Any): The content of the artifact.
         """
-        artifact_key = f"{self.round_num}__step_{self.step_index}_{key}"
+        artifact_key = f"{self.round_num}/__step_{self.step_index}_{key}"
         self.session.add_artifact(artifact_key, value)
-        self.artifacts[artifact_key] = {
-            "content": value,
-            "step": {"task_id": "none", "requires": []},
-        }
+        self.artifacts[artifact_key] = Artifact(name=artifact_key, content=value, step=self.current_step())
+
 
 @dataclass
 class Session:

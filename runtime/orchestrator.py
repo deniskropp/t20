@@ -6,12 +6,12 @@ and executing the workflow plan based on a high-level goal.
 
 import os
 import json
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Tuple
 import logging
 
 from colorama import Fore, Style
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ValidationError
 
 from runtime.agent import Agent # Import Agent base class
 from runtime.core import ExecutionContext, Session # Import Session and ExecutionContext
@@ -20,15 +20,17 @@ from runtime.util import read_file
 
 logger = logging.getLogger(__name__)
 
-from runtime.custom_types import Plan, AgentOutput
+from runtime.custom_types import Plan, AgentOutput, Team
+
 
 class Orchestrator(Agent):
     """An agent responsible for creating and managing a plan for multi-agent workflows."""
+    team: Dict[str,'Agent'] = {}
 
     def __init__(self, name, role, goal, model, system_prompt) -> None:
         super().__init__(name, role, goal, model, system_prompt)
 
-    def start_workflow(self, session: Session, initial_task: str, rounds: int = 1, plan_only: bool = False, files: List[str] = []):
+    def start_workflow(self, session: Session, initial_task: str, rounds: int = 1, plan_only: bool = False, files: Optional[List[str]] = None):
         """
         Initiates and manages the entire workflow for multiple rounds.
 
@@ -39,22 +41,26 @@ class Orchestrator(Agent):
             plan_only (bool): If True, only generates the plan without executing tasks.
             files (List[str]): List of file paths to be used as context in the task.
         """
-        file_contents = {}
+        file_contents = []
+
         if files:
-            logger.info("Files provided:")
             for file_path in files:
                 try:
-                    with open(file_path, 'r') as file_handle:
-                        content = file_handle.read()
-                        file_contents[file_path] = content
-                        logger.info(f"  - {file_path}")
+                    with open(file_path, 'r', encoding='utf-8') as file:
+                        file_contents.append({'name': os.path.basename(file_path), 'content': file.read()})
+                except FileNotFoundError:
+                    logger.error(f"File not found: {file_path}")
                 except Exception as e:
                     logger.error(f"Error reading file {file_path}: {e}")
 
         plan = self._generate_plan(session, initial_task, file_contents)
-        logger.info(f"Generated plan:\n{json.dumps(plan, indent=4)}")
+        if not plan:
+            logger.error("Orchestration failed: Could not generate a valid plan.")
+            return
 
-        if not plan or "tasks" not in plan or "roles" not in plan:
+        logger.info(f"Generated plan:\n{plan.model_dump_json(indent=4)}")
+
+        if not plan or not plan.tasks or not plan.roles:
             logger.error("Orchestration failed: Could not generate a valid plan.")
             return
 
@@ -65,26 +71,30 @@ class Orchestrator(Agent):
         context = ExecutionContext(session=session, high_level_goal=initial_task, plan=plan)
 
         if file_contents:
-            context.record_initial("initial_files.json", json.dumps(file_contents))
+            context.record_initial("initial_files.json", file_contents)
 
         for context.round_num in range(1, rounds + 1):
             logger.info(f"Orchestrator {self.name} is starting workflow round {context.round_num} for goal: '{initial_task}'")
 
             team_by_name = {agent.name: agent for agent in self.team.values()} if self.team else {}
 
-            context.step_index = 0
+            context.reset()
 
-            logger.info('')
-
-            while context.step_index < len(plan["tasks"]):
+            while context.step_index < len(plan.tasks):
                 step = context.current_step()
-                agent_name = step.get("name", "Any")
-                delegate_agent = team_by_name.get(agent_name)
+                agent_name = step.name
+                
+                delegate_agent = None
+                for name, agent in team_by_name.items():
+                    if name.lower() == agent_name.lower():
+                        delegate_agent = agent
+                        break
 
                 if not delegate_agent:
-                    logger.warning(f"No agent found with name '{agent_name}'. Skipping step {context.step_index}.")
-                    context.step_index += 1
-                    continue
+                    logger.warning(f"No agent found with name '{agent_name}'. Execution will continue with the Orchestrator as the fallback agent.")
+                    delegate_agent = self
+
+                logger.info(f"Agent '{delegate_agent.name}' is executing step {context.step_index + 1}/{len(plan.tasks)}: '{step.desc}' (Role: {step.role})")
 
                 result = delegate_agent.execute_task(context)
                 if result:
@@ -92,15 +102,15 @@ class Orchestrator(Agent):
                     try:
                         # Attempt to parse the output as AgentOutput
                         agent_output = AgentOutput.model_validate_json(result)
-                        if agent_output.prompts:
+                        if agent_output.team.prompts:
                             logger.info(f"Agent {delegate_agent.name} provided new prompts.")
-                            for prompt_data in agent_output.prompts:
+                            for prompt_data in agent_output.team.prompts:
                                 self._update_agent_prompt(session, prompt_data.name, prompt_data.content)
                     except Exception as e:
                         logger.warning(f"Could not parse agent output as AgentOutput: {e}. Treating as plain text.")
 
 
-                context.step_index += 1
+                context.next()
 
             logger.info(f"Orchestrator has completed workflow round {context.round_num}.")
 
@@ -110,22 +120,30 @@ class Orchestrator(Agent):
 
         Args:
             session (Session): The current session object.
-            agent_name (str): The name of the agent to update.
+            agent_name (str): The name or role of the agent to update.
             new_prompt (str): The new system prompt.
         """
-        if agent_name and new_prompt:
-            # Search for the target agent within the orchestrator's team or the session's agents
-            target_agent = self.team.get(agent_name)
-            if not target_agent:
-                target_agent = next((a for a in session.agents if a.name == agent_name), None)
+        if not (agent_name and new_prompt):
+            return
 
-            if target_agent:
-                target_agent.update_system_prompt(new_prompt)
-                logger.info(f"Agent '{agent_name}' system prompt updated.")
-            else:
-                logger.warning(f"Target agent '{agent_name}' not found for prompt update.")
+        # Combine team agents and session agents for a comprehensive search, ensuring uniqueness
+        all_agents = {agent.name: agent for agent in list(self.team.values()) + session.agents}.values()
 
-    def _generate_plan(self, session: Session, high_level_goal: str, file_contents: Dict[str, str] = {}) -> Dict[str, Any]:
+        # First, try to find by name
+        target_agent = next((agent for agent in all_agents if agent.name.lower() == agent_name.lower()), None)
+
+        # If not found by name, try to find by role
+        if not target_agent:
+            # This will find the first agent with the matching role.
+            target_agent = next((agent for agent in all_agents if agent.role.lower() == agent_name.lower()), None)
+
+        if target_agent:
+            target_agent.update_system_prompt(new_prompt)
+            logger.info(f"Agent '{target_agent.name}' (matched by '{agent_name}') system prompt updated.")
+        else:
+            logger.warning(f"Target agent '{agent_name}' not found for prompt update.")
+
+    def _generate_plan(self, session: Session, high_level_goal: str, file_contents: List[Tuple[str, str]] = []) -> Optional[Plan]:
         """
         Invokes the language model to get a structured plan for the given high-level goal.
         The plan includes a sequence of tasks and the roles responsible for them.
@@ -133,15 +151,15 @@ class Orchestrator(Agent):
         Args:
             session (Session): The current session object.
             high_level_goal (str): The high-level goal for which to generate a plan.
-            file_contents (Dict[str, str]): A dictionary of file paths and their contents to provide context to the LLM.
+            file_contents (List[Tuple[str, str]]): A list of file paths and their contents to provide context to the LLM.
 
         Returns:
-            Dict[str, Any]: The generated plan as a dictionary, or an empty dictionary if an error occurs.
+            Optional[Plan]: The generated plan as a Pydantic object, or None if an error occurs.
         """
         logger.info(f"Orchestrator {self.name} is generating a plan for: '{high_level_goal}'")
         if not self.llm or not self.team:
             logger.error("Orchestrator client or team not initialized. Cannot generate plan.")
-            return {}
+            return None
 
         # Construct a description of the available agents and their roles/goals
         team_description = "\n".join(
@@ -167,8 +185,8 @@ class Orchestrator(Agent):
         # Include file contents if provided
         if file_contents:
             file_section = [f"\n--- Files Content ---"]
-            for file_path, content in file_contents.items():
-                file_section.append(f"File: {file_path}\n```\n{content}\n```")
+            for f in file_contents:
+                file_section.append(f"File: {f['name']}\n```\n{f['content']}\n```")
             planning_prompt_parts.append("\n".join(file_section))
 
         logger.debug("Planning prompt parts for LLM: %s", planning_prompt_parts)
@@ -183,11 +201,14 @@ class Orchestrator(Agent):
                 response_mime_type='application/json', #if self.role == 'Prompt Engineer' else None
                 response_schema=Plan
             )
-            plan = json.loads(response or '{}')
+            plan = Plan.model_validate_json(response or '{}')
+        except (ValidationError, json.JSONDecodeError) as e:
+            logger.info(f"Error generating or validating plan for {self.name}: {e}")
+            return None
         except Exception as e:
-            logger.error(f"Error generating plan for {self.name}: {e}")
-            plan = {"error": str(e)}
+            logger.error(f"An unexpected error occurred during plan generation for {self.name}: {e}")
+            return None
 
-        logger.info(f"\n\nPlan generated for {self.name}: {json.dumps(plan, indent='    ')}\n\n\n")
-        session.add_artifact("initial_plan.json", plan)
+        logger.info(f"\n\nPlan generated for {self.name}: {plan.model_dump_json(indent=4)}\n\n\n")
+        session.add_artifact("initial_plan.json", plan.model_dump(mode='json'))
         return plan

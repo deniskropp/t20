@@ -9,9 +9,10 @@ import os
 import re
 import json
 from logging.handlers import RotatingFileHandler
+from colorama import Fore, Style
 
 # --- Configuration ---
-LOG_LEVEL = logging.DEBUG
+LOG_LEVEL = "INFO"
 LOG_FILE_DIR = "logs"
 LOG_FILE_NAME = "app.log"
 LOG_FILE_PATH = os.path.join(LOG_FILE_DIR, LOG_FILE_NAME)
@@ -26,48 +27,73 @@ class ColoredFormatter(logging.Formatter):
     """
     # ANSI escape codes for colors
     COLORS = {
-        'DEBUG': '[94m',    # Blue
-        'INFO': '[92m',     # Green
-        'WARNING': '[93m',  # Yellow
-        'ERROR': '[91m',    # Red
-        'CRITICAL': '[95m', # Magenta
-        'RESET': '[0m'      # Reset color
+        'DEBUG': Fore.YELLOW,
+        'INFO': Fore.CYAN,
+        'WARNING': Fore.YELLOW,
+        'ERROR': Fore.RED,
+        'CRITICAL': Fore.MAGENTA,
+        'RESET': Style.RESET_ALL
     }
 
     # Regex-based coloring rules (pattern, color)
-    REGEX_RULES = [
-        (re.compile(r"Agent instance created:"), '[93m'),  # Yellow
-        (re.compile(r"Agent .*'s system prompt updated."), '[97m'),  # White
-        (re.compile(r"Agent .* is executing task"), '[92m'),  # Green
-        (re.compile(r"Warning: Agent output is not in expected AgentOutput format."), '[91m'), # Red
-        (re.compile(r"--- System Runtime Bootstrap ---"), '[94m'),  # Light Blue
-        (re.compile(r"Error: No agents could be instantiated."), '[91m'), # Red
-        (re.compile(r"Session created:"), '[92m'),  # Green
-        (re.compile(r"Artifact '.*' saved in session .*"), '[94m'),  # Blue
-        (re.compile(r"Error saving artifact '.*'"), '[91m'), # Red
-        (re.compile(r"Files provided:"), '[96m'),  # Cyan
-        (re.compile(r"Error reading file .*"), '[91m'), # Red
-        (re.compile(r"Generated plan:"), '[96m'),  # Cyan
-        (re.compile(r"Orchestration failed: Could not generate a valid plan."), '[91m'), # Red
-        (re.compile(r"Orchestrator .* is generating a plan for"), '[95m'),  # Magenta
+    REGEX_RULES_MESSAGES = [
+        (re.compile(r"Agent instance created:"), Fore.YELLOW),
+        (re.compile(r"Agent '.*' system prompt updated."), Fore.GREEN),
+        (re.compile(r"Agent '.*' is executing task"), Fore.GREEN),
+        (re.compile(r"Agent '.*' completed task"), Fore.GREEN),
+        (re.compile(r"Warning: Agent output is not in expected AgentOutput format."), Fore.YELLOW),
+        (re.compile(r"System Runtime"), Fore.CYAN),
+        (re.compile(r"Error: No agents could be instantiated."), Fore.RED),
+        (re.compile(r"Session created:"), Fore.GREEN),
+        (re.compile(r"Artifact '.*' saved in session .*"), Fore.LIGHTBLUE_EX),
+        (re.compile(r"Error saving artifact '.*'"), Fore.RED),
+        (re.compile(r"Files provided:"), Fore.MAGENTA),
+        (re.compile(r"Error reading file .*"), Fore.RED),
+        (re.compile(r"Generated plan:"), Fore.WHITE),
+        (re.compile(r"Orchestration failed: Could not generate a valid plan."), Fore.RED),
+        (re.compile(r"Orchestrator .* is generating a plan for"), Fore.BLUE),
+        (re.compile(r"Orchestrator .* is starting workflow round"), Fore.CYAN),
+        (re.compile(r"Orchestrator has completed workflow round"), Fore.CYAN),
+        (re.compile(r"Agent .* provided new prompts."), Fore.LIGHTGREEN_EX),
+        (re.compile(r"Target agent '.*' not found for prompt update."), Fore.YELLOW),
+        (re.compile(r"Error generating or validating plan for .*"), Fore.RED),
     ]
+
+    COLORS_NAMES = {
+        'runtime.orchestrator': Fore.LIGHTYELLOW_EX,
+        'runtime.agent': Fore.GREEN,
+        'runtime.sysmain': Fore.LIGHTRED_EX,
+        'runtime.core': Fore.LIGHTBLUE_EX,
+        'runtime.bootstrap': Fore.LIGHTRED_EX,
+        'runtime.loader': Fore.LIGHTRED_EX,
+        'runtime.llm': Fore.LIGHTMAGENTA_EX,
+        'runtime.util': Fore.GREEN,
+        'runtime.factory': Fore.LIGHTRED_EX,
+        'runtime.paths': Fore.BLUE,
+        'runtime.custom_types': Fore.CYAN,
+    }
 
     def format(self, record):
         """
         Formats the log record with the appropriate color.
         """
         log_message = super().format(record)
-        
+
         # Check for regex-based coloring first
-        for pattern, color in self.REGEX_RULES:
+        for pattern, color in self.REGEX_RULES_MESSAGES:
             if pattern.search(record.getMessage()):
+                return f"{color}{log_message}{self.COLORS['RESET']}"
+
+        # Check for logger name-based coloring
+        for name_prefix, color in self.COLORS_NAMES.items():
+            if record.name.startswith(name_prefix):
                 return f"{color}{log_message}{self.COLORS['RESET']}"
 
         # Fallback to level-based coloring
         return f"{self.COLORS.get(record.levelname, self.COLORS['RESET'])}{log_message}{self.COLORS['RESET']}"
 
 # --- Setup ---
-def setup_logging():
+def setup_logging(level: str = LOG_LEVEL):
     """
     Sets up logging for the application.
     """
@@ -77,11 +103,11 @@ def setup_logging():
 
     # Get the root logger
     logger = logging.getLogger()
-    logger.setLevel(LOG_LEVEL)
+    logger.setLevel(level)
 
     # --- Console Handler ---
     console_handler = logging.StreamHandler()
-    console_handler.setLevel(LOG_LEVEL)
+    console_handler.setLevel(level)
 
     # --- File Handler ---
     file_handler = RotatingFileHandler(
@@ -89,7 +115,7 @@ def setup_logging():
         maxBytes=MAX_FILE_SIZE,
         backupCount=BACKUP_COUNT
     )
-    file_handler.setLevel(LOG_LEVEL)
+    file_handler.setLevel(level)
 
     # --- Formatters ---
     console_formatter = ColoredFormatter(
@@ -135,7 +161,7 @@ def setup_logging():
             maxBytes=MAX_FILE_SIZE,
             backupCount=BACKUP_COUNT
         )
-        jsonl_file_handler.setLevel(LOG_LEVEL)
+        jsonl_file_handler.setLevel(level)
         jsonl_file_handler.setFormatter(JsonFormatter())
         logger.addHandler(jsonl_file_handler)
 

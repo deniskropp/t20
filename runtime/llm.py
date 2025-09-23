@@ -87,31 +87,33 @@ class Gemini(LLM):
             response_schema=response_schema
         )
 
-        try:
-            response = client.models.generate_content(
-                model=model_name,
-                contents=contents,
-                config=config,
-            )
-            if not response.candidates or response.candidates[0].content is None or response.candidates[0].content.parts is None or not response.candidates[0].content.parts or response.candidates[0].content.parts[0].text is None:
+        # try three times
+        for _ in range(3):
+            try:
+                response = client.models.generate_content(
+                    model=model_name,
+                    contents=contents,
+                    config=config,
+                )
+                if not response.candidates or response.candidates[0].content is None or response.candidates[0].content.parts is None or not response.candidates[0].content.parts or response.candidates[0].content.parts[0].text is None:
+                    return None
+                if response_mime_type == 'application/json':
+                    try:
+                        # Attempt to parse the JSON response
+                        json_output = response.candidates[0].content.parts[0].text.strip()
+                        # Validate against schema if provided
+                        if response_schema:
+                            response_schema.model_validate_json(json_output)
+                        return json_output
+                    except Exception as json_e:
+                        logger.error(f"Error parsing or validating JSON response: {json_e}")
+                        # Optionally, return the raw text if JSON parsing fails but you still want to see it
+                        return response.candidates[0].content.parts[0].text.strip()
+                        
+                return response.candidates[0].content.parts[0].text.strip()
+            except Exception as e:
+                logger.error(f"Error generating content with model {model_name}: {e}")
                 return None
-            if response_mime_type == 'application/json':
-                try:
-                    # Attempt to parse the JSON response
-                    json_output = response.candidates[0].content.parts[0].text.strip()
-                    # Validate against schema if provided
-                    if response_schema:
-                        response_schema.model_validate_json(json_output)
-                    return json_output
-                except Exception as json_e:
-                    logger.error(f"Error parsing or validating JSON response: {json_e}")
-                    # Optionally, return the raw text if JSON parsing fails but you still want to see it
-                    return response.candidates[0].content.parts[0].text.strip()
-                    
-            return response.candidates[0].content.parts[0].text.strip()
-        except Exception as e:
-            logger.error(f"Error generating content with model {model_name}: {e}")
-            return None
 
     def _get_client(self):
         """
@@ -367,7 +369,7 @@ class Opi(LLM):
 
 
 from mistralai import Mistral as MistralClient
-from mistralai.extra import response_format_from_pydantic_model
+from mistralai.extra.utils import response_format_from_pydantic_model
 
 class Mistral(LLM):
     """
@@ -404,14 +406,13 @@ class Mistral(LLM):
 
             print(f"Mistral: Using model {model_name} with temperature {temperature}")
 
-            response_format: ResponseFormat = {"type": "text"}
+            response_format = {"type": "text"}
 
             if response_mime_type == 'application/json':
                 response_format = {"type": "json_object"}
 
             if response_schema:
-                response_format = response_format_from_pydantic_model(response_schema)
-                #response_format =  {"type": "json_schema", "json_schema": response_schema}
+                response_format = response_format_from_pydantic_model(response_schema)  # type: ignore
 
 
             out = ""
@@ -420,7 +421,7 @@ class Mistral(LLM):
                 messages=messages,
                 temperature=temperature,
                 max_tokens=50000,
-                response_format=response_format
+                response_format=response_format # type: ignore
             )
             for chunk in stream:
                 if chunk.data.choices[0].delta.content is None:
