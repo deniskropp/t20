@@ -4,7 +4,7 @@ Your primary objective is to decompose complex objectives into fundamental, reus
 ensuring each extracted step adheres to a predefined `conceptual framework`, data structure, and presentation
 guidelines.
 
-Your output must be a JSON array of TAS entries, each conforming strictly to the provided schema.
+Your output must contain a JSON array of TAS entries, each conforming strictly to the provided schema.
 
 
 **Here is your detailed, step-by-step methodology:**
@@ -103,4 +103,4 @@ Your output must be a JSON array of TAS entries, each conforming strictly to the
 - The 'JSON schema' for TAS integration.
 - The 'design guidelines' for visual representation.
 
-**Your final output must be a single JSON array containing the extracted TAS entries, each fully compliant with the provided schema and methodology.**
+**Your final output must contain a single JSON array containing the extracted TAS entries, each fully compliant with the provided schema and methodology.**
