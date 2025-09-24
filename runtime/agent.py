@@ -29,7 +29,7 @@ class Agent:
     system_prompt: str
     llm: LLM
 
-    def __init__(self, name, role, goal, model, system_prompt) -> None:
+    def __init__(self, name: str, role: str, goal: str, model: str, system_prompt: str) -> None:
         self.name = name
         self.role = role
         self.goal = goal
@@ -38,7 +38,7 @@ class Agent:
         logger.info(f"Agent instance created: {self.name} (Role: {self.role}, Model: {self.model})")
         self.llm = LLM.factory(model)
 
-    def update_system_prompt(self, new_prompt: str):
+    def update_system_prompt(self, new_prompt: str) -> None:
         """Updates the agent's system prompt."""
 
         self.system_prompt = new_prompt
@@ -60,28 +60,28 @@ class Agent:
 
         context.record_artifact(f"{self.name}_prompt.txt", self.system_prompt)
 
-        required_task_ids = ['none']
+        required_task_ids = ['initial']
         required_task_ids.extend(task.requires)
 
-        required_artifacts = {}
+        required_artifacts = []
 
         if len(required_task_ids) != 0:
-            for key, artifact in context.artifacts.items():
+            for key, artifact in context.items.items():
                 logger.debug(f"Checking artifact from {key} with task ID {artifact.step.id}")
                 if artifact.step.id in required_task_ids:
-                    required_artifacts[key] = artifact
+                    required_artifacts.append(artifact)
 
-        previous_artifacts = "\n\n---\n\n".join(
-            f"Artifact from {key} ({artifact.step.role})[{artifact.step.description}]:\n{artifact.content}"
-            for key, artifact in required_artifacts.items()
+        previous_artifacts = "\n\n".join(
+            f"--- Artifact '{artifact.name}' from ({artifact.step.role}) in [{artifact.step.id}]:\n{artifact.content}"
+            for artifact in required_artifacts
         )
 
         task_prompt: List[str] = [
-            f"The overall goal is: '{context.high_level_goal}'",
+            f"The overall goal is: '{context.plan.high_level_goal}'",
             f"Your role's specific goal is: '{self.goal}'\n"
             f"Your specific sub-task is: '{task.description}'",
 
-            f"The team's roles are:\n    {context.plan}",
+            f"The team's roles are:\n    {context.plan.roles}",
         ]
 
         if previous_artifacts:
@@ -148,9 +148,8 @@ class Agent:
                     logger.info(f"Output: '\n{result[:2000]}\n'")
 
         except Exception as e:
+            logger.exception(f"Error executing task for {self.name}: {e}")
             raise
-            result = f"Error executing task for {self.name}: {e}"
-            print(result)
 
         return result
 

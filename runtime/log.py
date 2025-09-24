@@ -74,7 +74,7 @@ class ColoredFormatter(logging.Formatter):
         'runtime.custom_types': Fore.CYAN,
     }
 
-    def format(self, record):
+    def format(self, record: logging.LogRecord) -> str:
         """
         Formats the log record with the appropriate color.
         """
@@ -94,7 +94,7 @@ class ColoredFormatter(logging.Formatter):
         return f"{self.COLORS.get(record.levelname, self.COLORS['RESET'])}{log_message}{self.COLORS['RESET']}"
 
 # --- Setup ---
-def setup_logging(level: str = LOG_LEVEL):
+def setup_logging(level: str = LOG_LEVEL) -> None:
     """
     Sets up logging for the application.
     """
@@ -127,7 +127,7 @@ def setup_logging(level: str = LOG_LEVEL):
     )
 
     class JsonFormatter(logging.Formatter):
-        def format(self, record):
+        def format(self, record: logging.LogRecord):
             log_record = {
                 "timestamp": self.formatTime(record, self.datefmt),
                 "name": record.name,

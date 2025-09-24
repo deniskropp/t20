@@ -7,7 +7,6 @@ centralized, well-defined data structures for plans, tasks, and agent outputs.
 from typing import List, Optional
 from pydantic import BaseModel, Field
 
-
 class Task(BaseModel):
     """A single actionable step in a plan."""
     id: str = Field(..., description="Unique identifier for the task (e.g., 'task_1').")
@@ -37,6 +36,7 @@ class Role(BaseModel):
 
 class Plan(BaseModel):
     """Overall strategy with reasoning, roles, and tasks."""
+    high_level_goal: str = Field(..., description="The overarching objective this plan aims to accomplish.")
     reasoning: str = Field(..., description="Why this plan is structured this way.")
     roles: List[Role] = Field(default_factory=list, description="All roles needed for execution.")
     tasks: List[Task] = Field(default_factory=list, description="Step-by-step ordered tasks.")

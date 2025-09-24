@@ -16,8 +16,7 @@ from runtime.custom_types import Plan, Task
 logger = logging.getLogger(__name__)
 
 
-class Artifact:
-    """Represents a file or data artifact generated during task execution."""
+class ContextItem:
     def __init__(self, name: str, content: Any, step: Task):
         self.name = name
         self.content = content
@@ -28,27 +27,26 @@ class Artifact:
 class ExecutionContext:
     """Holds the state and context for a multi-agent workflow."""
     session: 'Session'
-    high_level_goal: str
     plan: Plan
     step_index: int = 0
     round_num: int = 0
-    artifacts: Dict[str, Artifact] = field(default_factory=dict)
+    items: Dict[str, ContextItem] = field(default_factory=dict)
 
-    def next(self):
+    def next(self) -> None:
         self.step_index += 1
 
-    def reset(self):
+    def reset(self) -> None:
         self.step_index = 0
 
     def current_step(self) -> Task:
         """Returns the current step in the plan."""
         return self.plan.tasks[self.step_index]
 
-    def _remember_artifact(self, key: str, value: Any):
+    def _remember_artifact(self, key: str, value: Any, step: Task | None = None) -> None:
         """Remembers an artifact from a step's execution for future tasks."""
-        self.artifacts[key] = Artifact(name=key, content=value, step=self.current_step())
+        self.items[key] = ContextItem(name=key, content=value, step=step or self.current_step())
 
-    def record_artifact(self, key: str, value: Any, mem: bool = False):
+    def record_artifact(self, key: str, value: Any, mem: bool = False) -> None:
         """
         Records an artifact from a step's execution and optionally remembers it.
 
@@ -57,12 +55,12 @@ class ExecutionContext:
             value (Any): The content of the artifact.
             mem (bool): If True, the artifact is also stored in the execution context's memory.
         """
-        artifact_key = f"{self.round_num}/__step_{self.step_index}_{key}"
+        artifact_key = f"__{self.round_num}/__step_{self.step_index}_{key}"
         self.session.add_artifact(artifact_key, value)
         if mem:
             self._remember_artifact(artifact_key, value)
 
-    def record_initial(self, key: str, value: Any):
+    def record_initial(self, key: str, value: Any) -> None:
         """
         Records an artifact from a step's execution and optionally remembers it.
 
@@ -70,9 +68,14 @@ class ExecutionContext:
             key (str): The key under which to store the artifact.
             value (Any): The content of the artifact.
         """
-        artifact_key = f"{self.round_num}/__step_{self.step_index}_{key}"
-        self.session.add_artifact(artifact_key, value)
-        self.artifacts[artifact_key] = Artifact(name=artifact_key, content=value, step=self.current_step())
+        self._remember_artifact(key, value, step=Task(
+            id='initial',
+            description='Initial files provided by the user',
+            role='User',
+            agent='User'
+        ))
+
+
 
 
 @dataclass
@@ -84,7 +87,7 @@ class Session:
     session_dir: str = field(init=False)
     project_root: str = field(default_factory=str)
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """Initializes the session directory."""
         if not self.project_root:
             self.project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -92,7 +95,7 @@ class Session:
         os.makedirs(self.session_dir, exist_ok=True)
         logger.info(f"Session created: {self.session_id} (Directory: {self.session_dir})")
 
-    def add_artifact(self, name: str, content: Any):
+    def add_artifact(self, name: str, content: Any) -> None:
         """
         Saves an artifact in the session directory.
 

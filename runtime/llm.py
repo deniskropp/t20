@@ -4,11 +4,12 @@ It provides a unified interface for various LLM providers and models,
 allowing for easy integration and interchangeability of different LLMs.
 """
 
+import json
 import os
 from google import genai
 from google.genai import types
 from ollama import Client as Ollama
-from typing import Optional, Any
+from typing import Optional, Any, Dict
 from abc import ABC, abstractmethod
 import logging
 from pydantic import BaseModel
@@ -21,7 +22,7 @@ class LLM(ABC):
     Abstract base class for Large Language Models.
     Provides a centralized place for LLM-related configurations and utilities.
     """
-    def __init__(self):
+    def __init__(self) -> None:
         pass
 
     @abstractmethod
@@ -56,8 +57,9 @@ class Gemini(LLM):
     """
     Provides a centralized place for LLM-related configurations and utilities.
     """
-    def __init__(self, species: str):
-        self.client = None
+    _clients: Dict[str, genai.Client] = {} # Class-level cache for clients
+
+    def __init__(self, species: str) -> None:
         self.species = species
 
     def generate_content(self, model_name: str, contents: str, system_instruction: str = '',
@@ -96,41 +98,41 @@ class Gemini(LLM):
                     contents=contents,
                     config=config,
                 )
-                #print(response)
-                if response.parsed:
-                    return response.parsed
                 if not response.candidates or response.candidates[0].content is None or response.candidates[0].content.parts is None or not response.candidates[0].content.parts or response.candidates[0].content.parts[0].text is None:
-                    logger.warning(f"Gemini: No content in response from model {model_name}. Retrying...")
-                    continue
-                if response_mime_type == 'application/json':
-                    try:
-                        # Attempt to parse the JSON response
-                        json_output = response.candidates[0].content.parts[0].text.strip()
-                        # Validate against schema if provided
-                        if response_schema:
-                            response_schema.model_validate_json(json_output)
-                        return json_output
-                    except Exception as ex:
-                        logger.error(f"Error parsing or validating JSON response: {ex}")
-                        # Optionally, return the raw text if JSON parsing fails but you still want to see it
-                        return response.candidates[0].content.parts[0].text.strip()
-                return response.candidates[0].content.parts[0].text.strip()
+                    raise ValueError(f"Gemini: No content in response from model {model_name}. Retrying...")
+                break
             except Exception as ex:
-                logger.error(f"Error generating content with model {model_name}: {ex}")
+                logger.exception(f"Error generating content with model {model_name}: {ex}")
                 #return None
-        return None
 
-    def _get_client(self):
+        if isinstance(response.parsed, BaseModel):
+            return response.parsed
+
+        if response_mime_type == 'application/json':
+            try:
+                # Attempt to parse the JSON response
+                json_output = response.candidates[0].content.parts[0].text.strip()
+                # Validate against schema if provided
+                if response_schema:
+                    response_schema.model_validate_json(json_output)
+                return json_output
+            except Exception as ex:
+                logger.exception(f"Error parsing or validating JSON response: {ex}")
+
+        return response.candidates[0].content.parts[0].text.strip()
+
+    def _get_client(self) -> genai.Client:
         """
         Returns a GenAI client instance.
         """
         try:
-            if (self.client is None):
-                self.client = genai.Client()
-            return self.client
+            if self.species not in Gemini._clients:
+                logger.info(f"Initializing GenAI client for species {self.species}")
+                Gemini._clients[self.species] = genai.Client()
+            return Gemini._clients[self.species]
         except Exception as e:
-            logger.error(f"Error initializing GenAI client: {e}")
-            return None
+            logger.exception(f"Error initializing GenAI client: {e}")
+            raise
 
 
 class Olli(LLM):
@@ -188,12 +190,12 @@ class Olli(LLM):
         """
         try:
             if (self.client is None):
-                self.client = Ollama()#base_url='http://localhost:11434')
-            return self.client
+                if self.species not in Olli._clients:
+                    Olli._clients[self.species] = Ollama()#base_url='http://localhost:11434')
+            return Olli._clients[self.species]
         except Exception as e:
             logger.error(f"Error initializing GenAI client: {e}")
             return None
-
 
 
 
@@ -206,10 +208,11 @@ class Kimi(LLM):
     """
     Provides a centralized place for LLM-related configurations and utilities.
     """
-    def __init__(self, species: str = 'Kimi'):
-        self.client = None
-        self.species = species
+    _clients = {} # Class-level cache for clients
 
+    def __init__(self, species: str = 'Kimi'):
+        self.species = species
+    
     def generate_content(self, model_name: str, contents: str, system_instruction: str = '',
                          temperature: float = 0.7, response_mime_type: str = 'text/plain', response_schema: BaseModel = None) -> Optional[str]: # type: ignore
         """
@@ -268,12 +271,13 @@ class Kimi(LLM):
         """
         try:
             if (self.client is None):
-                self.client = client = InferenceClient(
-                    provider="featherless-ai",
-                    api_key=os.environ.get("HF_TOKEN"),
-                    model="moonshotai/Kimi-K2-Instruct"
-                )
-            return self.client
+                if self.species not in Kimi._clients:
+                    Kimi._clients[self.species] = InferenceClient(
+                        provider="featherless-ai",
+                        api_key=os.environ.get("HF_TOKEN"),
+                        model="moonshotai/Kimi-K2-Instruct"
+                    )
+            return Kimi._clients[self.species]
         except Exception as e:
             logger.error(f"Error initializing GenAI client: {e}")
             return None
@@ -288,10 +292,11 @@ class Opi(LLM):
     """
     Provides a centralized place for LLM-related configurations and utilities.
     """
-    def __init__(self, species: str = 'Opi'):
-        self.client = None
-        self.species = species
+    _clients = {} # Class-level cache for clients
 
+    def __init__(self, species: str = 'Opi'):
+        self.species = species
+    
     def generate_content(self, model_name: str, contents: str, system_instruction: str = '',
                          temperature: float = 0.7, response_mime_type: str = 'text/plain', response_schema: BaseModel = None) -> Optional[str]: # type: ignore
         """
@@ -361,12 +366,12 @@ class Opi(LLM):
         """
         try:
             if (self.client is None):
-                self.client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY",""), base_url=os.environ.get("OPENAI_API_BASE"))
-            return self.client
+                if self.species not in Opi._clients:
+                    Opi._clients[self.species] = OpenAI(api_key=os.environ.get("OPENAI_API_KEY",""), base_url=os.environ.get("OPENAI_API_BASE"))
+            return Opi._clients[self.species]
         except Exception as e:
             logger.error(f"Error initializing OpenAI client: {e}")
             return None
-
 
 
 
@@ -380,10 +385,11 @@ class Mistral(LLM):
     """
     Provides a centralized place for LLM-related configurations and utilities.
     """
-    def __init__(self, species: str = 'Mistral'):
-        self.client = None
-        self.species = species
+    _clients = {} # Class-level cache for clients
 
+    def __init__(self, species: str = 'Mistral'):
+        self.species = species
+    
     def generate_content(self, model_name: str, contents: str, system_instruction: str = '',
                          temperature: float = 0.7, response_mime_type: str = 'text/plain', response_schema: BaseModel = None) -> Optional[str]: # type: ignore
         """
@@ -445,11 +451,12 @@ class Mistral(LLM):
         """
         try:
             if self.client is None:
-                api_key = os.environ.get("MISTRAL_API_KEY")
-                if not api_key:
-                    raise ValueError("MISTRAL_API_KEY environment variable not set.")
-                self.client = MistralClient(api_key=api_key)
-            return self.client
+                if self.species not in Mistral._clients:
+                    api_key = os.environ.get("MISTRAL_API_KEY")
+                    if not api_key:
+                        raise ValueError("MISTRAL_API_KEY environment variable not set.")
+                    Mistral._clients[self.species] = MistralClient(api_key=api_key)
+            return Mistral._clients[self.species]
         except Exception as e:
             logger.error(f"Error initializing Mistral client: {e}")
             return None
