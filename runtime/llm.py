@@ -84,7 +84,8 @@ class Gemini(LLM):
             system_instruction=system_instruction,
             temperature=temperature,
             response_mime_type=response_mime_type,
-            response_schema=response_schema
+            response_schema=response_schema,
+            max_output_tokens=50000,
         )
 
         # try three times
@@ -95,8 +96,12 @@ class Gemini(LLM):
                     contents=contents,
                     config=config,
                 )
+                #print(response)
+                if response.parsed:
+                    return response.parsed
                 if not response.candidates or response.candidates[0].content is None or response.candidates[0].content.parts is None or not response.candidates[0].content.parts or response.candidates[0].content.parts[0].text is None:
-                    return None
+                    logger.warning(f"Gemini: No content in response from model {model_name}. Retrying...")
+                    continue
                 if response_mime_type == 'application/json':
                     try:
                         # Attempt to parse the JSON response
@@ -105,15 +110,15 @@ class Gemini(LLM):
                         if response_schema:
                             response_schema.model_validate_json(json_output)
                         return json_output
-                    except Exception as json_e:
-                        logger.error(f"Error parsing or validating JSON response: {json_e}")
+                    except Exception as ex:
+                        logger.error(f"Error parsing or validating JSON response: {ex}")
                         # Optionally, return the raw text if JSON parsing fails but you still want to see it
                         return response.candidates[0].content.parts[0].text.strip()
-                        
                 return response.candidates[0].content.parts[0].text.strip()
-            except Exception as e:
-                logger.error(f"Error generating content with model {model_name}: {e}")
-                return None
+            except Exception as ex:
+                logger.error(f"Error generating content with model {model_name}: {ex}")
+                #return None
+        return None
 
     def _get_client(self):
         """

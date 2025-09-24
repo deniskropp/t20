@@ -67,19 +67,19 @@ class Agent:
 
         if len(required_task_ids) != 0:
             for key, artifact in context.artifacts.items():
-                logger.debug(f"Checking artifact from {key} with task ID {artifact.step.task_id}")
-                if artifact.step.task_id in required_task_ids:
+                logger.debug(f"Checking artifact from {key} with task ID {artifact.step.id}")
+                if artifact.step.id in required_task_ids:
                     required_artifacts[key] = artifact
 
         previous_artifacts = "\n\n---\n\n".join(
-            f"Artifact from {key} ({artifact.step.role})[{artifact.step.desc}]:\n{artifact.content}"
+            f"Artifact from {key} ({artifact.step.role})[{artifact.step.description}]:\n{artifact.content}"
             for key, artifact in required_artifacts.items()
         )
 
         task_prompt: List[str] = [
             f"The overall goal is: '{context.high_level_goal}'",
             f"Your role's specific goal is: '{self.goal}'\n"
-            f"Your specific sub-task is: '{task.desc}'",
+            f"Your specific sub-task is: '{task.description}'",
 
             f"The team's roles are:\n    {context.plan}",
         ]
@@ -91,14 +91,14 @@ class Agent:
             f"Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project."
         )
 
-        logger.info(f"Agent '{self.name}' is executing task: {task_prompt[1]}")
+        #logger.info(f"Agent '{self.name}' is executing task: {task_prompt[1]}")
         #logger.info(f"Task requires outputs from task IDs: {required_task_ids}")
         #logger.info(
         #    f"Found {len(required_artifacts)} required artifacts from previous tasks. Previous artifacts preview: {previous_artifacts[:500]}"
         #)
 
         ret = self._run(context, "\n\n".join(task_prompt))
-        logger.info(f"Agent '{self.name}' completed task: {task.desc}")
+        logger.info(f"Agent '{self.name}' completed task: {task.description}")
         return ret
 
 
@@ -114,35 +114,41 @@ class Agent:
                 response_mime_type='application/json', #if self.role == 'Prompt Engineer' else None
                 response_schema=AgentOutput
             )
-            result = response or ''
-
-            if '```' in result:
-                match = re.search(r'```(json)?\s*([\s\S]*?)\s*```', result, re.IGNORECASE)
-                if match:
-                    # Extract the JSON content from the markdown block
-                    result = match.group(2).strip()
-
-            json_data = JSON.loads(result or '{}')
-            if isinstance(json_data, dict):
-                if "artifact" in json_data:
-                    if "files" in json_data["artifact"]:
-                        for file_data in json_data["artifact"]["files"]:
-                            if "name" in file_data and "content" in file_data:
-                                print(f"\n--- File: {file_data["name"]}")
-                                print(f"{file_data["content"]}")
-                                context.session.add_artifact(file_data["name"], file_data["content"])
-                #try:
-                #    output = JSON.loads(json_data["output"])
-                #except JSON.JSONDecodeError:
-                #    output = json_data["output"]
-                ##if isinstance(result, dict):
-                #output = JSON.dumps(output, indent=4) if isinstance(output, dict) else output
-                #logger.info(f"Output:\n{output[:2000]}\n")
+            if isinstance(response, AgentOutput):
+                result = response.model_dump_json()
+                print(f"\n--- Output:\n{response.output}\n")
+                if response.artifact and response.artifact.files:
+                    for file in response.artifact.files:
+                        print(f"\n--- File: {file.path}\n{file.content}\n")
+                        context.session.add_artifact(file.path, file.content)
             else:
-                logger.warning("Agent output is not in expected AgentOutput format. Processing as plain text.")
-                logger.info(f"Output: '\n{result[:2000]}\n'")
+                result = response or '{}'
+
+                if '```' in result:
+                    match = re.search(r'```(json)?\s*([\s\S]*?)\s*```', result, re.IGNORECASE)
+                    if match:
+                        # Extract the JSON content from the markdown block
+                        result = match.group(2).strip()
+
+                json_data = JSON.loads(result)
+                if isinstance(json_data, dict):
+                    if "output" in json_data and json_data["output"] is not None:
+                        output = JSON.dumps(json_data["output"], indent=4) if isinstance(json_data["output"], dict) else json_data["output"]
+                        logger.info(f"Output:\n{output[:2000]}\n")
+
+                    if "artifact" in json_data and json_data["artifact"] is not None:
+                        if "files" in json_data["artifact"]:
+                            for file_data in json_data["artifact"]["files"]:
+                                if "path" in file_data and "content" in file_data:
+                                    print(f"\n--- File: {file_data["path"]}")
+                                    print(f"{file_data["content"]}")
+                                    context.session.add_artifact(file_data["path"], file_data["content"])
+                else:
+                    logger.warning("Agent output is not in expected AgentOutput format. Processing as plain text.")
+                    logger.info(f"Output: '\n{result[:2000]}\n'")
 
         except Exception as e:
+            raise
             result = f"Error executing task for {self.name}: {e}"
             print(result)
 

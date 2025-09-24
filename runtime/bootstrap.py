@@ -57,7 +57,7 @@ def system_runtime_bootstrap(root_dir: str, initial_task: str, plan_only: bool =
         return
 
     orchestrator: Optional[Agent] = None
-    if orchestrator_name:
+    if orchestrator_name: # If an orchestrator name is explicitly provided, try to find it
         orchestrator = next((agent for agent in agents if agent.name.lower() == orchestrator_name.lower()), None)
     else:
         orchestrator_role = 'Orchestrator'

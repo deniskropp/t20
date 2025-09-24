@@ -82,7 +82,7 @@ class Orchestrator(Agent):
 
             while context.step_index < len(plan.tasks):
                 step = context.current_step()
-                agent_name = step.name
+                agent_name = step.agent
                 
                 delegate_agent = None
                 for name, agent in team_by_name.items():
@@ -94,7 +94,7 @@ class Orchestrator(Agent):
                     logger.warning(f"No agent found with name '{agent_name}'. Execution will continue with the Orchestrator as the fallback agent.")
                     delegate_agent = self
 
-                logger.info(f"Agent '{delegate_agent.name}' is executing step {context.step_index + 1}/{len(plan.tasks)}: '{step.desc}' (Role: {step.role})")
+                logger.info(f"Agent '{delegate_agent.name}' is executing step {context.step_index + 1}/{len(plan.tasks)}: '{step.description}' (Role: {step.role})")
 
                 result = delegate_agent.execute_task(context)
                 if result:
@@ -102,10 +102,10 @@ class Orchestrator(Agent):
                     try:
                         # Attempt to parse the output as AgentOutput
                         agent_output = AgentOutput.model_validate_json(result)
-                        if agent_output.team.prompts:
+                        if agent_output.team and agent_output.team.prompts:
                             logger.info(f"Agent {delegate_agent.name} provided new prompts.")
                             for prompt_data in agent_output.team.prompts:
-                                self._update_agent_prompt(session, prompt_data.name, prompt_data.content)
+                                self._update_agent_prompt(session, prompt_data.agent, prompt_data.system_prompt)
                     except Exception as e:
                         logger.warning(f"Could not parse agent output as AgentOutput: {e}. Treating as plain text.")
 
@@ -201,7 +201,10 @@ class Orchestrator(Agent):
                 response_mime_type='application/json', #if self.role == 'Prompt Engineer' else None
                 response_schema=Plan
             )
-            plan = Plan.model_validate_json(response or '{}')
+            if isinstance(response, Plan):
+                plan = response
+            else:
+                plan = Plan.model_validate_json(response or '{}')
         except (ValidationError, json.JSONDecodeError) as e:
             logger.info(f"Error generating or validating plan for {self.name}: {e}")
             return None

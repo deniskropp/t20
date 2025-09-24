@@ -40,7 +40,8 @@ class ColoredFormatter(logging.Formatter):
         (re.compile(r"Agent instance created:"), Fore.YELLOW),
         (re.compile(r"Agent '.*' system prompt updated."), Fore.GREEN),
         (re.compile(r"Agent '.*' is executing task"), Fore.GREEN),
-        (re.compile(r"Agent '.*' completed task"), Fore.GREEN),
+        (re.compile(r"Agent '.*' is executing step"), Fore.LIGHTRED_EX),
+        (re.compile(r"Agent '.*' completed task"), Fore.BLUE),
         (re.compile(r"Warning: Agent output is not in expected AgentOutput format."), Fore.YELLOW),
         (re.compile(r"System Runtime"), Fore.CYAN),
         (re.compile(r"Error: No agents could be instantiated."), Fore.RED),
@@ -61,7 +62,7 @@ class ColoredFormatter(logging.Formatter):
 
     COLORS_NAMES = {
         'runtime.orchestrator': Fore.LIGHTYELLOW_EX,
-        'runtime.agent': Fore.GREEN,
+        'runtime.agent': Fore.LIGHTWHITE_EX,
         'runtime.sysmain': Fore.LIGHTRED_EX,
         'runtime.core': Fore.LIGHTBLUE_EX,
         'runtime.bootstrap': Fore.LIGHTRED_EX,

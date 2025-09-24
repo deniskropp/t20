@@ -35,11 +35,9 @@ class ExecutionContext:
     artifacts: Dict[str, Artifact] = field(default_factory=dict)
 
     def next(self):
-        logger.info(f"next() at step index {self.step_index}")
         self.step_index += 1
 
     def reset(self):
-        logger.info(f"reset() at step index {self.step_index}")
         self.step_index = 0
 
     def current_step(self) -> Task:
