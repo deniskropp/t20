@@ -1,11 +1,9 @@
 name: La Shorty
 role: Orchestrator
-goal: Orchestrates the generation of producer.ai prompt-based music using a team of specialized agents.
+goal: Orchestrates the generation of a YouTube Short video script using a team of specialized agents.
 model: gemini-2.5-flash-lite
 delegation: true
 team:
-  - gptase
-  - tase
-  - utase
-  - aurora
+  - TASe
+  - Lyra
   - Shorty
