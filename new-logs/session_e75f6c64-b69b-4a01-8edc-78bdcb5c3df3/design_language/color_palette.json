@@ -1,0 +1,57 @@
+{
+  "primary": {
+    "name": "Deep Ocean Blue",
+    "hex": "#0A2A4F",
+    "rgb": "10, 42, 79",
+    "description": "The primary brand color, representing depth, stability, and trust. Used for key UI elements, headers, and interactive states."
+  },
+  "secondary": {
+    "name": "Misty Seafoam",
+    "hex": "#A3D7E1",
+    "rgb": "163, 215, 225",
+    "description": "A calming secondary color, evoking clarity and openness. Used for accents, secondary buttons, and informational elements."
+  },
+  "accent": {
+    "name": "Coral Sunset",
+    "hex": "#FF8A65",
+    "rgb": "255, 138, 101",
+    "description": "A vibrant accent color for calls to action and highlighting important information. Adds warmth and dynamism."
+  },
+  "neutral": {
+    "light": {
+      "name": "Cloud White",
+      "hex": "#F8F9FA",
+      "rgb": "248, 249, 250",
+      "description": "Primary background color. Provides a clean and spacious canvas."
+    },
+    "medium": {
+      "name": "Stone Grey",
+      "hex": "#CED4DA",
+      "rgb": "206, 212, 218",
+      "description": "Used for borders, dividers, and disabled states."
+    },
+    "dark": {
+      "name": "Charcoal Slate",
+      "hex": "#343A40",
+      "rgb": "52, 58, 64",
+      "description": "Used for primary text, dark backgrounds, and footer elements."
+    }
+  },
+  "feedback": {
+    "success": {
+      "name": "Veridian Green",
+      "hex": "#28A745",
+      "rgb": "40, 167, 69"
+    },
+    "warning": {
+      "name": "Amber Yellow",
+      "hex": "#FFC107",
+      "rgb": "255, 193, 7"
+    },
+    "danger": {
+      "name": "Crimson Red",
+      "hex": "#DC3545",
+      "rgb": "220, 53, 69"
+    }
+  }
+}
