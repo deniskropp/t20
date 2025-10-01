@@ -9,7 +9,7 @@ from pydantic import BaseModel, Field
 
 class Task(BaseModel):
     """A single actionable step in a plan."""
-    id: str = Field(..., description="Unique identifier for the task (e.g., 'task_1').")
+    id: str = Field(..., description="Unique ID for the task (e.g., 'T1', 'T-020', 'T_02_DESIGN_01').")
     description: str = Field(..., description="What the task is and how to execute it.")
     role: str = Field(..., description="Role responsible for performing this task.")
     agent: str = Field(..., description="Specific agent assigned to this task.")
