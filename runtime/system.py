@@ -114,7 +114,7 @@ class System:
             raise RuntimeError("Orchestration failed: Could not generate a valid plan.")
 
         print(f"\n\nInitial Plan: {plan.model_dump_json(indent=4)}\n\n\n")
-        self.session.add_artifact("initial_plan.json", plan.model_dump(mode='json'))
+        self.session.add_artifact("initial_plan.json", plan.model_dump_json(indent=4))
 
         return plan
 
@@ -126,7 +126,9 @@ class System:
 
         context = ExecutionContext(session=self.session, plan=plan)
 
-        context.record_initial("files", files)
+        print(f"\n\nInitial Files: {plan.model_dump_json(indent=4)}\n\n\n")
+
+        context.record_initial("files", "\n".join([file.model_dump_json(indent=4) for file in files]))
 
         for context.round_num in range(1, rounds + 1):
             logger.info(f"System is starting workflow round {context.round_num} for goal: '{plan.high_level_goal}'")
@@ -209,9 +211,6 @@ class System:
             Optional[Agent]: An instantiated Agent object, or None if the prompt is not found.
         """
         prompt_key = f"{agent_spec['name'].lower()}_instructions.txt"
-        if agent_spec.get("name") == "Meta-AI":
-            prompt_key = "orchestrator_instructions.txt"
-
         if prompt_key not in prompts:
             logger.warning(
                 f"Prompt for agent '{agent_spec['name']}' not found with key '{prompt_key}'. Empty system prompt will be used."
