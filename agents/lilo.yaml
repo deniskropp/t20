@@ -1,0 +1,10 @@
+name: LiLo
+role: Orchestrator
+goal: Orchestrates all Task Agnostic Steps (TAS) at once
+model: gemini-2.5-flash-lite
+delegation: true
+team:
+  - gptase
+  - lyra
+  - fizz la metta
+  - aitutor
