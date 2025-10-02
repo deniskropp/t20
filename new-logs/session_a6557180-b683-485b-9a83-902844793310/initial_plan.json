@@ -1,0 +1,114 @@
+{
+    "high_level_goal": "Generate documentation for the runtime.",
+    "reasoning": "The goal is to create comprehensive documentation for the runtime system. This plan breaks down the process into logical steps, assigning specific roles and tasks to ensure all aspects of the documentation are covered.",
+    "roles": [
+        {
+            "title": "Task-Agnostic Step (TAS) Extractor",
+            "purpose": "Identify and extract each 'Task Agnostic Step' (TAS) towards the high-level goal."
+        },
+        {
+            "title": "Prompt Engineer",
+            "purpose": "Structure workflows and ensure clarity in agent instructions, system prompt engineering."
+        },
+        {
+            "title": "Designer",
+            "purpose": "Generate aesthetic layouts, color palettes, typography, and UI flows, ensuring accessibility and visual balance."
+        },
+        {
+            "title": "Documentation Writer",
+            "purpose": "Generate clear, concise, and accurate technical documentation based on provided specifications, source code, and developer notes."
+        }
+    ],
+    "tasks": [
+        {
+            "id": "T1",
+            "description": "Extract Task Agnostic Steps (TAS) from the provided code and context related to the runtime documentation.",
+            "role": "Task-Agnostic Step (TAS) Extractor",
+            "agent": "TASe",
+            "requires": []
+        },
+        {
+            "id": "T2",
+            "description": "Based on the extracted TAS, define the overall documentation structure and identify key areas to be documented.",
+            "role": "Prompt Engineer",
+            "agent": "Lyra",
+            "requires": [
+                "T1"
+            ]
+        },
+        {
+            "id": "T3",
+            "description": "Develop system prompts for each agent involved in the documentation process, ensuring clarity and alignment with their roles and the overall goal.",
+            "role": "Prompt Engineer",
+            "agent": "Lyra",
+            "requires": [
+                "T2"
+            ]
+        },
+        {
+            "id": "T4",
+            "description": "Generate initial drafts for each section of the runtime documentation based on the defined structure and TAS.",
+            "role": "Documentation Writer",
+            "agent": "Lex",
+            "requires": [
+                "T2",
+                "T3"
+            ]
+        },
+        {
+            "id": "T5",
+            "description": "Review the generated documentation drafts for accuracy, clarity, completeness, and adherence to project standards. Provide feedback for revisions.",
+            "role": "Documentation Writer",
+            "agent": "Lex",
+            "requires": [
+                "T4"
+            ]
+        },
+        {
+            "id": "T6",
+            "description": "Refine the documentation drafts based on the review feedback. This may involve iterative writing and review cycles.",
+            "role": "Documentation Writer",
+            "agent": "Lex",
+            "requires": [
+                "T5"
+            ]
+        },
+        {
+            "id": "T7",
+            "description": "Design the overall layout, visual style, and user interface elements for the documentation, ensuring accessibility and aesthetic appeal.",
+            "role": "Designer",
+            "agent": "Aurora",
+            "requires": [
+                "T2"
+            ]
+        },
+        {
+            "id": "T8",
+            "description": "Integrate the designed layouts and visual elements into the documentation drafts.",
+            "role": "Designer",
+            "agent": "Aurora",
+            "requires": [
+                "T6",
+                "T7"
+            ]
+        },
+        {
+            "id": "T9",
+            "description": "Perform a final review of the integrated documentation, checking for consistency, quality, and readiness for publication.",
+            "role": "Prompt Engineer",
+            "agent": "Lyra",
+            "requires": [
+                "T8"
+            ]
+        },
+        {
+            "id": "T10",
+            "description": "Publish the final documentation.",
+            "role": "Documentation Writer",
+            "agent": "Lex",
+            "requires": [
+                "T9"
+            ]
+        }
+    ]
+}

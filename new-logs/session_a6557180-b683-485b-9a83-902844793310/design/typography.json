@@ -1,0 +1,13 @@
+{
+  "headings": {
+    "font_family": "Inter, sans-serif",
+    "font_weight": "bold"
+  },
+  "body": {
+    "font_family": "Inter, sans-serif",
+    "font_weight": "regular"
+  },
+  "code": {
+    "font_family": "Fira Code, monospace"
+  }
+}
