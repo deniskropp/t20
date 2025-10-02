@@ -57,8 +57,12 @@ class Team(BaseModel):
 
 class AgentOutput(BaseModel):
     """Structured output returned by an agent after executing a task."""
-    output: str = Field(..., description="Message from the agent, accompanied by artifact (or files).")
-    artifact: Optional[Artifact] = Field(default=None, description="Generated artifact, if applicable.")
+    output: str = Field(..., description="Message (response) from the agent. DO NOT put file contents here; place all generated content in the 'artifact' field.")
+#    output: Optional[str] = Field(
+#        default=None, 
+#        description="A brief, optional summary of the work performed. DO NOT put file contents here; place all generated content in the 'artifact' field."
+#    )
+    artifact: Optional[Artifact] = Field(default=None, description="Generated content, the agent's contributions or expected output.")
     team: Optional[Team] = Field(default=None, description="Updates to team configuration or system prompts.")
     reasoning: Optional[str] = Field(default=None, description="Explanation of how the agent arrived at this output.")
 
