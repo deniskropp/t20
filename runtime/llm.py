@@ -6,6 +6,7 @@ allowing for easy integration and interchangeability of different LLMs.
 
 import json
 import os
+import time
 from google import genai
 from google.genai import types
 from ollama import Client as Ollama
@@ -103,6 +104,11 @@ class Gemini(LLM):
                 break
             except Exception as ex:
                 logger.exception(f"Error generating content with model {model_name}: {ex}")
+                # If it's the last retry, return None
+                if _ == 2:
+                    return None
+                logger.warning(f"Retrying content generation for model {model_name}...")
+                time.sleep(10)
                 #return None
 
         if isinstance(response.parsed, BaseModel):

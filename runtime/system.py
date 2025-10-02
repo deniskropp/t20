@@ -18,7 +18,7 @@ from .orchestrator import Orchestrator
 from .log import setup_logging
 from .paths import AGENTS_DIR_NAME, CONFIG_DIR_NAME, PROMPTS_DIR_NAME, RUNTIME_CONFIG_FILENAME
 
-from .custom_types import AgentOutput, Plan, File
+from .custom_types import AgentOutput, Artifact, Plan, File
 logger = logging.getLogger(__name__)
 
 class System:
@@ -128,7 +128,8 @@ class System:
 
         print(f"\n\nInitial Files: {plan.model_dump_json(indent=4)}\n\n\n")
 
-        context.record_initial("files", "\n".join([file.model_dump_json(indent=4) for file in files]))
+        #context.record_initial("files", "\n".join([file.model_dump_json(indent=4) for file in files]))
+        context.record_initial("files", Artifact(task='initial',files=files).model_dump_json())
 
         for context.round_num in range(1, rounds + 1):
             logger.info(f"System is starting workflow round {context.round_num} for goal: '{plan.high_level_goal}'")
