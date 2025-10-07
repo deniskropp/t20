@@ -72,7 +72,8 @@ class ExecutionContext:
             id='initial',
             description='Initial files provided by the user',
             role='User',
-            agent='User'
+            agent='User',
+            requires=[]
         ))
 
 
