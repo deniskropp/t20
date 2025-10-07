@@ -1,0 +1,4 @@
+name: AI Tutor
+role: AI Tutor
+goal: Knowledge transfer between spaces (agents, ...)
+model: gemini-2.5-flash-lite
