@@ -166,13 +166,13 @@ class Olli(LLM):
             types.GenerateContentResponse: The response from the GenAI model.
         """
         print(f"Olli: Using model {model_name} with temperature {temperature}")
-        client = self._get_client()
+        client = self._get_client(species=self.species)
         if not client:
             return None
 
         try:
             out = ""
-            fmt = response_schema.model_json_schema()
+            fmt = response_schema.model_json_schema(by_alias=False, mode='serialization')
             print(f"Olli: Using response format {fmt}")
             response = client.generate(
                 model=self.species,#model_name,
@@ -190,17 +190,19 @@ class Olli(LLM):
             logger.error(f"Error generating content with model {model_name}: {e}")
             return None
 
-    def _get_client(self):
+    @staticmethod
+    def _get_client(species: str):
         """
         Returns a GenAI client instance.
         """
         try:
-            if (self.client is None):
-                if self.species not in Olli._clients:
-                    Olli._clients[self.species] = Ollama()#base_url='http://localhost:11434')
-            return Olli._clients[self.species]
+            if (Olli._clients is None):
+                Olli._clients = {}
+            if species not in Olli._clients:
+                Olli._clients[species] = Ollama()#base_url='http://localhost:11434')
+            return Olli._clients[species]
         except Exception as e:
-            logger.error(f"Error initializing GenAI client: {e}")
+            logger.exception(f"Error initializing Ollama client: {e}")
             return None
 
 
@@ -412,7 +414,7 @@ class Mistral(LLM):
         Returns:
             str: The response from the Mistral model.
         """
-        client = self._get_client()
+        client = Mistral._get_client(species=self.species)
         if not client:
             return None
         try:
@@ -451,18 +453,20 @@ class Mistral(LLM):
             print(f"Error generating content with model {model_name}: {e}")
             return None
 
-    def _get_client(self):
+    @staticmethod
+    def _get_client(species: str):
         """
         Returns a Mistral client instance.
         """
         try:
-            if self.client is None:
-                if self.species not in Mistral._clients:
-                    api_key = os.environ.get("MISTRAL_API_KEY")
-                    if not api_key:
-                        raise ValueError("MISTRAL_API_KEY environment variable not set.")
-                    Mistral._clients[self.species] = MistralClient(api_key=api_key)
-            return Mistral._clients[self.species]
+            if Mistral._clients is None:
+                Mistral._clients = {}
+            if species not in Mistral._clients:
+                api_key = os.environ.get("MISTRAL_API_KEY")
+                if not api_key:
+                    raise ValueError("MISTRAL_API_KEY environment variable not set.")
+                Mistral._clients[species] = MistralClient(api_key=api_key)
+            return Mistral._clients[species]
         except Exception as e:
-            logger.error(f"Error initializing Mistral client: {e}")
+            logger.exception(f"Error initializing Mistral client: {e}")
             return None
