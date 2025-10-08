@@ -145,6 +145,8 @@ class Olli(LLM):
     """
     Provides a centralized place for LLM-related configurations and utilities.
     """
+    _clients = {} # Class-level cache for clients
+
     def __init__(self, species: str = 'Olli'):
         self.client = None
         self.species = species
