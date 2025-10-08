@@ -6,3 +6,9 @@ OLD/
 Grok3/
 android/
 sessions/
+logs/
+GEMI_session_viewer/
+*.bak*
+build/
+session_viewer/
+streamlit_app/
