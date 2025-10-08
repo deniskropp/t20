@@ -1,0 +1,375 @@
+import os from 'os';
+import path from 'path';
+import fs from 'fs';
+import yaml from 'js-yaml';
+import { glob } from 'glob';
+
+import { Logger } from '../logger/Logger';
+import { Agent, AgentSpec, PromptSpec, findAgentByRole } from '../agent/Agent';
+import { Orchestrator } from '../orchestrator/Orchestrator';
+import { Session } from '../core/Session';
+import { ExecutionContext } from '../core/ExecutionContext';
+import { AgentOutput, Artifact, File, Plan, Role, Team, Prompt } from '../custom_types';
+
+const logger = Logger.getInstance();
+
+// Constants for directory and file names
+const AGENTS_DIR_NAME = 'agents';
+const CONFIG_DIR_NAME = 'config';
+const PROMPTS_DIR_NAME = 'prompts';
+const RUNTIME_CONFIG_FILENAME = 'runtime.yaml';
+
+export class System {
+  private rootDir: string;
+  private defaultModel: string;
+  public config: Record<string, any> = {};
+  public agents: Agent[] = [];
+  private session: Session | null = null;
+  private orchestrator: Orchestrator | null = null;
+
+  constructor(rootDir: string, defaultModel: string = 'gemini-2.5-flash-latest') {
+    this.rootDir = rootDir;
+    this.defaultModel = defaultModel;
+    logger.info(`System initialized with root directory: ${this.rootDir} and default model: ${this.defaultModel}`);
+  }
+
+  /**
+   * Sets up the system by loading configurations and instantiating agents.
+   * @param orchestratorName The name of the orchestrator agent to use. Defaults to finding an agent with the 'Orchestrator' role.
+   */
+  public async setup(orchestratorName?: string): Promise<void> {
+    logger.info('--- System Setup ---');
+    console.log(`Using default model: ${this.defaultModel}`);
+
+    // 1. Load configuration
+    this.config = this._loadConfig(path.join(this.rootDir, CONFIG_DIR_NAME, RUNTIME_CONFIG_FILENAME));
+    const logLevel = this.config.loggingLevel || 'INFO';
+    Logger.setup(logLevel); // Re-setup logging with potentially new level from config
+    logger.info(`Logging level set to: ${logLevel}`);
+
+    // 2. Load agent specifications and prompts
+    const agentSpecs = this._loadAgentSpecs(path.join(this.rootDir, AGENTS_DIR_NAME));
+    const prompts = this._loadPrompts(path.join(this.rootDir, PROMPTS_DIR_NAME));
+
+    // 3. Instantiate agents
+    const instantiatedAgents: Agent[] = [];
+    for (const spec of agentSpecs) {
+      const agent = await this._instantiateAgent(spec, prompts, agentSpecs);
+      if (agent) {
+        instantiatedAgents.push(agent);
+      }
+    }
+    this.agents = instantiatedAgents;
+
+    if (this.agents.length === 0) {
+      throw new Error('No agents could be instantiated. System setup failed.');
+    }
+    logger.info(`Successfully instantiated ${this.agents.length} agents.`);
+
+    // 4. Identify and set the orchestrator
+    let orchestratorAgent: Agent | null = null;
+    if (orchestratorName) {
+      orchestratorAgent = this.agents.find(agent => agent.name.toLowerCase() === orchestratorName.toLowerCase()) || null;
+    } else {
+      // Find agent with the role 'Orchestrator'
+      orchestratorAgent = findAgentByRole(this.agents, 'Orchestrator');
+    }
+
+    if (!orchestratorAgent) {
+      const errorMsg = orchestratorName ? `Orchestrator with name '${orchestratorName}' not found.` : "Orchestrator with role 'Orchestrator' not found.";
+      throw new Error(`${errorMsg} System setup failed.`);
+    }
+
+    // Ensure the found orchestrator is an instance of the Orchestrator class
+    if (!(orchestratorAgent instanceof Orchestrator)) {
+      throw new Error(`Agent '${orchestratorAgent.name}' is not a valid Orchestrator instance. System setup failed.`);
+    }
+    this.orchestrator = orchestratorAgent;
+    logger.info(`Orchestrator set to: ${this.orchestrator.name}`);
+
+    // 5. Initialize the session
+    this.session = new Session(this.agents, this.rootDir);
+    logger.info('Session initialized.');
+
+    logger.info('--- System Setup Complete ---');
+  }
+
+  /**
+   * Starts the workflow by generating a plan.
+   * @param highLevelGoal The initial goal for the workflow.
+   * @param files Initial files to be included in the plan context.
+   * @returns The generated Plan object.
+   */
+  public async start(highLevelGoal: string, files: File[] = []): Promise<Plan> {
+    if (!this.orchestrator || !this.session) {
+      throw new Error('System is not set up. Please call setup() before start().');
+    }
+
+    logger.info(`Starting workflow for goal: '${highLevelGoal}'`);
+    const plan = await this.orchestrator.generatePlan(this.session, highLevelGoal, files);
+
+    if (!plan) {
+      throw new Error('Orchestration failed: Could not generate a valid plan.');
+    }
+
+    logger.info('Plan generated successfully.');
+    console.log(`\n\nInitial Plan:\n${JSON.stringify(plan, null, 2)}\n\n`);
+    await this.session.recordArtifact('initial_plan.json', JSON.stringify(plan, null, 2));
+
+    return plan;
+  }
+
+  /**
+   * Executes the workflow based on the provided plan for a specified number of rounds.
+   * @param plan The Plan object generated by the orchestrator.
+   * @param rounds The number of execution rounds.
+   * @param files Initial files provided to the system.
+   */
+  public async run(plan: Plan, rounds: number = 1, files: File[] = []): Promise<void> {
+    if (!this.orchestrator || !this.session) {
+      throw new Error('System is not set up. Please call start() before run().');
+    }
+
+    logger.info(`--- Starting Workflow Execution (${rounds} rounds) ---`);
+
+    // Initialize execution context for the first round
+    let context = new ExecutionContext(this.session, plan);
+
+    // Record initial files provided to the system
+    await this.session.recordArtifact('initial_files.json', JSON.stringify({ files: files }, null, 2));
+    context.recordInitial('initial_files', files);
+
+    for (let roundNum = 1; roundNum <= rounds; roundNum++) {
+      context.roundNum = roundNum;
+      context.reset(); // Reset step index for the new round
+      logger.info(`System starting workflow round ${roundNum} for goal: '${plan.highLevelGoal}'`);
+
+      while (context.stepIndex < plan.tasks.length) {
+        const step = context.currentStep();
+        let delegateAgent: Agent | null = null;
+
+        // Find the agent assigned to the current task
+        if (step.agent) {
+          delegateAgent = this.agents.find(agent => agent.name.toLowerCase() === step.agent.toLowerCase()) || null;
+        }
+
+        // If no specific agent is found or assigned, use the orchestrator as a fallback
+        if (!delegateAgent) {
+          logger.warn(`Agent '${step.agent}' not found for task '${step.id}'. Falling back to Orchestrator '${this.orchestrator.name}'.`);
+          delegateAgent = this.orchestrator;
+        }
+
+        logger.info(`Executing step ${context.stepIndex + 1}/${plan.tasks.length} (Round ${roundNum}): Task '${step.id}' - Agent '${delegateAgent.name}' (Role: ${step.role})`);
+
+        try {
+          // Execute the task using the assigned agent
+          const agentOutputJson = await delegateAgent.executeTask(context);
+          let agentOutput: AgentOutput;
+
+          if (agentOutputJson) {
+            // Record the raw output for auditing
+            await this.session.recordArtifact(`${delegateAgent.name}_task_output_${step.id}_round_${roundNum}.json`, agentOutputJson);
+
+            try {
+              agentOutput = AgentOutput.parse(agentOutputJson); // Use Pydantic parsing
+              // Process team updates (e.g., prompt changes) if provided by the agent
+              if (agentOutput.team?.prompts) {
+                logger.info(`Received ${agentOutput.team.prompts.length} prompt updates from ${delegateAgent.name}.`);
+                for (const promptData of agentOutput.team.prompts) {
+                  this._updateAgentPrompt(promptData.agent, promptData.systemPrompt);
+                }
+              }
+            } catch (parseError) {
+              logger.warn(`Failed to parse agent output as AgentOutput for task '${step.id}'. Treating as plain text. Error: ${(parseError as Error).message}`);
+              // If parsing fails, create a default AgentOutput with the raw string as output
+              agentOutput = new AgentOutput({ output: agentOutputJson, reasoning: 'Raw LLM output, failed to parse as AgentOutput.' });
+            }
+          } else {
+            logger.error(`Task '${step.id}' by agent '${delegateAgent.name}' returned no output.`);
+            agentOutput = new AgentOutput({ output: `Error: Task '${step.id}' by agent '${delegateAgent.name}' returned no output.`, reasoning: 'Empty task output.' });
+            await this.session.recordArtifact(`${delegateAgent.name}_task_failure_${step.id}_round_${roundNum}.txt`, 'Task returned no output.');
+          }
+        } catch (error) {
+          logger.error(`Error executing task '${step.id}' by agent '${delegateAgent.name}':`, error);
+          agentOutput = new AgentOutput({ output: `Error executing task '${step.id}'. See logs for details.`, reasoning: (error as Error).message });
+          await this.session.recordArtifact(`${delegateAgent.name}_task_error_${step.id}_round_${roundNum}.txt`, (error as Error).message);
+        }
+
+        context.nextStep(); // Move to the next step in the plan
+      }
+      logger.info(`System has completed workflow round ${roundNum}.`);
+    }
+
+    logger.info('--- Workflow Execution Complete ---');
+  }
+
+  /**
+   * Updates the system prompt for a specific agent.
+   * @param agentName The name or role of the agent to update.
+   * @param newPrompt The new system prompt content.
+   */
+  private _updateAgentPrompt(agentName: string, newPrompt: string): void {
+    if (!agentName || !newPrompt) {
+      logger.warn('Attempted to update agent prompt with missing name or prompt content.');
+      return;
+    }
+
+    // Combine session agents and orchestrator's team agents for a comprehensive search
+    const allAgents = [...this.agents]; // Assuming this.agents contains all instantiated agents including the orchestrator
+
+    // Try to find the agent by name first, then by role
+    const targetAgent = allAgents.find(agent =>
+      agent.name.toLowerCase() === agentName.toLowerCase() ||
+      agent.role.toLowerCase() === agentName.toLowerCase()
+    );
+
+    if (targetAgent) {
+      targetAgent.updateSystemPrompt(newPrompt);
+      logger.info(`Agent '${targetAgent.name}' (matched by '${agentName}') system prompt updated.`);
+    } else {
+      logger.warn(`Target agent '${agentName}' not found for prompt update.`);
+    }
+  }
+
+  /**
+   * Instantiates an Agent based on its specification.
+   * @param spec Agent specification.
+   * @param prompts Dictionary of available prompts.
+   * @param allAgentSpecs List of all agent specifications (for resolving delegation teams).
+   * @returns The instantiated Agent, or null if instantiation fails.
+   */
+  private async _instantiateAgent(spec: AgentSpec, prompts: Record<string, string>, allAgentSpecs: AgentSpec[]): Promise<Agent | null> {
+    const promptKey = `${spec.name.toLowerCase()}_instructions.txt`;
+    let systemPrompt = prompts[promptKey] || '';
+
+    // If prompt not found by name, try loading from explicit path if provided
+    if (!systemPrompt && spec.systemPromptPath) {
+      try {
+        // Resolve path relative to the project root
+        const promptPath = path.resolve(this.rootDir, spec.systemPromptPath);
+        systemPrompt = fs.readFileSync(promptPath, 'utf-8');
+        logger.debug(`Loaded system prompt from explicit path: ${spec.systemPromptPath}`);
+      } catch (error) {
+        logger.warn(`Failed to load system prompt from path ${spec.systemPromptPath}:`, error);
+      }
+    }
+
+    if (!systemPrompt) {
+      logger.warn(`System prompt not found for agent '${spec.name}' (key: '${promptKey}', path: '${spec.systemPromptPath}'). Using empty prompt.`);
+    }
+
+    const model = spec.model || this.defaultModel;
+
+    // Instantiate the correct agent class based on role, defaulting to base Agent
+    let agentInstance: Agent;
+    if (spec.role === 'Orchestrator') {
+      agentInstance = new Orchestrator(spec.name, spec.role, spec.goal, model, systemPrompt);
+    } else {
+      agentInstance = new Agent(spec.name, spec.role, spec.goal, model, systemPrompt);
+    }
+
+    // Handle delegation (team members)
+    if (spec.team && spec.team.length > 0) {
+      logger.info(`Setting up team for agent '${spec.name}' with ${spec.team.length} members.`);
+      // Ensure the agent instance has a team property (might be needed for Orchestrator)
+      if (!('team' in agentInstance)) {
+        (agentInstance as any).team = {};
+      }
+      for (const memberSpecRef of spec.team) {
+        const memberAgentSpec = allAgentSpecs.find(s => s.name.toLowerCase() === memberSpecRef.name.toLowerCase());
+        if (memberAgentSpec) {
+          // Recursively instantiate team members if their specs are found
+          const memberAgent = await this._instantiateAgent(memberAgentSpec, prompts, allAgentSpecs);
+          if (memberAgent) {
+            (agentInstance as any).team[memberSpecRef.name] = memberAgent;
+            logger.debug(`Added team member '${memberAgent.name}' to '${spec.name}'.`);
+          }
+        } else {
+          // If a team member's spec isn't found, create a placeholder agent
+          logger.warn(`Agent specification for team member '${memberSpecRef.name}' not found. Creating a placeholder agent.`);
+          const placeholderAgent = new Agent(
+            memberSpecRef.name,
+            memberSpecRef.role || 'Unknown',
+            memberSpecRef.goal || '',
+            model, // Use default model
+            '' // Empty system prompt for placeholder
+          );
+          (agentInstance as any).team[memberSpecRef.name] = placeholderAgent;
+        }
+      }
+    }
+
+    logger.info(`Agent '${spec.name}' instantiated (Role: ${spec.role}, Model: ${model}).`);
+    return agentInstance;
+  }
+
+  /**
+   * Loads the runtime configuration from a YAML file.
+   * @param configPath Path to the runtime configuration file.
+   * @returns The loaded configuration object.
+   */
+  private _loadConfig(configPath: string): Record<string, any> {
+    logger.info(`Loading configuration from: ${configPath}`);
+    try {
+      const configFileContent = fs.readFileSync(configPath, 'utf-8');
+      const config = yaml.load(configFileContent) as Record<string, any>;
+      logger.info('Configuration loaded successfully.');
+      return config;
+    } catch (error) {
+      logger.error(`Error loading configuration from ${configPath}:`, error);
+      // Return empty config if file not found or error occurs, to allow system to proceed with defaults
+      return {};
+    }
+  }
+
+  /**
+   * Loads agent specifications from YAML files in the specified directory.
+   * @param agentsDir Directory containing agent YAML files.
+   * @returns An array of agent specifications.
+   */
+  private _loadAgentSpecs(agentsDir: string): AgentSpec[] {
+    logger.info(`Loading agent specifications from: ${agentsDir}`);
+    const agentFiles = glob.sync(path.join(agentsDir, '*.yaml'));
+    const specs: AgentSpec[] = [];
+    for (const agentFile of agentFiles) {
+      try {
+        const fileContent = fs.readFileSync(agentFile, 'utf-8');
+        const spec = yaml.load(fileContent) as AgentSpec;
+        // Resolve system prompt path relative to the agent file's directory if specified
+        if (spec.systemPromptPath) {
+          const baseDir = path.dirname(agentFile);
+          spec.systemPromptPath = path.resolve(baseDir, spec.systemPromptPath);
+        }
+        specs.push(spec);
+        logger.debug(`Loaded agent spec from ${agentFile}`);
+      } catch (error) {
+        logger.error(`Error loading agent spec from ${agentFile}:`, error);
+      }
+    }
+    logger.info(`${specs.length} agent specifications loaded.`);
+    return specs;
+  }
+
+  /**
+   * Loads system prompts from text files in the specified directory.
+   * @param promptsDir Directory containing prompt text files.
+   * @returns A dictionary mapping prompt filenames to their content.
+   */
+  private _loadPrompts(promptsDir: string): Record<string, string> {
+    logger.info(`Loading prompts from: ${promptsDir}`);
+    const promptFiles = glob.sync(path.join(promptsDir, '*.txt'));
+    const prompts: Record<string, string> = {};
+    for (const promptFile of promptFiles) {
+      try {
+        const content = fs.readFileSync(promptFile, 'utf-8');
+        // Use the base filename as the key for prompt lookup
+        prompts[path.basename(promptFile)] = content;
+        logger.debug(`Loaded prompt: ${path.basename(promptFile)}`);
+      } catch (error) {
+        logger.error(`Error loading prompt from ${promptFile}:`, error);
+      }
+    }
+    logger.info(`${Object.keys(prompts).length} prompts loaded.`);
+    return prompts;
+  }
+}
