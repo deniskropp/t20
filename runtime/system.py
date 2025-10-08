@@ -131,6 +131,13 @@ class System:
         #context.record_initial("files", "\n".join([file.model_dump_json(indent=4) for file in files]))
         context.record_initial("files", Artifact(task='initial',files=files).model_dump_json())
 
+
+        if plan.team and plan.team.prompts:
+            logger.info(f"Plan provided new prompts.")
+            for prompt_data in plan.team.prompts:
+                self._update_agent_prompt(self.session, prompt_data.agent, prompt_data.system_prompt)
+
+
         for context.round_num in range(1, rounds + 1):
             logger.info(f"System is starting workflow round {context.round_num} for goal: '{plan.high_level_goal}'")
 
