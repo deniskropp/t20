@@ -53,6 +53,8 @@ class Orchestrator(Agent):
         # Load the general planning prompt template
         t20_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..')) # Not used
         general_prompt_template = read_file(os.path.join(t20_root, "prompts", "general_planning.txt")).strip()
+
+        # Format the planning prompt parts
         planning_prompt_parts = [general_prompt_template.format(
             high_level_goal=high_level_goal,
             team_description=team_description
@@ -77,7 +79,7 @@ class Orchestrator(Agent):
                 model_name=self.model,
                 contents="\n\n".join(planning_prompt_parts),
                 system_instruction=self.system_prompt,
-                temperature=0.1,
+                temperature=0.0,
                 response_mime_type='application/json', #if self.role == 'Prompt Engineer' else None
                 response_schema=Plan
             )
