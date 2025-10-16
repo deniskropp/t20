@@ -38,7 +38,7 @@ class ColoredFormatter(logging.Formatter):
     # Regex-based coloring rules (pattern, color)
     REGEX_RULES_MESSAGES = [
         (re.compile(r"Agent instance created:"), Fore.YELLOW),
-        (re.compile(r"Agent '.*' system prompt updated."), Fore.GREEN),
+        (re.compile(r"Agent '.*' system prompt updated."), Fore.YELLOW),
         (re.compile(r"Agent '.*' is executing task"), Fore.GREEN),
         (re.compile(r"Agent '.*' is executing step"), Fore.LIGHTRED_EX),
         (re.compile(r"Agent '.*' completed task"), Fore.BLUE),

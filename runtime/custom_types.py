@@ -13,7 +13,7 @@ class Task(BaseModel):
     description: str = Field(..., description="Detailed description of what to do for this task.")
     role: str = Field(..., description="The role responsible for this task.")
     agent: str = Field(..., description="The agent assigned to this task.")
-    requires: List[str] = Field(..., description="List of requirements (IDs, e.g. ['T1', 'T2']).")
+    requires: List[str] = Field(..., description="List of requirements (IDs, e.g. ['T1', 'T2']), one-level. Explicitly mention any further dependencies.")
 
 
 class File(BaseModel):

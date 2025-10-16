@@ -34,6 +34,7 @@ class Agent:
         self.role = role
         self.goal = goal
         self.model = model
+        self.system_instruction = system_prompt
         self.system_prompt = system_prompt
         logger.info(f"Agent instance created: {self.name} (Role: {self.role}, Model: {self.model})")
         self.llm = LLM.factory(model)
@@ -41,9 +42,9 @@ class Agent:
     def update_system_prompt(self, new_prompt: str) -> None:
         """Updates the agent's system prompt."""
 
-        self.system_prompt = new_prompt
+        self.system_instruction=f"{new_prompt}\n\n---\n\n{self.system_prompt}\n"
 
-        logger.info(f"Agent {self.name}'s system prompt updated:\n{self.system_prompt}\n")
+        logger.info(f"Agent '{self.name}' system prompt updated:\n{new_prompt}\n")
 
     def execute_task(self, context: ExecutionContext) -> Optional[str]:
         """
@@ -58,7 +59,7 @@ class Agent:
 
         task = context.current_step()
 
-        context.record_artifact(f"{self.name}_prompt.txt", self.system_prompt)
+        context.record_artifact(f"{self.name}_system_instruction.txt", self.system_instruction)
 
         required_task_ids = ['initial']
         required_task_ids.extend(task.requires)
@@ -109,7 +110,7 @@ class Agent:
             response = self.llm.generate_content(   # ignore type
                 model_name=self.model,
                 contents=prompt,
-                system_instruction=self.system_prompt,
+                system_instruction=self.system_instruction,
                 temperature=0.7,
                 response_mime_type='application/json', #if self.role == 'Prompt Engineer' else None
                 response_schema=AgentOutput
