@@ -3,6 +3,6 @@
 from .custom_types import Role, Task, Plan, Artifact, File, Prompt, Team, AgentOutput
 
 from .agent import Agent
-from .core import Session
+from .core import Session, ExecutionContext
 from .orchestrator import Orchestrator
 from .system import System

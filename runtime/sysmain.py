@@ -8,6 +8,7 @@ import os
 import argparse
 import logging
 
+from runtime import Plan
 from runtime.log import setup_logging
 from runtime.system import System
 from runtime.custom_types import File
@@ -28,6 +29,7 @@ def parse_command_line_arguments() -> argparse.Namespace:
     )
 
     general_group = parser.add_argument_group("General Settings")
+    general_group.add_argument("-P", "--plan-from", type=str, default=None, help="Read plan from file.")
     general_group.add_argument("-p", "--plan-only", action="store_true", help="Generate only the plan without executing tasks.")
     general_group.add_argument("-r", "--rounds", type=int, default=1, help="The number of rounds to execute the workflow.")
     general_group.add_argument("-f", "--files", nargs='*', help="List of files to be used in the task.", default=[])
@@ -95,10 +97,17 @@ def system_main() -> None:
         setup_application_logging(log_level=log_level)
 
         # 6. Start the system's main workflow
-        plan = system.start(
-            high_level_goal=args.task,
-            files=file_objects
-        )
+        if (args.plan_from):
+            plan = system.start(
+                high_level_goal=args.task,
+                files=file_objects,
+                plan=Plan.model_validate_json(read_file(args.plan_from))
+            )
+        else:
+            plan = system.start(
+                high_level_goal=args.task,
+                files=file_objects
+            )
         if args.plan_only:
             logger.info("Plan-only mode: Workflow execution skipped.")
             return

@@ -88,15 +88,18 @@ class System:
         self.session = Session(agents=self.agents, project_root="./")
         logger.info("--- System Setup Complete ---")
 
-    def start(self, high_level_goal: str, files: List[File] = []) -> Plan:
+    def start(self, high_level_goal: str, files: List[File] = [], plan: Plan = None) -> Plan:
         """
-        Runs the main workflow of the system.
+        Starts the system's main workflow, generating a plan if one is not provided.
 
         Args:
-            initial_task (str): The initial task for the orchestrator to perform.
-            plan_only (bool): If True, only generates the plan without executing tasks.
-            rounds (int): The number of rounds to execute the workflow.
-            files (List[str]): List of files to be used in the task.
+            high_level_goal (str): The high-level goal for the orchestrator to perform.
+            files (List[File]): List of files to be used in the task.
+            plan (Plan, optional): An optional pre-existing plan to use. If not provided,
+                                   the orchestrator will generate one.
+
+        Returns:
+            Plan: The generated or provided plan.
 
         Raises:
             RuntimeError: If the system is not set up before running.
@@ -104,14 +107,19 @@ class System:
         if not self.orchestrator or not self.session:
             raise RuntimeError("System is not set up. Please call setup() before start().")
 
-        plan: Optional[Plan] = self.orchestrator.generate_plan(self.session, high_level_goal, files)
         if not plan:
-            raise RuntimeError("Orchestration failed: Could not generate a valid plan.")
+            plan = self.orchestrator.generate_plan(self.session, high_level_goal, files)
+            if not plan:
+                raise RuntimeError("Orchestration failed: Could not generate plan.")
+
+        plan = Plan.model_validate(plan)
+        if not plan:
+            raise RuntimeError("Orchestration failed: Could not validate plan.")
 
         logger.debug(f"{plan.model_dump_json()}")
 
         if not plan or not plan.tasks or not plan.roles:
-            raise RuntimeError("Orchestration failed: Could not generate a valid plan.")
+            raise RuntimeError("Orchestration failed: Could not find a valid plan.")
 
         print(f"\n\nInitial Plan: {plan.model_dump_json(indent=4)}\n\n\n")
         self.session.add_artifact("initial_plan.json", plan.model_dump_json(indent=4))
