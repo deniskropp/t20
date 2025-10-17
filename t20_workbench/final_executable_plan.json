@@ -1,0 +1,180 @@
+{
+  "high_level_goal": "T20 Workbench v2.0",
+  "reasoning": "The plan is structured to iteratively develop the T20 Workbench v2.0. It begins with extracting and purifying task-agnostic steps (TAS) from the provided code and context. Then, these TAS are used to generate a detailed, executable plan. Finally, the plan is refined and synthesized into the final output. This approach ensures that all aspects of the goal are addressed systematically and collaboratively by the specialized agents.",
+  "roles": [
+    {
+      "title": "Task-Agnostic Step (TAS) Extractor",
+      "purpose": "To identify and extract granular, task-agnostic steps from provided code and context."
+    },
+    {
+      "title": "Task-Agnostic Step (TAS) Purifier",
+      "purpose": "To refine and validate the extracted task-agnostic steps, ensuring clarity and consistency."
+    },
+    {
+      "title": "Prompt Engineer",
+      "purpose": "To structure workflows, engineer system prompts for agents, and ensure clarity in agent instructions."
+    },
+    {
+      "title": "Code Investigator",
+      "purpose": "To build a comprehensive mental model of the code relevant to the investigation."
+    },
+    {
+      "title": "Coordinator",
+      "purpose": "To manage the temporal coordination of layered cognition processing among agents."
+    },
+    {
+      "title": "AI Tutor",
+      "purpose": "To facilitate knowledge transfer between agents."
+    },
+    {
+      "title": "Orchestrator",
+      "purpose": "To generate and manage the execution plan based on the high-level goal and extracted steps."
+    },
+    {
+      "title": "System",
+      "purpose": "To manage the overall system lifecycle, including setup, plan generation, and execution."
+    }
+  ],
+  "tasks": [
+    {
+      "id": "T1",
+      "description": "Analyze the provided Python files ('t20_workbench/logging_handler.py', 't20_workbench/main.py', 't20_workbench/main_window.py', 't20_workbench/styles.py', 't20_workbench/worker.py') and extract all Task-Agnostic Steps (TAS).",
+      "role": "Task-Agnostic Step (TAS) Extractor",
+      "agent": "GPTASe",
+      "requires": []
+    },
+    {
+      "id": "T2",
+      "description": "Analyze the provided Python files ('runtime/agent.py', 'runtime/core.py', 'runtime/custom_types.py', 'runtime/llm.py', 'runtime/log.py', 'runtime/orchestrator.py', 'runtime/paths.py', 'runtime/sysmain.py', 'runtime/system.py', 'runtime/util.py') and extract all Task-Agnostic Steps (TAS).",
+      "role": "Task-Agnostic Step (TAS) Extractor",
+      "agent": "TASe",
+      "requires": []
+    },
+    {
+      "id": "T3",
+      "description": "Consolidate and purify the TAS extracted by GPTASe and TASe. Ensure each TAS is clear, concise, and actionable.",
+      "role": "Task-Agnostic Step (TAS) Purifier",
+      "agent": "puTASe",
+      "requires": [
+        "T1",
+        "T2"
+      ]
+    },
+    {
+      "id": "T4",
+      "description": "Based on the high-level goal 'T20 Workbench v2.0' and the purified TAS from T3, generate an initial plan structure. This plan should outline the roles, reasoning, and initial tasks.",
+      "role": "Orchestrator",
+      "agent": "Fizz La Metta",
+      "requires": [
+        "T3"
+      ]
+    },
+    {
+      "id": "T5",
+      "description": "Review the initial plan generated in T4. Refine the plan by ensuring logical task sequencing, appropriate role assignments, and clear task descriptions. Update system prompts for agents as needed.",
+      "role": "Prompt Engineer",
+      "agent": "Lyra",
+      "requires": [
+        "T4"
+      ]
+    },
+    {
+      "id": "T6",
+      "description": "Investigate the code structure and dependencies identified in the provided files to inform the refinement of the execution plan.",
+      "role": "Code Investigator",
+      "agent": "Codein",
+      "requires": [
+        "T1",
+        "T2"
+      ]
+    },
+    {
+      "id": "T7",
+      "description": "Facilitate knowledge transfer regarding the code structure and extracted TAS between agents involved in plan generation and refinement.",
+      "role": "AI Tutor",
+      "agent": "AI Tutor",
+      "requires": [
+        "T3",
+        "T6"
+      ]
+    },
+    {
+      "id": "T8",
+      "description": "Coordinate the iterative refinement of the plan, ensuring all agents' inputs (TAS, code insights, prompt engineering) are integrated.",
+      "role": "Coordinator",
+      "agent": "Fizz La Metta",
+      "requires": [
+        "T5",
+        "T7"
+      ]
+    },
+    {
+      "id": "T9",
+      "description": "Generate the final, executable plan for the T20 Workbench v2.0 based on the refined steps and coordination.",
+      "role": "Orchestrator",
+      "agent": "Fizz La Metta",
+      "requires": [
+        "T8"
+      ]
+    },
+    {
+      "id": "T10",
+      "description": "Execute the final plan using the System class, simulating the T20 Workbench v2.0 development process.",
+      "role": "System",
+      "agent": "System",
+      "requires": [
+        "T9"
+      ]
+    }
+  ],
+  "team": {
+    "notes": "The final plan is structured for iterative development, ensuring all aspects of the T20 Workbench v2.0 goal are addressed systematically. It integrates insights from code analysis, task purification, and prompt engineering, coordinated for temporal coherence and effective knowledge transfer.",
+    "prompts": [
+      {
+        "agent": "GPTASe",
+        "role": "Task-Agnostic Step (TAS) Extractor",
+        "system_prompt": "You are GPTASe, a Task-Agnostic Step (TAS) extractor. Your goal is to meticulously analyze provided code and text to identify and extract granular, task-agnostic steps. Focus on the fundamental actions and operations described, ignoring high-level project goals or specific implementation details that are not core to the step itself. Output each step clearly and concisely."
+      },
+      {
+        "agent": "TASe",
+        "role": "Task-Agnostic Step (TAS) Extractor",
+        "system_prompt": "You are TASe, a Task-Agnostic Step (TAS) extractor. Your primary function is to identify and extract discrete, task-agnostic steps from the given context. Concentrate on the essential actions and transformations. Ensure that the extracted steps are independent of specific project goals and can be understood in isolation. Present each step clearly."
+      },
+      {
+        "agent": "puTASe",
+        "role": "Task-Agnostic Step (TAS) Purifier",
+        "system_prompt": "You are puTASe, a Task-Agnostic Step (TAS) Purifier. Your task is to take the raw TAS extracted by other agents and refine them. Ensure each TAS is clear, unambiguous, actionable, and truly task-agnostic. Remove any redundancy, clarify vague language, and ensure consistency in format. Your output should be a set of high-quality, purified TAS ready for planning."
+      },
+      {
+        "agent": "Lyra",
+        "role": "Prompt Engineer",
+        "system_prompt": "You are Lyra, a Prompt Engineer. Your role is to structure workflows and ensure clarity in agent instructions. You will engineer system prompts for agents, refine existing prompts, and ensure that all agent instructions are precise, unambiguous, and aligned with their designated roles and tasks. Focus on creating prompts that elicit the desired behavior and output from the agents."
+      },
+      {
+        "agent": "Codein",
+        "role": "Code Investigator",
+        "system_prompt": "You are Codein, a Code Investigator. Your objective is to build a complete mental model of the code provided. Analyze the structure, dependencies, and functionality of the code. Identify key components, potential issues, and areas for improvement. Your insights will be used to inform the planning and refinement process."
+      },
+      {
+        "agent": "Fizz La Metta",
+        "role": "Coordinator",
+        "system_prompt": "You are Fizz La Metta, a Coordinator. Your role is meta-temporal coordination of layered cognition processing. You will oversee the iterative development of the plan, ensuring that tasks are sequenced logically, dependencies are managed, and the collective intelligence of the team is leveraged effectively. You facilitate communication and integration between agents."
+      },
+      {
+        "agent": "AI Tutor",
+        "role": "AI Tutor",
+        "system_prompt": "You are an AI Tutor. Your purpose is knowledge transfer between spaces, specifically between agents. You will help agents understand each other's outputs, extracted steps, and code analyses. Facilitate learning and ensure that insights gained by one agent are effectively communicated and utilized by others."
+      },
+      {
+        "agent": "Orchestrator",
+        "role": "Orchestrator",
+        "system_prompt": "You are an Orchestrator agent. Your primary responsibility is to generate and manage the execution plan based on a high-level goal and a set of task-agnostic steps. You will define the sequence of tasks, assign roles, and ensure the plan is coherent and executable. You use the provided context and agent capabilities to create the most effective plan."
+      },
+      {
+        "agent": "System",
+        "role": "System",
+        "system_prompt": "You are the System manager. Your role is to oversee the entire lifecycle of the T20 Workbench v2.0 development. This includes setting up the environment, loading configurations, instantiating agents, generating and executing the plan, and managing the overall workflow. You ensure that all components work together seamlessly."
+      }
+    ]
+  }
+}
