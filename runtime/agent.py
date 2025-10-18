@@ -4,7 +4,7 @@ It includes the agent's lifecycle methods, task execution logic, and
 helper functions for agent instantiation and discovery.
 """
 
-import json as JSON
+import json
 import uuid
 from dataclasses import dataclass, field
 import re
@@ -18,48 +18,55 @@ from runtime.core import ExecutionContext, Session
 
 logger = logging.getLogger(__name__)
 
-from runtime.custom_types import AgentOutput
+from runtime.custom_types import AgentOutput, Task, AgentProfile
+
+from runtime.message_bus import MessageBus
 
 class Agent:
     """Represents a runtime agent instance."""
-    name: str
-    role: str
-    goal: str
+    profile: AgentProfile
     model: str
     system_prompt: str
     llm: LLM
+    message_bus: MessageBus
 
-    def __init__(self, name: str, role: str, goal: str, model: str, system_prompt: str) -> None:
-        self.name = name
-        self.role = role
-        self.goal = goal
+    def __init__(self, name: str, role: str, goal: str, model: str, system_prompt: str, message_bus: MessageBus) -> None:
+        self.profile = AgentProfile(name=name, role=role, goal=goal)
         self.model = model
         self.system_instruction = system_prompt
         self.system_prompt = system_prompt
-        logger.info(f"Agent instance created: {self.name} (Role: {self.role}, Model: {self.model})")
+        self.message_bus = message_bus
+        logger.debug(f"Agent instance created: {self.profile.name} (Role: {self.profile.role}, Model: {self.model})")
         self.llm = LLM.factory(model)
+
+    def subscribe(self, topic: str, callback: Any) -> None:
+        """Subscribes to a topic on the message bus."""
+        self.message_bus.subscribe(topic, callback)
+
+    def publish(self, topic: str, message: Any) -> None:
+        """Publishes a message to a topic on the message bus."""
+        self.message_bus.publish(topic, message)
 
     def update_system_prompt(self, new_prompt: str) -> None:
         """Updates the agent's system prompt."""
 
         self.system_instruction=f"{new_prompt}\n\n---\n\n{self.system_prompt}\n"
 
-        logger.info(f"Agent '{self.name}' system prompt updated:\n{new_prompt}\n")
+        logger.info(f"Agent '{self.profile.name}' system prompt updated:\n{new_prompt}\n")
 
-    def execute_task(self, context: ExecutionContext) -> Optional[str]:
+    def execute_task(self, context: ExecutionContext, task: Task) -> Optional[str]:
         """
         Executes a task using the Generative AI model based on the provided context.
 
         Args:
             context (ExecutionContext): The execution context containing goal, plan, and artifacts.
+            task (Task): The task to execute.
 
         Returns:
             Optional[str]: The result of the task execution as a string, or an error string.
         """
 
-        task = context.current_step()
-
-        context.record_artifact(f"{self.name}_system_instruction.txt", self.system_instruction)
+        context.record_artifact(f"{self.profile.name}_system_instruction.txt", self.system_instruction, task)
 
         required_task_ids = ['initial']
         required_task_ids.extend(task.requires)
@@ -79,7 +86,7 @@ class Agent:
 
         task_prompt: List[str] = [
             f"The overall goal is: '{context.plan.high_level_goal}'",
-            f"Your role's specific goal is: '{self.goal}'\n"
+            f"Your role's specific goal is: '{self.profile.goal}'\n"
             f"Your specific sub-task is: '{task.description}'",
 
             f"The team's roles are:\n    {context.plan.model_dump_json()}",
@@ -92,65 +99,51 @@ class Agent:
             f"Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project."
         )
 
-        #logger.info(f"Agent '{self.name}' is executing task: {task_prompt[1]}")
-        #logger.info(f"Task requires outputs from task IDs: {required_task_ids}")
-        #logger.info(
-        #    f"Found {len(required_artifacts)} required artifacts from previous tasks. Previous artifacts preview: {previous_artifacts[:500]}"
-        #)
-
-        ret = self._run(context, "\n\n".join(task_prompt))
-        logger.info(f"Agent '{self.name}' completed task: {task.description}")
+        ret = self._run(context, "\n\n".join(task_prompt), task)
+        logger.info(f"Agent '{self.profile.name}' completed task: {task.description}")
         return ret
 
 
-    def _run(self, context: ExecutionContext, prompt: str) -> Optional[str]:
-        context.record_artifact(f"{self.name}_task.txt", prompt)
+    def _run(self, context: ExecutionContext, prompt: str, task: Task) -> Optional[str]:
+        context.record_artifact(f"{self.profile.name}_task.txt", prompt, task)
 
         try:
-            response = self.llm.generate_content(   # ignore type
+            response = self.llm.generate_content(
                 model_name=self.model,
                 contents=prompt,
                 system_instruction=self.system_instruction,
                 temperature=0.7,
-                response_mime_type='application/json', #if self.role == 'Prompt Engineer' else None
+                response_mime_type='application/json',
                 response_schema=AgentOutput
             )
+
             if isinstance(response, AgentOutput):
-                result = response.model_dump_json()
-                print(f"\n--- Output:\n{response.output}\n")
-                if response.artifact and response.artifact.files:
-                    for file in response.artifact.files:
-                        print(f"\n--- File: {file.path}\n{file.content}\n")
-                        context.session.add_artifact(file.path, file.content)
+                result = response.model_dump_json(indent=4)
             else:
-                result = response or '{}'
-
-                if '```' in result:
-                    match = re.search(r'```(json)?\s*([\s\S]*?)\s*```', result, re.IGNORECASE)
-                    if match:
-                        # Extract the JSON content from the markdown block
-                        result = match.group(2).strip()
-
-                json_data = JSON.loads(result)
-                if isinstance(json_data, dict):
-                    if "output" in json_data and json_data["output"] is not None:
-                        output = JSON.dumps(json_data["output"], indent=4) if isinstance(json_data["output"], dict) else json_data["output"]
-                        logger.info(f"Output:\n{output[:2000]}\n")
-
-                    if "artifact" in json_data and json_data["artifact"] is not None:
-                        if "files" in json_data["artifact"]:
-                            for file_data in json_data["artifact"]["files"]:
-                                if "path" in file_data and "content" in file_data:
-                                    print(f"\n--- File: {file_data["path"]}")
-                                    print(f"{file_data["content"]}")
-                                    context.session.add_artifact(file_data["path"], file_data["content"])
+                if isinstance(response, str):
+                    result = response
                 else:
-                    logger.warning("Agent output is not in expected AgentOutput format. Processing as plain text.")
-                    logger.info(f"Output: '\n{result[:2000]}\n'")
+                    result = json.dumps(response)
+
+            response = AgentOutput.model_validate_json(result)
+
+            print(f"\n====== Task '{task.id}' <= {task.requires} ======\n[{task.agent} | {task.role}] \"{task.description}\"\n")
+
+            print(f"\n--- Output:\n{response.output}\n")
+            if response.artifact and response.artifact.files:
+                for file in response.artifact.files:
+                    print(f"\n--- File: {file.path}\n{file.content}\n")
+                    context.session.add_artifact(file.path, file.content)
+            if response.team:
+                print(f"\n--- Team:\n\"{response.team.notes}\"")
+                if response.team.prompts:
+                    print(f"\n{"".join(f"{p.agent} | {p.role}\n  {p.system_prompt}\n" for p in response.team.prompts)}")
+            if response.reasoning:
+                print(f"\n--- Reasoning:\n{response.reasoning}\n")
 
         except Exception as e:
-            logger.exception(f"Error executing task for {self.name}: {e}")
-            raise
+            logger.exception(f"Error executing task for {self.profile.name}: {e}")
+            return f"Error executing task for {self.profile.name}: {e}"
 
         return result
 
@@ -165,5 +158,5 @@ def find_agent_by_role(agents: List[Agent], role: str) -> Optional[Agent]:
     Returns:
         Optional[Agent]: The found Agent object, or None if not found.
     """
-    logger.debug(f"Searching for agent with role: {role} in agents: {[agent.name for agent in agents]}")
-    return next((agent for agent in agents if agent.role == role), None)
+    logger.debug(f"Searching for agent with role: {role} in agents: {[agent.profile.name for agent in agents]}")
+    return next((agent for agent in agents if agent.profile.role == role), None)

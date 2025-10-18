@@ -18,13 +18,34 @@ from pydantic import BaseModel
 logger = logging.getLogger(__name__)
 
 
+import json
+import os
+import time
+from google import genai
+from google.genai import types
+from ollama import Client as Ollama
+from typing import Optional, Any, Dict, Type
+from abc import ABC, abstractmethod
+import logging
+from pydantic import BaseModel
+
+logger = logging.getLogger(__name__)
+
+_provider_registry: Dict[str, Type["LLM"]] = {}
+
+def register_provider(name: str):
+    def decorator(cls: Type["LLM"]) -> Type["LLM"]:
+        _provider_registry[name] = cls
+        return cls
+    return decorator
+
 class LLM(ABC):
     """
     Abstract base class for Large Language Models.
     Provides a centralized place for LLM-related configurations and utilities.
     """
-    def __init__(self) -> None:
-        pass
+    def __init__(self, species: str) -> None:
+        self.species = species
 
     @abstractmethod
     def generate_content(self, model_name: str, contents: str, system_instruction: str = '',
@@ -34,26 +55,21 @@ class LLM(ABC):
 
     @staticmethod
     def factory(species: str) -> 'LLM':
-        print(f"LLM Factory: Creating LLM instance for species '{species}'")
+        logger.debug(f"LLM Factory: Creating LLM instance for species '{species}'")
+        provider_name, _, model_name = species.partition(':')
+        if provider_name in _provider_registry:
+            return _provider_registry[provider_name](species=model_name or provider_name)
+        
+        # Fallback for old format
         if species == 'Olli':
-            return Olli()
+            return Olli(species='Olli')
         elif species == 'Kimi':
-            return Kimi()
-        if species.startswith('ollama:'):
-            # Extract model name after 'ollama:'
-            model_name = species.split(':', 1)[1]
-            return Olli(species=model_name)
-        if species.startswith('opi:'):
-            # Extract model name after 'opi:'
-            model_name = species.split(':', 1)[1]
-            return Opi(species=model_name)
-        if species.startswith('mistral:'):
-            # Extract model name after 'mistral:'
-            model_name = species.split(':', 1)[1]
-            return Mistral(species=model_name)
+            return Kimi(species='Kimi')
+        
         return Gemini(species)
 
 
+@register_provider("gemini")
 class Gemini(LLM):
     """
     Provides a centralized place for LLM-related configurations and utilities.
@@ -61,7 +77,8 @@ class Gemini(LLM):
     _clients: Dict[str, genai.Client] = {} # Class-level cache for clients
 
     def __init__(self, species: str) -> None:
-        self.species = species
+        super().__init__(species)
+
 
     def generate_content(self, model_name: str, contents: str, system_instruction: str = '',
                          temperature: float = 0.7, response_mime_type: str = 'text/plain', response_schema: BaseModel = None) -> Optional[str]: # type: ignore
@@ -84,7 +101,9 @@ class Gemini(LLM):
             return None
 
         config = types.GenerateContentConfig(
-            system_instruction=system_instruction,
+            system_instruction=[
+                types.Part.from_text(text=system_instruction)
+            ],
             temperature=temperature,
             response_mime_type=response_mime_type,
             response_schema=response_schema,
@@ -96,7 +115,9 @@ class Gemini(LLM):
             try:
                 response = client.models.generate_content(
                     model=model_name,
-                    contents=contents,
+                    contents=[
+                        types.Part.from_text(text=contents)
+                    ],
                     config=config,
                 )
                 if not response.candidates or response.candidates[0].content is None or response.candidates[0].content.parts is None or not response.candidates[0].content.parts or response.candidates[0].content.parts[0].text is None:
@@ -108,24 +129,24 @@ class Gemini(LLM):
                 if _ == 2:
                     return None
                 logger.warning(f"Retrying content generation for model {model_name}...")
-                time.sleep(10)
+                time.sleep(10+30*_)
                 #return None
 
         if isinstance(response.parsed, BaseModel):
             return response.parsed
 
+        text = ''.join(p.text for p in response.candidates[0].content.parts).strip()
+
         if response_mime_type == 'application/json':
             try:
-                # Attempt to parse the JSON response
-                json_output = response.candidates[0].content.parts[0].text.strip()
                 # Validate against schema if provided
                 if response_schema:
-                    response_schema.model_validate_json(json_output)
-                return json_output
+                    return response_schema.model_validate_json(text)
+                return json.loads(text)
             except Exception as ex:
                 logger.exception(f"Error parsing or validating JSON response: {ex}")
 
-        return response.candidates[0].content.parts[0].text.strip()
+        return text
 
     def _get_client(self) -> genai.Client:
         """
@@ -141,6 +162,7 @@ class Gemini(LLM):
             raise
 
 
+@register_provider("ollama")
 class Olli(LLM):
     """
     Provides a centralized place for LLM-related configurations and utilities.
@@ -148,8 +170,8 @@ class Olli(LLM):
     _clients = {} # Class-level cache for clients
 
     def __init__(self, species: str = 'Olli'):
+        super().__init__(species)
         self.client = None
-        self.species = species
 
     def generate_content(self, model_name: str, contents: str, system_instruction: str = '',
                          temperature: float = 0.7, response_mime_type: str = 'text/plain', response_schema: BaseModel = None) -> Optional[str]: # type: ignore
@@ -214,6 +236,7 @@ class Olli(LLM):
 from huggingface_hub import InferenceClient, ChatCompletionInputResponseFormatText, ChatCompletionInputResponseFormatJSONObject, ChatCompletionInputResponseFormatJSONSchema, ChatCompletionInputJSONSchema
 
 
+@register_provider("kimi")
 class Kimi(LLM):
     """
     Provides a centralized place for LLM-related configurations and utilities.
@@ -221,7 +244,7 @@ class Kimi(LLM):
     _clients = {} # Class-level cache for clients
 
     def __init__(self, species: str = 'Kimi'):
-        self.species = species
+        super().__init__(species)
     
     def generate_content(self, model_name: str, contents: str, system_instruction: str = '',
                          temperature: float = 0.7, response_mime_type: str = 'text/plain', response_schema: BaseModel = None) -> Optional[str]: # type: ignore
@@ -298,6 +321,7 @@ from openai import OpenAI
 from openai.types.chat.completion_create_params import ResponseFormat
 
 
+@register_provider("opi")
 class Opi(LLM):
     """
     Provides a centralized place for LLM-related configurations and utilities.
@@ -305,7 +329,7 @@ class Opi(LLM):
     _clients = {} # Class-level cache for clients
 
     def __init__(self, species: str = 'Opi'):
-        self.species = species
+        super().__init__(species)
     
     def generate_content(self, model_name: str, contents: str, system_instruction: str = '',
                          temperature: float = 0.7, response_mime_type: str = 'text/plain', response_schema: BaseModel = None) -> Optional[str]: # type: ignore
@@ -391,6 +415,7 @@ class Opi(LLM):
 from mistralai import Mistral as MistralClient
 from mistralai.extra.utils import response_format_from_pydantic_model
 
+@register_provider("mistral")
 class Mistral(LLM):
     """
     Provides a centralized place for LLM-related configurations and utilities.
@@ -398,7 +423,7 @@ class Mistral(LLM):
     _clients = {} # Class-level cache for clients
 
     def __init__(self, species: str = 'Mistral'):
-        self.species = species
+        super().__init__(species)
     
     def generate_content(self, model_name: str, contents: str, system_instruction: str = '',
                          temperature: float = 0.7, response_mime_type: str = 'text/plain', response_schema: BaseModel = None) -> Optional[str]: # type: ignore

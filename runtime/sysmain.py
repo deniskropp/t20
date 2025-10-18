@@ -4,6 +4,7 @@ It parses command-line arguments and initiates the system bootstrap process,
 acting as the primary interface for running the multi-agent system.
 """
 
+import json
 import os
 import argparse
 import logging
@@ -24,7 +25,7 @@ def parse_command_line_arguments() -> argparse.Namespace:
         An argparse.Namespace object containing the parsed arguments.
     """
     parser = argparse.ArgumentParser(
-        description="Run the Gemini agent runtime.",
+        description="T20 multi-agent runtime.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
 
@@ -97,27 +98,23 @@ def system_main() -> None:
         setup_application_logging(log_level=log_level)
 
         # 6. Start the system's main workflow
-        if (args.plan_from):
-            plan = system.start(
-                high_level_goal=args.task,
-                files=file_objects,
-                plan=Plan.model_validate_json(read_file(args.plan_from))
-            )
-        else:
-            plan = system.start(
-                high_level_goal=args.task,
-                files=file_objects
-            )
+        plan = system.start(
+            high_level_goal=args.task,
+            files=file_objects,
+            plan=None if not args.plan_from else Plan.model_validate_json(read_file(args.plan_from))
+        )
         if args.plan_only:
             logger.info("Plan-only mode: Workflow execution skipped.")
             return
 
         # 7. Run the system's main workflow
-        system.run(
-            plan=plan,
-            rounds=args.rounds,
-            files=file_objects
-        )
+        for step, result in system.run(plan=plan, rounds=args.rounds, files=file_objects):
+            try:
+                result = json.dumps(json.loads(result), indent=4)
+            except:
+                pass
+            #print(f"\n\n--- TASK [id: {step.id}, agent: {step.agent}, role: {step.role}, description: {step.description}] ---\n{result}\n")
+
 
     except (FileNotFoundError, RuntimeError) as e:
         logger.exception(f"A critical error occurred: {e}")

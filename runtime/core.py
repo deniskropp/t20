@@ -6,6 +6,7 @@ for handling artifacts and session-specific data.
 
 from dataclasses import dataclass, field
 from typing import Any, Dict, List
+from threading import Lock
 import uuid
 import os
 import logging
@@ -28,53 +29,35 @@ class ExecutionContext:
     """Holds the state and context for a multi-agent workflow."""
     session: 'Session'
     plan: Plan
-    step_index: int = 0
-    round_num: int = 0
     items: Dict[str, ContextItem] = field(default_factory=dict)
+    lock: Lock = field(default_factory=Lock)
 
-    def next(self) -> None:
-        self.step_index += 1
-
-    def reset(self) -> None:
-        self.step_index = 0
-
-    def current_step(self) -> Task:
-        """Returns the current step in the plan."""
-        return self.plan.tasks[self.step_index]
-
-    def _remember_artifact(self, key: str, value: Any, step: Task | None = None) -> None:
+    def _remember_artifact(self, key: str, value: Any, step: Task) -> None:
         """Remembers an artifact from a step's execution for future tasks."""
-        self.items[key] = ContextItem(name=key, content=value, step=step or self.current_step())
+        self.items[key] = ContextItem(name=key, content=value, step=step)
 
-    def record_artifact(self, key: str, value: Any, mem: bool = False) -> None:
+    def record_artifact(self, key: str, value: Any, step: Task, mem: bool = False) -> None:
         """
         Records an artifact from a step's execution and optionally remembers it.
-
-        Args:
-            key (str): The key under which to store the artifact.
-            value (Any): The content of the artifact.
-            mem (bool): If True, the artifact is also stored in the execution context's memory.
         """
-        artifact_key = f"__{self.round_num}/__step_{self.step_index}_{key}"
-        self.session.add_artifact(artifact_key, value)
-        if mem:
-            self._remember_artifact(artifact_key, value)
+        with self.lock:
+            artifact_key = f"__step_{step.id}_{key}"
+            self.session.add_artifact(artifact_key, value)
+            if mem:
+                self._remember_artifact(artifact_key, value, step)
 
     def record_initial(self, key: str, value: Any) -> None:
         """
         Records an artifact from a step's execution and optionally remembers it.
-
-        Args:
-            key (str): The key under which to store the artifact.
-            value (Any): The content of the artifact.
         """
-        self._remember_artifact(key, value, step=Task(
-            id='initial',
-            description='Initial files provided by the user',
-            role='User',
-            agent='User',
-            requires=[]
-        ))
+        with self.lock:
+            self._remember_artifact(key, value, step=Task(
+                id='initial',
+                description='Initial files provided by the user',
+                role='User',
+                agent='User',
+                requires=[]
+            ))
 
 
 
