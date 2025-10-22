@@ -88,6 +88,15 @@ def serving():
     import uvicorn
 
     app = FastAPI()
+    from fastapi.middleware.cors import CORSMiddleware
+
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],  # Allows all origins
+        allow_credentials=True,
+        allow_methods=["*"],  # Allows all methods
+        allow_headers=["*"],  # Allows all headers
+    )
 
     # This is a simple way to manage state for a local server.
     # For a production environment, a more robust solution would be needed.
