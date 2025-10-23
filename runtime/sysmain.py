@@ -70,7 +70,7 @@ def setup_application_logging(log_level: str = "INFO") -> None:
 
 class StartRequest(BaseModel):
     high_level_goal: str
-    files: Optional[List[str]] = []
+    files: Optional[List[File]] = []
     plan_from: Optional[str] = None
     orchestrator: str = "Meta-AI"
     model: str = "gemini-2.5-flash-lite"
@@ -78,7 +78,7 @@ class StartRequest(BaseModel):
 class RunRequest(BaseModel):
     plan: Plan
     rounds: int = 1
-    files: Optional[List[str]] = []
+    files: Optional[List[File]] = []
 
 def serving():
     """
@@ -109,17 +109,7 @@ def serving():
         """
         project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
-        # 3. Convert file paths to File objects
-        file_objects = []
-        for file_path in request.files:
-            try:
-                content = read_file(file_path)
-                if content.startswith("Error:"):
-                    logger.warning(f"Skipping file '{file_path}': {content}")
-                    continue
-                file_objects.append(File(path=file_path, content=content))
-            except Exception as e:
-                logger.error(f"Error processing file '{file_path}': {e}")
+
 
         # 4. Instantiate and set up the system
         system = System(root_dir=project_root, default_model=request.model)
@@ -133,7 +123,7 @@ def serving():
         # 6. Start the system's main workflow
         plan = system.start(
             high_level_goal=request.high_level_goal,
-            files=file_objects,
+            files=request.files,
             plan=None if not request.plan_from else Plan.model_validate_json(read_file(request.plan_from))
         )
         state["plan"] = plan
@@ -148,19 +138,10 @@ def serving():
         if not system:
             return {"error": "System not initialized. Please call /start first."}
 
-        file_objects = []
-        for file_path in request.files:
-            try:
-                content = read_file(file_path)
-                if content.startswith("Error:"):
-                    logger.warning(f"Skipping file '{file_path}': {content}")
-                    continue
-                file_objects.append(File(path=file_path, content=content))
-            except Exception as e:
-                logger.error(f"Error processing file '{file_path}': {e}")
+
 
         results = []
-        for step, result in system.run(plan=request.plan, rounds=request.rounds, files=file_objects):
+        for step, result in system.run(plan=request.plan, rounds=request.rounds, files=request.files):
             try:
                 result = json.dumps(json.loads(result), indent=4)
             except:
