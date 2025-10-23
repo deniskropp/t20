@@ -9,6 +9,8 @@ from PySide6.QtCore import (
     Slot,
     QStringListModel,
     QModelIndex,
+    QPoint,
+    QItemSelection,
 )
 from PySide6.QtWidgets import (
     QMainWindow,
@@ -20,6 +22,7 @@ from PySide6.QtWidgets import (
     QListView,
     QTreeView,
     QSplitter,
+    QSplitter,
     QTabWidget,
     QPlainTextEdit,
     QFileSystemModel,
@@ -27,12 +30,19 @@ from PySide6.QtWidgets import (
     QLabel,
     QHeaderView,
     QComboBox,
+    QLineEdit,
+    QMenu,
 )
-from PySide6.QtGui import QStandardItemModel, QStandardItem, QFont
+from PySide6.QtGui import QStandardItemModel, QStandardItem, QFont, QAction
 import yaml
 
 from worker import Worker
 from runtime.custom_types import Plan, Task
+from runtime.llm import _provider_registry
+from agent_config_dialog import AgentConfigDialog
+from views.left_panel_view import LeftPanelView
+from views.center_panel_view import CenterPanelView
+from views.bottom_panel_view import BottomPanelView
 
 # --- Constants for Plan View ---
 STATUS_COLUMN = 0
@@ -48,7 +58,7 @@ class MainWindow(QMainWindow):
     """Main application window for the T20 Workbench."""
 
     # Signal to start the workflow in the worker thread
-    start_workflow_signal = Signal(str, str, list)
+    start_workflow_signal = Signal(str, str, list, str, str)
 
     def __init__(self):
         super().__init__()
@@ -68,76 +78,22 @@ class MainWindow(QMainWindow):
 
     def _setup_ui(self):
         """Initializes and arranges all UI widgets."""
-        # --- Left Panel: Configuration & Controls ---
-        left_panel = QWidget()
-        left_layout = QVBoxLayout(left_panel)
+        self.left_panel = LeftPanelView(self.file_list_model)
+        self.center_panel = CenterPanelView(self.plan_model)
+        self.bottom_panel = BottomPanelView(self.fs_model)
 
-        self.goal_input = QTextEdit()
-        self.goal_input.setPlaceholderText("Enter the high-level goal for the agents...")
-
-        self.orchestrator_combo = QComboBox()
-
-        self.file_list_view = QListView()
-        self.file_list_view.setModel(self.file_list_model)
-
-        file_buttons_layout = QHBoxLayout()
-        self.add_files_button = QPushButton("Add File(s)")
-        self.remove_file_button = QPushButton("Remove")
-        file_buttons_layout.addWidget(self.add_files_button)
-        file_buttons_layout.addWidget(self.remove_file_button)
-
-        self.start_button = QPushButton("Start Workflow")
-        self.stop_button = QPushButton("Stop Workflow")
-
-        left_layout.addWidget(QLabel("Goal"))
-        left_layout.addWidget(self.goal_input, stretch=2)
-        left_layout.addWidget(QLabel("Orchestrator"))
-        left_layout.addWidget(self.orchestrator_combo)
-        left_layout.addWidget(QLabel("Context Files"))
-        left_layout.addWidget(self.file_list_view, stretch=3)
-        left_layout.addLayout(file_buttons_layout)
-        left_layout.addWidget(self.start_button)
-        left_layout.addWidget(self.stop_button)
-
-        # --- Center Panel: Plan Visualization ---
-        center_panel = QWidget()
-        center_layout = QVBoxLayout(center_panel)
-        self.plan_view = QTreeView()
-        self.plan_view.setModel(self.plan_model)
-        self.plan_model.setHorizontalHeaderLabels(["Status", "Task", "Agent"])
-        self.plan_view.header().setSectionResizeMode(TASK_COLUMN, QHeaderView.ResizeMode.Stretch)
-        self.plan_view.setColumnWidth(STATUS_COLUMN, 50)
-        self.plan_view.setColumnWidth(AGENT_COLUMN, 150)
-        center_layout.addWidget(QLabel("Execution Plan"))
-        center_layout.addWidget(self.plan_view)
-
-        # --- Bottom Panel: Logs & Artifacts ---
-        bottom_panel = QWidget()
-        bottom_layout = QVBoxLayout(bottom_panel)
-        self.tabs = QTabWidget()
-
-        self.log_view = QPlainTextEdit()
-        self.log_view.setReadOnly(True)
-        self.log_view.setFont(QFont("Courier New", 10))
-
-        self.artifact_view = QTreeView()
-        self.artifact_view.setModel(self.fs_model)
-        self.fs_model.setRootPath(os.path.expanduser("~"))
-
-        self.tabs.addTab(self.log_view, "Logs")
-        self.tabs.addTab(self.artifact_view, "Artifacts")
-        bottom_layout.addWidget(self.tabs)
+        self.left_panel.llm_provider_combo.addItems(sorted(_provider_registry.keys()))
 
         # --- Splitter Layout ---
         top_splitter = QSplitter(Qt.Orientation.Horizontal)
-        top_splitter.addWidget(left_panel)
-        top_splitter.addWidget(center_panel)
+        top_splitter.addWidget(self.left_panel)
+        top_splitter.addWidget(self.center_panel)
         top_splitter.setStretchFactor(0, 1)
         top_splitter.setStretchFactor(1, 3)
 
         main_splitter = QSplitter(Qt.Orientation.Vertical)
         main_splitter.addWidget(top_splitter)
-        main_splitter.addWidget(bottom_panel)
+        main_splitter.addWidget(self.bottom_panel)
         main_splitter.setStretchFactor(0, 2)
         main_splitter.setStretchFactor(1, 1)
 
@@ -145,10 +101,14 @@ class MainWindow(QMainWindow):
 
     def _populate_orchestrators(self):
         """Scans the agents directory and populates the orchestrator combo box."""
+        from config_manager import ConfigManager
+
+        config = ConfigManager()
+        agents_dir_path = config.get('paths.agents_dir', '../agents')
         try:
-            agents_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'agents'))
+            agents_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), agents_dir_path))
             if not os.path.isdir(agents_dir):
-                self.log_message.emit("[UI-ERROR] Agents directory not found.")
+                print("[UI-ERROR] Agents directory not found.")
                 return
 
             orchestrators = []
@@ -160,29 +120,19 @@ class MainWindow(QMainWindow):
                         doc = yaml.safe_load(f)
                         if doc and doc.get('role') == 'Orchestrator':
                             orchestrators.append(doc.get('name', filename.replace('.yaml', '')))
-            self.orchestrator_combo.addItems(sorted(orchestrators))
+            self.left_panel.orchestrator_combo.addItems(sorted(orchestrators))
         except FileNotFoundError:
-            self.log_message.emit(f"[UI-ERROR] Agents directory not found at expected path.")
+            print(f"[UI-ERROR] Agents directory not found at expected path.")
         except yaml.YAMLError as e:
-            self.log_message.emit(f"[UI-ERROR] Error parsing YAML in agents directory: {e}")
+            print(f"[UI-ERROR] Error parsing YAML in agents directory: {e}")
         except Exception as e:
-            self.log_message.emit(f"[UI-ERROR] An unexpected error occurred while loading orchestrators: {e}")
+            print(f"[UI-ERROR] An unexpected error occurred while loading orchestrators: {e}")
 
     def _setup_worker_thread(self):
         """Creates and configures the worker thread for background processing."""
         self.thread = QThread()
         self.worker = Worker()
         self.worker.moveToThread(self.thread)
-        self.thread.start()
-
-    def _setup_connections(self):
-        """Connects all signals and slots for the application."""
-        # UI controls
-        self.start_button.clicked.connect(self._on_start_workflow)
-        self.add_files_button.clicked.connect(self._add_files)
-        self.remove_file_button.clicked.connect(self._remove_selected_file)
-        self.file_list_view.selectionModel().selectionChanged.connect(self._update_button_states)
-        # Note: Stop button logic is more complex (thread termination) and is omitted for now.
 
         # Worker thread communication
         self.start_workflow_signal.connect(self.worker.run_workflow)
@@ -192,30 +142,65 @@ class MainWindow(QMainWindow):
         self.worker.workflow_finished.connect(self._on_workflow_finished)
         self.worker.error_occurred.connect(self._on_error)
 
+        self.thread.start()
+
+    def _setup_connections(self):
+        """Connects all signals and slots for the application."""
+        # UI controls
+        self.left_panel.start_button.clicked.connect(self._on_start_workflow)
+        self.left_panel.stop_button.clicked.connect(self.worker.stop)
+        self.left_panel.add_files_button.clicked.connect(self._add_files)
+        self.left_panel.remove_file_button.clicked.connect(self._remove_selected_file)
+        self.left_panel.file_list_view.selectionModel().selectionChanged.connect(self._update_button_states)
+        self.center_panel.plan_view.customContextMenuRequested.connect(self._show_plan_context_menu)
+        self.left_panel.configure_agents_button.clicked.connect(self._open_agent_config)
+        self.bottom_panel.artifact_view.selectionModel().selectionChanged.connect(self._preview_artifact)
+
+    @Slot(QItemSelection, QItemSelection)
+    def _preview_artifact(self, selected, deselected):
+        if not selected.indexes():
+            return
+        index = selected.indexes()[0]
+        file_path = self.fs_model.filePath(index)
+        if os.path.isfile(file_path):
+            try:
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    content = f.read()
+                self.bottom_panel.artifact_preview.setText(content)
+            except Exception as e:
+                self.bottom_panel.artifact_preview.setText(f"Error reading file: {e}")
+
+    @Slot()
+    def _open_agent_config(self):
+        dialog = AgentConfigDialog(self)
+        dialog.exec()
+
     @Slot()
     def _on_start_workflow(self):
         """Handles the 'Start Workflow' button click event."""
-        goal = self.goal_input.toPlainText().strip()
+        goal = self.left_panel.goal_input.toPlainText().strip()
         if not goal:
             QMessageBox.warning(self, "Warning", "The goal cannot be empty.")
             return
 
         # Clear previous run's results
-        self.log_view.clear()
+        self.bottom_panel.log_view.clear()
         self.plan_model.clear()
         self.plan_model.setHorizontalHeaderLabels(["Status", "Task", "Agent"])
         self.fs_model.setRootPath("") # Clear artifact view
 
         # Update UI state to 'running'
-        self.start_button.setText("Running...")
-        self.start_button.setEnabled(False)
-        self.stop_button.setEnabled(True)
-        self.goal_input.setEnabled(False)
-        self.orchestrator_combo.setEnabled(False)
+        self.left_panel.start_button.setText("Running...")
+        self.left_panel.start_button.setEnabled(False)
+        self.left_panel.stop_button.setEnabled(True)
+        self.left_panel.goal_input.setEnabled(False)
+        self.left_panel.orchestrator_combo.setEnabled(False)
 
-        orchestrator = self.orchestrator_combo.currentText()
+        orchestrator = self.left_panel.orchestrator_combo.currentText()
         files = self.file_list_model.stringList()
-        self.start_workflow_signal.emit(goal, orchestrator, files)
+        llm_provider = self.left_panel.llm_provider_combo.currentText()
+        model_name = self.left_panel.model_name_input.text().strip()
+        self.start_workflow_signal.emit(goal, orchestrator, files, llm_provider, model_name)
 
     @Slot(Plan)
     def _update_plan_view(self, plan: Plan):
@@ -229,35 +214,21 @@ class MainWindow(QMainWindow):
             task_item.setEditable(False)
             agent_item = QStandardItem(task.agent)
             agent_item.setEditable(False)
+            exec_time_item = QStandardItem()
+            exec_time_item.setEditable(False)
+            error_item = QStandardItem()
+            error_item.setEditable(False)
             # Store task.id in the status item for easy lookup
             status_item.setData(task.id, Qt.ItemDataRole.UserRole)
-            self.plan_model.appendRow([status_item, task_item, agent_item])
+            self.plan_model.appendRow([status_item, task_item, agent_item, exec_time_item, error_item])
 
     @Slot(str)
     def _append_log_message(self, message: str):
         """Appends a message to the log view and parses it for status updates."""
-        self.log_view.appendPlainText(message.strip())
-        # Regex to find task execution messages
-        match = re.search(r"executing step .*? '([T]\d+):", message)
-        if match:
-            task_id = match.group(1)
-            self._update_task_status(task_id, "running")
-        
-        match_complete = re.search(r"Agent '(.*)' completed task: (.*)", message)
-        if match_complete:
-            # A bit of a hack: find task by description since ID isn't in log
-            # A better implementation would have the runtime log the task ID on completion
-            desc_fragment = match_complete.group(2)
-            for row in range(self.plan_model.rowCount()):
-                task_item = self.plan_model.item(row, TASK_COLUMN)
-                status_item = self.plan_model.item(row, STATUS_COLUMN)
-                if task_item and desc_fragment in task_item.text():
-                    task_id = status_item.data(Qt.ItemDataRole.UserRole)
-                    self._update_task_status(task_id, "success")
-                    break
+        self.bottom_panel.log_view.appendPlainText(message.strip())
 
-    @Slot(str, str)
-    def _update_task_status(self, task_id: str, status: str):
+    @Slot(str, str, str, float)
+    def _update_task_status(self, task_id: str, status: str, error_message: str, execution_time: float):
         """Finds a task by its ID in the plan view and updates its status icon."""
         for row in range(self.plan_model.rowCount()):
             item = self.plan_model.item(row, STATUS_COLUMN)
@@ -266,8 +237,10 @@ class MainWindow(QMainWindow):
                     item.setText(STATUS_RUNNING)
                 elif status == "success":
                     item.setText(STATUS_SUCCESS)
+                    self.plan_model.item(row, 3).setText(f"{execution_time:.2f}s")
                 elif status == "error":
                     item.setText(STATUS_ERROR)
+                    self.plan_model.item(row, 4).setText(error_message)
                 return
 
     @Slot(str)
@@ -276,8 +249,8 @@ class MainWindow(QMainWindow):
         QMessageBox.information(self, "Success", "Workflow completed successfully.")
         self._reset_ui_state()
         self.fs_model.setRootPath(session_path)
-        self.artifact_view.setRootIndex(self.fs_model.index(session_path))
-        self.tabs.setCurrentIndex(1) # Switch to artifacts tab
+        self.bottom_panel.artifact_view.setRootIndex(self.fs_model.index(session_path))
+        self.bottom_panel.tabs.setCurrentIndex(1) # Switch to artifacts tab
 
     @Slot(str)
     def _on_error(self, error_message: str):
@@ -300,7 +273,7 @@ class MainWindow(QMainWindow):
     @Slot()
     def _remove_selected_file(self):
         """Removes the currently selected file from the context list."""
-        selected_indexes = self.file_list_view.selectedIndexes()
+        selected_indexes = self.left_panel.file_list_view.selectedIndexes()
         if not selected_indexes:
             return
         row_to_remove = selected_indexes[0].row()
@@ -309,15 +282,62 @@ class MainWindow(QMainWindow):
     @Slot()
     def _update_button_states(self):
         """Enables or disables the 'Remove' button based on selection."""
-        self.remove_file_button.setEnabled(len(self.file_list_view.selectedIndexes()) > 0)
+        self.left_panel.remove_file_button.setEnabled(len(self.left_panel.file_list_view.selectedIndexes()) > 0)
+
+    @Slot(QPoint)
+    def _show_plan_context_menu(self, pos):
+        index = self.center_panel.plan_view.indexAt(pos)
+        if not index.isValid():
+            return
+
+        menu = QMenu()
+        view_details_action = menu.addAction("View Task Details")
+        mark__complete_action = menu.addAction("Mark as Complete")
+        reschedule_action = menu.addAction("Reschedule")
+
+        action = menu.exec(self.center_panel.plan_view.viewport().mapToGlobal(pos))
+
+        if action == view_details_action:
+            self._view_task_details(index)
+        elif action == mark_complete_action:
+            self._mark_task_complete(index)
+        elif action == reschedule_action:
+            self._reschedule_task(index)
+
+    def _view_task_details(self, index):
+        row = index.row()
+        task_id = self.plan_model.item(row, STATUS_COLUMN).data(Qt.ItemDataRole.UserRole)
+        task_description = self.plan_model.item(row, TASK_COLUMN).text()
+        task_agent = self.plan_model.item(row, AGENT_COLUMN).text()
+        task_status = self.plan_model.item(row, STATUS_COLUMN).text()
+        task_exec_time = self.plan_model.item(row, 3).text()
+        task_error = self.plan_model.item(row, 4).text()
+
+        details = f"""
+        Task ID: {task_id}
+        Description: {task_description}
+        Agent: {task_agent}
+        Status: {task_status}
+        Execution Time: {task_exec_time}
+        Error: {task_error}
+        """
+        QMessageBox.information(self, "Task Details", details)
+
+    def _mark_task_complete(self, index):
+        row = index.row()
+        task_id = self.plan_model.item(row, STATUS_COLUMN).data(Qt.ItemDataRole.UserRole)
+        self.worker.mark_task_as_complete(task_id)
+
+    def _reschedule_task(self, index):
+        pass
 
     def _reset_ui_state(self):
         """Resets the UI controls to their initial, idle state."""
-        self.start_button.setText("Start Workflow")
-        self.start_button.setEnabled(True)
-        self.stop_button.setEnabled(False)
-        self.goal_input.setEnabled(True)
-        self.orchestrator_combo.setEnabled(True)
+        self.left_panel.start_button.setText("Start Workflow")
+        self.left_panel.start_button.setEnabled(True)
+        self.left_panel.stop_button.setEnabled(False)
+        self.left_panel.goal_input.setEnabled(True)
+        self.left_panel.orchestrator_combo.setEnabled(True)
         self._update_button_states()
 
     def closeEvent(self, event):

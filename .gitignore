@@ -5,6 +5,7 @@ node_modules/
 OLD/
 Grok3/
 android/
+*-session_*/
 sessions/
 logs/
 GEMI_session_viewer/
@@ -12,3 +13,4 @@ GEMI_session_viewer/
 build/
 session_viewer/
 streamlit_app/
+new-logs/

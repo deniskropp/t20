@@ -1,0 +1,4 @@
+llm:
+  default_model: 'gemini-2.5-flash-lite'
+paths:
+  agents_dir: '../agents'

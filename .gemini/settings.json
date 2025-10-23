@@ -1,0 +1,12 @@
+{
+  "code_assistance.indexing.ignore": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/build/**",
+    "sessions/**",
+    "logs/**",
+    "new-logs/**",
+    "*.log",
+    "*.lock"
+  ]
+}

@@ -6,3 +6,6 @@ colorama==0.4.6
 huggingface_hub==0.34.4
 openai==1.107.0
 mistralai==1.9.10
+PyQt6==6.7.0
+fastapi==0.111.0
+uvicorn==0.29.0

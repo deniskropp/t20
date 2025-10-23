@@ -30,7 +30,7 @@ class System:
     """
     Represents the entire multi-agent system, handling setup, execution, and state.
     """
-    def __init__(self, root_dir: str, default_model: str = "Olli"):
+    def __init__(self, root_dir: str, default_model: str = "gemini-2.5-flash-lite"):
         """
         Initializes the System.
 
