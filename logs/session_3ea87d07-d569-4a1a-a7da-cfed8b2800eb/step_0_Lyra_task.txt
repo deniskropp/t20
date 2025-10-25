@@ -1,6 +1,0 @@
-The overall goal is: 'refactoring'
-
-Your role's specific goal is: 'Refine prompts, structure workflows and ensure clarity in agent instructions.'
-Your specific sub-task is: 'Analyze the high-level goal 'refactoring' and identify key areas where agent collaboration is crucial for success. Define the scope of refactoring in the context of design, code, and user experience.'
-
-Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project.

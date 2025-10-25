@@ -1,7 +1,0 @@
-Iteration-0 Workflow:
-Step 0.1  Lyra → writes a concise prompt for GPTASe, TASe, uTASe that clarifies what a TAS is and how to extract it for the goal 'Echo laughing'.
-Step 0.2  GPTASe, TASe, uTASe → each emit one TAS.
-Step 0.3  Lyra → reviews the three TAS outputs, merges them into a single canonical TAS, and updates the system prompts of all agents to reflect the new shared understanding.
-Step 0.4  Repeat Steps 0.2-0.3 until the canonical TAS converges to a final atomic step that, when executed, directly achieves 'Echo laughing'.
-
-Begin Iteration-0 with Step 0.1.

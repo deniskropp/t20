@@ -1,6 +1,0 @@
-The overall goal is: 'refactoring'
-
-Your role's specific goal is: 'Identify and extract 'Task Agnostic Steps' (TAS) for achieving high-level goals.'
-Your specific sub-task is: 'Identify and extract the Task Agnostic Steps (TAS) required to achieve the high-level goal of 'refactoring'. This includes identifying areas for improvement, setting refactoring goals, and defining success metrics.'
-
-Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project.

@@ -1,4 +1,0 @@
-{
-  "output": "Define the core theme, narrative, and emotional tone for an epic hardstyle anthem. Focus on concepts such as overcoming adversity, relentless pursuit of a goal, unleashing primal energy, or a euphoric, transcendent experience. The narrative should build towards a powerful climax, mirroring the intensity of hardstyle music. The emotional tone should be a blend of aggression, determination, euphoria, and raw power.",
-  "files": []
-}

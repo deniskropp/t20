@@ -1,4 +1,0 @@
-{
-  "output": "Hello! I'm ready to help you learn about Meta-Temporal Coordination. To start, could you tell me a little about your background? Are you learning about this in high school, college, or perhaps for professional development? Also, have you encountered this term before? If so, what do you already understand about Meta-Temporal Coordination, or what are you hoping to learn?",
-  "files": []
-}

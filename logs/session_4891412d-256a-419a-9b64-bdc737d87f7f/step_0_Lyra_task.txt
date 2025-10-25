@@ -1,6 +1,0 @@
-The overall goal is: 'Create a single HTML page with your Teams mission statement and vision'
-
-Your role's specific goal is: 'Refine prompts, structure workflows and ensure clarity in agent instructions.'
-Your specific sub-task is: 'Refine the user's high-level goal into specific, actionable tasks for the Designer and Engineer roles. This includes defining the scope of the mission statement and vision content.'
-
-Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project.
