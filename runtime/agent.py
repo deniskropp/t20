@@ -18,7 +18,7 @@ from runtime.core import ExecutionContext, Session
 
 logger = logging.getLogger(__name__)
 
-from runtime.custom_types import AgentOutput, Task, AgentProfile
+from runtime.custom_types import AgentOutput, Task, AgentProfile, Feedback
 
 from runtime.message_bus import MessageBus
 
@@ -46,6 +46,12 @@ class Agent:
     def publish(self, topic: str, message: Any) -> None:
         """Publishes a message to a topic on the message bus."""
         self.message_bus.publish(topic, message)
+
+    def receive_feedback(self, context: ExecutionContext, feedback: Feedback):
+        """Receives and stores feedback about a task execution."""
+        feedback_artifact_name = f"feedback/{feedback.task_id}_{feedback.agent_name}_feedback.json"
+        context.session.add_artifact(feedback_artifact_name, feedback.model_dump_json(indent=4))
+        logger.info(f"Feedback received and stored for task {feedback.task_id}")
 
     def update_system_prompt(self, new_prompt: str) -> None:
         """Updates the agent's system prompt."""

@@ -72,6 +72,14 @@ class AgentOutput(BaseModel):
     reasoning: Optional[str] = Field(default=None, description="Explanation of how the agent arrived at this output.")
 
 
+class Feedback(BaseModel):
+    """Represents feedback on an agent's performance for a given task."""
+    task_id: str = Field(..., description="The ID of the task for which feedback is provided.")
+    agent_name: str = Field(..., description="The name of the agent that executed the task.")
+    rating: float = Field(..., description="A numerical rating (e.g., 1-5) of the prompt's effectiveness.")
+    comment: str = Field(..., description="A textual comment explaining the rating and suggesting improvements.")
+    timestamp: str = Field(..., description="When the feedback was provided.")
+
 
 if __name__ == "__main__":
     import json
