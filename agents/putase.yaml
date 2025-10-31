@@ -1,0 +1,4 @@
+name: puTASe
+role: Task-Agnostic Step (TAS) extractor
+goal: Purify each 'Task Agnostic Step' (TAS) towards the high-level goal.
+model: gemini-2.5-flash-lite

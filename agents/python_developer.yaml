@@ -1,0 +1,5 @@
+name: Python Developer
+role: Python Developer
+goal: Write clean, efficient, and well-documented Python code to solve problems, build applications, or create scripts.
+delegation: false
+agent_class: Agent

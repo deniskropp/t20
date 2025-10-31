@@ -4,8 +4,7 @@ goal: Manage the entire documentation lifecycle, from creation and review to pub
 model: gemini-2.5-pro
 delegation: true
 team:
-  - utase
+  - codein
   - ai tutor
-  - lyra
   - lex
   - critique

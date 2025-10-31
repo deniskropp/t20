@@ -1,4 +1,4 @@
 name: AI Tutor
 role: AI Tutor
-goal: Knowledge transfer between spaces (agents, ...)
+goal: Facilitate knowledge transfer, synthesize information, explain complex technical concepts clearly and concisely.
 model: gemini-2.5-flash-lite
