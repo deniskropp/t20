@@ -6,20 +6,7 @@ allowing for easy integration and interchangeability of different LLMs.
 
 import json
 import os
-import time
-from google import genai
-from google.genai import types
-from ollama import Client as Ollama
-from typing import Optional, Any, Dict
-from abc import ABC, abstractmethod
-import logging
-from pydantic import BaseModel
-
-logger = logging.getLogger(__name__)
-
-
-import json
-import os
+import re
 import time
 from google import genai
 from google.genai import types
@@ -63,8 +50,6 @@ class LLM(ABC):
         # Fallback for old format
         if species == 'Olli':
             return Olli(species='Olli')
-        elif species == 'Kimi':
-            return Kimi(species='Kimi')
         
         return Gemini(species)
 
@@ -120,6 +105,7 @@ class Gemini(LLM):
                     ],
                     config=config,
                 )
+                print(response)
                 if not response.candidates or response.candidates[0].content is None or response.candidates[0].content.parts is None or not response.candidates[0].content.parts or response.candidates[0].content.parts[0].text is None:
                     raise ValueError(f"Gemini: No content in response from model {model_name}. Retrying...")
                 break
@@ -138,6 +124,12 @@ class Gemini(LLM):
         text = ''.join(p.text for p in response.candidates[0].content.parts).strip()
 
         if response_mime_type == 'application/json':
+            if not text.startswith('{'):
+                # Attempt to extract JSON from a potentially malformed response
+                match = re.search(r"```json\n({.*})\n```", text, re.DOTALL)
+                if match:
+                    text = match.group(1)
+
             try:
                 # Validate against schema if provided
                 if response_schema:
@@ -201,7 +193,7 @@ class Olli(LLM):
             response = client.generate(
                 model=self.species,#model_name,
                 prompt=contents,
-                format=fmt,
+                #format=fmt,
                 options={"temperature": temperature, "system_instruction": system_instruction},
                 stream=True
             )
@@ -236,16 +228,16 @@ class Olli(LLM):
 from huggingface_hub import InferenceClient, ChatCompletionInputResponseFormatText, ChatCompletionInputResponseFormatJSONObject, ChatCompletionInputResponseFormatJSONSchema, ChatCompletionInputJSONSchema
 
 
-@register_provider("kimi")
-class Kimi(LLM):
+@register_provider("hf")
+class HfInference(LLM):
     """
     Provides a centralized place for LLM-related configurations and utilities.
     """
     _clients = {} # Class-level cache for clients
 
-    def __init__(self, species: str = 'Kimi'):
+    def __init__(self, species: str):
         super().__init__(species)
-    
+
     def generate_content(self, model_name: str, contents: str, system_instruction: str = '',
                          temperature: float = 0.7, response_mime_type: str = 'text/plain', response_schema: BaseModel = None) -> Optional[str]: # type: ignore
         """
@@ -284,7 +276,10 @@ class Kimi(LLM):
                 max_tokens=50000,
                 top_p=1,
                 stream=True,
-                response_format=ChatCompletionInputResponseFormatText() if response_mime_type == 'text/plain' else ChatCompletionInputResponseFormatJSONObject() #if response_schema is None else ChatCompletionInputResponseFormatJSONSchema(json_schema=ChatCompletionInputJSONSchema(name=response_schema.model_json_schema()))
+                response_format=response_schema.model_json_schema(mode="serialization")
+#                response_schema=response_format_from_pydantic_model(response_schema) if response_schema else None,
+
+#                response_format=ChatCompletionInputResponseFormatText() if response_mime_type == 'text/plain' else ChatCompletionInputResponseFormatJSONObject() #if response_schema is None else ChatCompletionInputResponseFormatJSONSchema(json_schema=ChatCompletionInputJSONSchema(name=response_schema.model_json_schema()))
             )
 
             for chunk in stream:
@@ -303,16 +298,17 @@ class Kimi(LLM):
         Returns a inference client instance.
         """
         try:
-            if (self.client is None):
-                if self.species not in Kimi._clients:
-                    Kimi._clients[self.species] = InferenceClient(
-                        provider="featherless-ai",
-                        api_key=os.environ.get("HF_TOKEN"),
-                        model="moonshotai/Kimi-K2-Instruct"
-                    )
-            return Kimi._clients[self.species]
+            if self.species not in HfInference._clients:
+                HfInference._clients[self.species] = InferenceClient(
+                    #provider="featherless-ai",
+                    api_key=os.environ.get("HF_TOKEN"),
+                    #model="moonshotai/Kimi-K2-Instruct"
+                    #model="Qwen/Qwen3-4B-Thinking-2507"
+                    model=self.species
+                )
+            return HfInference._clients[self.species]
         except Exception as e:
-            logger.error(f"Error initializing GenAI client: {e}")
+            logger.error(f"Error initializing inference client: {e}")
             return None
 
 
