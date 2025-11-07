@@ -221,7 +221,7 @@ async def startup_event():
 
 # --- API Endpoints ---
 
-@app.post("/api/v2/start", response_model=StartResponseG2, status_code=status.HTTP_202_ACCEPTED)
+@app.post("/start", response_model=StartResponseG2, status_code=status.HTTP_202_ACCEPTED)
 async def start_workflow_g2(request: StartRequest):
     """Initialize the system and create a workflow plan."""
     job_id = str(uuid.uuid4())
@@ -250,10 +250,10 @@ async def start_workflow_g2(request: StartRequest):
     return StartResponseG2(
         jobId=job_id,
         plan=api_plan,
-        statusStreamUrl=f"{BASE_URL}/api/v2/runs/{job_id}/stream"
+        statusStreamUrl=f"{BASE_URL}/runs/{job_id}/stream"
     )
 
-@app.post("/api/v2/runs/{jobId}", response_model=RunInitiatedResponseG2, status_code=status.HTTP_202_ACCEPTED)
+@app.post("/runs/{jobId}", response_model=RunInitiatedResponseG2, status_code=status.HTTP_202_ACCEPTED)
 async def initiate_run_g2(request: RunRequest, jobId: str):
     """Initiate the execution of a workflow plan."""
     if jobId not in JOBS:
@@ -266,8 +266,8 @@ async def initiate_run_g2(request: RunRequest, jobId: str):
     return RunInitiatedResponseG2(
         jobId=job_id,
         status="pending",
-        statusStreamUrl=f"{BASE_URL}/api/v2/runs/{job_id}/stream",
-        controlUrl=f"{BASE_URL}/api/v2/runs/{job_id}/control"
+        statusStreamUrl=f"{BASE_URL}/runs/{job_id}/stream",
+        controlUrl=f"{BASE_URL}/runs/{job_id}/control"
     )
 
 async def run_workflow_background(job_id: str, request: RunRequest):
@@ -307,7 +307,7 @@ async def run_workflow_background(job_id: str, request: RunRequest):
         print(f"Job {job_id} failed: {e}")
 
 
-@app.get("/api/v2/runs/{jobId}", response_model=RunStatusResponseG2)
+@app.get("/runs/{jobId}", response_model=RunStatusResponseG2)
 async def get_run_status_g2(jobId: str):
     """Retrieve the current status and summary results of a workflow execution."""
     job = JOBS.get(jobId)
@@ -355,7 +355,7 @@ async def event_generator(job_id: str):
             pass
 
 
-@app.get("/api/v2/runs/{jobId}/stream")
+@app.get("/runs/{jobId}/stream")
 async def stream_workflow_events(jobId: str):
     """Stream real-time events for a workflow execution."""
     job = JOBS[jobId]
@@ -374,7 +374,7 @@ async def stream_workflow_events(jobId: str):
 
     return EventSourceResponse(event_generator(jobId))
 
-@app.post("/api/v2/runs/{jobId}/control", status_code=status.HTTP_204_NO_CONTENT)
+@app.post("/runs/{jobId}/control", status_code=status.HTTP_204_NO_CONTENT)
 async def control_workflow(jobId: str, command: ControlCommand):
     """Send control commands to a running workflow."""
     job = JOBS.get(jobId)
@@ -392,7 +392,7 @@ async def control_workflow(jobId: str, command: ControlCommand):
     print(f"Job {jobId} received command: {command.command}. New status: {job['status']}")
     return None
 
-@app.post("/api/v2/webhooks", response_model=Dict[str, str], status_code=status.HTTP_201_CREATED)
+@app.post("/webhooks", response_model=Dict[str, str], status_code=status.HTTP_201_CREATED)
 async def register_webhook(subscription: WebhookSubscription):
     """Register a new webhook subscription."""
     webhook_id = str(uuid.uuid4())
@@ -400,12 +400,12 @@ async def register_webhook(subscription: WebhookSubscription):
     WEBHOOKS[webhook_id] = subscription
     return {"webhookId": webhook_id}
 
-@app.get("/api/v2/webhooks", response_model=List[WebhookSubscription])
+@app.get("/webhooks", response_model=List[WebhookSubscription])
 async def list_webhooks():
     """List registered webhook subscriptions."""
     return list(WEBHOOKS.values())
 
-@app.delete("/api/v2/webhooks/{webhookId}", status_code=status.HTTP_204_NO_CONTENT)
+@app.delete("/webhooks/{webhookId}", status_code=status.HTTP_204_NO_CONTENT)
 async def unregister_webhook(webhookId: str):
     """Unregister a webhook subscription."""
     if webhookId not in WEBHOOKS:
@@ -413,7 +413,7 @@ async def unregister_webhook(webhookId: str):
     del WEBHOOKS[webhookId]
     return None
 
-@app.get("/api/v2/history/runs", response_model=List[RunSummary])
+@app.get("/history/runs", response_model=List[RunSummary])
 async def list_history_runs(limit: int = 20, offset: int = 0):
     """List historical workflow runs."""
     summaries = []
@@ -429,7 +429,7 @@ async def list_history_runs(limit: int = 20, offset: int = 0):
         summaries.append(summary)
     return summaries[offset:offset+limit]
 
-@app.get("/api/v2/history/runs/{jobId}/state", response_model=RunStateDetail)
+@app.get("/history/runs/{jobId}/state", response_model=RunStateDetail)
 async def get_history_run_state(jobId: str):
     """Retrieve the detailed state of a specific historical workflow run."""
     job = JOBS.get(jobId)
