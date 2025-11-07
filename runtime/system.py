@@ -11,6 +11,7 @@ from glob import glob
 
 import logging
 from typing import Any, Generator, List, Optional, Dict, Tuple
+from pydantic import BaseModel
 
 import concurrent
 
@@ -25,6 +26,15 @@ from .custom_types import AgentOutput, Artifact, Plan, File, Task
 logger = logging.getLogger(__name__)
 
 from .message_bus import MessageBus
+
+class SystemConfig(BaseModel):
+    """
+    Pydantic model for validating the structure of the system configuration.
+    """
+    logging_level: str = "INFO"
+    default_model: str = "gemini-2.5-flash-lite"
+    # Add other system-wide configuration parameters here as needed
+
 
 class System:
     """
@@ -41,7 +51,7 @@ class System:
         self.root_dir = root_dir
         self.default_model = default_model
         self.message_bus = MessageBus()
-        self.config: dict = {}
+        self.config: SystemConfig = SystemConfig()
         self.agents: List[Agent] = []
         self.session: Optional[Session] = None
         self.orchestrator: Optional[Orchestrator] = None
@@ -175,7 +185,7 @@ class System:
             for prompt_data in plan.team.prompts:
                 self._update_agent_prompt(self.session, prompt_data.agent, prompt_data.system_prompt)
 
-        dependency_graph = {task.id: task.requires for task in plan.tasks}
+        dependency_graph = {task.id: task.deps for task in plan.tasks}
         self.completed_tasks = set()
         task_map = {task.id: task for task in plan.tasks}
 

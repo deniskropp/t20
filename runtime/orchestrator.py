@@ -111,6 +111,15 @@ Key considerations for your plan:
 
         session.add_artifact("planning_prompt.txt", planning_prompt)
 
+#        response = self.llm.generate_content(
+#            model_name=self.model,
+#            contents=planning_prompt,
+#            system_instruction=self.system_instruction,
+#            temperature=0.0
+#        )
+
+#        session.add_artifact("planning_response.txt", response)
+
         try:
             response = self.llm.generate_content(
                 model_name=self.model,

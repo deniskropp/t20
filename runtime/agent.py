@@ -75,7 +75,7 @@ class Agent:
         context.record_artifact(f"{self.profile.name}_system_instruction.txt", self.system_instruction, task)
 
         required_task_ids = ['initial']
-        required_task_ids.extend(task.requires)
+        required_task_ids.extend(task.deps)
 
         required_artifacts = []
 
@@ -133,7 +133,7 @@ class Agent:
 
             response = AgentOutput.model_validate_json(result)
 
-            print(f"\n====== Task '{task.id}' <= {task.requires} ======\n[{task.agent} | {task.role}] \"{task.description}\"\n")
+            print(f"\n====== Task '{task.id}' <= {task.deps} ======\n[{task.agent} | {task.role}] \"{task.description}\"\n")
 
             print(f"\n--- Output:\n{response.output}\n")
             if response.artifact and response.artifact.files:

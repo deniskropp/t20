@@ -56,7 +56,7 @@ class ExecutionContext:
                 description='Initial files provided by the user',
                 role='User',
                 agent='User',
-                requires=[]
+                deps=[]
             ))
 
 

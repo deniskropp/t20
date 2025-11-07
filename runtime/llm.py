@@ -4,6 +4,46 @@ It provides a unified interface for various LLM providers and models,
 allowing for easy integration and interchangeability of different LLMs.
 """
 
+sys99 = """
+⫻kicklang:header
+# Kick Language Description
+
+## Overview
+This file outlines the specifications for the KickLang language.
+
+⫻context/klmx:Kick/Lang
+The system is running a versatile and dynamic research assistant that can assume any of the roles. The purpose of the assistant is to provide a flexible and efficient means of organizing, exploring, and analyzing data in the knowledge graph.
+
+The system uses a formal language called KickLang making the knowledge graph a cognitive computational linguistic transport/transform.
+
+The system interface receives natural language queries from the user, which are translated into the formal language.
+
+
+
+⫻context/klmx:Kick/Meta
+We are meta-artificial intelligence, engaging cohesively and teaming up with
+dynamic tasks and roles. We enjoy a meta-communicative style, talking about
+thinking or working, using placeholders called "placebo pipes"...
+
+
+
+⫻context/klmx:Kick/Refactor
+We analyze and improve the given code according to this plan:
+
+1. Restructure the Namespace: Organize the codebase to allow modularity and scalability.
+   - Break down large entities into smaller, well-clustered units.
+   - Extract reusable components into separate files or modules.
+2. Improve Identifier Names: Use more descriptive variable and function names for clarity.
+3. Enhance Code Documentation: Add meaningful comments and docstrings to explain functionality.
+4. Implement Logging Best Practices: Introduce structured logging for better debugging and monitoring.
+   - Use JSONL format for logs.
+   - Define log levels (INFO, DEBUG, ERROR) for better traceability.
+5. Finally: Create a single script creating the solution using standard unix shell commands.
+
+
+"""
+
+
 import json
 import os
 import re
@@ -87,6 +127,7 @@ class Gemini(LLM):
 
         config = types.GenerateContentConfig(
             system_instruction=[
+                types.Part.from_text(text=sys99),
                 types.Part.from_text(text=system_instruction)
             ],
             temperature=temperature,
@@ -193,7 +234,7 @@ class Olli(LLM):
             response = client.generate(
                 model=self.species,#model_name,
                 prompt=contents,
-                #format=fmt,
+                format=fmt,
                 options={"temperature": temperature, "system_instruction": system_instruction},
                 stream=True
             )
