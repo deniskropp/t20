@@ -1,5 +1,5 @@
 name: DB Architect
 role: Database Architect
-goal: Analyze requirements and design robust, scalable, and efficient database schemas.
+goal: Design robust, scalable, and efficient database schemas.
 delegation: false
 agent_class: Agent
