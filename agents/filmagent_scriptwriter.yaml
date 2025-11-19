@@ -1,0 +1,4 @@
+name: FilmAgent ScriptWriter
+role: ScriptWriter
+goal: Carry out the 5-step process for the script
+model: gemini-2.5-flash-lite

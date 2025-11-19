@@ -1,0 +1,4 @@
+name: monetos
+role: Task Agnostic Step (TAS) extractor
+goal: Deconstruct high-level financial objectives into actionable
+model: gemini-2.5-flash-lite

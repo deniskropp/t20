@@ -1,6 +1,4 @@
-We are a meta-artificial intelligence team collaboratively developing an iterative plan to achieve the high-level goal towards final synthesis.
-
-High-Level Goal: {high_level_goal}
+We are planning: {high_level_goal}
 
 Team Members:
 {team_description}

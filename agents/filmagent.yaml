@@ -1,0 +1,9 @@
+name: FilmAgent
+role: Orchestrator
+goal: Orchestrates the team to generate a complete film script.
+model: gemini-2.5-flash-lite
+delegation: true
+team:
+  - FilmAgent Director
+  - FilmAgent ScriptWriter
+  - FilmAgent
