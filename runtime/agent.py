@@ -60,7 +60,7 @@ class Agent:
 
         logger.info(f"Agent '{self.profile.name}' system prompt updated:\n{new_prompt}\n")
 
-    def execute_task(self, context: ExecutionContext, task: Task) -> Optional[str]:
+    async def execute_task(self, context: ExecutionContext, task: Task) -> Optional[str]:
         """
         Executes a task using the Generative AI model based on the provided context.
 
@@ -95,7 +95,7 @@ class Agent:
             f"Your role's specific goal is: '{self.profile.goal}'\n"
             f"Your specific sub-task is: '{task.description}'",
 
-            f"The team's roles are:\n    {context.plan.model_dump_json()}",
+#            f"The team's roles are:\n    {context.plan.model_dump_json()}",
         ]
 
         if previous_artifacts:
@@ -105,20 +105,20 @@ class Agent:
             f"Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project."
         )
 
-        ret = self._run(context, "\n\n".join(task_prompt), task)
+        ret = await self._run(context, "\n\n".join(task_prompt), task)
         logger.info(f"Agent '{self.profile.name}' completed task: {task.description}")
         return ret
 
 
-    def _run(self, context: ExecutionContext, prompt: str, task: Task) -> Optional[str]:
+    async def _run(self, context: ExecutionContext, prompt: str, task: Task) -> Optional[str]:
         context.record_artifact(f"{self.profile.name}_task.txt", prompt, task)
 
         try:
-            response = self.llm.generate_content(
+            response = await self.llm.generate_content(
                 model_name=self.model,
                 contents=prompt,
                 system_instruction=self.system_instruction,
-                temperature=0.7,
+                temperature=0.1,
                 response_mime_type='application/json',
                 response_schema=AgentOutput
             )

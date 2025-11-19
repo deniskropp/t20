@@ -10,10 +10,9 @@ import yaml
 from glob import glob
 
 import logging
-from typing import Any, Generator, List, Optional, Dict, Tuple
+from typing import Any, AsyncGenerator, List, Optional, Dict, Tuple
 from pydantic import BaseModel
-
-import concurrent
+import asyncio
 
 from .core import Session, ExecutionContext
 from .agent import Agent, find_agent_by_role
@@ -119,7 +118,7 @@ class System:
         self.session = Session(agents=self.agents, project_root="./")
         logger.info("--- System Setup Complete ---")
 
-    def start(self, high_level_goal: str, files: List[File] = [], plan: Plan = None) -> Plan:
+    async def start(self, high_level_goal: str, files: List[File] = [], plan: Plan = None) -> Plan:
         """
         Starts the system's main workflow, generating a plan if one is not provided.
 
@@ -139,7 +138,7 @@ class System:
             raise RuntimeError("System is not set up. Please call setup() before start().")
 
         if not plan:
-            plan = self.orchestrator.generate_plan(self.session, high_level_goal, files)
+            plan = await self.orchestrator.generate_plan(self.session, high_level_goal, files)
             if not plan:
                 raise RuntimeError("Orchestration failed: Could not generate plan.")
 
@@ -157,7 +156,7 @@ class System:
 
         return plan
 
-    def run(self, plan: Plan, rounds: int = 1, files: List[File] = []) -> Generator[Tuple[Task, Optional[str]]]:
+    async def run(self, plan: Plan, rounds: int = 1, files: List[File] = []) -> AsyncGenerator[Tuple[Task, Optional[str]], None]:
         """
         Runs the multi-agent workflow based on the provided plan.
 
@@ -188,31 +187,41 @@ class System:
         dependency_graph = {task.id: task.deps for task in plan.tasks}
         self.completed_tasks = set()
         task_map = {task.id: task for task in plan.tasks}
+        
+        running_tasks = {}
 
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            futures = {}
-            while len(self.completed_tasks) < len(plan.tasks):
-                ready_tasks = []
-                for task_id, dependencies in dependency_graph.items():
-                    if task_id not in self.completed_tasks and task_id not in futures:
-                        if all(dep in self.completed_tasks for dep in dependencies):
-                            ready_tasks.append(task_map[task_id])
+        while len(self.completed_tasks) < len(plan.tasks):
+            ready_tasks = []
+            running_task_ids = {t.id for t in running_tasks.values()}
+            for task_id, dependencies in dependency_graph.items():
+                if task_id not in self.completed_tasks and task_id not in running_task_ids:
+                    if all(dep in self.completed_tasks for dep in dependencies):
+                        ready_tasks.append(task_map[task_id])
 
-                for task in ready_tasks:
-                    futures[executor.submit(self._execute_task, task, context)] = task
+            for task in ready_tasks:
+                coro = self._execute_task(task, context)
+                running_tasks[asyncio.create_task(coro)] = task
 
-                for future in concurrent.futures.as_completed(futures):
-                    task = futures.pop(future)
-                    try:
-                        result = future.result()
-                        self.completed_tasks.add(task.id)
-                        yield task, result
-                    except Exception as e:
-                        logger.exception(f"Error executing task {task.id}: {e}")
-                        yield task, f"Error executing task {task.id}: {e}"
+            if not running_tasks:
+                await asyncio.sleep(0.1)  # Avoid busy-waiting
+                continue
+
+            done, pending = await asyncio.wait(running_tasks.keys(), return_when=asyncio.FIRST_COMPLETED)
+
+            for future in done:
+                task = running_tasks.pop(future)
+                try:
+                    result = await future
+                    self.completed_tasks.add(task.id)
+                    yield task, result
+                except Exception as e:
+                    logger.exception(f"Error executing task {task.id}: {e}")
+                    self.completed_tasks.add(task.id)  # Mark as completed to avoid re-running
+                    yield task, f"Error executing task {task.id}: {e}"
+
         logger.info("--- Workflow Complete ---")
 
-    def _execute_task(self, task: Task, context: ExecutionContext) -> Optional[str]:
+    async def _execute_task(self, task: Task, context: ExecutionContext) -> Optional[str]:
         agent_name = task.agent
         team_by_name = {agent.profile.name: agent for agent in self.orchestrator.team.values()} if self.orchestrator.team else {}
         delegate_agent = team_by_name.get(agent_name)
@@ -225,7 +234,7 @@ class System:
 
         logger.info(f"Agent '{delegate_agent.profile.name}' is executing step {task.id}: '{task.description}' (Role: {task.role})")
 
-        result = delegate_agent.execute_task(context, task)
+        result = await delegate_agent.execute_task(context, task)
         if result:
             context.record_artifact(f"{delegate_agent.profile.name}_result.txt", result, task, True)
             try:

@@ -4,6 +4,7 @@ It parses command-line arguments and initiates the system bootstrap process,
 acting as the primary interface for running the multi-agent system.
 """
 
+import asyncio
 import json
 import os
 import argparse
@@ -103,7 +104,7 @@ def serving():
     state = {}
 
     @app.post("/start")
-    def start_workflow(request: StartRequest):
+    async def start_workflow(request: StartRequest):
         """
         Initializes the system and creates a plan. This corresponds to steps 4, 5, and 6.
         """
@@ -121,7 +122,7 @@ def serving():
         setup_application_logging(log_level=log_level)
 
         # 6. Start the system's main workflow
-        plan = system.start(
+        plan = await system.start(
             high_level_goal=request.high_level_goal,
             files=request.files,
             plan=None if not request.plan_from else Plan.model_validate_json(read_file(request.plan_from))
@@ -130,7 +131,7 @@ def serving():
         return {"plan": plan.model_dump()}
 
     @app.post("/run")
-    def run_workflow(request: RunRequest):
+    async def run_workflow(request: RunRequest):
         """
         Runs the system's main workflow. This corresponds to step 7.
         """
@@ -138,10 +139,8 @@ def serving():
         if not system:
             return {"error": "System not initialized. Please call /start first."}
 
-
-
         results = []
-        for step, result in system.run(plan=request.plan, rounds=request.rounds, files=request.files):
+        async for step, result in system.run(plan=request.plan, rounds=request.rounds, files=request.files):
             try:
                 result = json.dumps(json.loads(result), indent=4)
             except:
@@ -152,7 +151,7 @@ def serving():
     uvicorn.run(app, host="0.0.0.0", port=8000)
 
 
-def system_main() -> None:
+async def system_main():
     """
     Main entry point for the runtime system.
     Parses arguments, sets up logging and configuration, and runs the system.
@@ -193,7 +192,7 @@ def system_main() -> None:
         setup_application_logging(log_level=log_level)
 
         # 6. Start the system's main workflow
-        plan = system.start(
+        plan = await system.start(
             high_level_goal=args.task,
             files=file_objects,
             plan=None if not args.plan_from else Plan.model_validate_json(read_file(args.plan_from))
@@ -203,7 +202,7 @@ def system_main() -> None:
             return
 
         # 7. Run the system's main workflow
-        for step, result in system.run(plan=plan, rounds=args.rounds, files=file_objects):
+        async for step, result in system.run(plan=plan, rounds=args.rounds, files=file_objects):
             try:
                 result = json.dumps(json.loads(result), indent=4)
             except:
@@ -219,5 +218,8 @@ def system_main() -> None:
         exit(1)
 
 
+def main():
+    asyncio.run(system_main())
+
 if __name__ == "__main__":
-    system_main()
+    main()

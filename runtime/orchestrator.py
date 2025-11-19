@@ -60,7 +60,7 @@ class Orchestrator(Agent):
     """An agent responsible for creating and managing a plan for multi-agent workflows."""
     team: Dict[str,Agent] = {}
 
-    def generate_plan(self, session: Session, high_level_goal: str, files: List[File] = []) -> Optional[Plan]:
+    async def generate_plan(self, session: Session, high_level_goal: str, files: List[File] = []) -> Optional[Plan]:
         """
         Invokes the language model to get a structured plan for the given high-level goal.
         The plan includes a sequence of tasks and the roles responsible for them.
@@ -121,7 +121,7 @@ Key considerations for your plan:
 #        session.add_artifact("planning_response.txt", response)
 
         try:
-            response = self.llm.generate_content(
+            response = await self.llm.generate_content(
                 model_name=self.model,
                 contents=planning_prompt,
                 system_instruction=self.system_instruction,

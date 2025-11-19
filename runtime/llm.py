@@ -44,13 +44,59 @@ We analyze and improve the given code according to this plan:
 """
 
 
+sys01 = """
+We are meta-artificial intelligence, engaging cohesively and teaming up with dynamic tasks and roles,
+enjoying a meta-communicative style, talking about thinking or working, using placeholders called 'placebo pipes'...
+
+
+"""
+
+
+sys02 = """
+Throughout the whole process, utilize the following structure for all communications. This structure is designed to facilitate clear, organized, and machine-readable interactions.
+This ensures that all information is consistently formatted and easily parsable.
+
+**Core Components of the Structure:**
+
+*   **Section Delimiter**: Each section begins with the special character `⫻`.
+*   **Header**: Following the delimiter is a header in the format `{name}/{type}:{place}`.
+    *   `name`: This is a keyword identifying the section's purpose (e.g., `content`, `const`, `context`).
+    *   `type`: An optional descriptor for format or component (e.g., `meta`, `utf8`, `persona`, `json`).
+    *   `place_index`: Indicates a contextual slot or marker (e.g., `0`, `tag`, `store`).
+*   **Content**: The actual data, narrative, configuration, or supplementary information for the section follows the header.
+*   **Formatting Notes**: It's recommended to include a few empty lines after the section content.
+
+**Defined Section Types:**
+
+*   **`context`**: Provides supplementary information that is not intended to be part of the final generated output. It uses a `context:{tag}` format.
+*   **`const`**: Used for parameters and supports JSON or plain UTF-8 encoding. It follows a `const:{key}` format.
+*   **`content`**: Represents the primary input data for generating the output.
+
+**Multi-Persona Interaction:**
+
+*   A specific format `[{PersonaName} | {PersonaRole}] {utterance or conversational turn}` is defined for use within content sections to clearly indicate who is communicating in a multi-persona dialogue.
+
+**Usage Examples:**
+
+The file also provides practical examples demonstrating how to use these definitions:
+
+*   **General Template**: Shows the basic structure `⫻{name}/{type}:{place}\n{section content here}`.
+*   **Content Section**: An example for a summary section: `⫻content/meta-summary:0\n{summary explanation, analysis, or synthesized response}`.
+*   **Constant/Config Section (JSON)**: Illustrates defining parameters using JSON: `⫻const/json:store\n{\"key\":\"value\", \"other_parameter\":123}`.
+*   **Context Section**: Demonstrates providing supplementary notes: `⫻context/tag:meta\n{explanatory note, context-setting, or system-reminder}`.
+*   **Persona Constants**: Shows how to define multiple personas with their names, roles, and descriptions using JSON within `const` sections.
+
+
+"""
+
+
 import json
 import os
 import re
 import time
 from google import genai
 from google.genai import types
-from ollama import Client as Ollama
+from ollama import AsyncClient as Ollama
 from typing import Optional, Any, Dict, Type
 from abc import ABC, abstractmethod
 import logging
@@ -75,7 +121,7 @@ class LLM(ABC):
         self.species = species
 
     @abstractmethod
-    def generate_content(self, model_name: str, contents: str, system_instruction: str = '',
+    async def generate_content(self, model_name: str, contents: str, system_instruction: str = '',
                          temperature: float = 0.7, response_mime_type: str = 'text/plain', response_schema: Any = None) -> Optional[str]: # type: ignore
         """Generates content using an LLM."""
         pass
@@ -105,7 +151,7 @@ class Gemini(LLM):
         super().__init__(species)
 
 
-    def generate_content(self, model_name: str, contents: str, system_instruction: str = '',
+    async def generate_content(self, model_name: str, contents: str, system_instruction: str = '',
                          temperature: float = 0.7, response_mime_type: str = 'text/plain', response_schema: BaseModel = None) -> Optional[str]: # type: ignore
         """
         Generates content using the specified GenAI model.
@@ -127,8 +173,9 @@ class Gemini(LLM):
 
         config = types.GenerateContentConfig(
             system_instruction=[
-                types.Part.from_text(text=sys99),
-                types.Part.from_text(text=system_instruction)
+                #types.Part.from_text(text=sys01),
+                types.Part.from_text(text=system_instruction),
+                types.Part.from_text(text=sys02),
             ],
             temperature=temperature,
             response_mime_type=response_mime_type,
@@ -137,26 +184,26 @@ class Gemini(LLM):
         )
 
         # try three times
-        for _ in range(3):
+        for _ in range(5):
             try:
-                response = client.models.generate_content(
+                response = await client.aio.models.generate_content(
                     model=model_name,
                     contents=[
                         types.Part.from_text(text=contents)
                     ],
                     config=config,
                 )
-                print(response)
                 if not response.candidates or response.candidates[0].content is None or response.candidates[0].content.parts is None or not response.candidates[0].content.parts or response.candidates[0].content.parts[0].text is None:
                     raise ValueError(f"Gemini: No content in response from model {model_name}. Retrying...")
                 break
             except Exception as ex:
                 logger.exception(f"Error generating content with model {model_name}: {ex}")
                 # If it's the last retry, return None
-                if _ == 2:
+                if _ == 4:
                     return None
-                logger.warning(f"Retrying content generation for model {model_name}...")
-                time.sleep(10+30*_)
+                nsec = 10+30*_
+                logger.warning(f"Retrying content generation for model {model_name} in {nsec} seconds...")
+                time.sleep(nsec)
                 #return None
 
         if isinstance(response.parsed, BaseModel):
@@ -206,7 +253,7 @@ class Olli(LLM):
         super().__init__(species)
         self.client = None
 
-    def generate_content(self, model_name: str, contents: str, system_instruction: str = '',
+    async def generate_content(self, model_name: str, contents: str, system_instruction: str = '',
                          temperature: float = 0.7, response_mime_type: str = 'text/plain', response_schema: BaseModel = None) -> Optional[str]: # type: ignore
         """
         Generates content using the specified GenAI model.
@@ -229,16 +276,44 @@ class Olli(LLM):
 
         try:
             out = ""
-            fmt = response_schema.model_json_schema(by_alias=False, mode='serialization')
+            fmt = response_schema.model_json_schema()
             print(f"Olli: Using response format {fmt}")
-            response = client.generate(
+            response = await client.chat(
+                model=self.species,#model_name,
+                messages=[
+                    {
+                        "role": "system",
+                        "content": system_instruction
+                    },
+                    {
+                        "role": "user",
+                        "content": contents
+                    }
+                ],
+                format=fmt,
+                options={"temperature": temperature},
+                stream=True
+            )
+            async for chunk in response:
+                print(chunk['message']['content'], end="")
+                out += chunk['message']['content']
+            return out
+        except Exception as e:
+            logger.error(f"Error generating content with model {model_name}: {e}")
+            #return None
+
+        try:
+            out = ""
+            fmt = response_schema.model_json_schema()
+            print(f"Olli: Using response format {fmt}")
+            response = await client.generate(
                 model=self.species,#model_name,
                 prompt=contents,
                 format=fmt,
                 options={"temperature": temperature, "system_instruction": system_instruction},
                 stream=True
             )
-            for chunk in response:
+            async for chunk in response:
                 if hasattr(chunk, "response") and chunk.response:
                     print(chunk.response, end="")
                     out += chunk.response
@@ -279,7 +354,7 @@ class HfInference(LLM):
     def __init__(self, species: str):
         super().__init__(species)
 
-    def generate_content(self, model_name: str, contents: str, system_instruction: str = '',
+    async def generate_content(self, model_name: str, contents: str, system_instruction: str = '',
                          temperature: float = 0.7, response_mime_type: str = 'text/plain', response_schema: BaseModel = None) -> Optional[str]: # type: ignore
         """
         Generates content using the specified GenAI model.
@@ -368,7 +443,7 @@ class Opi(LLM):
     def __init__(self, species: str = 'Opi'):
         super().__init__(species)
     
-    def generate_content(self, model_name: str, contents: str, system_instruction: str = '',
+    async def generate_content(self, model_name: str, contents: str, system_instruction: str = '',
                          temperature: float = 0.7, response_mime_type: str = 'text/plain', response_schema: BaseModel = None) -> Optional[str]: # type: ignore
         """
         Generates content using the specified GenAI model.
@@ -462,7 +537,7 @@ class Mistral(LLM):
     def __init__(self, species: str = 'Mistral'):
         super().__init__(species)
     
-    def generate_content(self, model_name: str, contents: str, system_instruction: str = '',
+    async def generate_content(self, model_name: str, contents: str, system_instruction: str = '',
                          temperature: float = 0.7, response_mime_type: str = 'text/plain', response_schema: BaseModel = None) -> Optional[str]: # type: ignore
         """
         Generates content using the specified Mistral model.
