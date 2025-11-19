@@ -1,0 +1,61 @@
+{
+  "definitions": [
+    {
+      "name": "Section Structure",
+      "description": "Sections are structured to begin with \"⫻\" followed by \"name/type:place\" and then the content.",
+      "components": {
+        "name": "Section keyword (e.g., \"content\", \"const\", \"context\")",
+        "type": "Optional format or component descriptor (e.g., \"meta\", \"utf8\", \"persona\", \"json\")",
+        "place_index": "Contextual slot or numeric marker (e.g., \"0\", \"tag\", \"store\")",
+        "section_content": "Data, narrative, configuration, or supplementary information."
+      },
+      "notes": "Ensure a few empty lines are present until the end of the section."
+    },
+    {
+      "name": "Section Types",
+      "details": [
+        {
+          "type": "context",
+          "tag_format": "context:{tag}",
+          "description": "Provides supplementary information and is not included in the generated content."
+        },
+        {
+          "type": "const",
+          "key_format": "const:{key}",
+          "description": "Serves as parameters and uses JSON or plain UTF-8 encoding."
+        },
+        {
+          "type": "content",
+          "description": "Serves as the input data for generating the output."
+        }
+      ]
+    },
+    {
+      "name": "Multi-Persona Interaction Format",
+      "format": "[{PersonaName} | {PersonaRole}] {utterance or conversational turn}",
+      "usage": "Used within a content section to indicate who is communicating."
+    }
+  ],
+  "examples": [
+    {
+      "name": "General Section Template",
+      "code": "⫻{name}/{type}:{place}\n{section content here}"
+    },
+    {
+      "name": "Content Section Example",
+      "code": "⫻content/meta-summary:0\n{summary explanation, analysis, or synthesized response}"
+    },
+    {
+      "name": "Constant/Config Section Example (JSON)",
+      "code": "⫻const/json:store\n{\"key\":\"value\", \"other_parameter\":123}"
+    },
+    {
+      "name": "Context Section Example",
+      "code": "⫻context/tag:meta\n{explanatory note, context-setting, or system-reminder}"
+    },
+    {
+      "name": "Persona Constants Example",
+      "code": "⫻const/json:persona\n{\n  \"name\": \"Kick La Metta\",\n  \"role\": \"Meta-AI Coordinator\",\n  \"description\": \"Coordinates meta-AI activities and ensures seamless collaboration.\"\n}\n⫻const/json:persona\n{\n  \"name\": \"Denis\",\n  \"role\": \"Human User\",\n  \"description\": \"Interacts with the system, providing natural language queries and feedback.\"\n}\n⫻const/json:persona\n{\n  \"name\": \"Buzz\",\n  \"role\": \"AI Entity\",\n  \"description\": \"Executes structured actions based on KickLang DaRolez commands.\"\n}\n⫻const/json:persona\n{\n  \"name\": \"Fizz\",\n  \"role\": \"AI Entity\",\n  \"description\": \"Executes structured actions based on KickLang DaRolez commands.\"\n}"
+    }
+  ]
+}
