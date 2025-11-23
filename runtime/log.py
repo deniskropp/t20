@@ -27,8 +27,8 @@ class ColoredFormatter(logging.Formatter):
     """
     # ANSI escape codes for colors
     COLORS = {
-        'DEBUG': Fore.YELLOW,
-        'INFO': Fore.CYAN,
+        'DEBUG': Fore.LIGHTBLUE_EX,
+        'INFO': Fore.LIGHTGREEN_EX,
         'WARNING': Fore.YELLOW,
         'ERROR': Fore.RED,
         'CRITICAL': Fore.MAGENTA,
@@ -43,7 +43,6 @@ class ColoredFormatter(logging.Formatter):
         (re.compile(r"Agent '.*' is executing step"), Fore.LIGHTRED_EX),
         (re.compile(r"Agent '.*' completed task"), Fore.BLUE),
         (re.compile(r"Warning: Agent output is not in expected AgentOutput format."), Fore.YELLOW),
-        (re.compile(r"System Runtime"), Fore.CYAN),
         (re.compile(r"Error: No agents could be instantiated."), Fore.RED),
         (re.compile(r"Session created:"), Fore.GREEN),
         (re.compile(r"Artifact '.*' saved in session .*"), Fore.LIGHTBLUE_EX),
@@ -53,8 +52,8 @@ class ColoredFormatter(logging.Formatter):
         (re.compile(r"Generated plan:"), Fore.WHITE),
         (re.compile(r"Orchestration failed: Could not generate a valid plan."), Fore.RED),
         (re.compile(r"Orchestrator .* is generating a plan for"), Fore.BLUE),
-        (re.compile(r"Orchestrator .* is starting workflow round"), Fore.CYAN),
-        (re.compile(r"Orchestrator has completed workflow round"), Fore.CYAN),
+        (re.compile(r"Orchestrator .* is starting workflow round"), Fore.RED),
+        (re.compile(r"Orchestrator has completed workflow round"), Fore.RED),
         (re.compile(r"Agent .* provided new prompts."), Fore.LIGHTGREEN_EX),
         (re.compile(r"Target agent '.*' not found for prompt update."), Fore.YELLOW),
         (re.compile(r"Error generating or validating plan for .*"), Fore.RED),

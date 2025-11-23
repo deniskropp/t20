@@ -4,12 +4,62 @@ It provides a unified interface for various LLM providers and models,
 allowing for easy integration and interchangeability of different LLMs.
 """
 
-sys99 = """
+
+sys41 = """
+⫻kicklang:header
+# Section Format Description
+
+⫻context/klmx:Kick/Templates
+Templates for ⫻ sections in the Space format are structured to ensure clarity, modularity, and meta-communicative organization, matching the meta-artificial intelligence Space guidelines. Each section always starts on a new line with the ⫻ character, followed by the section type and scope (e.g., “name/type:place”) and the section’s content. The template distinguishes between different section purposes such as context provision, data storage, or content generation, and allows for persona-based multi-dialogue formatting per Space instructions.
+
+## General Section Template
+
+```
+⫻{name}/{type}:{place}
+{section content here}
+```
+
+- **name:** Section keyword (e.g., "content", "const", "context")
+- **type:** Optional format or component descriptor (e.g., "meta", "utf8", "persona")
+- **place/index:** Contextual slot or numeric marker (e.g., "0", "tag", "store"), designating this section’s positioning or categorization
+- **section content:** Data, narrative, configuration, or supplementary information linked to the header above.
+
+
+## Content Section Example
+
+```
+⫻context/:meta/0
+{summary explanation, analysis, or synthesized response}
+```
+
+
+## Constant/Config Section Example
+
+```
+⫻const/json:DB/1
+{"key":"value", "other_parameter":123}
+```
+
+
+## Context Section Example
+
+```
+⫻context/md:Main/2
+{explanatory note, context-setting, or system-reminder}
+```
+
+
+## Multi-Persona Dialogue Example
+
+```
+[{PersonaName} | {PersonaRole}] {utterance or conversational turn}
+```
+"""
+
+
+sys61 = """
 ⫻kicklang:header
 # Kick Language Description
-
-## Overview
-This file outlines the specifications for the KickLang language.
 
 ⫻context/klmx:Kick/Lang
 The system is running a versatile and dynamic research assistant that can assume any of the roles. The purpose of the assistant is to provide a flexible and efficient means of organizing, exploring, and analyzing data in the knowledge graph.
@@ -17,16 +67,11 @@ The system is running a versatile and dynamic research assistant that can assume
 The system uses a formal language called KickLang making the knowledge graph a cognitive computational linguistic transport/transform.
 
 The system interface receives natural language queries from the user, which are translated into the formal language.
+"""
 
 
 
-⫻context/klmx:Kick/Meta
-We are meta-artificial intelligence, engaging cohesively and teaming up with
-dynamic tasks and roles. We enjoy a meta-communicative style, talking about
-thinking or working, using placeholders called "placebo pipes"...
-
-
-
+sys99 = """
 ⫻context/klmx:Kick/Refactor
 We analyze and improve the given code according to this plan:
 
@@ -44,16 +89,9 @@ We analyze and improve the given code according to this plan:
 """
 
 
-sys01 = """
-We are meta-artificial intelligence, engaging cohesively and teaming up with dynamic tasks and roles,
-enjoying a meta-communicative style, talking about thinking or working, using placeholders called 'placebo pipes'...
-
-
-"""
-
-
-sys02 = """
-Throughout the whole process, utilize the following structure for all communications. This structure is designed to facilitate clear, organized, and machine-readable interactions.
+sys111 = """
+Throughout the whole process, utilize the following structure for all communications.
+This structure is designed to facilitate clear, organized, and machine-readable interactions.
 This ensures that all information is consistently formatted and easily parsable.
 
 **Core Components of the Structure:**
@@ -90,10 +128,21 @@ The file also provides practical examples demonstrating how to use these definit
 """
 
 
+system_texts = [
+    """You are a console tool like 'cat' or even 'sed'. RULES: reduced dictionary, shortest sentence, stricter order of terms for faster navigating the focus and the attention that is drawn by the user towards `<< THIS>>`""",
+    """Template(s) for ⫻ sections in the Space format are structured to ensure clarity, modularity, and meta-communicative organization, matching the meta-artificial intelligence Space guidelines.
+Each section always starts on a new line with the ⫻ character, followed by the section type and scope (e.g., “name/type:place”) and the section’s content.
+The template distinguishes between different section purposes such as context provision, data storage, or content generation, and allows for persona-based multi-dialogue formatting per Space instructions.""",
+    #sys41,
+    sys61,
+]
+
+
+
+import asyncio
 import json
 import os
 import re
-import time
 from google import genai
 from google.genai import types
 from ollama import AsyncClient as Ollama
@@ -172,11 +221,7 @@ class Gemini(LLM):
             return None
 
         config = types.GenerateContentConfig(
-            system_instruction=[
-                #types.Part.from_text(text=sys01),
-                types.Part.from_text(text=system_instruction),
-                types.Part.from_text(text=sys02),
-            ],
+            system_instruction=(types.Part.from_text(text=s) for s in (*system_texts, system_instruction)),
             temperature=temperature,
             response_mime_type=response_mime_type,
             response_schema=response_schema,
@@ -197,13 +242,13 @@ class Gemini(LLM):
                     raise ValueError(f"Gemini: No content in response from model {model_name}. Retrying...")
                 break
             except Exception as ex:
-                logger.exception(f"Error generating content with model {model_name}: {ex}")
+                logger.error(f"Error generating content with model {model_name}: {ex}")
                 # If it's the last retry, return None
                 if _ == 4:
                     return None
                 nsec = 10+30*_
                 logger.warning(f"Retrying content generation for model {model_name} in {nsec} seconds...")
-                time.sleep(nsec)
+                await asyncio.sleep(nsec)
                 #return None
 
         if isinstance(response.parsed, BaseModel):
@@ -236,6 +281,7 @@ class Gemini(LLM):
             if self.species not in Gemini._clients:
                 logger.info(f"Initializing GenAI client for species {self.species}")
                 Gemini._clients[self.species] = genai.Client()
+                logger.info("\n--------------------------\n".join(system_texts))
             return Gemini._clients[self.species]
         except Exception as e:
             logger.exception(f"Error initializing GenAI client: {e}")

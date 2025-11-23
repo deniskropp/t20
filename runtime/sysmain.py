@@ -64,7 +64,7 @@ def setup_application_logging(log_level: str = "INFO") -> None:
     """
     try:
         setup_logging(level=log_level)
-        logger.info(f"Logging initialized with level: {log_level}")
+        logger.debug(f"Logging initialized with level: {log_level}")
     except ValueError as e:
         logger.error(f"Invalid log level '{log_level}': {e}")
         raise
@@ -211,15 +211,22 @@ async def system_main():
 
 
     except (FileNotFoundError, RuntimeError) as e:
-        logger.exception(f"A critical error occurred: {e}")
-        exit(1)
+        logger.error(f"A critical error occurred: {e}")
+        return
     except Exception as e:
-        logger.exception(f"An unexpected error occurred during system main execution: {e}")
-        exit(1)
+        logger.error(f"An unexpected error occurred during system main execution: {e}")
+        return
 
 
 def main():
-    asyncio.run(system_main())
+    try:
+        asyncio.run(system_main())
+    except Exception as e:
+        logger.exception(f"An unexpected error occurred: {e}")
+        return
+    except KeyboardInterrupt as e:
+        print('')
+        return
 
 if __name__ == "__main__":
     main()

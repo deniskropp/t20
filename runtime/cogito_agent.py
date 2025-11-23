@@ -71,7 +71,7 @@ Your output should be only the refined prompt text, without any additional expla
         refined_prompt_text = self.llm.generate_content(
             model_name=self.model,
             contents=refinement_prompt,
-            system_instruction=self.system_instruction,
+            system_instruction=self.system_instructions,
             temperature=0.5,
         )
 

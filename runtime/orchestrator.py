@@ -9,6 +9,7 @@ import os
 import json
 from typing import List, Dict, Optional, Tuple
 import logging
+from colorama import Fore, Style
 
 from pydantic import BaseModel, Field, ValidationError
 
@@ -73,66 +74,49 @@ class Orchestrator(Agent):
         Returns:
             Optional[Plan]: The generated plan as a Pydantic object, or None if an error occurs.
         """
-        logger.info(f"Orchestrator {self.profile.name} is generating a plan for: '{high_level_goal}'")
         if not self.llm or not self.team:
             logger.error("Orchestrator client or team not initialized. Cannot generate plan.")
             return None
 
-        planning_prompt = f"""
-You are an expert orchestrator. Your goal is to break down a high-level goal into a detailed, actionable plan for a team of specialized agents.
-The plan should be a sequence of tasks, each assigned to a specific agent role.
+        planning_prompt = PlanningPrompt(agents=[t.profile for t in self.team.values()], files=files)
 
-Here's the high-level goal: '{high_level_goal}'
+        logger.debug(f"Orchestrator '{self.profile.name}' is using: '{planning_prompt.model_dump_json()}'")
+        logger.debug(f"Orchestrator '{self.profile.name}' is generating a plan for: '{high_level_goal}'")
 
-Here are the available agents and their roles:
-{json.dumps([{"name": agent.profile.name, "role": agent.profile.role, "goal": agent.profile.goal} for agent in self.team.values()], indent=4)}
+        planning_prompt = planning_prompt.make(high_level_goal)
 
-Here are the files provided by the user:
-{json.dumps([file.model_dump() for file in files], indent=4)}
+        print(f"\n{Fore.CYAN}Orchestrator '{self.profile.name}' Instructions:{Style.RESET_ALL}\n{self.system_instructions}")
+        print(f"\n{Fore.CYAN}Orchestrator '{self.profile.name}' Planning:{Style.RESET_ALL}\n{planning_prompt}")
 
-Your plan should adhere to the following structure (Pydantic Plan model):
-{Plan.model_json_schema(by_alias=False, mode='serialization')}
-
-Key considerations for your plan:
-1.  **Break down the goal**: Decompose the `high_level_goal` into smaller, manageable `tasks`.
-2.  **Assign roles**: Each `task` must be assigned to an `agent` by its `name` and/or `role`. Ensure the assigned agent's goal aligns with the task's requirements.
-3.  **Dependencies**: Define `requires` for each task, indicating which previous tasks must be completed before the current one can start. Use the `id` of the preceding tasks. The first task should have `requires: []`.
-4.  **Comprehensive**: Ensure all aspects of the `high_level_goal` are covered by the tasks, hence `reasoning`.
-5.  **Logical flow**: The sequence of tasks should be logical and progressive towards achieving the overall goal.
-6.  **Output**: Your response MUST be a JSON object that strictly conforms to the `Plan` schema.
-7.  **Team Updates (Optional)**: If necessary, you can include `team` updates in the plan, such as new `system_prompts` for agents or general `notes` about team coordination.
-    -   If you update a `system_prompt`, ensure the `agent` name matches an existing agent exactly.
-    -   The `system_prompt` should be the full, new system prompt, not just a diff.
-"""
-
-        planning_prompt = PlanningPrompt(agents=[t.profile for t in self.team.values()], files=files).make(high_level_goal)
-
-        logger.info(f"Orchestrator {self.profile.name} Planning Prompt:\n{planning_prompt}")
-
+        session.add_artifact("planning_instructions.txt", self.system_instructions)
         session.add_artifact("planning_prompt.txt", planning_prompt)
-
-#        response = self.llm.generate_content(
-#            model_name=self.model,
-#            contents=planning_prompt,
-#            system_instruction=self.system_instruction,
-#            temperature=0.0
-#        )
-
-#        session.add_artifact("planning_response.txt", response)
 
         try:
             response = await self.llm.generate_content(
                 model_name=self.model,
                 contents=planning_prompt,
-                system_instruction=self.system_instruction,
+                system_instruction=self.system_instructions,
+                temperature=0.0
+            )
+
+            print(f"\n{Fore.CYAN}Orchestrator '{self.profile.name}' Planning Response:{Style.RESET_ALL}\n{response}")
+
+            session.add_artifact("planning_response.txt", response)
+
+            response = await self.llm.generate_content(
+                model_name=self.model,
+                contents=planning_prompt,
+                system_instruction=self.system_instructions,
                 temperature=0.0,
                 response_mime_type='application/json',
                 response_schema=Plan
             )
-            if isinstance(response, Plan):
-                plan = response
-            else:
-                plan = Plan.model_validate_json(response or '{}')
+            result = response or Plan(high_level_goal="[]", reasoning="", roles=[], tasks=[])
+
+            session.add_artifact("planning_result.txt", result)
+
+            if isinstance(result, str):
+                result = Plan.model_validate_json(result)
         except (ValidationError, json.JSONDecodeError) as e:
             logger.exception(f"Error generating or validating plan for {self.profile.name}: {e}")
             return None
@@ -140,4 +124,5 @@ Key considerations for your plan:
             logger.exception(f"An unexpected error occurred during plan generation for {self.profile.name}: {e}")
             return None
 
-        return plan
+        print(f"\n{Fore.CYAN}Orchestrator '{self.profile.name}' Planning Result:{Style.RESET_ALL}\n{result.model_dump_json(indent=4)}")
+        return result

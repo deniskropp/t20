@@ -94,7 +94,7 @@ class System:
                         if team_member:
                             agent.team[team_member_name] = team_member
                         else:
-                            logger.warning(f"Team member '{team_member_name}' for orchestrator '{agent.profile.name}' not found.")
+                            logger.debug(f"Team member '{team_member_name}' for orchestrator '{agent.profile.name}' not found.")
 
         self.agents = all_agents
 
@@ -148,11 +148,11 @@ class System:
 
         logger.debug(f"{plan.model_dump_json()}")
 
-        if not plan or not plan.tasks or not plan.roles:
-            raise RuntimeError("Orchestration failed: Could not find a valid plan.")
+        #if not plan or not plan.tasks or not plan.roles:
+        #    raise RuntimeError("Orchestration failed: Could not find a valid plan.")
 
-        print(f"\n\nInitial Plan: {plan.model_dump_json(indent=4)}\n\n\n")
-        self.session.add_artifact("initial_plan.json", plan.model_dump_json(indent=4))
+        #print(f"\n\nInitial Plan: {plan.model_dump_json(indent=4)}\n\n\n")
+        self.session.add_artifact("initial_plan.json", plan.model_dump())
 
         return plan
 
@@ -222,14 +222,13 @@ class System:
         logger.info("--- Workflow Complete ---")
 
     async def _execute_task(self, task: Task, context: ExecutionContext) -> Optional[str]:
-        agent_name = task.agent
         team_by_name = {agent.profile.name: agent for agent in self.orchestrator.team.values()} if self.orchestrator.team else {}
-        delegate_agent = team_by_name.get(agent_name)
+        delegate_agent = team_by_name.get(task.agent)
         if not delegate_agent:
-            delegate_agent = next((agent for agent in self.agents if agent.profile.name.lower() == agent_name.lower()), None)
+            delegate_agent = next((agent for agent in self.agents if agent.profile.name.lower() == task.agent.lower()), None)
 
         if not delegate_agent:
-            logger.warning(f"No agent found with name '{agent_name}'. Execution will continue with the Orchestrator as the fallback agent.")
+            logger.warning(f"No agent found with name '{task.agent}'. Execution will continue with the Orchestrator as the fallback agent.")
             delegate_agent = self.orchestrator
 
         logger.info(f"Agent '{delegate_agent.profile.name}' is executing step {task.id}: '{task.description}' (Role: {task.role})")
@@ -275,7 +274,7 @@ class System:
 
         if target_agent:
             target_agent.update_system_prompt(new_prompt)
-            logger.info(f"Agent '{target_agent.profile.name}' (matched by '{agent_name}') system prompt updated.")
+            logger.debug(f"Agent '{target_agent.profile.name}' (matched by '{agent_name}') system prompt updated.")
         else:
             logger.warning(f"Target agent '{agent_name}' not found for prompt update.")
 
@@ -294,7 +293,7 @@ class System:
         prompt_key = f"{agent_spec['name'].lower()}_instructions.txt"
         system_prompt = prompts.get(prompt_key, "")
         if not system_prompt:
-            logger.warning(
+            logger.debug(
                 f"Prompt for agent '{agent_spec['name']}' not found with key '{prompt_key}'. Empty system prompt will be used."
             )
 

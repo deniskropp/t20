@@ -75,9 +75,11 @@ class Session:
         """Initializes the session directory."""
         if not self.project_root:
             self.project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-        self.session_dir = os.path.join(self.project_root, 'sessions', self.session_id)
+        self.session_dir = os.path.abspath(os.path.join(self.project_root, 'sessions', self.session_id))
+        logger.info(f"Project Root: '{self.project_root}'")
+        logger.info(f"Session Root: '{self.session_dir}'")
         os.makedirs(self.session_dir, exist_ok=True)
-        logger.info(f"Session created: {self.session_id} (Directory: {self.session_dir})")
+        logger.debug(f"Session created: {self.session_id}")
 
     def add_artifact(self, name: str, content: Any) -> None:
         """
@@ -87,6 +89,10 @@ class Session:
             name (str): The name of the artifact file.
             content (Any): The content to write to the artifact file. Can be dict, list, or string.
         """
+        if os.path.isabs(name):
+            logger.error(f"Artifact to add has absolute file path: '{name}'")
+            return None
+
         artifact_path = os.path.join(self.session_dir, name)
         try:
             os.makedirs(os.path.dirname(artifact_path), exist_ok=True)
@@ -109,6 +115,10 @@ class Session:
         Returns:
             Any: The content of the artifact, or None if an error occurs.
         """
+        if os.path.isabs(name):
+            logger.error(f"Artifact to get has absolute file path: '{name}'")
+            return None
+
         artifact_path = os.path.join(self.session_dir, name)
         try:
             with open(artifact_path, 'r', encoding='utf-8') as f:

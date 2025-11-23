@@ -33,7 +33,7 @@ class Agent:
     def __init__(self, name: str, role: str, goal: str, model: str, system_prompt: str, message_bus: MessageBus) -> None:
         self.profile = AgentProfile(name=name, role=role, goal=goal)
         self.model = model
-        self.system_instruction = system_prompt
+        self.system_instructions = system_prompt
         self.system_prompt = system_prompt
         self.message_bus = message_bus
         logger.debug(f"Agent instance created: {self.profile.name} (Role: {self.profile.role}, Model: {self.model})")
@@ -56,9 +56,10 @@ class Agent:
     def update_system_prompt(self, new_prompt: str) -> None:
         """Updates the agent's system prompt."""
 
-        self.system_instruction=f"{new_prompt}\n\n---\n\n{self.system_prompt}\n"
+        #self.system_instructions=f"{new_prompt}\n\n---\n\n{self.system_prompt}\n"
+        self.system_instructions=f"{new_prompt}"
 
-        logger.info(f"Agent '{self.profile.name}' system prompt updated:\n{new_prompt}\n")
+        logger.debug(f"Agent '{self.profile.name}' system prompt updated:\n{new_prompt}\n")
 
     async def execute_task(self, context: ExecutionContext, task: Task) -> Optional[str]:
         """
@@ -71,8 +72,7 @@ class Agent:
         Returns:
             Optional[str]: The result of the task execution as a string, or an error string.
         """
-
-        context.record_artifact(f"{self.profile.name}_system_instruction.txt", self.system_instruction, task)
+        context.record_artifact(f"{self.profile.name}_instructions.txt", self.system_instructions, task)
 
         required_task_ids = ['initial']
         required_task_ids.extend(task.deps)
@@ -86,7 +86,8 @@ class Agent:
                     required_artifacts.append(artifact)
 
         previous_artifacts = "\n\n".join(
-            f"--- Artifact '{artifact.name}' from ({artifact.step.role}) in [{artifact.step.id}]:\n{artifact.content}"
+            #f"--- Artifact '{artifact.name}' from ({artifact.step.role}) in [{artifact.step.id}]:\n{artifact.content}"
+            f"⫻context/artifact:{artifact.name}/{artifact.step.id}\n{artifact.content}"
             for artifact in required_artifacts
         )
 
@@ -99,25 +100,46 @@ class Agent:
         ]
 
         if previous_artifacts:
-            task_prompt.append(f"Please use the following outputs from the other agents as your input:\n\n{previous_artifacts}\n\n")
+            #task_prompt.append(f"Please use the following outputs from the other agents as your input:\n\n{previous_artifacts}\n\n")
+            task_prompt.append(f"{previous_artifacts}\n\n")
 
         task_prompt.append(
             f"Please execute your sub-task, keeping the overall goal and your role's specific goal in mind to ensure your output is relevant to the project."
         )
 
-        ret = await self._run(context, "\n\n".join(task_prompt), task)
+        prompt = "\n\n".join(task_prompt)
+
+        context.record_artifact(f"{self.profile.name}_prompt.txt", prompt, task)
+
+        ret = await self._run(prompt)
+
         logger.info(f"Agent '{self.profile.name}' completed task: {task.description}")
+
+        print(f"\n====== Task '{task.id}' <= {task.deps} ======\n[{task.agent} | {task.role}] \"{task.description}\"\n")
+
+        response = AgentOutput.model_validate_json(ret)
+
+        print(f"\n--- Output:\n{response.output}\n")
+        if response.artifact and response.artifact.files:
+            for file in response.artifact.files:
+                print(f"\n--- File: {file.path}\n{file.content}\n")
+                context.session.add_artifact(file.path, file.content)
+        if response.team:
+            print(f"\n--- Team:\n\"{response.team.notes}\"")
+            if response.team.prompts:
+                print(f"\n{"".join(f"{p.agent} | {p.role}\n  {p.system_prompt}\n\n" for p in response.team.prompts)}")
+        if response.reasoning:
+            print(f"\n--- Reasoning:\n{response.reasoning}\n")
+
         return ret
 
 
-    async def _run(self, context: ExecutionContext, prompt: str, task: Task) -> Optional[str]:
-        context.record_artifact(f"{self.profile.name}_task.txt", prompt, task)
-
+    async def _run(self, prompt: str) -> Optional[str]:
         try:
             response = await self.llm.generate_content(
                 model_name=self.model,
                 contents=prompt,
-                system_instruction=self.system_instruction,
+                system_instruction=self.system_instructions,
                 temperature=0.1,
                 response_mime_type='application/json',
                 response_schema=AgentOutput
@@ -130,22 +152,6 @@ class Agent:
                     result = response
                 else:
                     result = json.dumps(response)
-
-            response = AgentOutput.model_validate_json(result)
-
-            print(f"\n====== Task '{task.id}' <= {task.deps} ======\n[{task.agent} | {task.role}] \"{task.description}\"\n")
-
-            print(f"\n--- Output:\n{response.output}\n")
-            if response.artifact and response.artifact.files:
-                for file in response.artifact.files:
-                    print(f"\n--- File: {file.path}\n{file.content}\n")
-                    context.session.add_artifact(file.path, file.content)
-            if response.team:
-                print(f"\n--- Team:\n\"{response.team.notes}\"")
-                if response.team.prompts:
-                    print(f"\n{"".join(f"{p.agent} | {p.role}\n  {p.system_prompt}\n" for p in response.team.prompts)}")
-            if response.reasoning:
-                print(f"\n--- Reasoning:\n{response.reasoning}\n")
 
         except Exception as e:
             logger.exception(f"Error executing task for {self.profile.name}: {e}")
