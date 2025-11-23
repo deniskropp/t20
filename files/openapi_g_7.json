@@ -1,0 +1,263 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Multi-Agent Workflow API — Generation 7 (Adaptive Intelligence)",
+    "version": "7.0.0",
+    "description": "Generation 7: Adaptive Intelligence and Federated Orchestration. This OpenAPI document adds adaptive feedback, federation, capability discovery, semantic telemetry, and policy-driven adaptation to the Generation 6 spec."
+  },
+  "servers": [
+    { "url": "https://api.example.com/v7", "description": "Production" }
+  ],
+  "paths": {
+    
+    "/feedback": {
+      "post": {
+        "summary": "Register feedback and metrics for a workflow run",
+        "operationId": "registerFeedback",
+        "security": [{ "apiKeyAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Feedback" }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Feedback recorded" },
+          "400": { "description": "Invalid input" }
+        }
+      }
+    },
+
+    "/insights/{workflowId}": {
+      "get": {
+        "summary": "Get adaptive insights and suggested changes for a workflow",
+        "operationId": "getWorkflowInsights",
+        "parameters": [
+          { "name": "workflowId", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "since", "in": "query", "required": false, "schema": { "type": "string", "format": "date-time" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Insights retrieved",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/InsightsResponse" } } }
+          },
+          "404": { "description": "Workflow not found" }
+        }
+      }
+    },
+
+    "/federation/orchestrators": {
+      "post": {
+        "summary": "Register a federated orchestrator",
+        "operationId": "registerOrchestrator",
+        "security": [{ "apiKeyAuth": [] }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/OrchestratorRegistration" } } } },
+        "responses": { "201": { "description": "Orchestrator registered" }, "400": { "description": "Invalid input" } }
+      },
+      "get": {
+        "summary": "List registered federated orchestrators",
+        "operationId": "listOrchestrators",
+        "responses": { "200": { "description": "List", "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/OrchestratorRegistration" } } } } } }
+      }
+    },
+
+    "/federation/delegate": {
+      "post": {
+        "summary": "Delegate a workflow or task to a federated orchestrator",
+        "operationId": "delegateRun",
+        "security": [{ "apiKeyAuth": [] }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DelegationRequest" } } } },
+        "responses": { "202": { "description": "Delegation accepted" }, "400": { "description": "Invalid request" }, "403": { "description": "Forbidden" } }
+      }
+    },
+
+    "/capabilities": {
+      "post": {
+        "summary": "Register a capability manifest",
+        "operationId": "registerCapability",
+        "security": [{ "apiKeyAuth": [] }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Capability" } } } },
+        "responses": { "201": { "description": "Capability registered" } }
+      },
+      "get": {
+        "summary": "Discover capabilities",
+        "operationId": "discoverCapabilities",
+        "parameters": [
+          { "name": "query", "in": "query", "schema": { "type": "string" } },
+          { "name": "type", "in": "query", "schema": { "type": "string" } },
+          { "name": "provider", "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "Capabilities", "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Capability" } } } } } }
+      }
+    },
+
+    "/telemetry": {
+      "get": {
+        "summary": "Query semantic telemetry",
+        "operationId": "queryTelemetry",
+        "parameters": [
+          { "name": "workflowId", "in": "query", "schema": { "type": "string" } },
+          { "name": "from", "in": "query", "schema": { "type": "string", "format": "date-time" } },
+          { "name": "to", "in": "query", "schema": { "type": "string", "format": "date-time" } },
+          { "name": "eventType", "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "Telemetry events", "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/TelemetryEvent" } } } } } }
+      }
+    },
+
+    "/policies": {
+      "post": {
+        "summary": "Create a policy",
+        "operationId": "createPolicy",
+        "security": [{ "apiKeyAuth": [] }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Policy" } } } },
+        "responses": { "201": { "description": "Policy created" } }
+      },
+      "get": {
+        "summary": "List policies",
+        "operationId": "listPolicies",
+        "responses": { "200": { "description": "Policies", "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Policy" } } } } } }
+      }
+    },
+
+    "/policies/{policyId}/enforce": {
+      "post": {
+        "summary": "Enforce a policy against a target",
+        "operationId": "enforcePolicy",
+        "parameters": [ { "name": "policyId", "in": "path", "required": true, "schema": { "type": "string" } } ],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "properties": { "targetId": { "type": "string" } }, "required": ["targetId"] } } } },
+        "responses": { "200": { "description": "Enforcement scheduled" }, "404": { "description": "Policy not found" } }
+      }
+    },
+
+    "/adaptive/simulations": {
+      "post": {
+        "summary": "Run a simulation of a proposed adaptation",
+        "operationId": "runAdaptiveSimulation",
+        "security": [{ "apiKeyAuth": [] }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SimulationRequest" } } } },
+        "responses": { "200": { "description": "Simulation result", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SimulationResult" } } } } }
+      }
+    }
+
+  },
+
+  "components": {
+    "securitySchemes": {
+      "apiKeyAuth": { "type": "apiKey", "in": "header", "name": "X-API-Key" },
+      "federationJwt": { "type": "http", "scheme": "bearer", "bearerFormat": "JWT" }
+    },
+    "schemas": {
+      "Feedback": {
+        "type": "object",
+        "properties": {
+          "workflowId": { "type": "string" },
+          "runId": { "type": "string" },
+          "submittedBy": { "type": "string", "nullable": true },
+          "metrics": { "type": "object", "additionalProperties": true },
+          "annotations": { "type": "object", "additionalProperties": true },
+          "timestamp": { "type": "string", "format": "date-time" }
+        },
+        "required": ["workflowId", "runId", "metrics"]
+      },
+
+      "InsightsResponse": {
+        "type": "object",
+        "properties": {
+          "workflowId": { "type": "string" },
+          "generatedAt": { "type": "string", "format": "date-time" },
+          "suggestedDefinitions": { "type": "array", "items": { "type": "object" } },
+          "recommendations": { "type": "array", "items": { "type": "string" } },
+          "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+        }
+      },
+
+      "OrchestratorRegistration": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "endpoint": { "type": "string", "format": "uri" },
+          "capabilities": { "type": "array", "items": { "type": "string" } },
+          "auth": { "type": "object", "additionalProperties": true },
+          "metadata": { "type": "object", "additionalProperties": true }
+        },
+        "required": ["name", "endpoint"]
+      },
+
+      "DelegationRequest": {
+        "type": "object",
+        "properties": {
+          "targetOrchestratorId": { "type": "string" },
+          "workflowDefinitionId": { "type": "string" },
+          "context": { "type": "object", "additionalProperties": true },
+          "priority": { "type": "string", "enum": ["low","normal","high"], "default": "normal" }
+        },
+        "required": ["targetOrchestratorId","workflowDefinitionId"]
+      },
+
+      "Capability": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "provider": { "type": "string" },
+          "type": { "type": "string", "enum": ["action","sensor","transform","orchestrator"] },
+          "schema": { "type": "object", "description": "JSON Schema describing inputs/outputs" },
+          "examples": { "type": "array", "items": { "type": "object" } },
+          "metadata": { "type": "object", "additionalProperties": true }
+        },
+        "required": ["name","provider","type","schema"]
+      },
+
+      "TelemetryEvent": {
+        "type": "object",
+        "properties": {
+          "eventId": { "type": "string" },
+          "workflowId": { "type": "string" },
+          "runId": { "type": "string" },
+          "eventType": { "type": "string" },
+          "payload": { "type": "object", "additionalProperties": true },
+          "timestamp": { "type": "string", "format": "date-time" }
+        },
+        "required": ["eventId","eventType","timestamp"]
+      },
+
+      "Policy": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "scope": { "type": "string", "enum": ["workflow","organization","federation"] },
+          "rules": { "type": "object", "description": "Policy rules in a declarative JSON form" },
+          "enabled": { "type": "boolean", "default": true }
+        },
+        "required": ["name","scope","rules"]
+      },
+
+      "SimulationRequest": {
+        "type": "object",
+        "properties": {
+          "workflowDefinition": { "type": "object" },
+          "hypothesis": { "type": "string" },
+          "simulationParameters": { "type": "object", "additionalProperties": true }
+        },
+        "required": ["workflowDefinition","hypothesis"]
+      },
+
+      "SimulationResult": {
+        "type": "object",
+        "properties": {
+          "resultId": { "type": "string" },
+          "summary": { "type": "string" },
+          "metrics": { "type": "object", "additionalProperties": true },
+          "passed": { "type": "boolean" }
+        }
+      }
+
+    }
+  },
+  "security": [{ "apiKeyAuth": [] }]
+}

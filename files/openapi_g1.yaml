@@ -1,0 +1,326 @@
+openapi: 3.0.0
+info:
+  title: Multi-Agent Workflow API (G1)
+  version: 1.0.0
+  description: API for orchestrating multi-agent workflows with asynchronous execution and standardized error handling.
+servers:
+  - url: /api/v1
+paths:
+  /start:
+    post:
+      summary: Initialize the system and create a workflow plan
+      operationId: startWorkflow
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartRequest'
+      responses:
+        '202':
+          description: Plan generated and accepted. Returns plan and job ID.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartResponse'
+        '400':
+          description: Invalid input for plan generation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error during plan generation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /runs:
+    post:
+      summary: Initiate the execution of a workflow plan
+      operationId: initiateRun
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunRequest'
+      responses:
+        '202':
+          description: Workflow execution initiated. Returns job ID.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunInitiatedResponse'
+        '400':
+          description: Invalid plan or system not initialized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: System not initialized. A plan must be created first.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error during workflow initiation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /runs/{jobId}:
+    get:
+      summary: Retrieve the status and results of a workflow execution
+      operationId: getRunStatus
+      parameters:
+        - name: jobId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The unique identifier for the workflow run.
+      responses:
+        '200':
+          description: Workflow status and results retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunStatusResponse'
+        '404':
+          description: Job ID not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error retrieving job status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    StartRequest:
+      type: object
+      properties:
+        high_level_goal:
+          type: string
+          description: The main goal to achieve.
+        files:
+          type: array
+          description: Input files for the workflow.
+          items:
+            $ref: '#/components/schemas/File'
+        plan_from:
+          type: string
+          nullable: true
+          description: File path to read a pre-existing plan from.
+        orchestrator:
+          type: string
+          default: "Meta-AI"
+          description: The orchestrator agent to use.
+        model:
+          type: string
+          default: "gemini-2.5-flash-lite"
+          description: The LLM model to use.
+      required:
+        - high_level_goal
+    StartResponse:
+      type: object
+      properties:
+        plan:
+          $ref: '#/components/schemas/Plan'
+        jobId:
+          type: string
+          description: The unique identifier for this workflow run.
+      required:
+        - plan
+        - jobId
+    RunRequest:
+      type: object
+      properties:
+        plan:
+          $ref: '#/components/schemas/Plan'
+        rounds:
+          type: integer
+          default: 1
+          description: Number of execution rounds.
+        files:
+          type: array
+          description: Additional files relevant to this specific run.
+          items:
+            $ref: '#/components/schemas/File'
+      required:
+        - plan
+    RunInitiatedResponse:
+      type: object
+      properties:
+        jobId:
+          type: string
+          description: The unique identifier for the initiated workflow run.
+        status:
+          type: string
+          default: "pending"
+          description: The initial status of the workflow run.
+      required:
+        - jobId
+        - status
+    RunStatusResponse:
+      type: object
+      properties:
+        jobId:
+          type: string
+          description: The unique identifier for the workflow run.
+        status:
+          type: string
+          enum: ["pending", "running", "completed", "failed"]
+          description: The current status of the workflow run.
+        results:
+          type: array
+          description: The results of the workflow execution if completed.
+          items:
+            type: object
+            properties:
+              step:
+                $ref: '#/components/schemas/Task'
+              result:
+                $ref: '#/components/schemas/AgentOutput'
+        error:
+          $ref: '#/components/schemas/ErrorResponse'
+          description: Error details if the status is 'failed'.
+    Plan:
+      type: object
+      properties:
+        high_level_goal:
+          type: string
+        reasoning:
+          type: string
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/Role'
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Task'
+        team:
+          $ref: '#/components/schemas/Team'
+      required:
+        - high_level_goal
+        - reasoning
+        - roles
+        - tasks
+    Role:
+      type: object
+      properties:
+        title:
+          type: string
+        purpose:
+          type: string
+      required:
+        - title
+        - purpose
+    Task:
+      type: object
+      properties:
+        id:
+          type: string
+        description:
+          type: string
+        role:
+          type: string
+        agent:
+          type: string
+        requires:
+          type: array
+          description: IDs of prerequisite tasks. Validation should ensure these IDs exist within the plan.
+          items:
+            type: string
+      required:
+        - id
+        - description
+        - role
+        - agent
+        - requires
+    Team:
+      type: object
+      properties:
+        notes:
+          type: string
+        prompts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Prompt'
+      required:
+        - notes
+    Prompt:
+      type: object
+      properties:
+        agent:
+          type: string
+        role:
+          type: string
+        system_prompt:
+          type: string
+      required:
+        - agent
+        - role
+        - system_prompt
+    AgentOutput:
+      type: object
+      properties:
+        output:
+          type: string
+        artifact:
+          $ref: '#/components/schemas/Artifact'
+        team:
+          $ref: '#/components/schemas/Team'
+          description: Team structure or prompts relevant to subsequent steps.
+        reasoning:
+          type: string
+          nullable: true
+      required:
+        - output
+    Artifact:
+      type: object
+      properties:
+        task:
+          type: string
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/File'
+      required:
+        - task
+        - files
+    File:
+      type: object
+      properties:
+        path:
+          type: string
+        content:
+          type: string
+      required:
+        - path
+        - content
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+      required:
+        - code
+        - message
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+security:
+  - ApiKeyAuth: []

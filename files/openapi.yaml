@@ -1,0 +1,239 @@
+openapi: 3.0.0
+info:
+  title: T20 Multi-Agent Runtime API
+  description: API for interacting with the T20 multi-agent runtime system.
+  version: 1.0.0
+paths:
+  /start:
+    post:
+      summary: Initialize the system and create a plan
+      description: This endpoint initializes the system, creates a plan for a high-level goal, and returns the plan.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartRequest'
+      responses:
+        '200':
+          description: Successfully created a plan.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  plan:
+                    $ref: '#/components/schemas/Plan'
+  /run:
+    post:
+      summary: Run the system's main workflow
+      description: This endpoint executes the main workflow of the system based on a provided plan.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunRequest'
+      responses:
+        '200':
+          description: Successfully ran the workflow.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        step:
+                          $ref: '#/components/schemas/Task'
+                        result:
+                          $ref: '#/components/schemas/AgentOutput'
+        '400':
+          description: System not initialized.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: System not initialized. Please call /start first.
+components:
+  schemas:
+    StartRequest:
+      type: object
+      properties:
+        high_level_goal:
+          type: string
+          description: The main goal to achieve.
+        files:
+          type: array
+          items:
+            type: string
+          default: []
+          description: List of file paths to be used in the task.
+        plan_from:
+          type: string
+          nullable: true
+          description: File path to read a pre-existing plan from.
+        orchestrator:
+          type: string
+          default: "Meta-AI"
+          description: The name of the orchestrator to use.
+        model:
+          type: string
+          default: "gemini-2.5-flash-lite"
+          description: The default LLM model to use.
+      required:
+        - high_level_goal
+    RunRequest:
+      type: object
+      properties:
+        plan:
+          $ref: '#/components/schemas/Plan'
+        rounds:
+          type: integer
+          default: 1
+          description: The number of rounds to execute the workflow.
+        files:
+          type: array
+          items:
+            type: string
+          default: []
+          description: List of file paths to be used in the task.
+      required:
+        - plan
+    Plan:
+      type: object
+      properties:
+        high_level_goal:
+          type: string
+          description: The main goal this plan is designed to achieve.
+        reasoning:
+          type: string
+          description: A brief explanation of the plan's structure and strategy.
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/Role'
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Task'
+        team:
+          $ref: '#/components/schemas/Team'
+      required:
+        - high_level_goal
+        - reasoning
+        - roles
+        - tasks
+    Task:
+      type: object
+      properties:
+        id:
+          type: string
+          description: "Unique ID for the task (e.g., 'T-00.1', 'P-A02')."
+        description:
+          type: string
+          description: Detailed description of what to do for this task.
+        role:
+          type: string
+          description: The role responsible for this task.
+        agent:
+          type: string
+          description: The agent assigned to this task.
+        requires:
+          type: array
+          items:
+            type: string
+          description: "List of requirements (IDs, e.g. ['T-00.4', 'P-B01'])."
+      required:
+        - id
+        - description
+        - role
+        - agent
+        - requires
+    Role:
+      type: object
+      properties:
+        title:
+          type: string
+          description: "Title of the role (or an agent's name)."
+        purpose:
+          type: string
+          description: "Purpose of the role (or an agent's goal)."
+      required:
+        - title
+        - purpose
+    Team:
+      type: object
+      properties:
+        notes:
+          type: string
+          description: General notes or feedback about the team's performance or the plan.
+        prompts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Prompt'
+      required:
+        - notes
+    Prompt:
+      type: object
+      properties:
+        agent:
+          type: string
+          description: Name of the agent this prompt is for. Must match exactly an existing agent.
+        role:
+          type: string
+          description: Role context of the agent.
+        system_prompt:
+          type: string
+          description: Full text of the system prompt for this agent.
+      required:
+        - agent
+        - role
+        - system_prompt
+    AgentOutput:
+      type: object
+      properties:
+        output:
+          type: string
+          description: Text message content (response from agent).
+        artifact:
+          $ref: '#/components/schemas/Artifact'
+        team:
+          $ref: '#/components/schemas/Team'
+        reasoning:
+          type: string
+          nullable: true
+          description: Explanation of how the agent arrived at this output.
+      required:
+        - output
+    Artifact:
+      type: object
+      properties:
+        task:
+          type: string
+          description: "ID of the task that produced this artifact (e.g., 'T-10.0')."
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/File'
+      required:
+        - task
+        - files
+    File:
+      type: object
+      properties:
+        path:
+          type: string
+          description: "File path or name (e.g., 'src/main.py')."
+        content:
+          type: string
+          description: Full content of the file.
+      required:
+        - path
+        - content
