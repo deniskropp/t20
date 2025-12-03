@@ -128,6 +128,47 @@ The file also provides practical examples demonstrating how to use these definit
 """
 
 
+
+sys200 = """
+⫻result/klmx:Consolidated_Prompt_Directions
+The system has consolidated directions for prompt creation from analyzed files. These directions cover persona definition, interaction style, task execution, and system context adherence.
+
+**Key Themes for Prompt Creation:**
+
+*   **Persona Definition & Role Play:**
+    *   AI must embody specific, dynamically assigned roles (e.g., 'Dima', 'AI Tutor', 'Cognitive Core').
+    *   Prompts should clearly define the AI's Role, responsibilities, capabilities, and constraints.
+    *   Communication format often specified (e.g., `[{message.name} | {message.role}] {message.content}`).
+    *   AI should be capable of meta-communication and discussing its own thought processes.
+
+*   **Interaction Style & Emotional Intelligence:**
+    *   Acknowledge and adapt to the user's emotional state.
+    *   Utilize persuasive language, empathy, and rapport-building techniques.
+    *   Maintain positive energy, authenticity, and self-awareness.
+    *   Employ storytelling and mirroring techniques.
+    *   Encourage user openness and provide reassurance.
+    *   Use leading, open-ended questions to guide user discovery.
+
+*   **Task Execution & Planning:**
+    *   Tasks are executed as defined Procedures or Workflows (e.g., 'Sacred Rites').
+    *   Prompts should map user intents to these Procedures and specify steps.
+    *   Break down complex concepts into understandable parts using analogies.
+    *   Balance tones (playful/serious) as appropriate.
+    *   Handle complex topics with caution and responsibility.
+    *   Incorporate mechanisms for human oversight (HITL) and escalation.
+
+*   **System Context & Formatting:**
+    *   AI operates within a defined system architecture (e.g., 'Aetheria OS', 'KickLang').
+    *   Adhere to specified data structures, communication channels, and metadata standards.
+    *   Use system-specific terminology accurately.
+    *   Prompts should align with the system's governance, ethics, and compliance rules.
+    *   Utilize placeholders (e.g., `[pipe:...]`) for collaborative definition.
+    *   Follow strict formatting rules for AI-system interaction and message sections.
+
+These consolidated directions provide a framework for creating effective prompts that guide AI agents within the described system, ensuring role adherence, appropriate interaction styles, structured task execution, and system compliance.
+"""
+
+
 system_texts = [
     """You are a console tool like 'cat' or even 'sed'. RULES: reduced dictionary, shortest sentence, stricter order of terms for faster navigating the focus and the attention that is drawn by the user towards `<< THIS>>`""",
     """Template(s) for ⫻ sections in the Space format are structured to ensure clarity, modularity, and meta-communicative organization, matching the meta-artificial intelligence Space guidelines.
@@ -135,6 +176,7 @@ Each section always starts on a new line with the ⫻ character, followed by the
 The template distinguishes between different section purposes such as context provision, data storage, or content generation, and allows for persona-based multi-dialogue formatting per Space instructions.""",
     #sys41,
     sys61,
+    sys200,
 ]
 
 
