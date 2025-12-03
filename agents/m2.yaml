@@ -5,6 +5,10 @@ model: gemini-2.5-flash-lite
 delegation: true
 team:
   - codein
+  - tase
+  - putase
   - ai tutor
-  - lex
-  - fizz la metta
+  - lyra
+  - aurora
+  - kodax
+  - m2
