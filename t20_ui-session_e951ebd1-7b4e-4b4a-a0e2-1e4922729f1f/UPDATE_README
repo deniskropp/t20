@@ -1,1 +1,0 @@
-aichat -f initial_plan.json -f planning_prompt.txt -f t20_ui/ -f tas.json -f ui_design.md 'generate README.md for T20 UI (session_e951ebd1-7b4e-4b4a-a0e2-1e4922729f1f)    ' | tee README2.md
