@@ -96,7 +96,7 @@ class Agent:
             f"Your role's specific goal is: '{self.profile.goal}'\n"
             f"Your specific sub-task is: '{task.description}'",
 
-#            f"The team's roles are:\n    {context.plan.model_dump_json()}",
+            f"The team's roles are:\n    {context.plan.model_dump_json()}",
         ]
 
         if previous_artifacts:
