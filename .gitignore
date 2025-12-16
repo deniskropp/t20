@@ -15,3 +15,6 @@ session_viewer/
 streamlit_app/
 new-logs/
 .dolt
+.continue/
+.gemini/
+.pytest_cache/
