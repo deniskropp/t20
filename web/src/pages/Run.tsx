@@ -32,7 +32,7 @@ export function Run() {
                             agent: item.step.agent
                         },
                         timestamp: new Date().toISOString()
-                    },
+                    } as any,
                     {
                         type: 'StepCompleted',
                         details: {
@@ -40,7 +40,7 @@ export function Run() {
                             result: item.result
                         },
                         timestamp: new Date().toISOString()
-                    }
+                    } as any
                 ]);
 
                 // Add final status event
@@ -80,12 +80,14 @@ export function Run() {
         const es = new EventSource(streamUrl);
 
         es.onopen = () => {
+            console.log("[Run] SSE Connection opened");
             setStatus('running');
         };
 
         es.onmessage = (event) => {
             try {
                 const data = JSON.parse(event.data);
+                console.log("[Run] SSE Event received:", data); // DEBUG LOG
                 setEvents(prev => [...prev, data]);
 
                 // Update task status helpers
@@ -115,8 +117,12 @@ export function Run() {
             console.error("SSE Error", e);
             // Only mark failed if we were actually running, otherwise it might just be connection jitter before start
             if (status === 'running') {
-                setStatus('failed');
-                es.close();
+                // Check readyState. If CLOSED (2), then it's a real closure/error.
+                if (es.readyState === EventSource.CLOSED) {
+                    console.log("[Run] SSE Closed");
+                }
+                // setStatus('failed'); // Temporarily disable marking failed on error to debug
+                // es.close();
             }
         };
 
@@ -155,7 +161,7 @@ export function Run() {
                     Execution
                 </h2>
                 <div className="flex-1 min-h-0">
-                    <ExecutionConsole events={events} />
+                    <ExecutionConsole events={events} executionState={status} />
                 </div>
             </div>
         </div>

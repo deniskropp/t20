@@ -36,7 +36,7 @@ interface WorkflowStatus {
 }
 
 // --- Component ---
-export function ExecutionConsole({ events }: { events: any[] }) {
+export function ExecutionConsole({ events, executionState }: { events: any[], executionState?: 'pending' | 'connecting' | 'running' | 'completed' | 'failed' }) {
     const bottomRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -57,23 +57,40 @@ export function ExecutionConsole({ events }: { events: any[] }) {
                     timestamp: new Date(timestamp || Date.now()).getTime()
                 });
             } else if (type === 'AgentOutputReceived') {
-                const step = stepsMap.get(details.stepId);
-                if (step) {
-                    // This event might be partial or summary, simpler to trust StepCompleted for full data usually,
-                    // but we can append if we want streaming feel. 
-                    // For now, we trust StepCompleted for the structured result.
+                let step = stepsMap.get(details.stepId);
+                if (!step) {
+                    step = {
+                        stepId: details.stepId,
+                        agent: details.agent,
+                        status: 'running',
+                        output: '',
+                        timestamp: new Date(timestamp || Date.now()).getTime()
+                    };
+                    stepsMap.set(details.stepId, step);
+                }
+                if (details.outputSummary) {
+                    step.output = details.outputSummary;
                 }
             } else if (type === 'StepCompleted') {
-                const step = stepsMap.get(details.stepId);
-                if (step) {
-                    step.status = 'completed';
-                    // Parse result
-                    const result = details.result || {};
-                    step.output = typeof result === 'string' ? result : (result.output || JSON.stringify(result));
-                    step.reasoning = result.reasoning;
-                    if (result.artifact) {
-                        step.artifacts = result.artifact.files || [];
-                    }
+                let step = stepsMap.get(details.stepId);
+                if (!step) {
+                    step = {
+                        stepId: details.stepId,
+                        agent: details.agent,
+                        status: 'running', // Will be updated to completed below
+                        output: '',
+                        timestamp: new Date(timestamp || Date.now()).getTime()
+                    };
+                    stepsMap.set(details.stepId, step);
+                }
+
+                step.status = 'completed';
+                // Parse result
+                const result = details.result || {};
+                step.output = typeof result === 'string' ? result : (result.output || JSON.stringify(result));
+                step.reasoning = result.reasoning;
+                if (result.artifact) {
+                    step.artifacts = result.artifact.files || [];
                 }
             } else if (type === 'WorkflowCompleted') {
                 wfStatus = { status: 'completed' };
@@ -83,15 +100,19 @@ export function ExecutionConsole({ events }: { events: any[] }) {
         });
 
         // Infer running status if we have running steps and haven't finished
-        if (wfStatus.status === 'idle' && Array.from(stepsMap.values()).some(s => s.status === 'running')) {
-            wfStatus = { status: 'running' };
+        if (wfStatus.status === 'idle') {
+            if (Array.from(stepsMap.values()).some(s => s.status === 'running')) {
+                wfStatus = { status: 'running' };
+            } else if (executionState === 'running' || executionState === 'connecting') {
+                wfStatus = { status: 'running' };
+            }
         }
 
         return {
             steps: Array.from(stepsMap.values()),
             workflowStatus: wfStatus
         };
-    }, [events]);
+    }, [events, executionState]);
 
     // Auto-scroll logic
     useEffect(() => {
