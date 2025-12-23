@@ -12,7 +12,7 @@ import os
 import logging
 import json
 
-from runtime.custom_types import Plan, Task
+from t20sdk.core.custom_types import Plan, Task
 
 logger = logging.getLogger(__name__)
 

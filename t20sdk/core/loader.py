@@ -2,7 +2,7 @@ import os
 import importlib.util
 import inspect
 from typing import Dict, Type
-from runtime.agent import Agent
+from t20sdk.core.agent import Agent
 
 def load_agent_classes(directory: str) -> Dict[str, Type[Agent]]:
     """

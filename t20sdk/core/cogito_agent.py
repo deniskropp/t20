@@ -6,9 +6,9 @@ refining prompts for other agents in the multi-agent system.
 import logging
 from typing import Optional
 
-from runtime.agent import Agent
-from runtime.custom_types import AgentOutput, Task, File
-from runtime.core import ExecutionContext
+from t20sdk.core.agent import Agent
+from t20sdk.core.custom_types import AgentOutput, Task, File
+from t20sdk.core.core import ExecutionContext
 
 logger = logging.getLogger(__name__)
 

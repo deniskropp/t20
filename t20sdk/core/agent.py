@@ -11,16 +11,16 @@ import re
 import logging
 from typing import List, Dict, Any, Optional
 
-from runtime.llm import LLM
+from t20sdk.core.llm import LLM
 
-from runtime.core import ExecutionContext, Session
+from t20sdk.core.core import ExecutionContext, Session
 
 
 logger = logging.getLogger(__name__)
 
-from runtime.custom_types import AgentOutput, Task, AgentProfile, Feedback
+from t20sdk.core.custom_types import AgentOutput, Task, AgentProfile, Feedback
 
-from runtime.message_bus import MessageBus
+from t20sdk.core.message_bus import MessageBus
 
 class Agent:
     """Represents a runtime agent instance."""

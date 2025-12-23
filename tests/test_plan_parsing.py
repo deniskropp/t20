@@ -1,5 +1,5 @@
 import pytest
-from runtime.parsing import KickLangParser
+from t20sdk.core.parsing import KickLangParser
 
 def test_parse_simple_plan():
     text = """

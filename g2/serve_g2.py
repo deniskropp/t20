@@ -19,10 +19,10 @@ from pydantic import BaseModel, Field, HttpUrl
 from sse_starlette.sse import EventSourceResponse
 
 # --- Runtime Imports ---
-from runtime.system import System
-from runtime.util import read_file as runtime_read_file
-from runtime.custom_types import File as RuntimeFile
-from runtime import Plan as RuntimePlan
+from t20sdk.core.system import System
+from t20sdk.core.util import read_file as runtime_read_file
+from t20sdk.core.custom_types import File as RuntimeFile
+from t20sdk.core.custom_types import Plan as RuntimePlan
 
 # --- Pydantic Models from openapi_g2.yaml ---
 
@@ -216,11 +216,11 @@ app.add_middleware(
 JOBS: Dict[str, Dict[str, Any]] = {}
 WEBHOOKS: Dict[str, WebhookSubscription] = {}
 BASE_URL = "http://localhost:8000"
-PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../t20sdk'))
 
 # --- System Initialization ---
 # Global system instance
-system = System(root_dir=PROJECT_ROOT, default_model="gemini-2.5-flash")
+system = System(root_dir=PROJECT_ROOT, default_model="mistral:mistral-small")
 
 
 # --- API Endpoints ---

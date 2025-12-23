@@ -63,7 +63,7 @@ class Plan(BaseModel):
     reasoning: str = Field(..., description="A brief explanation of the plan's structure and strategy.")
     roles: List[Role] = Field(..., description="List of all roles required to execute the plan.")
     tasks: List[Task] = Field(..., description="A step-by-step sequence of tasks to be executed in order.")
-    #metadata: Dict[str, str] = Field(default_factory=dict, description="Metadata and parameters for the plan.")
+    #metadata: Dict[str, Any] = Field(default_factory=dict, description="Metadata and parameters for the plan.")
     team: Optional[Team] = Field(default=None, description="Updates to team configuration or system prompts.")
 
 

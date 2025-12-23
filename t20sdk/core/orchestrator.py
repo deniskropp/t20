@@ -13,13 +13,13 @@ from colorama import Fore, Style
 
 from pydantic import BaseModel, Field, ValidationError
 
-from runtime.agent import Agent
-from runtime.core import Session
-from runtime.util import read_file
+from t20sdk.core.agent import Agent
+from t20sdk.core.core import Session
+from t20sdk.core.util import read_file
 
 logger = logging.getLogger(__name__)
 
-from runtime.custom_types import Plan, File, AgentProfile
+from t20sdk.core.custom_types import Plan, File, AgentProfile
 
 
 class PlanningPrompt(BaseModel):
@@ -37,7 +37,7 @@ class PlanningPrompt(BaseModel):
 
         # Load the general planning prompt template
         t20_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..')) # Not used
-        general_prompt_template = read_file(os.path.join(t20_root, "prompts", "general_planning.txt")).strip()
+        general_prompt_template = read_file(os.path.join(t20_root, "assets", "prompts", "general_planning.txt")).strip()
 
         # Format the planning prompt parts
         planning_prompt_parts = [general_prompt_template.format(

@@ -1,9 +1,9 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="t20-system-runtime",
+    name="t20sdk",
     version="0.1.0",
-    py_modules=["runtime"],
+    description="The T20 Multi-Agent System SDK",
     packages=find_packages(),
     install_requires=[
         "google-genai==1.26.0",
@@ -17,7 +17,7 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "t20-system=runtime.sysmain:main",
+            "t20-system=t20sdk.core.sysmain:main",
         ],
     },
 )

@@ -6,9 +6,9 @@ reused consistently throughout the application.
 """
 
 # Directory Names
-AGENTS_DIR_NAME = "agents"
+AGENTS_DIR_NAME = "assets/agents"
 CONFIG_DIR_NAME = "config"
-PROMPTS_DIR_NAME = "prompts"
+PROMPTS_DIR_NAME = "assets/prompts"
 
 # File Names
 RUNTIME_CONFIG_FILENAME = "runtime.yaml"

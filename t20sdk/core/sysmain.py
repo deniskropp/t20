@@ -13,11 +13,11 @@ from typing import List, Optional
 
 from pydantic import BaseModel
 
-from runtime import Plan
-from runtime.custom_types import File
-from runtime.log import setup_logging
-from runtime.system import System
-from runtime.util import read_file
+from t20sdk.core import Plan
+from t20sdk.core.custom_types import File
+from t20sdk.core.log import setup_logging
+from t20sdk.core.system import System
+from t20sdk.core.util import read_file
 
 logger = logging.getLogger(__name__)
 
@@ -167,7 +167,7 @@ def serving():
         if request.plan_from:
             plan_content = read_file(request.plan_from)
             if request.plan_from.endswith(".kl") or request.plan_from.endswith(".md"):
-                from runtime.parsing import KickLangParser
+                from t20sdk.core.parsing import KickLangParser
                 plan_arg = KickLangParser.parse(plan_content)
             else:
                 plan_arg = Plan.model_validate_json(plan_content)
@@ -248,7 +248,7 @@ async def system_main():
         if args.plan_from:
             plan_content = read_file(args.plan_from)
             if args.plan_from.endswith(".kl") or args.plan_from.endswith(".md"):
-                from runtime.parsing import KickLangParser
+                from t20sdk.core.parsing import KickLangParser
                 plan_arg = KickLangParser.parse(plan_content)
             else:
                 plan_arg = Plan.model_validate_json(plan_content)
