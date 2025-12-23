@@ -1,6 +1,6 @@
 <img src="https://r2cdn.perplexity.ai/pplx-full-logo-primary-dark%402x.png" style="height:64px;margin-right:32px"/>
 
-# Generate KickLang Syntax Reference
+# KickLang Syntax Reference
 
 KickLang is a formal language and cognitive framework designed for orchestrating layered, role-based reasoning and knowledge structuring, with a syntax built around meta-communicative and modular workflows for dynamic collaboration in knowledge graphs. Below is a concise KickLang syntax reference based on the available documentation.[^2][^9]
 

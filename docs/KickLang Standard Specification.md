@@ -1,6 +1,6 @@
 <img src="https://r2cdn.perplexity.ai/pplx-full-logo-primary-dark%402x.png" style="height:64px;margin-right:32px"/>
 
-# Generate KickLang Standard Specification
+# KickLang Standard Specification
 
 The KickLang Standard Specification defines a formal language and cognitive framework for orchestrating layered, role-based reasoning and knowledge structuring. KickLang enables modular, traceable workflows in knowledge graphs, supporting progressive knowledge building and multi-perspective synthesis.[^2][^4][^5]
 
