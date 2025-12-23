@@ -1,5 +1,5 @@
 from .spec import Role, RoleType, Action, ActionType, Placebo, Researcher, Storyteller, Planner, Summarizer, Analyst
-from .syntax import Step, Plan, Pipeline
+from .ast import Step, Plan, Pipeline
 from .runtime import PlanExecutor
 
 __all__ = [

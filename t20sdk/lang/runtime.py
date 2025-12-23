@@ -1,7 +1,7 @@
 import logging
 from typing import Dict, Any, List
 from .spec import ActionType, Role, Placebo
-from .syntax import Plan, Step, Pipeline
+from .ast import Plan, Step, Pipeline
 
 logger = logging.getLogger(__name__)
 
