@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
+import { getRunState } from '../api';
 import type { Plan } from '../types';
 import { PlanViewer } from '../components/PlanViewer';
 import { ExecutionConsole } from '../components/ExecutionConsole';
@@ -9,7 +10,7 @@ export function Run() {
     const { jobId } = useParams<{ jobId: string }>();
     const location = useLocation();
 
-    const [plan] = useState<Plan | null>(location.state?.plan || null);
+    const [plan, setPlan] = useState<Plan | null>(location.state?.plan || null);
     const streamUrl = location.state?.streamUrl || `/api/runs/${jobId}/stream`;
 
     const [events, setEvents] = useState<any[]>([]);
@@ -17,7 +18,38 @@ export function Run() {
 
     const [status, setStatus] = useState<'pending' | 'connecting' | 'running' | 'completed' | 'failed'>('pending');
 
+    useEffect(() => {
+        if (!plan && jobId) {
+            getRunState(jobId).then(state => {
+                setPlan(state.plan);
+
+                // Reconstruct events from log
+                const reconstructedEvents = state.executionLog.map(item => ({
+                    type: 'StepCompleted', // This is a simplification, ideally we have the raw events or better log structure
+                    details: {
+                        stepId: item.step.id,
+                        output: item.result.output
+                    },
+                    timestamp: new Date().toISOString()
+                }));
+                setEvents(reconstructedEvents);
+
+                // Reconstruct statuses
+                const newStatuses: Record<string, any> = {};
+                state.executionLog.forEach(item => {
+                    newStatuses[item.step.id] = 'completed';
+                });
+                setTaskStatuses(newStatuses);
+
+                setStatus(state.finalStatus as any);
+            }).catch(e => console.error("Failed to load run state", e));
+        }
+    }, [jobId, plan]);
+
     const startRun = () => {
+        // Don't start stream if already finished
+        if (status === 'completed' || status === 'failed') return;
+
         setStatus('connecting');
         const es = new EventSource(streamUrl);
 
@@ -61,14 +93,17 @@ export function Run() {
                 es.close();
             }
         };
+
+        return () => es.close();
     };
 
     useEffect(() => {
-        // Auto-start for now to simplify
+        // Auto-start only if we intend to run and haven't loaded a finished state
         if (jobId && status === 'pending') {
-            startRun();
+            const cleanup = startRun();
+            return cleanup;
         }
-    }, [jobId]);
+    }, [jobId, status]);
 
 
     if (!plan) return <div className="p-8 text-center">Loading plan...</div>;
