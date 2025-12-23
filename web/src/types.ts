@@ -63,3 +63,25 @@ export interface TaskResult {
     step: Task;
     result: string; // The raw string result (could be JSON of AgentOutput)
 }
+
+export interface RunSummary {
+    jobId: string;
+    highLevelGoal: string;
+    startTime: string;
+    endTime?: string;
+    status: string;
+}
+
+export interface ErrorResponse {
+    code: string;
+    message: string;
+    details?: Record<string, any>;
+}
+
+export interface RunStateDetail {
+    jobId: string;
+    plan: Plan;
+    executionLog: { step: Task; result: AgentOutput }[];
+    finalStatus: string;
+    error?: ErrorResponse;
+}

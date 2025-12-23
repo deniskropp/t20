@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { StartRequest, StartResponse } from './types';
+import type { StartRequest, StartResponse, RunSummary, RunStateDetail } from './types';
 
 const api = axios.create({
     baseURL: '/api',
@@ -20,4 +20,14 @@ export const listArtifacts = async (): Promise<string[]> => {
 export const getArtifactContent = async (path: string): Promise<string> => {
     const response = await api.get(`/artifacts/content`, { params: { path } });
     return response.data; // Assuming raw text or JSON with content
+};
+
+export const listRuns = async (): Promise<RunSummary[]> => {
+    const response = await api.get('/history/runs');
+    return response.data;
+};
+
+export const getRunState = async (jobId: string): Promise<RunStateDetail> => {
+    const response = await api.get(`/history/runs/${jobId}/state`);
+    return response.data;
 };
