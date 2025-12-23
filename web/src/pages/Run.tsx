@@ -24,14 +24,40 @@ export function Run() {
                 setPlan(state.plan);
 
                 // Reconstruct events from log
-                const reconstructedEvents = state.executionLog.map(item => ({
-                    type: 'StepCompleted', // This is a simplification, ideally we have the raw events or better log structure
-                    details: {
-                        stepId: item.step.id,
-                        output: item.result.output
+                const reconstructedEvents = state.executionLog.flatMap(item => [
+                    {
+                        type: 'StepStarted',
+                        details: {
+                            stepId: item.step.id,
+                            agent: item.step.agent
+                        },
+                        timestamp: new Date().toISOString()
                     },
-                    timestamp: new Date().toISOString()
-                }));
+                    {
+                        type: 'StepCompleted',
+                        details: {
+                            stepId: item.step.id,
+                            result: item.result
+                        },
+                        timestamp: new Date().toISOString()
+                    }
+                ]);
+
+                // Add final status event
+                if (state.finalStatus === 'completed') {
+                    reconstructedEvents.push({
+                        type: 'WorkflowCompleted',
+                        details: {},
+                        timestamp: new Date().toISOString()
+                    });
+                } else if (state.finalStatus === 'failed') {
+                    reconstructedEvents.push({
+                        type: 'WorkflowFailed',
+                        details: { error: state.error },
+                        timestamp: new Date().toISOString()
+                    });
+                }
+
                 setEvents(reconstructedEvents);
 
                 // Reconstruct statuses
