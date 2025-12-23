@@ -7,25 +7,28 @@ configuration loading, agent instantiation, and workflow execution.
 import os
 import json
 import yaml
-from glob import glob
-
 import logging
+import asyncio
 from typing import Any, AsyncGenerator, List, Optional, Dict, Tuple
 from pydantic import BaseModel
-import asyncio
 
-from .core import Session, ExecutionContext
-from .agent import Agent, find_agent_by_role
-from .orchestrator import Orchestrator
-from .log import setup_logging
-from .loader import load_agent_classes
-from .paths import AGENTS_DIR_NAME, CONFIG_DIR_NAME, PROMPTS_DIR_NAME, RUNTIME_CONFIG_FILENAME
+from runtime.core import Session, ExecutionContext
+from runtime.agent import Agent
+from runtime.orchestrator import Orchestrator
+from runtime.log import setup_logging
+from runtime.paths import AGENTS_DIR_NAME, CONFIG_DIR_NAME, PROMPTS_DIR_NAME, RUNTIME_CONFIG_FILENAME
+from runtime.custom_types import Task, Plan, File
+from runtime.message_bus import MessageBus
 
-from .custom_types import AgentOutput, Artifact, Plan, File, Task
+# Aetheria OS Components
+from aetheria_os.prompt_store import PromptStore
+from aetheria_os.agent_manager import AgentManager
+from aetheria_os.workflow_engine import WorkflowEngine
+
+# KickLang Components
+from kicklang.interpreter import KickLangInterpreter
+
 logger = logging.getLogger(__name__)
-
-from .message_bus import MessageBus
-from .task_manager import TaskManager, TaskStatus
 
 class SystemConfig(BaseModel):
     """
@@ -33,347 +36,105 @@ class SystemConfig(BaseModel):
     """
     logging_level: str = "INFO"
     default_model: str = "gemini-2.5-flash-lite"
-    # Add other system-wide configuration parameters here as needed
-
 
 class System:
     """
     Represents the entire multi-agent system, handling setup, execution, and state.
     """
     def __init__(self, root_dir: str, default_model: str = "gemini-2.5-flash-lite"):
-        """
-        Initializes the System.
-
-        Args:
-            root_dir (str): The root directory of the project.
-            default_model (str): The default LLM model to use.
-        """
         self.root_dir = root_dir
         self.default_model = default_model
         self.message_bus = MessageBus()
         self.config: SystemConfig = SystemConfig()
-        self.agents: List[Agent] = []
         self.session: Optional[Session] = None
-        self.orchestrator: Optional[Orchestrator] = None
-        self.completed_tasks: set = set()
+        
+        # Core Components
+        self.prompt_store: Optional[PromptStore] = None
+        self.agent_manager: Optional[AgentManager] = None
+        self.workflow_engine: Optional[WorkflowEngine] = None
+        self.kicklang: Optional[KickLangInterpreter] = None
+        
+        # Inject Knowledge Graph Interface
+        from knowledge_graph.interface import KnowledgeGraphInterface
+        self.kg = KnowledgeGraphInterface()
 
     def setup(self, orchestrator_name: Optional[str] = None) -> None:
         """
-        Sets up the system by loading configurations and instantiating agents.
-
-        Args:
-            orchestrator_name (str, optional): The name of the orchestrator to use.
-
-        Raises:
-            RuntimeError: If no agents or orchestrator can be set up.
+        Sets up the system by loading configurations and instantiating components.
         """
         logger.info("--- System Setup ---")
         print(f"Using default model: {self.default_model}")
 
-        self.config = self._load_config(os.path.join(self.root_dir, CONFIG_DIR_NAME, RUNTIME_CONFIG_FILENAME))
-        agent_specs = self._load_agent_templates(os.path.join(self.root_dir, AGENTS_DIR_NAME), self.config, self.default_model)
-        prompts = self._load_prompts(os.path.join(self.root_dir, PROMPTS_DIR_NAME))
-        agent_classes = load_agent_classes(os.path.join(self.root_dir, AGENTS_DIR_NAME))
+        # Load Config
+        config_path = os.path.join(self.root_dir, CONFIG_DIR_NAME, RUNTIME_CONFIG_FILENAME)
+        logger.info(f"Loading configuration from: {config_path}")
+        with open(config_path, 'r', encoding='utf-8') as f:
+            raw_config = yaml.safe_load(f)
+            # Simple merge for now
+            if raw_config:
+                 self.config.logging_level = raw_config.get('logging_level', 'INFO')
 
-        # Instantiate all agents
-        all_agents = []
-        for spec in agent_specs:
-            spec["model"] = spec.get("model", self.default_model)
-            agent = self._instantiate_agent(spec, prompts, agent_classes)
-            if agent:
-                all_agents.append(agent)
-
-        # Build teams
-        agents_by_name = {agent.profile.name.lower(): agent for agent in all_agents}
-        for agent in all_agents:
-            if isinstance(agent, Orchestrator):
-                spec = next((s for s in agent_specs if s["name"].lower() == agent.profile.name.lower()), None)
-                if spec and "team" in spec:
-                    agent.team = {}
-                    for team_member_name in spec["team"]:
-                        team_member = agents_by_name.get(team_member_name.lower())
-                        if team_member:
-                            agent.team[team_member_name] = team_member
-                        else:
-                            logger.debug(f"Team member '{team_member_name}' for orchestrator '{agent.profile.name}' not found.")
-
-        self.agents = all_agents
-
-        if not self.agents:
+        # Initialize Components
+        prompts_dir = os.path.join(self.root_dir, PROMPTS_DIR_NAME)
+        self.prompt_store = PromptStore(prompts_dir)
+        
+        agents_dir = os.path.join(self.root_dir, AGENTS_DIR_NAME)
+        self.agent_manager = AgentManager(
+            agents_dir=agents_dir, 
+            prompt_store=self.prompt_store, 
+            config=self.config, 
+            message_bus=self.message_bus,
+            default_model=self.default_model
+        )
+        self.agent_manager.load_agents() # Load agents and build teams
+        
+        if not self.agent_manager.agents:
             raise RuntimeError("No agents could be instantiated. System setup failed.")
 
-        orchestrator: Optional[Agent] = None
+        # Resolve Orchestrator
+        orchestrator = self.agent_manager.orchestrator
         if orchestrator_name:
-            orchestrator = next((agent for agent in self.agents if agent.profile.name.lower() == orchestrator_name.lower()), None)
-        else:
-            orchestrator = find_agent_by_role(self.agents, 'Orchestrator')
-
+             orchestrator = next((a for a in self.agent_manager.agents if a.profile.name.lower() == orchestrator_name.lower()), None)
+        
         if not orchestrator:
-            error_msg = f"Orchestrator with name '{orchestrator_name}' not found." if orchestrator_name else "Orchestrator with role 'Orchestrator' not found."
-            raise RuntimeError(f"{error_msg} System setup failed.")
-
-        if not isinstance(orchestrator, Orchestrator):
-            raise RuntimeError(f"Agent '{orchestrator.profile.name}' is not a valid Orchestrator instance. System setup failed.")
-
-        self.orchestrator = orchestrator
-        self.session = Session(agents=self.agents, project_root="./")
+             raise RuntimeError("Orchestrator not found.")
+        
+        # Initialize Session
+        self.session = Session(agents=self.agent_manager.agents, project_root="./", kg=self.kg)
+        
+        # Initialize Workflow Engine
+        self.workflow_engine = WorkflowEngine(
+            session=self.session, 
+            agents=self.agent_manager.agents,
+            orchestrator=orchestrator
+        )
+        
+        # Initialize KickLang
+        self.kicklang = KickLangInterpreter()
+        
         logger.info("--- System Setup Complete ---")
 
     async def start(self, high_level_goal: str, files: List[File] = [], plan: Plan = None) -> Plan:
-        """
-        Starts the system's main workflow, generating a plan if one is not provided.
-
-        Args:
-            high_level_goal (str): The high-level goal for the orchestrator to perform.
-            files (List[File]): List of files to be used in the task.
-            plan (Plan, optional): An optional pre-existing plan to use. If not provided,
-                                   the orchestrator will generate one.
-
-        Returns:
-            Plan: The generated or provided plan.
-
-        Raises:
-            RuntimeError: If the system is not set up before running.
-        """
-        if not self.orchestrator or not self.session:
-            raise RuntimeError("System is not set up. Please call setup() before start().")
-
+        if not self.workflow_engine:
+             raise RuntimeError("System not setup.")
+        
         if not plan:
-            plan = await self.orchestrator.generate_plan(self.session, high_level_goal, files)
-            if not plan:
-                raise RuntimeError("Orchestration failed: Could not generate plan.")
-
-        plan = Plan.model_validate(plan)
-        if not plan:
-            raise RuntimeError("Orchestration failed: Could not validate plan.")
-
-        logger.debug(f"{plan.model_dump_json()}")
-
-        #if not plan or not plan.tasks or not plan.roles:
-        #    raise RuntimeError("Orchestration failed: Could not find a valid plan.")
-
-        #print(f"\n\nInitial Plan: {plan.model_dump_json(indent=4)}\n\n\n")
-        self.session.add_artifact("initial_plan.json", plan.model_dump())
-
+             plan = await self.workflow_engine.generate_plan(high_level_goal, files)
+        
         return plan
 
     async def run(self, plan: Plan, rounds: int = 1, files: List[File] = []) -> AsyncGenerator[Tuple[Task, Optional[str]], None]:
-        """
-        Runs the multi-agent workflow based on the provided plan.
-
-        Args:
-            plan (Plan): The execution plan generated by the orchestrator.
-            rounds (int): The number of rounds to execute the workflow.
-            files (List[File]): Initial files provided to the system.
-
-        Yields:
-            Tuple[Task, Optional[str]]: A tuple containing the executed task and its result.
-
-        Raises:
-            RuntimeError: If the system is not set up before running.
-        """
-        if not self.orchestrator or not self.session:
-            raise RuntimeError("System is not set up. Please call start() before run().")
-
-        logger.info("--- Starting Workflow ---")
-
-        context = ExecutionContext(session=self.session, plan=plan)
-        context.record_initial("files", Artifact(task='initial',files=files).model_dump_json())
-
-        if plan.team and plan.team.prompts:
-            logger.info(f"Plan provided new prompts.")
-            for prompt_data in plan.team.prompts:
-                self._update_agent_prompt(self.session, prompt_data.agent, prompt_data.system_prompt)
-
-        task_manager = TaskManager(plan)
+        if not self.workflow_engine:
+             raise RuntimeError("System not setup.")
         
-        running_tasks = {}
+        context = ExecutionContext(session=self.session, plan=plan)
+        # Record initial files
+        from runtime.custom_types import Artifact as RunArtifact
+        # Note: Importing Artifact here might conflict with the new Pydantic Artifact if not careful,
+        # but custom_types.Artifact is a Pydantic model itself (likely different).
+        # We should check custom_types.
+        
+        context.record_initial("files", RunArtifact(task='initial', files=files).model_dump_json())
 
-        while not task_manager.is_all_completed():
-            ready_tasks = task_manager.get_ready_tasks()
-            
-            # Filter out tasks that are already running
-            running_task_ids = {t.id for t in running_tasks.values()}
-            ready_tasks = [t for t in ready_tasks if t.id not in running_task_ids]
-
-            for task in ready_tasks:
-                task_manager.mark_running(task.id)
-                coro = self._execute_task(task, context)
-                running_tasks[asyncio.create_task(coro)] = task
-
-            if not running_tasks:
-                if not task_manager.is_all_completed():
-                     # Check if we are stuck (no running tasks, but not all completed)
-                     # This could happen if there are circular dependencies or failed tasks that block others
-                     # For now, we just break to avoid infinite loop
-                     logger.error("Workflow stuck: No running tasks and not all tasks completed.")
-                     break
-                else:
-                    break
-
-            done, pending = await asyncio.wait(running_tasks.keys(), return_when=asyncio.FIRST_COMPLETED)
-
-            for future in done:
-                task = running_tasks.pop(future)
-                try:
-                    result = await future
-                    task_manager.mark_completed(task.id, result)
-                    yield task, result
-                except Exception as e:
-                    logger.exception(f"Error executing task {task.id}: {e}")
-                    task_manager.mark_failed(task.id, str(e))
-                    yield task, f"Error executing task {task.id}: {e}"
-
-        logger.info("--- Workflow Complete ---")
-
-    async def _execute_task(self, task: Task, context: ExecutionContext) -> Optional[str]:
-        team_by_name = {agent.profile.name: agent for agent in self.orchestrator.team.values()} if self.orchestrator.team else {}
-        delegate_agent = team_by_name.get(task.agent)
-        if not delegate_agent:
-            delegate_agent = next((agent for agent in self.agents if agent.profile.name.lower() == task.agent.lower()), None)
-
-        if not delegate_agent:
-            logger.warning(f"No agent found with name '{task.agent}'. Execution will continue with the Orchestrator as the fallback agent.")
-            delegate_agent = self.orchestrator
-
-        logger.info(f"Agent '{delegate_agent.profile.name}' is executing step {task.id}: '{task.description}' (Role: {task.role})")
-
-        result = await delegate_agent.execute_task(context, task)
-        if result:
-            context.record_artifact(f"{delegate_agent.profile.name}_result.txt", result, task, True)
-            try:
-                agent_output = AgentOutput.model_validate_json(result)
-                if agent_output.team and agent_output.team.prompts:
-                    logger.info(f"Agent {delegate_agent.profile.name} provided new prompts.")
-                    for prompt_data in agent_output.team.prompts:
-                        self._update_agent_prompt(self.session, prompt_data.agent, prompt_data.system_prompt)
-            except (json.JSONDecodeError, Exception) as e:
-                logger.warning(f"Could not parse agent output as AgentOutput: {e}. Treating as plain text.")
-        return result
-
-    def _update_agent_prompt(self, session: Session, agent_name: str, new_prompt: str) -> None:
-        """
-        Updates an agent's system prompt.
-
-        Args:
-            session (Session): The current session object.
-            agent_name (str): The name or role of the agent to update.
-            new_prompt (str): The new system prompt.
-        """
-        if not (agent_name and new_prompt):
-            return
-
-        if not (self.orchestrator and self.orchestrator.team):
-            logger.warning("Orchestrator or its team is not initialized. Cannot update agent prompt.")
-            return
-
-        # Combine team agents and session agents for a comprehensive search, ensuring uniqueness
-        all_agents = {agent.profile.name: agent for agent in list(self.orchestrator.team.values()) + session.agents}.values()
-
-        # First, try to find by name
-        target_agent = next((agent for agent in all_agents if agent.profile.name.lower() == agent_name.lower()), None)
-
-        # If not found by name, try to find by role
-        if not target_agent:
-            target_agent = next((agent for agent in all_agents if agent.profile.role.lower() == agent_name.lower()), None)
-
-        if target_agent:
-            target_agent.update_system_prompt(new_prompt)
-            logger.debug(f"Agent '{target_agent.profile.name}' (matched by '{agent_name}') system prompt updated.")
-        else:
-            logger.warning(f"Target agent '{agent_name}' not found for prompt update.")
-
-    def _instantiate_agent(self, agent_spec: Dict[str, Any], prompts: Dict[str, str], agent_classes: Dict[str, Any]) -> Optional[Agent]:
-        """
-        Instantiates an Agent (or a subclass) based on the provided specification.
-
-        Args:
-            agent_spec (Dict[str, Any]): A dictionary containing the agent's specifications.
-            prompts (Dict[str, str]): A dictionary of available system prompts.
-            agent_classes (Dict[str, Any]): A dictionary of available agent classes.
-
-        Returns:
-            Optional[Agent]: An instantiated Agent object, or None if the prompt is not found.
-        """
-        prompt_key = f"{agent_spec['name'].lower()}_instructions.txt"
-        system_prompt = prompts.get(prompt_key, "")
-        if not system_prompt:
-            logger.debug(
-                f"Prompt for agent '{agent_spec['name']}' not found with key '{prompt_key}'. Empty system prompt will be used."
-            )
-
-        agent_class_name = agent_spec.get("agent_class")
-        if agent_class_name and agent_class_name in agent_classes:
-            agent_class = agent_classes[agent_class_name]
-        else:
-            agent_class = Orchestrator if agent_spec.get("delegation") else Agent
-            
-        return agent_class(
-            name=agent_spec.get("name", "Unnamed Agent"),
-            role=agent_spec.get("role", "Agent"),
-            goal=agent_spec.get("goal", ""),
-            model=agent_spec.get("model", self.default_model),
-            system_prompt=system_prompt,
-            message_bus=self.message_bus,
-        )
-
-    def _load_config(self, config_path: str) -> Any:
-        """
-        Loads the runtime configuration from a YAML file.
-
-        Args:
-            config_path (str): The absolute path to the configuration file.
-
-        Returns:
-            dict: The loaded configuration as a dictionary.
-        """
-        logger.info(f"Loading configuration from: {config_path}")
-        with open(config_path, 'r', encoding='utf-8') as f:
-            return yaml.safe_load(f)
-
-    def _load_agent_templates(self, agents_dir: str, config: dict, default_model: str) -> List[Dict[str, Any]]:
-        """
-        Loads all agent specifications from YAML files within a specified directory.
-
-        Args:
-            agents_dir (str): The absolute path to the directory containing agent YAML files.
-
-        Returns:
-            list: A list of dictionaries, where each dictionary represents an agent's specification.
-        """
-        logger.info(f"Loading agent templates from: {agents_dir}")
-        agent_files = glob(os.path.join(agents_dir, '*.yaml'))
-        templates = []
-        for agent_file in agent_files:
-            with open(agent_file, 'r', encoding='utf-8') as f:
-                template = yaml.safe_load(f)
-                # Resolve prompt path relative to the agent file's directory
-                if 'system_prompt' in template and template['system_prompt']:
-                    base_dir = os.path.dirname(agent_file)
-                    prompt_path = os.path.abspath(os.path.join(base_dir, template['system_prompt']))
-                    template['system_prompt_path'] = prompt_path
-                template["model"] = default_model
-                templates.append(template)
-        logger.info(f"{len(templates)} agent templates loaded.")
-        return templates
-
-    def _load_prompts(self, prompts_dir: str) -> Dict[str, str]:
-        """
-        Loads all system prompts from text files within a specified directory.
-
-        Args:
-            prompts_dir (str): The absolute path to the directory containing prompt text files.
-
-        Returns:
-            dict: A dictionary where keys are prompt filenames (e.g., 'agent_instructions.txt')
-                and values are the content of the prompt files.
-        """
-        logger.info(f"Loading prompts from: {prompts_dir}")
-        prompt_files = glob(os.path.join(prompts_dir, '*.txt'))
-        prompts = {}
-        for prompt_file in prompt_files:
-            with open(prompt_file, 'r', encoding='utf-8') as f:
-                # Use the absolute path as the key for reliable lookup
-                prompts[os.path.basename(prompt_file)] = f.read()
-        logger.info(f"{len(prompts)} prompts loaded.")
-        return prompts
+        async for task, result in self.workflow_engine.run(plan, context):
+            yield task, result

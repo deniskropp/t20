@@ -70,6 +70,7 @@ class Session:
     state: str = "initialized"
     session_dir: str = field(init=False)
     project_root: str = field(default_factory=str)
+    kg: Any = None # KnowledgeGraphInterface
 
     def __post_init__(self) -> None:
         """Initializes the session directory."""
@@ -99,9 +100,31 @@ class Session:
             with open(artifact_path, 'w', encoding='utf-8') as f:
                 if isinstance(content, (dict, list)):
                     json.dump(content, f, indent=4)
+                    content_str = json.dumps(content)
                 else:
                     f.write(str(content))
+                    content_str = str(content)
+            
             logger.info(f"Artifact '{name}' saved in session {self.session_id}.")
+            
+            # Log to Knowledge Graph
+            if self.kg:
+                 from data_models.artifact_schemas import Artifact
+                 # Create a basic Artifact object
+                 # In a real scenario, we'd need more context (task_id, agent_id) here.
+                 # For now, we use a placeholder task ID.
+                 try:
+                     artifact = Artifact(
+                         system_task_id="T-UNKNOWN", 
+                         output_summary=f"Artifact {name} saved",
+                         generated_by_agent_id=None,
+                         generated_for_component_id=None,
+                         files=[] 
+                     )
+                     self.kg.add_artifact(artifact)
+                     logger.info(f"Artifact '{name}' logged to Knowledge Graph.")
+                 except Exception as e:
+                     logger.warning(f"Failed to log artifact to KG: {e}")
         except (TypeError, IOError) as e:
             logger.error(f"Error saving artifact '{name}': {e}")
 

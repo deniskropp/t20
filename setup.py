@@ -18,6 +18,7 @@ setup(
     entry_points={
         "console_scripts": [
             "t20-system=runtime.sysmain:main",
+            "t20-console=runtime.cli:main",
         ],
     },
 )
