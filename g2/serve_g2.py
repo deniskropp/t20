@@ -10,6 +10,7 @@ import json
 import os
 import uuid
 from typing import List, Optional, Dict, Any, Literal
+from contextlib import asynccontextmanager
 
 import uvicorn
 from fastapi import FastAPI, HTTPException, status
@@ -38,7 +39,7 @@ class Task(BaseModel):
     description: str
     role: str
     agent: str
-    requires: List[str]
+    deps: List[str]
 
 class Prompt(BaseModel):
     agent: str
@@ -188,10 +189,19 @@ class AgentOutput(BaseModel):
 
 # --- FastAPI Application ---
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Initializes the system on server startup."""
+    system.setup(orchestrator_name="Meta-AI")
+    print("System initialized.")
+    yield
+    print("System shutdown.")
+
 app = FastAPI(
     title="Multi-Agent Workflow API (G2)",
     version="2.0.0",
     description="API for orchestrating multi-agent workflows with real-time streaming, control, and webhook support.",
+    lifespan=lifespan,
 )
 
 app.add_middleware(
@@ -210,13 +220,7 @@ PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 # --- System Initialization ---
 # Global system instance
-system = System(root_dir=PROJECT_ROOT)
-
-@app.on_event("startup")
-async def startup_event():
-    """Initializes the system on server startup."""
-    system.setup(orchestrator_name="Meta-AI")
-    print("System initialized.")
+system = System(root_dir=PROJECT_ROOT, default_model="gemini-2.5-flash")
 
 
 # --- API Endpoints ---
@@ -234,7 +238,7 @@ async def start_workflow_g2(request: StartRequest):
             plan_content = runtime_read_file(request.plan_from)
             plan_from_file = RuntimePlan.model_validate_json(plan_content)
 
-        plan = system.start(
+        plan = await system.start(
             high_level_goal=request.high_level_goal,
             files=runtime_files,
             plan=plan_from_file
@@ -278,16 +282,7 @@ async def run_workflow_background(job_id: str, request: RunRequest):
     runtime_files = [RuntimeFile(path=f.path, content=f.content) for f in request.files]
 
     try:
-        blocking_generator = system.run(plan=runtime_plan, rounds=request.rounds, files=runtime_files)
-        
-        while True:
-            item = await asyncio.to_thread(lambda: next(blocking_generator, None))
-            
-            if item is None:
-                break
-
-            step, result = item
-
+        async for step, result in system.run(plan=runtime_plan, rounds=request.rounds, files=runtime_files):
             result = AgentOutput.model_validate_json(result).model_dump()
 
             await event_queue.put(StepStartedEvent(details=StepStartedEventDetails(stepId=step.id, agent=step.agent)))

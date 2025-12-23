@@ -89,8 +89,8 @@ def parse_command_line_arguments() -> argparse.Namespace:
 
     if args.rounds < 1:
         parser.error("Number of rounds must be at least 1.")
-    if not args.task and not args.serve:
-        parser.error("The task argument is required when not in serve mode.")
+    if not args.task and not args.serve and not args.plan_from:
+        parser.error("The task argument is required when not in serve mode, unless --plan-from is specified.")
 
     return args
 
@@ -163,12 +163,19 @@ def serving():
         setup_application_logging(log_level=log_level)
 
         # 6. Start the system's main workflow
+        plan_arg = None
+        if request.plan_from:
+            plan_content = read_file(request.plan_from)
+            if request.plan_from.endswith(".kl") or request.plan_from.endswith(".md"):
+                from runtime.parsing import KickLangParser
+                plan_arg = KickLangParser.parse(plan_content)
+            else:
+                plan_arg = Plan.model_validate_json(plan_content)
+
         plan = await system.start(
             high_level_goal=request.high_level_goal,
             files=request.files,
-            plan=None
-            if not request.plan_from
-            else Plan.model_validate_json(read_file(request.plan_from)),
+            plan=plan_arg
         )
         state["plan"] = plan
         return {"plan": plan.model_dump()}
@@ -237,14 +244,22 @@ async def system_main():
         setup_application_logging(log_level=log_level)
 
         # 6. Start the system's main workflow
+        plan_arg = None
+        if args.plan_from:
+            plan_content = read_file(args.plan_from)
+            if args.plan_from.endswith(".kl") or args.plan_from.endswith(".md"):
+                from runtime.parsing import KickLangParser
+                plan_arg = KickLangParser.parse(plan_content)
+            else:
+                plan_arg = Plan.model_validate_json(plan_content)
+
         plan = await system.start(
             high_level_goal=args.task,
             files=file_objects,
-            plan=None
-            if not args.plan_from
-            else Plan.model_validate_json(read_file(args.plan_from)),
+            plan=plan_arg
         )
         if args.plan_only:
+            print(plan.model_dump_json(indent=4))
             logger.info("Plan-only mode: Workflow execution skipped.")
             return
 
