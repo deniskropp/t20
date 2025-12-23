@@ -5,9 +5,9 @@ model: gemini-2.5-flash-lite
 delegation: true
 team:
   - gptase
+  - tase
+  - utase
   - putase
-  - codein
-  - TypeScript Developer
-  - DB Architect
-  - SQL Developer
-  - Lex
+  - Lyra
+  - Aurora
+  - Kodax
