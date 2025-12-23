@@ -189,10 +189,26 @@ class AgentOutput(BaseModel):
 
 # --- FastAPI Application ---
 
+def handle_task_started(task: Any):
+    """Callback for task_started events from the system message bus."""
+    event = StepStartedEvent(details=StepStartedEventDetails(stepId=task.id, agent=task.agent))
+    
+    # Broadcast to all running jobs
+    for job in JOBS.values():
+        if job["status"] == "running":
+            # We use put_nowait because this callback is synchronous
+            # and the queue is unbounded.
+            job["events"].put_nowait(event)
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Initializes the system on server startup."""
     system.setup(orchestrator_name="Meta-AI")
+    
+    # Subscribe to task started events
+    system.message_bus.subscribe("task_started", handle_task_started)
+    
     print("System initialized.")
     yield
     print("System shutdown.")
@@ -285,7 +301,7 @@ async def run_workflow_background(job_id: str, request: RunRequest):
         async for step, result in system.run(plan=runtime_plan, rounds=request.rounds, files=runtime_files):
             result = AgentOutput.model_validate_json(result).model_dump()
 
-            await event_queue.put(StepStartedEvent(details=StepStartedEventDetails(stepId=step.id, agent=step.agent)))
+            # StepStartedEvent is now handled by message bus subscription
             await event_queue.put(AgentOutputReceivedEvent(details=AgentOutputReceivedEventDetails(stepId=step.id, agent=step.agent, outputSummary=str(result)[:200])))
             await event_queue.put(StepCompletedEvent(details=StepCompletedEventDetails(stepId=step.id, agent=step.agent, result=result)))
             

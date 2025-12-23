@@ -82,6 +82,11 @@ export function ExecutionConsole({ events }: { events: any[] }) {
             }
         });
 
+        // Infer running status if we have running steps and haven't finished
+        if (wfStatus.status === 'idle' && Array.from(stepsMap.values()).some(s => s.status === 'running')) {
+            wfStatus = { status: 'running' };
+        }
+
         return {
             steps: Array.from(stepsMap.values()),
             workflowStatus: wfStatus

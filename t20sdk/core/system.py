@@ -237,6 +237,7 @@ class System:
             delegate_agent = self.orchestrator
 
         logger.info(f"Agent '{delegate_agent.profile.name}' is executing step {task.id}: '{task.description}' (Role: {task.role})")
+        self.message_bus.publish("task_started", task)
 
         result = await delegate_agent.execute_task(context, task)
         if result:
