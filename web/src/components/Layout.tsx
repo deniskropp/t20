@@ -12,6 +12,7 @@ export function Layout() {
                     </Link>
                     <nav className="flex items-center gap-4">
                         <Link to="/" className="text-sm font-medium hover:text-primary transition-colors">New Task</Link>
+                        <Link to="/runs" className="text-sm font-medium hover:text-primary transition-colors">Runs</Link>
                         <Link to="/artifacts" className="text-sm font-medium hover:text-primary transition-colors">Artifacts</Link>
                     </nav>
                 </div>

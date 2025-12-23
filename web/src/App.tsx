@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { Home } from './pages/Home';
 import { Run } from './pages/Run';
+import { Runs } from './pages/Runs';
 import { Artifacts } from './pages/Artifacts';
 
 export default function App() {
@@ -10,6 +11,7 @@ export default function App() {
             <Routes>
                 <Route element={<Layout />}>
                     <Route path="/" element={<Home />} />
+                    <Route path="/runs" element={<Runs />} />
                     <Route path="/artifacts" element={<Artifacts />} />
                     <Route path="/run/:jobId" element={<Run />} />
                 </Route>
