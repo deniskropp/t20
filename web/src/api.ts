@@ -9,3 +9,15 @@ export const startWorkflow = async (data: StartRequest): Promise<StartResponse> 
     const response = await api.post('/start', data);
     return response.data;
 };
+
+export const listArtifacts = async (): Promise<string[]> => {
+    const response = await api.get('/artifacts');
+    // Assuming backend returns a list of file paths or objects. 
+    // Adjust logic based on actual backend response if needed.
+    return response.data;
+};
+
+export const getArtifactContent = async (path: string): Promise<string> => {
+    const response = await api.get(`/artifacts/content`, { params: { path } });
+    return response.data; // Assuming raw text or JSON with content
+};

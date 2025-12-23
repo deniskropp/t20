@@ -8,10 +8,14 @@ export function Home() {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
 
-    const handleStart = async (goal: string) => {
+    const handleStart = async (goal: string, files: any[], model: string) => {
         setLoading(true);
         try {
-            const res = await startWorkflow({ high_level_goal: goal });
+            const res = await startWorkflow({
+                high_level_goal: goal,
+                files,
+                model
+            });
             navigate(`/run/${res.jobId}`, { state: { plan: res.plan, streamUrl: res.statusStreamUrl } });
         } catch (e) {
             console.error(e);
