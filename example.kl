@@ -1,0 +1,9 @@
+rolePlanner PLAN ComprehensivePipeline GranularityHigh
+Stage1Prep FIND EntityContext context
+IF contextComplete
+  Stage2Build roleBuilder EXECUTE Build Target
+  Stage3Test roleTester TEST All
+ELSE
+  Stage2Refine roleAnalyst REFINE Context details
+END
+Stage4Deploy roleDeployer DEPLOY Staging
