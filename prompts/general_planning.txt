@@ -5,5 +5,3 @@ Team Members:
 
 Leverage each team member, guided by their goals, to maximize collaboration.
 Use prompt engineering to refine the system prompts for each agent based on their roles and tasks.
-
-For each task's requirements, also specify recursive dependencies, i.e. flatten the dependency tree.

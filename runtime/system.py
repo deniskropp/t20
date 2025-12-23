@@ -25,6 +25,7 @@ from .custom_types import AgentOutput, Artifact, Plan, File, Task
 logger = logging.getLogger(__name__)
 
 from .message_bus import MessageBus
+from .task_manager import TaskManager, TaskStatus
 
 class SystemConfig(BaseModel):
     """
@@ -184,27 +185,31 @@ class System:
             for prompt_data in plan.team.prompts:
                 self._update_agent_prompt(self.session, prompt_data.agent, prompt_data.system_prompt)
 
-        dependency_graph = {task.id: task.deps for task in plan.tasks}
-        self.completed_tasks = set()
-        task_map = {task.id: task for task in plan.tasks}
+        task_manager = TaskManager(plan)
         
         running_tasks = {}
 
-        while len(self.completed_tasks) < len(plan.tasks):
-            ready_tasks = []
+        while not task_manager.is_all_completed():
+            ready_tasks = task_manager.get_ready_tasks()
+            
+            # Filter out tasks that are already running
             running_task_ids = {t.id for t in running_tasks.values()}
-            for task_id, dependencies in dependency_graph.items():
-                if task_id not in self.completed_tasks and task_id not in running_task_ids:
-                    if all(dep in self.completed_tasks for dep in dependencies):
-                        ready_tasks.append(task_map[task_id])
+            ready_tasks = [t for t in ready_tasks if t.id not in running_task_ids]
 
             for task in ready_tasks:
+                task_manager.mark_running(task.id)
                 coro = self._execute_task(task, context)
                 running_tasks[asyncio.create_task(coro)] = task
 
             if not running_tasks:
-                await asyncio.sleep(0.1)  # Avoid busy-waiting
-                continue
+                if not task_manager.is_all_completed():
+                     # Check if we are stuck (no running tasks, but not all completed)
+                     # This could happen if there are circular dependencies or failed tasks that block others
+                     # For now, we just break to avoid infinite loop
+                     logger.error("Workflow stuck: No running tasks and not all tasks completed.")
+                     break
+                else:
+                    break
 
             done, pending = await asyncio.wait(running_tasks.keys(), return_when=asyncio.FIRST_COMPLETED)
 
@@ -212,11 +217,11 @@ class System:
                 task = running_tasks.pop(future)
                 try:
                     result = await future
-                    self.completed_tasks.add(task.id)
+                    task_manager.mark_completed(task.id, result)
                     yield task, result
                 except Exception as e:
                     logger.exception(f"Error executing task {task.id}: {e}")
-                    self.completed_tasks.add(task.id)  # Mark as completed to avoid re-running
+                    task_manager.mark_failed(task.id, str(e))
                     yield task, f"Error executing task {task.id}: {e}"
 
         logger.info("--- Workflow Complete ---")
