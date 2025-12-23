@@ -68,63 +68,61 @@ class Session:
     session_id: str = field(default_factory=lambda: f"session_{uuid.uuid4()}")
     agents: list = field(default_factory=list) # Type hint will be updated later to List[Agent]
     state: str = "initialized"
+    # session_dir is kept for compatibility if needed, but primary storage is now DB
     session_dir: str = field(init=False)
     project_root: str = field(default_factory=str)
+    _db: Any = field(init=False, repr=False, default=None)
 
     def __post_init__(self) -> None:
-        """Initializes the session directory."""
+        """Initializes the session database connection."""
+        from t20sdk.core.db import SessionDB
+        
         if not self.project_root:
             self.project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-        self.session_dir = os.path.abspath(os.path.join(self.project_root, 'sessions', self.session_id))
+        
+        # We ensure the sessions directory exists to store the DB file
+        sessions_root = os.path.join(self.project_root, 'sessions')
+        os.makedirs(sessions_root, exist_ok=True)
+        
+        self.session_dir = os.path.join(sessions_root, self.session_id)
+        # We might not need to create the specific session dir if everything is in DB, 
+        # but let's keep it if we want to store other things or for backward compat.
+        # For now, we won't strictly enforce its creation for artifacts.
+        
+        db_path = os.path.join(sessions_root, "sessions.db")
+        self._db = SessionDB.get_instance(db_path)
+        
+        # Register session in DB
+        self._db.create_session(self.session_id)
+        
         logger.info(f"Project Root: '{self.project_root}'")
-        logger.info(f"Session Root: '{self.session_dir}'")
-        os.makedirs(self.session_dir, exist_ok=True)
-        logger.debug(f"Session created: {self.session_id}")
+        logger.info(f"Session DB: '{db_path}'")
+        logger.debug(f"Session initialized: {self.session_id}")
 
     def add_artifact(self, name: str, content: Any) -> None:
         """
-        Saves an artifact in the session directory.
+        Saves an artifact in the session database.
 
         Args:
-            name (str): The name of the artifact file.
-            content (Any): The content to write to the artifact file. Can be dict, list, or string.
+            name (str): The name of the artifact.
+            content (Any): The content to write.
         """
-        if os.path.isabs(name):
-            logger.error(f"Artifact to add has absolute file path: '{name}'")
-            return None
-
-        artifact_path = os.path.join(self.session_dir, name)
-        try:
-            os.makedirs(os.path.dirname(artifact_path), exist_ok=True)
-            with open(artifact_path, 'w', encoding='utf-8') as f:
-                if isinstance(content, (dict, list)):
-                    json.dump(content, f, indent=4)
-                else:
-                    f.write(str(content))
-            logger.info(f"Artifact '{name}' saved in session {self.session_id}.")
-        except (TypeError, IOError) as e:
-            logger.error(f"Error saving artifact '{name}': {e}")
+        if self._db:
+            self._db.save_artifact(self.session_id, name, content)
+        else:
+            logger.error("Session DB not initialized.")
 
     def get_artifact(self, name: str) -> Any:
         """
-        Loads an artifact from the session directory.
+        Loads an artifact from the session database.
 
         Args:
-            name (str): The name of the artifact file to load.
+            name (str): The name of the artifact to load.
 
         Returns:
-            Any: The content of the artifact, or None if an error occurs.
+            Any: The content of the artifact, or None if not found or error.
         """
-        if os.path.isabs(name):
-            logger.error(f"Artifact to get has absolute file path: '{name}'")
-            return None
-
-        artifact_path = os.path.join(self.session_dir, name)
-        try:
-            with open(artifact_path, 'r', encoding='utf-8') as f:
-                if name.endswith('.json'):
-                    return json.load(f)
-                return f.read()
-        except (FileNotFoundError, json.JSONDecodeError, IOError) as e:
-            logger.error(f"Error retrieving artifact '{name}': {e}")
-            return None
+        if self._db:
+            return self._db.get_artifact(self.session_id, name)
+        logger.error("Session DB not initialized.")
+        return None
