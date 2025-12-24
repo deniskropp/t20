@@ -1,0 +1,9 @@
+rolePlanner PLAN PipelineCombined
+  Stage1 roleTransformer PLAN FirstGenerationTransform
+    Stage1Input TRANSFORM <> TO <>
+    Stage2Refine REFINE <> WITH <>
+    output output1
+  Stage2 roleAnotherTransformer PLAN SecondGenerationTransform
+    Stage1Input TRANSFORM output1 TO <>
+    Stage2Validate VALIDATE <> WITH <>
+    output finalOutput
