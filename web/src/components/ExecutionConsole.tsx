@@ -122,9 +122,9 @@ export function ExecutionConsole({ events, executionState }: { events: any[], ex
     }, [steps.length, workflowStatus.status, events.length]);
 
     return (
-        <div className="bg-[#1e1e1e] rounded-xl border border-[#333] shadow-xl flex flex-col h-full overflow-hidden text-[#d4d4d4] font-sans">
+        <div className="bg-card rounded-lg border shadow-sm flex flex-col h-full overflow-hidden text-card-foreground font-sans">
             {/* Header */}
-            <div className="p-3 bg-[#252526] border-b border-[#333] flex items-center justify-between shrink-0 z-10">
+            <div className="p-3 bg-muted/30 border-b flex items-center justify-between shrink-0 z-10">
                 <div className="flex items-center gap-2">
                     <div className="p-1.5 bg-primary/10 rounded-md">
                         <Terminal className="w-4 h-4 text-primary" />
@@ -164,12 +164,12 @@ export function ExecutionConsole({ events, executionState }: { events: any[], ex
                     <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="p-4 rounded-lg bg-green-950/20 border border-green-500/20 flex items-center gap-3"
+                        className="p-4 rounded-lg bg-green-50 border border-green-200 flex items-center gap-3"
                     >
-                        <CheckCircle2 className="w-6 h-6 text-green-500" />
+                        <CheckCircle2 className="w-6 h-6 text-green-600" />
                         <div>
-                            <h3 className="font-semibold text-green-400">Workflow Finalized</h3>
-                            <p className="text-sm text-green-500/70">All steps completed successfully.</p>
+                            <h3 className="font-semibold text-green-900">Workflow Finalized</h3>
+                            <p className="text-sm text-green-800">All steps completed successfully.</p>
                         </div>
                     </motion.div>
                 )}
@@ -178,12 +178,12 @@ export function ExecutionConsole({ events, executionState }: { events: any[], ex
                     <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="p-4 rounded-lg bg-red-950/20 border border-red-500/20 flex items-start gap-3"
+                        className="p-4 rounded-lg bg-red-50 border border-red-200 flex items-start gap-3"
                     >
-                        <AlertCircle className="w-6 h-6 text-red-500 shrink-0" />
+                        <AlertCircle className="w-6 h-6 text-red-600 shrink-0" />
                         <div>
-                            <h3 className="font-semibold text-red-400">Workflow Failed</h3>
-                            <p className="text-sm text-red-500/70 mt-1">
+                            <h3 className="font-semibold text-red-900">Workflow Failed</h3>
+                            <p className="text-sm text-red-800 mt-1">
                                 {workflowStatus.error?.message || "An unexpected error occurred."}
                             </p>
                         </div>
@@ -206,17 +206,17 @@ function StepCard({ step, isLast }: { step: StepData, isLast: boolean }) {
     }, [step.status]);
 
     const statusColor = {
-        pending: "border-gray-500/50",
+        pending: "border-muted-foreground/30",
         running: "border-yellow-500",
         completed: "border-green-500",
         failed: "border-red-500"
     }[step.status];
 
     const bgStatus = {
-        pending: "bg-[#2d2d2d]",
-        running: "bg-[#2d2d2d]", // active highlight handled by border
-        completed: "bg-[#1e1e1e]",
-        failed: "bg-[#2d1e1e]"
+        pending: "bg-card",
+        running: "bg-card", // active highlight handled by border
+        completed: "bg-card", // or bg-muted/20
+        failed: "bg-destructive/5"
     }[step.status];
 
     return (
@@ -224,14 +224,14 @@ function StepCard({ step, isLast }: { step: StepData, isLast: boolean }) {
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
             className={cn(
-                "rounded-lg border-l-4 overflow-hidden transition-colors border-[#333] shadow-sm",
+                "rounded-lg border-l-4 overflow-hidden transition-colors border shadow-sm",
                 statusColor,
                 bgStatus
             )}
         >
             <button
                 onClick={() => setExpanded(!expanded)}
-                className="w-full p-3 flex items-center gap-3 hover:bg-white/5 transition-colors text-left"
+                className="w-full p-3 flex items-center gap-3 hover:bg-muted/50 transition-colors text-left"
             >
                 {step.status === 'running' ? (
                     <Loader2 className="w-5 h-5 text-yellow-500 animate-spin shrink-0" />
@@ -248,7 +248,7 @@ function StepCard({ step, isLast }: { step: StepData, isLast: boolean }) {
                         <span className="font-mono text-xs font-bold text-primary/80 uppercase tracking-wider bg-primary/10 px-1.5 py-0.5 rounded">
                             {step.agent}
                         </span>
-                        <span className="text-sm font-medium truncate block text-zinc-300">
+                        <span className="text-sm font-medium truncate block text-foreground">
                             Step {step.stepId}
                         </span>
                     </div>
@@ -267,12 +267,12 @@ function StepCard({ step, isLast }: { step: StepData, isLast: boolean }) {
                         exit={{ height: 0, opacity: 0 }}
                         className="overflow-hidden"
                     >
-                        <div className="p-4 pt-0 space-y-3 border-t border-white/5">
+                        <div className="p-4 pt-0 space-y-3 border-t">
 
                             {/* Reasoning Section - Only show if present */}
                             {step.reasoning && (
-                                <div className="mt-3 bg-blue-950/20 border-l-2 border-blue-500/50 p-3 rounded-r text-sm text-blue-200/80">
-                                    <div className="flex items-center gap-2 mb-1 text-blue-400 font-semibold text-xs uppercase tracking-wide">
+                                <div className="mt-3 bg-blue-50/80 border-l-2 border-blue-500/50 p-3 rounded-r text-sm text-blue-900">
+                                    <div className="flex items-center gap-2 mb-1 text-blue-700 font-semibold text-xs uppercase tracking-wide">
                                         <BrainCircuit className="w-3.5 h-3.5" /> Reasoning
                                     </div>
                                     <div className="italic leading-relaxed">
@@ -285,8 +285,8 @@ function StepCard({ step, isLast }: { step: StepData, isLast: boolean }) {
                             {step.artifacts && step.artifacts.length > 0 && (
                                 <div className="mt-3 flex gap-2 overflow-x-auto pb-1">
                                     {step.artifacts.map((file: any, i: number) => (
-                                        <div key={i} className="flex items-center gap-1.5 bg-[#252526] border border-[#3e3e42] px-2 py-1.5 rounded text-xs text-zinc-300 whitespace-nowrap">
-                                            <FileCode className="w-3.5 h-3.5 text-blue-400" />
+                                        <div key={i} className="flex items-center gap-1.5 bg-muted border px-2 py-1.5 rounded text-xs text-foreground whitespace-nowrap">
+                                            <FileCode className="w-3.5 h-3.5 text-blue-500" />
                                             {file.path || "Generated File"}
                                         </div>
                                     ))}
@@ -296,7 +296,7 @@ function StepCard({ step, isLast }: { step: StepData, isLast: boolean }) {
                             {/* Main Output */}
                             <div className="mt-3">
                                 <div className="text-xs font-mono text-zinc-500 mb-1.5 uppercase tracking-wider">Output</div>
-                                <div className="bg-[#000000] p-3 rounded-md border border-[#333] font-mono text-sm leading-relaxed whitespace-pre-wrap text-[#9cdcfe] shadow-inner max-h-[300px] overflow-y-auto custom-scrollbar">
+                                <div className="bg-zinc-950 p-3 rounded-md border border-zinc-800 font-mono text-sm leading-relaxed whitespace-pre-wrap text-zinc-100 shadow-inner max-h-[300px] overflow-y-auto custom-scrollbar">
                                     {step.output || <span className="text-zinc-600 italic">No output yet...</span>}
                                 </div>
                             </div>
