@@ -6,3 +6,7 @@ from .agent import Agent
 from .core import Session, ExecutionContext
 from .orchestrator import Orchestrator
 from .system import System
+
+from .graph_service import GraphService
+from .graph_backend import GraphBackend, PythonGraphBackend, WasmGraphBackend
+
