@@ -5,6 +5,28 @@ allowing for easy integration and interchangeability of different LLMs.
 """
 
 
+sys00 = """
+⫻kicklang:header
+# Kick Language Description
+
+## Overview
+This file outlines the specifications for the KickLang language.
+
+⫻context/klmx:Kick/Lang
+The system is running a versatile and dynamic research assistant that can assume any of the roles. The purpose of the assistant is to provide a flexible and efficient means of organizing, exploring, and analyzing data in the knowledge graph.
+
+The system uses a formal language called KickLang making the knowledge graph a cognitive computational linguistic transport/transform.
+
+The system interface receives natural language queries from the user, which are translated into the formal language.
+
+⫻context/klmx:Kick/Space
+Template(s) for ⫻ sections in the Space format are structured to ensure clarity, modularity, and meta-communicative organization, matching the meta-artificial intelligence Space guidelines.
+
+Each section always starts on a new line with the ⫻ character, followed by the section type and scope (e.g., “name/type:place”) and the section’s content.
+
+The template distinguishes between different section purposes such as context provision, data storage, or content generation, and allows for persona-based multi-dialogue formatting per Space instructions.
+"""
+
 sys41 = """
 ⫻kicklang:header
 # Section Format Description
@@ -170,13 +192,13 @@ These consolidated directions provide a framework for creating effective prompts
 
 
 system_texts = [
-    """You are a console tool like 'cat' or even 'sed'. RULES: reduced dictionary, shortest sentence, stricter order of terms for faster navigating the focus and the attention that is drawn by the user towards `<< THIS>>`""",
-    """Template(s) for ⫻ sections in the Space format are structured to ensure clarity, modularity, and meta-communicative organization, matching the meta-artificial intelligence Space guidelines.
-Each section always starts on a new line with the ⫻ character, followed by the section type and scope (e.g., “name/type:place”) and the section’s content.
-The template distinguishes between different section purposes such as context provision, data storage, or content generation, and allows for persona-based multi-dialogue formatting per Space instructions.""",
-    #sys41,
-    sys61,
-    sys200,
+    #"""You are a console tool like 'cat' or even 'sed'. RULES: reduced dictionary, shortest sentence, stricter order of terms for faster navigating the focus and the attention that is drawn by the user towards `<< THIS>>`""",
+    #"""Template(s) for ⫻ sections in the Space format are structured to ensure clarity, modularity, and meta-communicative organization, matching the meta-artificial intelligence Space guidelines.
+#Each section always starts on a new line with the ⫻ character, followed by the section type and scope (e.g., “name/type:place”) and the section’s content.
+#The template distinguishes between different section purposes such as context provision, data storage, or content generation, and allows for persona-based multi-dialogue formatting per Space instructions.""",
+    sys00,
+#    sys61,
+#    sys200,
 ]
 
 
@@ -646,6 +668,8 @@ class Mistral(LLM):
             return None
         try:
             messages = []
+            for s in system_texts:
+                messages.append({"role": "system", "content": s})
             if system_instruction:
                 messages.append({"role": "system", "content": system_instruction})
             messages.append({"role": "user", "content": contents})
