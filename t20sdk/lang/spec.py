@@ -51,11 +51,14 @@ class ActionType(str, Enum):
     LINK = "LINK"
     MAP = "MAP"
     CLUSTER = "CLUSTER"
+    CREATE = "CREATE"
     
     # Knowledge Transformation
     SUMMARIZE = "SUMMARIZE"
     COMPARE = "COMPARE"
     EXPLAIN = "EXPLAIN"
+    ANALYZE = "ANALYZE"
+    QUERY = "QUERY"
     
     # Meta Operations
     COMMENT = "COMMENT"

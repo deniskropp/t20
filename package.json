@@ -1,0 +1,16 @@
+{
+  "name": "t20",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.26.2",
+  "dependencies": {
+    "mem0ai": "^2.2.0"
+  }
+}

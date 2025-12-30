@@ -26,6 +26,7 @@ logger = logging.getLogger(__name__)
 
 from .message_bus import MessageBus
 from .task_manager import TaskManager, TaskStatus
+from .system_interface import SystemInterfaceLayer
 
 class SystemConfig(BaseModel):
     """
@@ -52,10 +53,17 @@ class System:
         self.default_model = default_model
         self.message_bus = MessageBus()
         self.config: SystemConfig = SystemConfig()
+        self.interface = SystemInterfaceLayer()
         self.agents: List[Agent] = []
         self.session: Optional[Session] = None
         self.orchestrator: Optional[Orchestrator] = None
         self.completed_tasks: set = set()
+
+    def e(self, taskType: str, instruction: str, context: Optional[str] = None) -> Any:
+        """
+        Cognitive interface entry point.
+        """
+        return self.interface.e(taskType, instruction, context)
 
     def setup(self, orchestrator_name: Optional[str] = None) -> None:
         """
