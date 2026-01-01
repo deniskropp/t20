@@ -12,7 +12,7 @@ import os
 import logging
 import json
 
-from t20sdk.core.custom_types import Plan, Task
+from t20.core.custom_types import Plan, Task
 
 logger = logging.getLogger(__name__)
 
@@ -75,7 +75,7 @@ class Session:
 
     def __post_init__(self) -> None:
         """Initializes the session database connection."""
-        from t20sdk.core.db import SessionDB
+        from t20.core.db import SessionDB
         
         if not self.project_root:
             self.project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))

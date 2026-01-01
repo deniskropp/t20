@@ -1,6 +1,6 @@
 import unittest
-from t20sdk.core.system_interface import SystemInterfaceLayer
-from t20sdk.lang.spec import ActionType
+from t20.core.system_interface import SystemInterfaceLayer
+from t20.lang.spec import ActionType
 
 class TestSystemInterfaceLayer(unittest.TestCase):
     def setUp(self):

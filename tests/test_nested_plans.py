@@ -1,6 +1,6 @@
 import pytest
-from t20sdk.core.parsing import KickLangParser
-from t20sdk.core.custom_types import Task
+from t20.core.parsing import KickLangParser
+from t20.core.custom_types import Task
 
 def test_nested_plan_parsing_details():
     """

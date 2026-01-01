@@ -1,6 +1,6 @@
 import re
 from typing import List, Optional, Dict, Any
-from t20sdk.core.custom_types import Plan, Task, Role
+from t20.core.custom_types import Plan, Task, Role
 
 class KickLangParser:
     """Parses KickLang PLAN blocks into runtime Plan objects."""

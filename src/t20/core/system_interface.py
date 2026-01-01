@@ -1,7 +1,7 @@
 import logging
 import re
 from typing import Optional, Any, Dict
-from t20sdk.lang.spec import Action, ActionType, Role, RoleType
+from t20.lang.spec import Action, ActionType, Role, RoleType
 
 logger = logging.getLogger(__name__)
 

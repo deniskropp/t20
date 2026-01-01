@@ -14,9 +14,11 @@ class Task(BaseModel):
     role: str = Field(..., description="The role responsible for this task.")
     agent: str = Field(..., description="The agent assigned to this task.")
     deps: List[str] = Field(..., description="List of requirements (task IDs, e.g. ['T-00.4', 'P-B01']).")
-    #condition: Optional[str] = Field(default=None, description="Condition to evaluate before executing this task.")
-    #action_verb: Optional[str] = Field(default=None, description="The action verb (e.g., 'FIND', 'EXECUTE').")
-    #action_params: List[str] = Field(default_factory=list, description="Parameters for the action.")
+
+class TaskAction(BaseModel):
+    condition: Optional[str] = Field(default=None, description="Condition to evaluate before executing this task.")
+    action_verb: Optional[str] = Field(default=None, description="The action verb (e.g., 'FIND', 'EXECUTE').")
+    action_params: List[str] = Field(default_factory=list, description="Parameters for the action.")
 
 
 class File(BaseModel):
@@ -63,8 +65,10 @@ class Plan(BaseModel):
     reasoning: str = Field(..., description="A brief explanation of the plan's structure and strategy.")
     roles: List[Role] = Field(..., description="List of all roles required to execute the plan.")
     tasks: List[Task] = Field(..., description="A step-by-step sequence of tasks to be executed in order.")
-    #metadata: Dict[str, Any] = Field(default_factory=dict, description="Metadata and parameters for the plan.")
     team: Optional[Team] = Field(default=None, description="Updates to team configuration or system prompts.")
+
+class PlanMeta(BaseModel):
+    metadata: Dict[str, Any] = Field(default_factory=dict, description="Metadata and parameters for the plan.")
 
 
 class AgentOutput(BaseModel):

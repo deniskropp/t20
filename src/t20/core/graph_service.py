@@ -3,7 +3,7 @@ GraphService module for KickLang SDK.
 Provides knowledge graph capabilities by delegating to a GraphBackend.
 """
 from typing import List, Dict, Any, Union, Optional
-from t20sdk.core.graph_backend import GraphBackend, PythonGraphBackend
+from t20.core.graph_backend import GraphBackend, PythonGraphBackend
 
 class GraphService:
     """

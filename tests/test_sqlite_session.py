@@ -3,8 +3,8 @@ import os
 import shutil
 import tempfile
 import sqlite3
-from t20sdk.core.core import Session
-from t20sdk.core.db import SessionDB
+from t20.core.core import Session
+from t20.core.db import SessionDB
 
 @pytest.fixture
 def temp_project_root():

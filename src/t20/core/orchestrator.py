@@ -13,13 +13,13 @@ from colorama import Fore, Style
 
 from pydantic import BaseModel, Field, ValidationError
 
-from t20sdk.core.agent import Agent
-from t20sdk.core.core import Session
-from t20sdk.core.util import read_file
+from t20.core.agent import Agent
+from t20.core.core import Session
+from t20.core.util import read_file
 
 logger = logging.getLogger(__name__)
 
-from t20sdk.core.custom_types import Plan, File, AgentProfile
+from t20.core.custom_types import Plan, File, AgentProfile
 
 
 class PlanningPrompt(BaseModel):

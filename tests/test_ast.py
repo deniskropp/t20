@@ -5,28 +5,19 @@ import sys
 logging.basicConfig(level=logging.INFO, format='%(message)s')
 
 def test_ast_movement():
-    print("Testing imports from t20sdk.lang.ast...")
+    print("Testing imports from t20.lang.ast...")
     try:
-        from t20sdk.lang.ast import Step, Plan, Pipeline
-        print("✅ Successfully imported Step, Plan, Pipeline from t20sdk.lang.ast")
+        from t20.lang.ast import Step, Plan, Pipeline
+        print("✅ Successfully imported Step, Plan, Pipeline from t20.lang.ast")
     except ImportError as e:
-        print(f"❌ Failed to import from t20sdk.lang.ast: {e}")
-        sys.exit(1)
-
-def test_backward_compatibility():
-    print("Testing backward compatibility imports from t20sdk.lang.syntax...")
-    try:
-        from t20sdk.lang.syntax import Step, Plan, Pipeline
-        print("✅ Successfully imported Step, Plan, Pipeline from t20sdk.lang.syntax")
-    except ImportError as e:
-        print(f"❌ Failed to import from t20sdk.lang.syntax: {e}")
+        print(f"❌ Failed to import from t20.lang.ast: {e}")
         sys.exit(1)
 
 def test_object_creation():
     print("Testing object creation...")
     try:
-        from t20sdk.lang.ast import Step, Plan, Pipeline
-        from t20sdk.lang.spec import Placebo
+        from t20.lang.ast import Step, Plan, Pipeline
+        from t20.lang.spec import Placebo
         
         step = Step(name="test_step", action=Placebo(marker="test"))
         plan = Plan(name="test_plan")
@@ -42,8 +33,8 @@ def test_object_creation():
 def test_if_block():
     print("Testing IfBlock...")
     try:
-        from t20sdk.lang.ast import Step, Plan, IfBlock
-        from t20sdk.lang.spec import Placebo
+        from t20.lang.ast import Step, Plan, IfBlock
+        from t20.lang.spec import Placebo
         
         step_true = Step(name="true_step", action=Placebo(marker="true"))
         step_false = Step(name="false_step", action=Placebo(marker="false"))

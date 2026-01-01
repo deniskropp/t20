@@ -1,6 +1,6 @@
 import asyncio
 import logging
-from t20sdk.core.ntfy import NtfyClient
+from t20.core.ntfy import NtfyClient
 
 # Setup basic logging to see the output
 logging.basicConfig(level=logging.INFO)

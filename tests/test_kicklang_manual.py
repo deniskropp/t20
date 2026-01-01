@@ -1,6 +1,6 @@
 import logging
 import sys
-from t20sdk.lang import (
+from t20.lang import (
     Role, Action, ActionType, Placebo,
     Planner, Researcher, Storyteller,
     Step, Plan, Pipeline, PlanExecutor

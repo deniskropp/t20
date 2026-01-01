@@ -1,13 +1,14 @@
 import pytest
 import asyncio
-from t20sdk.core.system import System
-from t20sdk.core.task_manager import TaskManager, TaskStatus
-from t20sdk.core.custom_types import Plan, Task, Role
-from t20sdk.core.message_bus import SpaceMessage
+import os
+from t20.core.system import System
+from t20.core.task_manager import TaskManager, TaskStatus
+from t20.core.custom_types import Plan, Task, Role
+from t20.core.message_bus import SpaceMessage
 
 @pytest.mark.asyncio
 async def test_agent_loading():
-    system = System(root_dir="/home/einrichten/t20/t20sdk")
+    system = System(root_dir=os.path.abspath("src/t20"))
     system.setup(orchestrator_name="LiLo")
     assert system.orchestrator is not None
     assert system.orchestrator.profile.name == "LiLo"
@@ -38,7 +39,7 @@ async def test_task_manager():
 
 @pytest.mark.asyncio
 async def test_message_bus():
-    from t20sdk.core.message_bus import MessageBus
+    from t20.core.message_bus import MessageBus
     bus = MessageBus()
     received = []
     

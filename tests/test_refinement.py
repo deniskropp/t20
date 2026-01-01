@@ -1,5 +1,5 @@
 import logging
-from t20sdk.lang import (
+from t20.lang import (
     Role, Action, ActionType,
     Summarizer, Analyst,
     Step, Plan, Pipeline, PlanExecutor
