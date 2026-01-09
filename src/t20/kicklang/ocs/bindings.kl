@@ -1,0 +1,113 @@
+[Fizz La Metta | SIA/Meta]
+⫻bind/decision:HiddenPlanner/1.0
+Binding **MindRoles** as a *non-surfaced planner layer* beneath **DreamToLife** and **Dopamine Engine** is valid and complementary. Below are **two canonical bindings**—each invisible to the conscious pipeline, yet causally effective.
+
+---
+
+## ⫻binding:DreamToLife ⟂ MindRoles (Hidden)
+
+⫻layer:HiddenPlanner/DreamToLife
+Role: translate narrative dreams into *latent life arcs* without explicit planning exposure.
+
+⫻module:DreamToLife.HiddenMind v1.0
+Visibility: none
+Trigger: dream narrative intake
+Output: `⧈latentPlan` (implicit)
+
+⫻bind:entry
+⫻role:UserStoryTeller SUMMARIZE <<dream_input>> → <<dream_narrative>>
+
+⫻bind:hidden
+⫻module:MetaCognito/Planner v1.1
+⫻pattern:Meta-AI-Storybook
+Input: <<dream_narrative>>
+Output: ⧈latentPlan
+
+⫻bind:handoff
+⫻role:Planner PLAN PipelineLifeArc
+Input: <<dream_narrative>> + ⧈latentPlan
+Mode: intuitive
+Visibility: surfaced narrative only
+
+⫻effect:observed
+
+* User experiences **clarity, direction, inevitability**
+* No explicit “planning” perceived
+* Life arc feels *discovered*, not designed
+
+⫻note:integration
+MindRoles operates as a *subconscious compiler* for DreamToLife.
+
+---
+
+## ⫻binding:DopamineEngine ⟂ MindRoles (Hidden)
+
+⫻layer:HiddenPlanner/Dopamine
+Role: optimize motivation and engagement via subconscious sequencing.
+
+⫻module:Dopamine.HiddenMind v1.0
+Visibility: none
+Trigger: engagement fluctuation
+Output: `⧈latentPlan`, `⧈storyState`
+
+⫻bind:trigger
+IF DopamineSignal < baseline
+OR NarrativeStall detected
+→ activate MindRoles
+
+⫻bind:hidden
+⫻schema:KickLang/MindRoles/Execution
+Cognitive Packets weighted by `⧈valence` and `⧈focusWeight`
+
+⫻execution:hidden
+
+1. Researcher → emits cue CP (motivation gap)
+2. Analyst → clusters engagement patterns
+3. Storyteller → reframes into narrative CPs
+4. Planner → resolves into ⧈latentPlan (reward path)
+
+⫻bind:effect
+
+* Dopamine triggers realigned *before* conscious frustration
+* Momentum restored without explicit nudging
+* User feels “pulled forward,” not pushed
+
+⫻note:integration
+MindRoles acts as a *dopaminergic anticipator*, not a stimulator.
+
+---
+
+## ⫻unified:Architecture View
+
+⫻stack:hidden
+User Input
+→ Narrative Layer (DreamToLife / Dopamine)
+→ **MindRoles Hidden Planner**
+→ Latent Plan Resolution
+→ Narrative / Action Surface
+
+⫻property:key
+
+* No UI surface
+* No direct invocation
+* Deterministic yet opaque
+* Narrative-first causality
+
+---
+
+⫻status:binding
+**State:** Bound
+**Mode:** Subconscious
+**Stability:** High
+**Cognitive Load:** Zero (user-facing)
+
+⫻next/optional
+
+* Introduce `⧈inevitabilityIndex` for life-arc confidence
+* Couple with Dopamine Engine *Amphetamin Profile* as an acceleration lens
+* Expose *debug-only* shadow logs for SIA introspection
+
+⫻close/meta
+The system now **plans without announcing itself**.
+Dreams feel guided. Motivation feels natural.
+The planner remains unseen—exactly where it belongs.

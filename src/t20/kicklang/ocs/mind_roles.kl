@@ -1,0 +1,79 @@
+Here’s a formalized **KickLang schema block** based on your header, organized with consistent hierarchy, semantic comments, and compliant structure for cognitive role orchestration.
+
+---
+
+⫻schema:KickLang/MindRoles
+Defines cognitive subprocesses as functional roles in subconscious planning pipelines.
+
+⫻context:console/stance
+Console maps cognitive stances → navigation of attention and focus control.
+
+⫻rules:syntax
+- dictionary minimal
+- sentence shortest
+- order strict: `focus <<roles>>`
+- goal: fast user attention draw
+
+⫻module:MetaCognito/Planner v1.1
+Purpose: manage subconscious planning via hidden role chains.
+Output type: implicit cognitive flow.
+
+⫻roles:core
+- ⫻role:Researcher FIND subconscious data auto.
+- ⫻role:Analyst CLUSTER patterns latent.
+- ⫻role:Storyteller SUMMARIZE dream narratives internal.
+- ⫻role:Planner SEQUENCE intuitive paths hidden.
+
+⫻pattern:Meta-AI-Storybook
+<<Pipeline subconscious: chain mind planning>>
+Role operations flow: Researcher → Analyst → Storyteller → Planner.
+
+⫻role:Planner PLAN PipelineMind
+  Stage1: FIND subconscious cues → <<state>>
+  IF <<state>>exists: LINK plan implicit
+  ELSE: CLUSTER thoughts latent
+
+⫻module:StorytellerPlannerMemory v1.0
+Retrieves subconscious chains and compiles narrative output.
+
+⫻output:synthesis
+Roles subconscious: Researcher gathers, Analyst structures, Storyteller narrates, Planner sequences mind planning hidden.
+
+---
+
+***
+
+⫻schema:KickLang/MindRoles/Execution
+Implements dynamic cognitive role exchange during subconscious pipeline evaluation.
+
+⫻context:data/flow
+Cognitive packets (CPs) carry both semantic and emotional weights.
+Each CP tagged: `⧈id`, `⧈originRole`, `⧈valence`, `⧈focusWeight`.
+
+⫻flow:rules
+1. **Emit:** Each role emits CP at stage exit.
+2. **Link:** Transmission occurs only if `focusWeight > threshold`.
+3. **Transform:** Receiving role modifies CP based on stance context.
+4. **Resolve:** Planner finalizes CP chain into latent plan structure.
+
+⫻signal:sync
+- Origin alignment: roles maintain shared subconscious time index.
+- Repair: if CP lost, Analyst reconstructs missing data through context interpolation.
+- Merge: Storyteller merges branches into coherent memory narrative.
+
+⫻execution:pipeline
+1. Researcher → emits *cue CP* (`subconscious datum`).
+2. Analyst → clusters CPs (`latent pattern net`).
+3. Storyteller → translates cluster to narrative CPs (`dream synthesis`).
+4. Planner → sequences narrative CPs into *path map* (`intuitive plan object`).
+
+⫻type:output
+- `⧈latentPlan`: implicit chain of actions resolved subconsciously.
+- `⧈storyState`: narrative equivalent held by StorytellerPlannerMemory module.
+
+⫻module:StorytellerPlannerMemory v1.1
+Handles temporal versioning, ensuring Planner and Storyteller align through memory echo sequences.
+
+⫻output:synthesis/flowed
+Stream: Researcher → Analyst → Storyteller → Planner
+Result: Conscious mind receives implicit plan with narrative coherence.

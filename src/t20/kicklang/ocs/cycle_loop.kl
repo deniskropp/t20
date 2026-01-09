@@ -1,0 +1,66 @@
+# KickLang Cycle Loop Template
+Implements the Task Agnostic Steps (TAS) structure for iterative co-creative collaboration between human and machine agents.
+---
+
+⫻context/klmx:Kick/CycleLoop
+role: "Iteration Engine"
+description: "Manages seed prompts, synthesis, reflections, role checks, feedback, and documentation in a continuous loop."
+
+⫻context/klmx:Seed/Node
+task: "Finding Seed Prompts"
+methods:
+  - find_prompts(source="contextual_db", diversity="broad-spectrum")
+  - filter(criteria=["clarity","relevance","goal_alignment"])
+  - output(channel="SeedPrompts")
+
+⫻context/klmx:Synthesis/Node
+task: "Summarizing Co-Synthesis"
+inputs: ["SeedPrompts", "AgentOutputs"]
+methods:
+  - collect(agent_streams=["human","machine"])
+  - summarize(focus=["insights","decisions","actions"])
+  - output(channel="SynthesisSummary")
+
+⫻context/klmx:Reflect/Node
+task: "Commenting on Reflections"
+inputs: ["SynthesisSummary"]
+methods:
+  - gather_reflections(agents=["human","machine"])
+  - comment_on(successes=True, challenges=True, improvements=True)
+  - output(channel="ReflectionsLog")
+
+⫻context/klmx:RoleCheck/Node
+task: "Comparing Role Checks"
+inputs: ["ReflectionsLog"]
+methods:
+  - analyze_roles(balance="evaluate", diversity="check")
+  - adjust_roles(strategy="dynamic_rebalance")
+  - output(channel="RoleComparisons")
+
+⫻context/klmx:Feedback/Cycle
+task: "Iterative Feedback Loop"
+inputs: ["RoleComparisons"]
+methods:
+  - feed_results_to("Seed/Node")
+  - update_cycle_state(version_increment=True)
+  - log_feedback(output_channel="FeedbackArchive")
+
+⫻context/klmx:Version/Log
+task: "Documentation and Versioning"
+inputs: ["SeedPrompts","SynthesisSummary","ReflectionsLog","RoleComparisons","FeedbackArchive"]
+methods:
+  - archive_entries()
+  - tag_version(timestamp=True, author_tracking=True)
+  - output(channel="CycleHistory")
+
+⫻context/klmx:Loop/Trigger
+type: "auto"
+interval: "per_iteration"
+on_event: ["Feedback/Cycle.update"]
+next: "Seed/Node.find_prompts"
+
+⫻context/klmx:Metadata
+version: "1.0"
+status: "active"
+date_created: "2026-01-09"
+maintainer: "KickLang Research Node"
