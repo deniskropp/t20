@@ -86,7 +86,7 @@ def generate_plan(program: Program) -> Plan:
                                  role=get_or_create_role(role_name),
                                  agent="Agent1",
                                  deps=[],
-                                 subtasks=None
+                                 subtasks=process_statements(stmt.block) if stmt.block else None
                              ))
                     elif len(real_args) > 0:
                          if isinstance(real_args[0], Identifier) and real_args[0].value == "END":

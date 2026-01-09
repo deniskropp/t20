@@ -117,14 +117,12 @@ class Parser:
                     # Error or skip
                     self.next_token()
             
-        # 4. Check for Block (PLAN)
-        if verb == TokenType.PLAN:
-            # Plan statements might end with a block
-            if self.cur_token_is(TokenType.NEWLINE):
-                self.next_token()
-            
-            if self.cur_token_is(TokenType.INDENT):
-                block = self.parse_block()
+        # 4. Check for Block (Generic)
+        if self.cur_token_is(TokenType.NEWLINE):
+            self.next_token()
+        
+        if self.cur_token_is(TokenType.INDENT):
+            block = self.parse_block()
 
         return Command(subject=subject, verb=verb, args=args, output=output, block=block)
 

@@ -135,6 +135,13 @@ class Lexer:
             token_type = self.lookup_keyword(literal)
             return Token(type=token_type, literal=literal, line=self.line, column=start_col)
 
+        # Comments
+        if self.ch == '#':
+            self.read_char()
+            while self.ch is not None and self.ch != '\n':
+                self.read_char()
+            return self.next_token()
+
         # Unknown char
         token = Token(type=TokenType.ERROR, literal=self.ch, line=self.line, column=self.column, error_msg=f"Unexpected character: {self.ch}")
         self.read_char()
