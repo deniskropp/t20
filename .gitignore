@@ -18,3 +18,7 @@ new-logs/
 .continue/
 .gemini/
 .pytest_cache/
+server_v2.log
+server.log
+server.pid
+prompts.db

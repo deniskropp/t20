@@ -130,7 +130,7 @@ export function ArtifactBrowser({ artifacts: propArtifacts, jobId }: ArtifactBro
 
             state.executionLog.forEach(item => {
                 if (item.result && item.result.artifact && item.result.artifact.files) {
-                    item.result.artifact.files.forEach(file => {
+                    item.result.artifact.files.forEach((file: any) => {
                         newMap[file.path] = file.content;
                     });
                 }

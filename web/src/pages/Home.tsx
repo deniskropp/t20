@@ -1,28 +1,15 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GoalInput } from '../components/GoalInput';
-import { startWorkflow } from '../api';
+import { usePlan } from '../context/PlanContext';
 import { Loader2 } from 'lucide-react';
 
 export function Home() {
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(false);
+    const { startNewPlan, isLoading } = usePlan();
 
     const handleStart = async (goal: string, files: any[], model: string) => {
-        setLoading(true);
-        try {
-            const res = await startWorkflow({
-                high_level_goal: goal,
-                files,
-                model
-            });
-            navigate(`/run/${res.jobId}`, { state: { plan: res.plan, streamUrl: res.statusStreamUrl } });
-        } catch (e) {
-            console.error(e);
-            alert("Failed to start workflow. Ensure the backend is running on port 8000.");
-        } finally {
-            setLoading(false);
-        }
+        await startNewPlan(goal, files, model);
+        navigate('/design');
     };
 
     return (
@@ -36,7 +23,7 @@ export function Home() {
                 </p>
             </div>
 
-            {loading ? (
+            {isLoading ? (
                 <div className="flex flex-col items-center justify-center py-12 space-y-4">
                     <Loader2 className="w-10 h-10 animate-spin text-primary" />
                     <p className="text-muted-foreground text-lg animate-pulse">Orchestrating plan...</p>

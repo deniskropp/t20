@@ -1,8 +1,16 @@
 import axios from 'axios';
-import type { StartRequest, StartResponse, RunSummary, RunStateDetail } from './types';
+import type { 
+    StartRequest, 
+    StartResponse, 
+    RunSummary, 
+    RunStateDetail, 
+    ControlCommand,
+    RunStatusResponse,
+    Plan
+} from './types';
 
-const api = axios.create({
-    baseURL: '/api',
+export const api = axios.create({
+    baseURL: '/api', // Adjust if needed to match proxy or backend
 });
 
 export const startWorkflow = async (data: StartRequest): Promise<StartResponse> => {
@@ -11,23 +19,36 @@ export const startWorkflow = async (data: StartRequest): Promise<StartResponse> 
 };
 
 export const listArtifacts = async (): Promise<string[]> => {
-    const response = await api.get('/artifacts');
-    // Assuming backend returns a list of file paths or objects. 
-    // Adjust logic based on actual backend response if needed.
+    // This endpoint wasn't in the provided openapi.json subset but was in original api.ts
+    // Keeping it as is or assuming it exists on backend not shown in snippet
+    const response = await api.get('/artifacts'); 
     return response.data;
 };
 
 export const getArtifactContent = async (path: string): Promise<string> => {
     const response = await api.get(`/artifacts/content`, { params: { path } });
-    return response.data; // Assuming raw text or JSON with content
+    return response.data;
 };
 
-export const listRuns = async (): Promise<RunSummary[]> => {
-    const response = await api.get('/history/runs');
+export const listRuns = async (limit: number = 20, offset: number = 0): Promise<RunSummary[]> => {
+    const response = await api.get('/history/runs', { params: { limit, offset } });
     return response.data;
 };
 
 export const getRunState = async (jobId: string): Promise<RunStateDetail> => {
     const response = await api.get(`/history/runs/${jobId}/state`);
     return response.data;
+};
+
+export const getRunStatus = async (jobId: string): Promise<RunStatusResponse> => {
+    const response = await api.get(`/runs/${jobId}`);
+    return response.data;
+};
+
+export const controlRun = async (jobId: string, command: ControlCommand): Promise<void> => {
+    await api.post(`/runs/${jobId}/control`, command);
+};
+
+export const initiateRun = async (jobId: string, plan: Plan, rounds: number = 1): Promise<void> => {
+    await api.post(`/runs/${jobId}`, { plan, rounds });
 };
