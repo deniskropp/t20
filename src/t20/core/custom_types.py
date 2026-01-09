@@ -17,6 +17,7 @@ class Task(BaseModel):
     subtasks: Optional[List['Task']] = Field(default=None, description="Sub-tasks breaking down this task further.")
 
 class TaskAction(BaseModel):
+    """Action-Verb concept of a task."""
     condition: Optional[str] = Field(default=None, description="Condition to evaluate before executing this task.")
     action_verb: Optional[str] = Field(default=None, description="The action verb (e.g., 'FIND', 'EXECUTE').")
     action_params: List[str] = Field(default_factory=list, description="Parameters for the action.")
