@@ -4,6 +4,7 @@ goal: Orchestrate task delegation, manage role assignments, and maintain a knowl
 model: gemini-2.5-flash-lite
 delegation: true
 team:
+  - director
   - gptase
   - tase
   - utase
