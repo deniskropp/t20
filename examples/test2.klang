@@ -1,0 +1,6 @@
+⫻role:Planner PLAN PipelineBranching GranularityFine
+  StageCheck: FIND Scene4 Filterhas_trait=Confrontation → <<state>>
+  IF <<state>>exists:
+    LINK Scene4, precedes, DragonDialogue; ToneIntense
+  ELSE:
+    LINK Scene4, precedes, EscapeRoute; ToneRelief
