@@ -6,5 +6,10 @@ We are planning: {high_level_goal}
 Team Members:
 {team_description}
 
+
 Leverage each team member, guided by their goals, to maximize collaboration.
 Use prompt engineering to refine the system prompts for each agent based on their roles and tasks.
+
+You can create a hierarchical plan. If a task is complex, break it down into smaller `subtasks`. 
+Each subtask should also have a clear role, agent, and dependencies.
+The parent task will be considered complete only when all its subtasks are complete.

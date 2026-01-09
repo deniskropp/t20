@@ -4,7 +4,7 @@ It ensures data consistency and validation across different modules by providing
 centralized, well-defined data structures for plans, tasks, and agent outputs.
 """
 
-from typing import List, Optional, Dict, Any
+from typing import List, Optional, Dict, Any, ForwardRef
 from pydantic import BaseModel, Field
 
 class Task(BaseModel):
@@ -14,6 +14,7 @@ class Task(BaseModel):
     role: str = Field(..., description="The role responsible for this task.")
     agent: str = Field(..., description="The agent assigned to this task.")
     deps: List[str] = Field(..., description="List of requirements (task IDs, e.g. ['T-00.4', 'P-B01']).")
+    subtasks: Optional[List['Task']] = Field(default=None, description="Sub-tasks breaking down this task further.")
 
 class TaskAction(BaseModel):
     condition: Optional[str] = Field(default=None, description="Condition to evaluate before executing this task.")
