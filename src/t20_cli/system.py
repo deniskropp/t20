@@ -15,10 +15,10 @@ import typer
 from typing_extensions import Annotated
 
 from t20.core import Plan
-from t20.core.custom_types import File
-from t20.core.log import setup_logging
-from t20.core.system import System
-from t20.core.util import read_file
+from t20.core.common.types import File
+from t20.core.system.log import setup_logging
+from t20.core.system.system import System
+from t20.core.common.util import read_file
 
 logger = logging.getLogger(__name__)
 

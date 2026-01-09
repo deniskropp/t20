@@ -9,10 +9,10 @@ from fastapi import APIRouter, HTTPException, status, BackgroundTasks, Request
 from sse_starlette.sse import EventSourceResponse
 
 # --- Runtime Imports ---
-from t20.core.system import System
-from t20.core.custom_types import File as RuntimeFile
-from t20.core.custom_types import Plan as RuntimePlan
-from t20.core.custom_types import Task as RuntimeTask
+from t20.core.system.system import System
+from t20.core.common.types import File as RuntimeFile
+from t20.core.common.types import Plan as RuntimePlan
+from t20.core.common.types import Task as RuntimeTask
 
 from t20_api import models
 
@@ -84,7 +84,7 @@ def convert_api_plan_to_runtime(api_plan: models.Plan) -> RuntimePlan:
             deps=t.deps
         ))
     
-    from t20.core.custom_types import Role as RuntimeRole, Team as RuntimeTeam, Prompt as RuntimePrompt
+    from t20.core.common.types import Role as RuntimeRole, Team as RuntimeTeam, Prompt as RuntimePrompt
     
     roles = [RuntimeRole(title=r.title, purpose=r.purpose) for r in api_plan.roles]
     

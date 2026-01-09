@@ -1,6 +1,6 @@
 import asyncio
-from t20.core.dream_to_life import DreamToLife
-from t20.core.dopamine_engine import DopamineEngine
+from t20.core.agents.dream_to_life import DreamToLife
+from t20.core.agents.dopamine_engine import DopamineEngine
 
 async def verify_ocs_integration():
     print("--- Verifying DreamToLife Integration ---")

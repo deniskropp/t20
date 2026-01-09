@@ -14,18 +14,18 @@ from typing import Any, AsyncGenerator, List, Optional, Dict, Tuple
 from pydantic import BaseModel
 import asyncio
 
-from .core import Session, ExecutionContext
-from .agent import Agent, find_agent_by_role
-from .orchestrator import Orchestrator
+from .session import Session, ExecutionContext
+from t20.core.agents.agent import Agent, find_agent_by_role
+from t20.core.orchestration.orchestrator import Orchestrator
 from .log import setup_logging
-from .loader import load_agent_classes
+from t20.core.common.loader import load_agent_classes
 from .paths import AGENTS_DIR_NAME, CONFIG_DIR_NAME, PROMPTS_DIR_NAME, RUNTIME_CONFIG_FILENAME
 
-from .custom_types import AgentOutput, Artifact, Plan, File, Task
+from t20.core.common.types import AgentOutput, Artifact, Plan, File, Task
 logger = logging.getLogger(__name__)
 
 from .message_bus import MessageBus
-from .task_manager import TaskManager, TaskStatus
+from t20.core.orchestration.task_manager import TaskManager, TaskStatus
 from .system_interface import SystemInterfaceLayer
 
 class SystemConfig(BaseModel):

@@ -1,7 +1,7 @@
 from typing import List, Optional, Union, Dict, Any
 from .ast import Program, Statement, Command, IfStatement, Expression, Identifier, LiteralValue, Directive
 from .tokens import TokenType
-from t20.core.custom_types import Plan, Task, Role, Team, Prompt, AgentOutput
+from t20.core.common.types import Plan, Task, Role, Team, Prompt, AgentOutput
 
 def generate_plan(program: Program) -> Plan:
     high_level_goal = "Executed KickLang Program"

@@ -10,9 +10,9 @@ import logging
 from typing import List, Optional, Any, Dict
 from pydantic import BaseModel, Field
 
-from t20.core.system import System
-from t20.core.graph_backend import PythonGraphBackend
-from t20.core.custom_types import Plan, File, Task
+from t20.core.system.system import System
+from t20.core.data.graph_backend import PythonGraphBackend
+from t20.core.common.types import Plan, File, Task
 
 logger = logging.getLogger(__name__)
 
