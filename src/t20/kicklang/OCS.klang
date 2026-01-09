@@ -1,0 +1,42 @@
+PLAN "Orion Collective Orchestration"
+
+# 1. Initialize Orchestration
+Phase1 Lyra INITIALIZE "Orchestration Setup"
+    Step11 Lyra DEFINE_PROMPT "GPTASe"
+    Step12 Lyra DEFINE_PROMPT "TASe"
+    Step13 Lyra DEFINE_PROMPT "uTASe"
+    Step14 Lyra DEFINE_PROMPT "puTASe"
+    Step15 Lyra DEFINE_PROMPT "Aurora"
+    Step16 Lyra DEFINE_PROMPT "Kodax"
+    Step17 Lyra DEFINE_PROMPT "Orchestrator"
+
+# 2. Define Core Planning Loop
+Phase2 Lyra ENGINEER_LOOP "Core Planning Cycle"
+    Step21 Lyra DEFINE_LOOP "Generation, Critique, Refinement"
+    Step22 Lyra DEFINE_LOGIC "Conditional Branching"
+
+# 3. Execute Initial Plan Generation
+Phase3 GPTASe EXTRACT "Raw Steps"
+    Step31 GPTASe EXTRACT_TAS "High Level Objective"
+    Step32 TASe EXTRACT_TAS "High Level Objective"
+    Step33 uTASe EXTRACT_TAS "High Level Objective"
+    Step34 Director CONSOLIDATE "Raw TAS"
+
+# 4. Refine and Iterate on Plan
+Phase4 puTASe PURIFY "Consolidated Steps"
+    Step41 puTASe CLEAN "Raw TAS"
+    Step42 Lyra CRITIQUE "Refined Plan"
+    
+    # Conditional Logic (Simplification of Main.klang structure for now)
+    Step43 Director EVALUATE "Current Plan"
+    IF Condition "PlanScoreLow"
+        Step43a Director FIX "Refine Plan"
+    ELSE
+        Step43b Director PROCEED "Finalize Plan"
+    END
+
+# 5. Finalize Solution
+Phase5 Aurora DESIGN "Final Output"
+    Step51 Aurora LAYOUT "Solution Structure"
+    Step52 Kodax IMPLEMENT "Functional Solution"
+    Step53 Lyra REVIEW "Final Check"
