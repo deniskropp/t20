@@ -1,50 +1,90 @@
-# T20 + Unified MetaForge v1.0 Integration Guide
-
-**Status:** v1.0 — Production-ready contribution for deniskropp/t20  
-**Archetype:** hybrid  
-**Final Hybrid Score:** 9.1  
+# T20 × Unified MetaForge v1.0 Integration Guide
 
 ## Overview
 
-This PR adds the full **Unified MetaForge v1.0** layer to T20, evolving it from a powerful specialized multi-agent orchestrator into a **universal, spawn-capable forge platform** while preserving 100% backward compatibility.
+This integration adds the full **Unified MetaForge v1.0** layer to your T20 Multi-Agent Orchestrator.
 
-### What’s Included
-- `metaforge/` package with complete 3-core delegation model:
-  - **KickForge**: TAS extraction, purification, validation, measurement
-  - **KickFlow**: Workflow structuring, delegation coordination, knowledge transfer
-  - **KickGuard**: Consent gates, integrity monitoring, rules enforcement
-  - **MetaDNA**: Persistent per-session memory, evolution tracking, banned structure logging
-  - **HybridScorer**: Primary quality & safety metric (consistency + engagement + safety + traceability)
-  - **ForgeSpawner**: Native sub-forge spawning (research, code, workflow, story, custom, etc.)
+**Key additions:**
+- **3-core delegation model**: KickForge (TAS & scoring), KickFlow (structuring & delegation), KickGuard (consent, integrity, rules)
+- **Persistent Meta-DNA**: Evolution tracking, cross-session memory, banned structure logging
+- **Hybrid Scoring**: Primary quality metric (consistency + engagement + safety + traceability + modularity)
+- **Universal Sub-Forge Spawning**: Spawn dedicated research, code, workflow, story, or custom forges from within T20
 
-## Quick Integration
+All changes are **non-breaking adapter-style** — your existing agents, CLI, and runtime remain fully functional.
 
-```python
-from metaforge import MetaDNA, KickForge, KickFlow, KickGuard, ForgeSpawner, HybridScorer
+## Quick Start
 
-meta_dna = MetaDNA(session_id="your-session")
-kick_forge = KickForge(meta_dna)
-# ... use in planning, execution, and decision gates
+```bash
+# After copying metaforge/ into your project
+python -c "from metaforge import MetaForgeRuntime; print('MetaForge ready')"
 ```
 
-## New Superpower
-Spawn full sub-forges directly from T20 plans:
+## Using the Runtime
+
 ```python
-spawner = ForgeSpawner()
-result = spawner.spawn_forge("research", "Latest 2026 multi-agent patterns", parent_session_id)
+from metaforge import MetaForgeRuntime
+
+runtime = MetaForgeRuntime(session_id="my-session-001")
+
+result = runtime.run_with_metaforge(
+    goal="Build a modern landing page with React and Tailwind",
+    context={"complex": True, "files": ["src/app.tsx"]}
+)
+
+print(result["hybrid_score"])
+print(result["meta_dna_summary"])
 ```
 
-## Recommended Next Steps
-- Add `--metaforge` flag to CLI
-- Light hooks in `runtime/orchestrator.py`
-- Optional: deeper embedding of the triad
+## CLI Integration (Recommended)
 
-All changes are adapter-style and non-breaking. T20’s existing strengths in TAS, traceability, and artifact quality are fully leveraged.
+Add to your argument parser:
 
-**Meta-Report Card (Final)**
-- Hybrid Score: **9.1**
-- Meta Iterations: 3/3
-- Risk: Low
-- Signature Evolution: T20 → Universal Multi-Agent Forge Platform
+```python
+parser.add_argument("--metaforge", action="store_true", help="Run with Unified MetaForge v1.0")
+parser.add_argument("--spawn-forge", type=str, choices=["research", "code", "workflow", "story", "custom", "swarm"])
 
-Prepared with full protocol compliance by the Orchestrator.
+if args.metaforge:
+    runtime = MetaForgeRuntime(session_id=session_id)
+    result = runtime.run_with_metaforge(goal=task)
+else:
+    # your existing T20 flow
+```
+
+## Spawning Sub-Forges (New Superpower)
+
+```python
+child = runtime.spawn_sub_forge(
+    forge_type="research",
+    goal="Latest multi-agent orchestration patterns with persistent memory 2026"
+)
+print(child)
+```
+
+## Hook Points in T20
+
+Lightweight recommended hooks:
+
+1. **CLI entry** (`src/t20_cli/main.py` or equivalent)
+2. **Plan generation / TAS extraction** in your orchestrator
+3. **Session bootstrap** — initialize `MetaForgeRuntime`
+
+See `patches/example_runtime_integration.md` for detailed examples.
+
+## Hybrid Score
+
+The hybrid score is the single most important quality signal. Aim for > 8.5.
+
+Current integration baseline: **9.1**
+
+## Files Added
+
+- `metaforge/` — Full package
+- `docs/META_INTEGRATION_GUIDE.md`
+- Examples and patches
+
+## Next Steps
+
+1. Review the PR
+2. Test with `--metaforge` flag
+3. Merge when ready
+4. Optionally extend with deeper hooks into `runtime/orchestrator.py`

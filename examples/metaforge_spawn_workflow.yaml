@@ -1,0 +1,30 @@
+# Example .agent/workflows/ file showing MetaForge spawn capability
+name: metaforge_research_spawn
+version: 1.0
+
+description: |
+  Example workflow that uses MetaForge to spawn a dedicated research sub-forge.
+
+steps:
+  - id: extract_tas
+    action: metaforge.kick_forge.extract_and_purify_tas
+    input:
+      goal: "{{ goal }}"
+
+  - id: check_consent
+    action: metaforge.kick_guard.check_consent_gate
+    input:
+      action: "spawn_research_forge"
+      risk_level: "medium"
+
+  - id: spawn_research
+    action: metaforge.forge_spawner.spawn_forge
+    input:
+      forge_type: "research"
+      goal: "Deep research on {{ topic }}"
+      inherit_meta_dna: true
+
+  - id: score_and_persist
+    action: metaforge.hybrid_scorer.score
+    input:
+      plan: "{{ steps.spawn_research }}"
