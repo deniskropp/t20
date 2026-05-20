@@ -10,6 +10,7 @@ from .kick_forge import KickForge
 from .kick_flow import KickFlow
 from .kick_guard import KickGuard
 from .forge_spawner import ForgeSpawner
+from .metaforge_runtime import MetaForgeRuntime
 
 __version__ = "1.0.0-t20"
 __all__ = [
@@ -19,4 +20,5 @@ __all__ = [
     "KickFlow",
     "KickGuard",
     "ForgeSpawner",
+    "MetaForgeRuntime",
 ]
