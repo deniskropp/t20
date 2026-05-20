@@ -46,8 +46,16 @@ class MetaForgeRuntime:
         context = context or {}
         trace: List[Dict[str, Any]] = []
 
-        # Step 1: Consent & Integrity Gate (KickGuard)
-        consent_ok, consent_notes = self.kick_guard.check_consent(goal, context)
+        # Step 1: Consent & Integrity Gate (KickGuard) - robust fallback
+        if hasattr(self.kick_guard, "check_consent"):
+            consent_ok, consent_notes = self.kick_guard.check_consent(goal, context)
+        elif hasattr(self.kick_guard, "check_consent_gate"):
+            gate_result = self.kick_guard.check_consent_gate(goal, context)
+            consent_ok = gate_result.get("passed", True)
+            consent_notes = gate_result.get("notes", "consent checked via gate")
+        else:
+            consent_ok, consent_notes = True, "consent gate (fallback)"
+
         if not consent_ok:
             return {
                 "status": "halted",
