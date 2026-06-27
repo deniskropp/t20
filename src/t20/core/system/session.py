@@ -5,7 +5,7 @@ for handling artifacts and session-specific data.
 """
 
 from dataclasses import dataclass, field
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 from threading import Lock
 import uuid
 import os
@@ -13,6 +13,11 @@ import logging
 import json
 
 from t20.core.common.types import Plan, Task
+# Meta-DNA integration for enrailed Unified MetaForge
+try:
+    from t20.core.system.meta_dna import MetaDNA
+except ImportError:
+    MetaDNA = None  # type: ignore
 
 logger = logging.getLogger(__name__)
 
@@ -61,7 +66,6 @@ class ExecutionContext:
 
 
 
-
 @dataclass
 class Session:
     """Manages the runtime context for a task, including session ID and artifact storage."""
@@ -72,29 +76,34 @@ class Session:
     session_dir: str = field(init=False)
     project_root: str = field(default_factory=str)
     _db: Any = field(init=False, repr=False, default=None)
+    meta_dna: Optional['MetaDNA'] = field(init=False, repr=False, default=None)
 
     def __post_init__(self) -> None:
-        """Initializes the session database connection."""
+        """Initializes the session database connection and Meta-DNA logger."""
         from t20.core.data.db import SessionDB
-        
+
         if not self.project_root:
             self.project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-        
+
         # We ensure the sessions directory exists to store the DB file
         sessions_root = os.path.join(self.project_root, 'sessions')
         os.makedirs(sessions_root, exist_ok=True)
-        
+
         self.session_dir = os.path.join(sessions_root, self.session_id)
-        # We might not need to create the specific session dir if everything is in DB, 
-        # but let's keep it if we want to store other things or for backward compat.
-        # For now, we won't strictly enforce its creation for artifacts.
-        
+
         db_path = os.path.join(sessions_root, "sessions.db")
         self._db = SessionDB.get_instance(db_path)
-        
+
         # Register session in DB
         self._db.create_session(self.session_id)
-        
+
+        # Meta-DNA initialization (enrailed Unified MetaForge)
+        if MetaDNA is not None:
+            try:
+                self.meta_dna = MetaDNA(self.session_id)
+            except Exception as e:
+                logger.warning(f"Failed to initialize MetaDNA: {e}")
+
         logger.info(f"Project Root: '{self.project_root}'")
         logger.info(f"Session DB: '{db_path}'")
         logger.debug(f"Session initialized: {self.session_id}")
@@ -126,3 +135,14 @@ class Session:
             return self._db.get_artifact(self.session_id, name)
         logger.error("Session DB not initialized.")
         return None
+
+    def log_rail_event(
+        self,
+        rail: int,
+        event: str,
+        data: Optional[Dict[str, Any]] = None,
+        hybrid_score: Optional[float] = None,
+    ) -> None:
+        """Log a rail transition or MetaForge event to Meta-DNA."""
+        if self.meta_dna:
+            self.meta_dna.log_rail_event(rail=rail, event=event, data=data, hybrid_score=hybrid_score)
