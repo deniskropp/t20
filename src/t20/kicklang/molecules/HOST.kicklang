@@ -1,0 +1,60 @@
+# HOST.kicklang — t20 binding surface for MetaPlaybookRuntime v1.0
+# Space: OCS/Node | Bond: ⨼context/klmx:Kick/Lang/MetaPlaybookRuntime
+# Canonical molecule: klmx-meta-playbook-molecule.kicklang
+# Runtime concept graph: runtime_gen.kl
+# Python host: t20.core.orchestration.molecule_runtime.MoleculeRuntime
+
+molecule MetaPlaybookRuntime.host v1.0
+TITLE t20 Molecule Host Binding
+DESCRIPTION Bind Session, ExecutionContext, Orchestrator, Plan, and Meta-DNA to the self-running 20-stage lattice.
+
+klmx:
+  name        MetaPlaybookRuntime.host
+  formula     obj → tas → ptas → spec → state → insight ↻ obj
+  model       three-agent-core
+  space       OCS/Node
+  scope       t20
+  reference   kicklang-meta-playbook@v2.1
+  bonds:
+    in        ⨼data/obj, user_request, context_graph, run_flags, living_objective
+    out       ⨼data/draft, ⨼data/insight, ⨼data/consensus, coherence_report, Plan
+    catalyst  Session.add_artifact, MetaDNA.log_rail_event, KickGuard.halt
+    recycle   ⨼data/insight → ⨼data/obj
+
+# Concept map: runtime_gen.kl → t20 Python
+concept Role             binds t20.core.common.types.Role
+concept Task             binds t20.core.common.types.Task
+concept Plan             binds t20.core.common.types.Plan
+concept Artifact         binds t20.core.common.types.Artifact
+concept AgentOutput      binds t20.core.common.types.AgentOutput
+concept Agent            binds t20.core.agents.agent.Agent
+concept Orchestrator     binds t20.core.orchestration.orchestrator.Orchestrator
+concept ExecutionContext binds t20.core.system.session.ExecutionContext
+concept Session          binds t20.core.system.session.Session
+concept LLM              binds t20.core.agents.llm.LLM
+concept LoadConfig       binds t20.core.common.loader
+
+# Payload map: molecule → MoleculeState
+⨼data/obj      -> MoleculeState.obj
+⨼data/tas      -> MoleculeState.tas
+⨼data/ptas     -> MoleculeState.ptas
+⨼data/spec     -> MoleculeState.spec
+⨼data/state    -> MoleculeState.state
+⨼data/logic    -> MoleculeState.logic
+⨼data/insight  -> MoleculeState.insight
+⨼data/draft    -> MoleculeState.draft
+⨼data/consensus-> MoleculeState.consensus
+coherence_report   -> MoleculeState.coherence
+
+# Guard stages (KickGuard.present)
+Stage10 EthicalCompliance   ⨼cmd/halt ethical non-consent
+Stage16 JointDecisions      ⨼cmd/halt joint-decision gate
+Stage17 IntegrityMonitoring ⨼cmd/halt coherence floor < 0.72
+
+⨼cmd/mode Hybrid
+⨼cmd/lang KickLang
+⨼cmd/exec Activate MetaPlaybookRuntime.host
+  require run_flags.self_run explicit
+  require consent_gate on first recycle
+  require KickGuard.present on stages 10, 16, 17
+  emit Plan via MoleculeRuntime.as_plan
