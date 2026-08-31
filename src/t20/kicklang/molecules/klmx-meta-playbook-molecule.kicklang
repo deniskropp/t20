@@ -1,0 +1,127 @@
+# klmx-meta-playbook-molecule.kicklang
+# Meta-DNA: KickLang Meta-Playbook v2.1 -> Self-Running Molecule v1.0
+# Space: OCS/Node | Scope: global | Schema: KickLang v4.1 + Meta-Playbook v2.1
+# Bond: context/klmx:Kick/Lang/MetaPlaybookRuntime
+# Host: t20.core.orchestration.molecule_runtime.MoleculeRuntime
+
+molecule MetaPlaybookRuntime v1.0
+TITLE Self-Running KickLang Meta-Playbook Molecule
+DESCRIPTION Closed-loop 20-stage Meta-Playbook that binds, catalyzes, and re-enters itself until coherence or halt.
+roleOrchestrator PLAN FullMetaPlaybook user_request context_graph run_flags living_objective
+
+klmx:
+  name        MetaPlaybookRuntime
+  formula     obj -> tas -> ptas -> spec -> state -> insight recycle obj
+  model       three-agent-core
+  space       OCS/Node
+  scope       global
+  reference   kicklang-meta-playbook@v2.1
+  bonds:
+    in        data/obj, user_request, context_graph, run_flags, living_objective
+    out       data/draft, data/insight, data/consensus, coherence_report, Plan
+    catalyst  CoherenceMonitorBridge, KickGuard.halt, Session.add_artifact, MetaDNA
+    recycle   data/insight -> data/obj
+
+schema user_request        { text: string, locale: string? }
+schema context_graph       { domain: string, refs: string[]? }
+schema run_flags           { mode: "Strict"|"Creative"|"Fluid"|"Swarm"|"SwarmF"|"Hybrid",
+                             ruleset: string?, visual: bool?,
+                             self_run: bool, max_cycles: int?,
+                             microcycle_on_stable_spec: bool? }
+schema living_objective    { text: string, valence: number?, drift: "low"|"med"|"high"? }
+schema coherence_report    { coherence: number, drift: string, valence: number, cycle: int }
+
+roleKickForge PLAN ForgeCore
+  CONSOLIDATE GPTASe puTASe TAS-EXTRACT TAS-PURIFY TAS-VALIDATE TAS-MEASURE
+roleKickFlow PLAN FlowCore
+  CONSOLIDATE Lyra FizzLaMetta AI_Tutor Codein TAS-SEQUENCE TAS-ALIGN TAS-DELEGATE
+roleKickGuard PLAN GuardCore
+  CONSOLIDATE Dima SystemMonitor WePlan KickLaMetta AR00L QllickBuzz QllickFizz
+
+flow:
+  data/obj -> data/tas -> data/ptas -> data/spec -> data/state
+  data/tas + data/ptas + data/spec -> data/insight -> data/draft -> EMIT Plan
+  data/insight recycle data/obj
+
+Stage1 KickForgeExtract:
+  roleKickForge EXTRACT user_request context_graph living_objective
+  LINK KickForgeExtract, produces, data/tas
+Stage2 KickForgePurify:
+  roleKickForge PURIFY data/tas policy_constraints
+  LINK KickForgePurify, produces, data/ptas
+  IF policy_constraints.hard_stops MATCH data/tas THEN cmd/halt "policy hard-stop on raw TAS"
+Stage3 KickFlowStructure:
+  roleKickFlow PLAN PipelineStructure data/ptas
+  LINK KickFlowStructure, produces, data/spec
+Stage4 KickFlowDelegate:
+  roleKickFlow PLAN PipelineDelegate data/spec
+  LINK KickFlowDelegate, produces, data/state
+Stage5 KnowledgeTransfer:
+  roleAI_Tutor EXPLAIN data/spec
+  LINK KnowledgeTransfer, produces, data/logic
+Stage6 CodeContext:
+  roleCodein EXPLAIN execution_context
+  LINK CodeContext, produces, data/logic
+Stage7 PromptRefinement:
+  roleLyra TRANSFORM data/spec data/logic
+  LINK PromptRefinement, produces, data/spec
+Stage8 ProtocolEstablishment:
+  roleFizzLaMetta SET mode run_flags.mode
+  LINK ProtocolEstablishment, produces, cmd/mode
+Stage9 SystemMonitoring:
+  roleSystemMonitor CHECK data/state data/spec
+  LINK SystemMonitoring, produces, monitor_report
+Stage10 EthicalCompliance:
+  roleDima CHECK data/spec policy_profile
+  IF decision_token == DENY THEN cmd/halt "ethical non-consent"
+Stage11 VisualAssets:
+  roleAR00L GENERATE data/spec
+  IF NOT run_flags.visual THEN SKIP
+Stage12 OperationalRules:
+  roleQllickBuzz SET ruleset run_flags.ruleset
+  IF run_flags.ruleset == null THEN SKIP
+Stage13 StrategicPlans:
+  roleWePlan PLAN Strategy data/spec data/state
+Stage14 NLTranslation:
+  roleKickLaMetta TRANSLATE user_request
+  LINK NLTranslation, produces, data/ptas
+Stage15 DynamicRoleAdaptation:
+  roleOrchestrator ADAPT data/state data/spec
+  LINK DynamicRoleAdaptation, hastrait, microcycle-entry
+Stage16 JointDecisions:
+  roleDima DECIDE decision_token monitor_report
+  IF decision_token == HALT OR monitor_report.integrity == FAIL THEN cmd/halt "joint-decision gate"
+Stage17 IntegrityMonitoring:
+  roleSystemMonitor CHECK integrity data/spec data/state
+  IF coherence_report.coherence < 0.72 THEN cmd/halt "coherence floor breached"
+Stage18 TailoredPlans:
+  roleWePlan REFINE data/spec data/state
+Stage19 HolisticTaskApproach:
+  roleOrchestrator SYNTHESIZE data/tas data/ptas data/spec data/state
+  LINK HolisticTaskApproach, produces, data/insight
+Stage20 ReviewRefinement:
+  roleKickForge REVIEW data/insight data/spec
+  roleKickFlow  REVIEW data/insight data/spec
+  roleKickGuard REVIEW data/insight data/spec
+  LINK ReviewRefinement, produces, data/draft
+  LINK ReviewRefinement, hastrait, recycle-port
+
+logic:
+  set cycle = 0
+  set max_cycles = run_flags.max_cycles OR 3
+  if run_flags.self_run == false THEN EMIT data/draft ; cmd/halt "single-pass complete"
+  loop until cycle >= max_cycles OR halt_token OR convergence
+    if spec_stable AND run_flags.microcycle_on_stable_spec THEN ENTER Stage15
+    else ENTER Stage1 ; REBIND data/obj = data/insight OR user_request
+    set cycle = cycle + 1
+    if coherence_report.drift == "high" THEN cmd/halt "drift — HITL required"
+    if data/conflict AND NOT data/consensus THEN cmd/halt "unresolved conflict"
+  convergence WHEN coherence >= 0.90 AND drift == "low" AND draft present
+
+cmd/mode Hybrid
+cmd/lang KickLang
+cmd/exec Activate MetaPlaybookRuntime
+  require run_flags.self_run explicit
+  require consent_gate on first recycle
+  require KickGuard.present on stages 10, 16, 17
+  emit Plan via MoleculeRuntime.as_plan
