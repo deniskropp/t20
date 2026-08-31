@@ -1,0 +1,151 @@
+# KickLang representation of t20 runtime (types, agent, session, loader, llm, orchestrator)
+# Source mapping: runtime_gen.kl -> src/t20/core/*
+
+concept Role {
+  description: "The definition of an agent's role within the system."
+  properties: { title: "string", description: "string" }
+  binds: t20.core.common.types.Role
+}
+
+concept Task {
+  description: "A specific unit of work to be performed by an agent."
+  properties: {
+    task_id: "string", task: "string", role: "string", name: "string", requires: "list<string>"
+  }
+  binds: t20.core.common.types.Task
+}
+
+concept Plan {
+  description: "A structured sequence of roles and tasks to achieve a goal."
+  properties: { reasoning: "string", roles: "list<Role>", tasks: "list<Task>" }
+  binds: t20.core.common.types.Plan
+}
+
+concept Artifact {
+  description: "A piece of data or file generated during task execution."
+  properties: { name: "string", content: "any" }
+  binds: t20.core.common.types.Artifact
+}
+
+concept AgentOutput {
+  description: "The structured output produced by an agent after completing a task."
+  properties: { output: "string", files: "list<Artifact>" }
+  binds: t20.core.common.types.AgentOutput
+}
+
+concept RuntimeConfig {
+  description: "Configuration settings for the runtime environment."
+  properties: {
+    default_agent: "string", max_concurrent_agents: "integer",
+    logging_level: "string", api_endpoints: "map<string, string>"
+  }
+}
+
+concept Agent {
+  description: "Represents a runtime agent instance capable of executing tasks."
+  properties: {
+    name: "string", role: "string", goal: "string", model: "string",
+    system_prompt: "string", team: "map<string, Agent>", llm: "LLM"
+  }
+  functions: [UpdateSystemPrompt, ExecuteTask]
+  binds: t20.core.agents.agent.Agent
+}
+
+concept UpdateSystemPrompt {
+  input: { new_prompt: "string" }
+  output: "void"
+}
+
+concept ExecuteTask {
+  input: { context: "ExecutionContext" }
+  output: "optional<string>"
+}
+
+concept InstantiateAgent {
+  input: {
+    agent_spec: "map<string, any>", prompts: "map<string, string>",
+    all_agent_specs: "list<map<string, any>>"
+  }
+  output: "optional<Agent>"
+}
+
+concept FindAgentByRole {
+  input: { agents: "list<Agent>", role: "string" }
+  output: "optional<Agent>"
+}
+
+concept ExecutionContext {
+  description: "Holds the state and context for a multi-agent workflow."
+  properties: {
+    session: "Session", high_level_goal: "string", plan: "map<string, any>",
+    step_index: "integer", round_num: "integer", artifacts: "map<string, any>"
+  }
+  functions: [CurrentStep, RememberArtifact, RecordArtifact]
+  binds: t20.core.system.session.ExecutionContext
+  also_binds: t20.lang.runtime.ExecutionContext
+}
+
+concept Session {
+  description: "Manages the runtime context for a task, including session ID and artifact storage."
+  properties: {
+    session_id: "string", agents: "list<Agent>", state: "string", session_dir: "string"
+  }
+  functions: [AddArtifact, GetArtifact]
+  binds: t20.core.system.session.Session
+}
+
+concept LoadConfig {
+  input: { config_path: "string" }
+  output: "map<string, any>"
+}
+
+concept LoadAgentTemplates {
+  input: { agents_dir: "string", config: "map<string, any>", default_model: "string" }
+  output: "list<map<string, any>>"
+}
+
+concept LoadPrompts {
+  input: { prompts_dir: "string" }
+  output: "map<string, string>"
+}
+
+concept LLM {
+  description: "Abstract base class for Large Language Models."
+  functions: [GenerateContent, Factory]
+  binds: t20.core.agents.llm.LLM
+}
+
+concept GenerateContent {
+  input: {
+    model_name: "string", contents: "string", system_instruction: "string",
+    temperature: "float", response_mime_type: "string", response_schema: "BaseModel"
+  }
+  output: "optional<string>"
+}
+
+concept Factory {
+  input: { species: "string" }
+  output: "LLM"
+}
+
+concept Gemini { properties: { client: "any", species: "string" } functions: [GenerateContent, GetClient] }
+concept Olli   { properties: { client: "any", species: "string" } functions: [GenerateContent, GetClient] }
+concept Kimi   { properties: { client: "any", species: "string" } functions: [GenerateContent, GetClient] }
+
+concept Orchestrator {
+  description: "An agent responsible for creating and managing a plan for multi-agent workflows."
+  extends: "Agent"
+  functions: [StartWorkflow, CheckNewPrompts, CheckNewPrompt, GeneratePlan]
+  binds: t20.core.orchestration.orchestrator.Orchestrator
+}
+
+concept GeneratePlan {
+  input: { session: "Session", high_level_goal: "string", file_contents: "map<string, string>" }
+  output: "map<string, any>"
+}
+
+concept MoleculeRuntime {
+  description: "Self-running MetaPlaybookRuntime host layered on Session + Orchestrator."
+  functions: [Ignite, AsPlan]
+  binds: t20.core.orchestration.molecule_runtime.MoleculeRuntime
+}
