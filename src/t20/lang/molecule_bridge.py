@@ -14,7 +14,7 @@ from t20.core.common.molecule_types import MoleculeState
 
 
 def project_scope(state: MoleculeState) -> Dict[str, Any]:
-    """Map ⨼data/* namespaces onto lang.runtime.ExecutionContext.scope keys."""
+    """Map data/* namespaces onto lang.runtime.ExecutionContext.scope keys."""
     return {
         "obj": state.obj,
         "tas": [t.model_dump() for t in state.tas],
@@ -38,4 +38,4 @@ def apply_scope(lang_ctx: Any, state: MoleculeState) -> None:
         if hasattr(lang_ctx, "set"):
             lang_ctx.set(key, value)
         if hasattr(lang_ctx, "artifacts") and isinstance(lang_ctx.artifacts, dict):
-            lang_ctx.artifacts[f"⨼data/{key}"] = value
+            lang_ctx.artifacts[f"data/{key}"] = value

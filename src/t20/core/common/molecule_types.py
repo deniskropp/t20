@@ -124,7 +124,7 @@ class MoleculeHalt(BaseModel):
 
 
 class MoleculeState(BaseModel):
-    """Session-local molecule bus — maps ⨼data/* namespaces."""
+    """Session-local molecule bus — maps data/* namespaces."""
 
     obj: str = ""
     tas: List[MoleculeTAS] = Field(default_factory=list)
