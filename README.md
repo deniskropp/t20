@@ -101,8 +101,8 @@ Once you've created the YAML file and optionally the system prompt, your new age
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/your-username/t20-multi-agent.git
-    cd t20-multi-agent
+    git clone https://github.com/deniskropp/t20.git
+    cd t20
     ```
 
 2.  **Create and activate a virtual environment:**
@@ -227,3 +227,19 @@ The `runtime/` directory contains the core logic of the T20 system. Here is a br
 ## Contributing
 
 We welcome contributions! Please feel free to submit a pull request or open an issue.
+
+---
+
+## Status Update — October 2026
+
+T20 remains the early multi-agent orchestration foundation that informed the Orion Collective System (OCS) and KickLang. Key lineage notes:
+
+- Cognitive roles and orchestrator-delegate patterns evolved into the three-agent-core (KickForge / KickFlow / KickGuard) and broader OCS team matrix.
+- TAS extraction (GPTASe / TASe) became a first-class primitive across the ecosystem.
+- Fizz La Metta coordination and related personas continue as living roles in current skills and Spaces.
+- Documentation and protocol density now live primarily in t333 (OCS Substrate), t324 (Unified MetaForge/OCS docs), and the skill layer; this repo preserves the original runtime and agent YAML model.
+- Compatible with current KickLang v4.1+ and OCS v2.1 patterns; used as historical reference and extensible base.
+
+Public surface refreshed to reflect current ecosystem context. Active development continues in private/skill layers and related t-series repos.
+
+*Last aligned: 2026-10-15*
